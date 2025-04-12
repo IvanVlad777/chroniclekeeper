@@ -1,0 +1,6 @@
+@ChronicleKeeperAPI_HostAddress = http://localhost:5274
+
+GET {{ChronicleKeeperAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
