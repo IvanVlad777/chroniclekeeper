@@ -1,0 +1,10 @@
+{
+  "title": "Register",
+  "success": "Registration successful.",
+  "logunknownerr": "Unknown error during registration",
+  "alreadyhaveaccount": "Already have an account?",
+  "loginhere": "Login here!",
+  "email": "Email",
+  "password": "Password",
+  "submit": "Register now!"
+}

@@ -50,8 +50,8 @@ namespace ChronicleKeeper.Core.Entities.Characters
         // Biological Traits
         //[Required]
         //[ForeignKey("SapientSpecies")]
-        public int SapientSpeciesId { get; set; }
-        public virtual SapientSpecies SapientSpecies { get; set; } = null!;
+        public int? SapientSpeciesId { get; set; }
+        public virtual SapientSpecies? SapientSpecies { get; set; }
 
         //public int? RaceId { get; private set; }
         //public virtual Race? Race { get; private set; } // ✅ Tied to a race within their species

@@ -1,0 +1,11 @@
+{
+  "title": "Prijava",
+  "email": "Email",
+  "donthaveacc": "Nemaš još račun?",
+  "registerhere": "Registriraj se!",
+  "password": "Lozinka",
+  "submit": "Pošalji",
+  "successfullogin": "Uspješna prijava!",
+  "logsucces": "Prijava uspješna, token pohranjen u sessionStorage.",
+  "logunknownerr": "Nepoznata greška tijekom prijave"
+}

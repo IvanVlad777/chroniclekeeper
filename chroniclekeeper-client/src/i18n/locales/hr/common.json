@@ -1,0 +1,10 @@
+﻿{
+  "title": "Čuvar kronika",
+  "dashboard": "Nadzorna ploča",
+  "loggedinas": "Prijavljen kao",
+  "role": "Uloga",
+  "login": "Prijava",
+  "register": "Registracija",
+  "logout": "Odjava",
+  "adminaccess": "Imate administratorski pristup."
+}

@@ -21,12 +21,10 @@ namespace ChronicleKeeper.Core.Entities.Geography
         public GovernmentSystem? GovernmentSystem { get; set; }
         public ICollection<PoliticalParty> PoliticalParties { get; set; } = new List<PoliticalParty>();
 
-        public int? CapitalCityId { get; set; } // treba stvoriti vezu za sad još nema
+        public ICollection<City> Cities { get; set; } = new List<City>();
 
-        //public ICollection<City> Cities { get; set; } = new List<City>();
 
-        
-        public int PrimaryNationId { get; set; } // Zasad samo ID
+        public int? PrimaryNationId { get; set; } // Zasad samo ID
         public ICollection<Nation> Nations { get; set; } = new List<Nation>();
 
 
@@ -37,14 +35,6 @@ namespace ChronicleKeeper.Core.Entities.Geography
         //[ForeignKey("EconomicSystem")]
         public int? EconomicSystemId { get; set; }
         public EconomicSystem? EconomicSystem { get; set; }
-
-
-        //[ForeignKey("TaxationSystem")]
-        //public int TaxationSystemId { get; set; }
-        //public TaxationSystem? TaxationSystem { get; set; }
-        //[ForeignKey("BankingSystem")]
-        //public int? BankingSystemId { get; set; }
-        //public BankingSystem? BankingSystem { get; set; }
 
         //[ForeignKey("EducationSystem")]
         public int? EducationSystemId { get; set; }

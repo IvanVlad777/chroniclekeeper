@@ -15,8 +15,7 @@ namespace ChronicleKeeper.Core.DTOs.Character
         public string Title { get; set; } = string.Empty;
         public DateTime? BirthDate { get; set; }
         public bool IsArtificial { get; set; }
-
-        public int SapientSpeciesId { get; set; }
+        public int? SapientSpeciesId { get; set; }
         public int? NationId { get; set; }
         public int? ReligionId { get; set; }
         public int? ProfessionId { get; set; }

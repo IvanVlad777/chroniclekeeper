@@ -266,7 +266,7 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Property<int?>("ReligionId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SapientSpeciesId")
+                    b.Property<int?>("SapientSpeciesId")
                         .HasColumnType("int");
 
                     b.Property<int?>("SocialClassId")
@@ -5038,6 +5038,9 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                 {
                     b.HasBaseType("ChronicleKeeper.Core.Entities.Geography.Location");
 
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("EconomicSystemId")
                         .HasColumnType("int");
 
@@ -5053,8 +5056,10 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Property<bool>("IsCapital")
                         .HasColumnType("bit");
 
-                    b.Property<int>("LegalSystemId")
+                    b.Property<int?>("LegalSystemId")
                         .HasColumnType("int");
+
+                    b.HasIndex("CountryId");
 
                     b.HasIndex("EconomicSystemId");
 
@@ -5098,9 +5103,6 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                 {
                     b.HasBaseType("ChronicleKeeper.Core.Entities.Geography.Location");
 
-                    b.Property<int?>("CapitalCityId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("EconomicSystemId")
                         .HasColumnType("int");
 
@@ -5113,7 +5115,7 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Property<int?>("LegalSystemId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PrimaryNationId")
+                    b.Property<int?>("PrimaryNationId")
                         .HasColumnType("int");
 
                     b.HasIndex("EconomicSystemId");
@@ -5664,9 +5666,7 @@ namespace ChronicleKeeper.Infrastructure.Migrations
 
                     b.HasOne("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.SapientSpecies", "SapientSpecies")
                         .WithMany("Characters")
-                        .HasForeignKey("SapientSpeciesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SapientSpeciesId");
 
                     b.HasOne("ChronicleKeeper.Core.Entities.Social.Structure.SocialClass", "SocialClass")
                         .WithMany("Members")
@@ -7733,6 +7733,12 @@ namespace ChronicleKeeper.Infrastructure.Migrations
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.City", b =>
                 {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Country", "Country")
+                        .WithMany("Cities")
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("ChronicleKeeper.Core.Entities.Social.Economy.EconomicSystem", "EconomicSystem")
                         .WithMany("CitiesUsing")
                         .HasForeignKey("EconomicSystemId");
@@ -7751,9 +7757,9 @@ namespace ChronicleKeeper.Infrastructure.Migrations
 
                     b.HasOne("ChronicleKeeper.Core.Entities.Social.Politics.LegalSystem", "LegalSystem")
                         .WithMany("Cities")
-                        .HasForeignKey("LegalSystemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LegalSystemId");
+
+                    b.Navigation("Country");
 
                     b.Navigation("EconomicSystem");
 
@@ -8131,6 +8137,8 @@ namespace ChronicleKeeper.Infrastructure.Migrations
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Country", b =>
                 {
+                    b.Navigation("Cities");
+
                     b.Navigation("MajorIndustries");
                 });
 

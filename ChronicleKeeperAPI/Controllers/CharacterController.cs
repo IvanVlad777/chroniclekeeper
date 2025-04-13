@@ -1,4 +1,5 @@
-﻿using ChronicleKeeper.Core.DTOs;
+﻿using AutoMapper;
+using ChronicleKeeper.Core.DTOs;
 using ChronicleKeeper.Core.DTOs.Character;
 using ChronicleKeeper.Core.DTOs.Character.ChronicleKeeper.API.Dtos;
 using ChronicleKeeper.Core.Entities.Characters;
@@ -21,11 +22,13 @@ namespace ChronicleKeeperAPI.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly ILogger<CharacterController> _logger;
+        private readonly IMapper _mapper;
 
-        public CharacterController(ApplicationDbContext context, ILogger<CharacterController> logger)
+        public CharacterController(ApplicationDbContext context, ILogger<CharacterController> logger, IMapper mapper)
         {
             _context = context;
             _logger = logger;
+            _mapper = mapper;
         }
 
         // GET: /api/characters
@@ -37,39 +40,20 @@ namespace ChronicleKeeperAPI.Controllers
             _logger.LogInformation("Fetching all characters...");
 
             var characters = await _context.Characters
+                .Include(c => c.SapientSpecies)
+                .Include(c => c.Religion)
+                .Include(c => c.Nation)
+                .Include(c => c.Profession)
+                .Include(c => c.SocialClass)
+                .Include(c => c.Father)
+                .Include(c => c.Mother)
                 .AsNoTracking()
-                .Select(c => new CharacterDto
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                    Description = c.Description,
-                    CreatedAt = c.CreatedAt,
-                    UpdatedAt = c.UpdatedAt,
-                    FirstName = c.FirstName,
-                    LastName = c.LastName,
-                    Nickname = c.Nickname,
-                    Title = c.Title,
-                    BirthDate = c.BirthDate,
-                    DeathDate = c.DeathDate,
-                    Height = c.Height,
-                    Weight = c.Weight,
-                    HairColor = c.HairColor,
-                    EyeColor = c.EyeColor,
-                    SpecialPhysicalFeatures = c.SpecialPhysicalFeatures,
-                    IsArtificial = c.IsArtificial,
-                    Species = new ReferenceDto { Id = c.SapientSpecies.Id, Name = c.SapientSpecies.Name },
-                    Religion = c.Religion == null ? null : new ReferenceDto { Id = c.Religion.Id, Name = c.Religion.Name },
-                    Nation = c.Nation == null ? null : new ReferenceDto { Id = c.Nation.Id, Name = c.Nation.Name },
-                    Profession = c.Profession == null ? null : new ReferenceDto { Id = c.Profession.Id, Name = c.Profession.Name },
-                    SocialClass = c.SocialClass == null ? null : new ReferenceDto { Id = c.SocialClass.Id, Name = c.SocialClass.Name },
-                    Father = c.Father == null ? null : new ReferenceDto { Id = c.Father.Id, Name = c.Father.Name },
-                    Mother = c.Mother == null ? null : new ReferenceDto { Id = c.Mother.Id, Name = c.Mother.Name }
-                })
                 .ToListAsync();
 
+            var dtoList = _mapper.Map<List<CharacterDto>>(characters);
             _logger.LogInformation("Returned {Count} characters.", characters.Count);
 
-            return Ok(characters);
+            return Ok(dtoList);
         }
 
         // GET: /api/characters/{id}
@@ -82,44 +66,15 @@ namespace ChronicleKeeperAPI.Controllers
             _logger.LogInformation("Fetching character with ID {Id}", id);
 
             var character = await _context.Characters
+                .Include(c => c.SapientSpecies)
+                .Include(c => c.Religion)
+                .Include(c => c.Nation)
+                .Include(c => c.Profession)
+                .Include(c => c.SocialClass)
+                .Include(c => c.Father)
+                .Include(c => c.Mother)
                 .AsNoTracking()
-                .Where(c => c.Id == id)
-                .Select(c => new CharacterDetailsDto
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                    Description = c.Description,
-                    CreatedAt = c.CreatedAt,
-                    UpdatedAt = c.UpdatedAt,
-                    FirstName = c.FirstName,
-                    LastName = c.LastName,
-                    Nickname = c.Nickname,
-                    Title = c.Title,
-                    BirthDate = c.BirthDate,
-                    DeathDate = c.DeathDate,
-                    Height = c.Height,
-                    Weight = c.Weight,
-                    HairColor = c.HairColor,
-                    EyeColor = c.EyeColor,
-                    SpecialPhysicalFeatures = c.SpecialPhysicalFeatures,
-                    IsArtificial = c.IsArtificial,
-                    Species = new ReferenceDto { Id = c.SapientSpecies.Id, Name = c.SapientSpecies.Name },
-                    Religion = c.Religion == null ? null : new ReferenceDto { Id = c.Religion.Id, Name = c.Religion.Name },
-                    Nation = c.Nation == null ? null : new ReferenceDto { Id = c.Nation.Id, Name = c.Nation.Name },
-                    Profession = c.Profession == null ? null : new ReferenceDto { Id = c.Profession.Id, Name = c.Profession.Name },
-                    SocialClass = c.SocialClass == null ? null : new ReferenceDto { Id = c.SocialClass.Id, Name = c.SocialClass.Name },
-                    Father = c.Father == null ? null : new ReferenceDto { Id = c.Father.Id, Name = c.Father.Name },
-                    Mother = c.Mother == null ? null : new ReferenceDto { Id = c.Mother.Id, Name = c.Mother.Name },
-                    Abilities = c.Abilities.Select(a => new ReferenceDto { Id = a.Id, Name = a.Name }).ToList(),
-                    Hobbies = c.Hobbies.Select(h => new ReferenceDto { Id = h.Id, Name = h.Name }).ToList(),
-                    Equipments = c.Equipments.Select(e => new ReferenceDto { Id = e.Id, Name = e.Name }).ToList(),
-                    Clothing = c.Clothing.Select(cl => new ReferenceDto { Id = cl.Id, Name = cl.Name }).ToList(),
-                    Educations = c.Educations.Select(ed => new ReferenceDto { Id = ed.Id, Name = ed.Name }).ToList(),
-                    Specialisations = c.Specialisations.Select(s => new ReferenceDto { Id = s.Id, Name = s.Name }).ToList(),
-                    Factions = c.Factions.Select(f => new ReferenceDto { Id = f.Id, Name = f.Name }).ToList(),
-                    Siblings = c.Siblings.Select(sib => new ReferenceDto { Id = sib.Id, Name = sib.Name }).ToList()
-                })
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(c => c.Id == id);
 
             if (character == null)
             {
@@ -127,12 +82,14 @@ namespace ChronicleKeeperAPI.Controllers
                 return NotFound();
             }
 
+            var dto = _mapper.Map<CharacterDto>(character);
             _logger.LogInformation("Returned character with ID {Id}.", id);
-            return Ok(character);
+            return Ok(dto);
         }
 
         // POST: /api/characters
         [HttpPost]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
         [SwaggerOperation(Summary = "Create new character", Description = "Creates a new character entry")]
         [SwaggerResponse(201, "Character created")]
         [SwaggerResponse(400, "Invalid input")]
@@ -144,35 +101,22 @@ namespace ChronicleKeeperAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            var character = new Character
-            {
-                Name = dto.Name,
-                FirstName = dto.FirstName,
-                LastName = dto.LastName,
-                Nickname = dto.Nickname,
-                Title = dto.Title,
-                BirthDate = dto.BirthDate,
-                IsArtificial = dto.IsArtificial,
-                SapientSpeciesId = dto.SapientSpeciesId,
-                NationId = dto.NationId,
-                ReligionId = dto.ReligionId,
-                ProfessionId = dto.ProfessionId,
-                SocialClassId = dto.SocialClassId,
-                FatherId = dto.FatherId,
-                MotherId = dto.MotherId,
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
-            };
+            var character = _mapper.Map<Character>(dto);
+            character.CreatedAt = DateTime.UtcNow;
+            character.UpdatedAt = DateTime.UtcNow;
 
             _context.Characters.Add(character);
             await _context.SaveChangesAsync();
 
+            var resultDto = _mapper.Map<CharacterDto>(character);
+
             _logger.LogInformation("Created character with ID {Id}", character.Id);
-            return CreatedAtAction(nameof(GetById), new { id = character.Id }, null);
+            return CreatedAtAction(nameof(GetById), new { id = character.Id }, resultDto);
         }
 
         // DELETE: /api/characters/{id}
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [SwaggerOperation(Summary = "Delete character by ID", Description = "Deletes a character entry")]
         [SwaggerResponse(204, "Character deleted")]
         [SwaggerResponse(404, "Character not found")]

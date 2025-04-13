@@ -7,7 +7,7 @@ public class CharacterConfiguration : IEntityTypeConfiguration<Character>
 {
     public void Configure(EntityTypeBuilder<Character> builder)
     {
-        // ✅ Self-referencing Parent-Child Relationship
+        // Self-referencing Parent-Child Relationship
         builder.HasOne(c => c.Father)
             .WithMany()
             .HasForeignKey(c => c.FatherId)
@@ -18,7 +18,7 @@ public class CharacterConfiguration : IEntityTypeConfiguration<Character>
             .HasForeignKey(c => c.MotherId)
             .OnDelete(DeleteBehavior.Restrict); // Prevent cascade delete
 
-        // ✅ Sibling Relationship
+        // Sibling Relationship
         builder.HasMany(c => c.Siblings)
             .WithOne()
             .OnDelete(DeleteBehavior.Restrict);

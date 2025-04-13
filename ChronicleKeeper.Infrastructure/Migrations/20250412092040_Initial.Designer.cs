@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChronicleKeeper.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250316120845_CreaturePreyAndPredatorAndParents")]
-    partial class CreaturePreyAndPredatorAndParents
+    [Migration("20250412092040_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -5041,6 +5041,9 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                 {
                     b.HasBaseType("ChronicleKeeper.Core.Entities.Geography.Location");
 
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("EconomicSystemId")
                         .HasColumnType("int");
 
@@ -5058,6 +5061,8 @@ namespace ChronicleKeeper.Infrastructure.Migrations
 
                     b.Property<int>("LegalSystemId")
                         .HasColumnType("int");
+
+                    b.HasIndex("CountryId");
 
                     b.HasIndex("EconomicSystemId");
 
@@ -5100,9 +5105,6 @@ namespace ChronicleKeeper.Infrastructure.Migrations
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Country", b =>
                 {
                     b.HasBaseType("ChronicleKeeper.Core.Entities.Geography.Location");
-
-                    b.Property<int?>("CapitalCityId")
-                        .HasColumnType("int");
 
                     b.Property<int?>("EconomicSystemId")
                         .HasColumnType("int");
@@ -7736,6 +7738,12 @@ namespace ChronicleKeeper.Infrastructure.Migrations
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.City", b =>
                 {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Country", "Country")
+                        .WithMany("Cities")
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("ChronicleKeeper.Core.Entities.Social.Economy.EconomicSystem", "EconomicSystem")
                         .WithMany("CitiesUsing")
                         .HasForeignKey("EconomicSystemId");
@@ -7757,6 +7765,8 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .HasForeignKey("LegalSystemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Country");
 
                     b.Navigation("EconomicSystem");
 
@@ -8134,6 +8144,8 @@ namespace ChronicleKeeper.Infrastructure.Migrations
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Country", b =>
                 {
+                    b.Navigation("Cities");
+
                     b.Navigation("MajorIndustries");
                 });
 

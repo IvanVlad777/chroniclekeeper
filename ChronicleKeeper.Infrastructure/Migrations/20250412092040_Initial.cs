@@ -6,11 +6,50 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ChronicleKeeper.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "AspNetRoles",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Content",
                 columns: table => new
@@ -41,6 +80,112 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Histories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetRoleClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserClaims_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserLogins",
+                columns: table => new
+                {
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserLogins_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserRoles",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserTokens",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserTokens_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -1515,6 +1660,7 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     HistoryId = table.Column<int>(type: "int", nullable: true),
+                    ParentCreatureId = table.Column<int>(type: "int", nullable: true),
                     Type = table.Column<int>(type: "int", nullable: false),
                     AverageLifespan = table.Column<double>(type: "float", nullable: false),
                     Height = table.Column<double>(type: "float", nullable: false),
@@ -1523,8 +1669,6 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     IsArtificial = table.Column<bool>(type: "bit", nullable: false),
                     ArtificialOrigin = table.Column<int>(type: "int", nullable: true),
                     Discriminator = table.Column<string>(type: "nvarchar(21)", maxLength: 21, nullable: false),
-                    FungusId = table.Column<int>(type: "int", nullable: true),
-                    PlantId = table.Column<int>(type: "int", nullable: true),
                     Diet = table.Column<int>(type: "int", nullable: true),
                     IsDomesticated = table.Column<bool>(type: "bit", nullable: true),
                     NumberOfLegs = table.Column<int>(type: "int", nullable: true),
@@ -1539,7 +1683,6 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     IsPackAnimal = table.Column<bool>(type: "bit", nullable: true),
                     IsAggressive = table.Column<bool>(type: "bit", nullable: true),
                     IsSymbiotic = table.Column<bool>(type: "bit", nullable: true),
-                    AnimalId = table.Column<int>(type: "int", nullable: true),
                     ScientificName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsMedicinal = table.Column<bool>(type: "bit", nullable: true),
                     IsPoisonous = table.Column<bool>(type: "bit", nullable: true),
@@ -1551,8 +1694,6 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     CanCommunicate = table.Column<bool>(type: "bit", nullable: true),
                     SpecialProperties = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MythologicalSignificance = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Fungus_AnimalId = table.Column<int>(type: "int", nullable: true),
-                    FungusId1 = table.Column<int>(type: "int", nullable: true),
                     PlantType = table.Column<int>(type: "int", nullable: true),
                     Plant_ScientificName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Plant_IsMedicinal = table.Column<bool>(type: "bit", nullable: true),
@@ -1569,8 +1710,6 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     Plant_MythologicalSignificance = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Plant_IsSymbiotic = table.Column<bool>(type: "bit", nullable: true),
                     IsParasitic = table.Column<bool>(type: "bit", nullable: true),
-                    Plant_AnimalId = table.Column<int>(type: "int", nullable: true),
-                    PlantId1 = table.Column<int>(type: "int", nullable: true),
                     YieldPerHectare = table.Column<double>(type: "float", nullable: true),
                     CropType = table.Column<int>(type: "int", nullable: true),
                     Crop_IsDomesticated = table.Column<bool>(type: "bit", nullable: true),
@@ -1581,7 +1720,6 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     SapientSpecies_ScientificName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsHumanoid = table.Column<bool>(type: "bit", nullable: true),
                     SapientType = table.Column<int>(type: "int", nullable: true),
-                    ReligionId1 = table.Column<int>(type: "int", nullable: true),
                     Domain = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     WorshipMethods = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsMonotheistic = table.Column<bool>(type: "bit", nullable: true),
@@ -1595,40 +1733,11 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Creatures", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Creatures_Creatures_AnimalId",
-                        column: x => x.AnimalId,
+                        name: "FK_Creatures_Creatures_ParentCreatureId",
+                        column: x => x.ParentCreatureId,
                         principalTable: "Creatures",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Creatures_Creatures_FungusId",
-                        column: x => x.FungusId,
-                        principalTable: "Creatures",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Creatures_Creatures_FungusId1",
-                        column: x => x.FungusId1,
-                        principalTable: "Creatures",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Creatures_Creatures_Fungus_AnimalId",
-                        column: x => x.Fungus_AnimalId,
-                        principalTable: "Creatures",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Creatures_Creatures_PlantId",
-                        column: x => x.PlantId,
-                        principalTable: "Creatures",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Creatures_Creatures_PlantId1",
-                        column: x => x.PlantId1,
-                        principalTable: "Creatures",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Creatures_Creatures_Plant_AnimalId",
-                        column: x => x.Plant_AnimalId,
-                        principalTable: "Creatures",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Creatures_Histories_HistoryId",
                         column: x => x.HistoryId,
@@ -1637,11 +1746,6 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_Creatures_Religions_ReligionId",
                         column: x => x.ReligionId,
-                        principalTable: "Religions",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Creatures_Religions_ReligionId1",
-                        column: x => x.ReligionId1,
                         principalTable: "Religions",
                         principalColumn: "Id");
                 });
@@ -1716,6 +1820,52 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         name: "FK_ReligiousOrders_Religions_ReligionId",
                         column: x => x.ReligionId,
                         principalTable: "Religions",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CreaturePredation",
+                columns: table => new
+                {
+                    PredatorsId = table.Column<int>(type: "int", nullable: false),
+                    PreyId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CreaturePredation", x => new { x.PredatorsId, x.PreyId });
+                    table.ForeignKey(
+                        name: "FK_CreaturePredation_Creatures_PredatorsId",
+                        column: x => x.PredatorsId,
+                        principalTable: "Creatures",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CreaturePredation_Creatures_PreyId",
+                        column: x => x.PreyId,
+                        principalTable: "Creatures",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CreatureSymbiosis",
+                columns: table => new
+                {
+                    CreatureId = table.Column<int>(type: "int", nullable: false),
+                    SymbioticPartnersId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CreatureSymbiosis", x => new { x.CreatureId, x.SymbioticPartnersId });
+                    table.ForeignKey(
+                        name: "FK_CreatureSymbiosis_Creatures_CreatureId",
+                        column: x => x.CreatureId,
+                        principalTable: "Creatures",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CreatureSymbiosis_Creatures_SymbioticPartnersId",
+                        column: x => x.SymbioticPartnersId,
+                        principalTable: "Creatures",
                         principalColumn: "Id");
                 });
 
@@ -2317,6 +2467,7 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     ParentLocationId = table.Column<int>(type: "int", nullable: true),
                     ArchitectureStyleId = table.Column<int>(type: "int", nullable: true),
                     Discriminator = table.Column<string>(type: "nvarchar(21)", maxLength: 21, nullable: false),
+                    CountryId = table.Column<int>(type: "int", nullable: true),
                     IsCapital = table.Column<bool>(type: "bit", nullable: true),
                     City_GovernmentSystemId = table.Column<int>(type: "int", nullable: true),
                     City_LegalSystemId = table.Column<int>(type: "int", nullable: true),
@@ -2325,7 +2476,6 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     FactionId = table.Column<int>(type: "int", nullable: true),
                     ContinentSpecifics = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     GovernmentSystemId = table.Column<int>(type: "int", nullable: true),
-                    CapitalCityId = table.Column<int>(type: "int", nullable: true),
                     PrimaryNationId = table.Column<int>(type: "int", nullable: true),
                     LegalSystemId = table.Column<int>(type: "int", nullable: true),
                     EconomicSystemId = table.Column<int>(type: "int", nullable: true),
@@ -2415,6 +2565,12 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         column: x => x.CityId,
                         principalTable: "Locations",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Locations_Locations_CountryId",
+                        column: x => x.CountryId,
+                        principalTable: "Locations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Locations_Locations_ParentLocationId",
                         column: x => x.ParentLocationId,
@@ -3300,8 +3456,7 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     CharacterId = table.Column<int>(type: "int", nullable: true),
                     CulturalInstitutionId = table.Column<int>(type: "int", nullable: true),
                     TimelineEventId = table.Column<int>(type: "int", nullable: true),
-                    UniversityMajorId = table.Column<int>(type: "int", nullable: true),
-                    UniversityMajorId1 = table.Column<int>(type: "int", nullable: true)
+                    UniversityMajorId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -3368,11 +3523,6 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_Characters_UniversityMajors_UniversityMajorId",
                         column: x => x.UniversityMajorId,
-                        principalTable: "UniversityMajors",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Characters_UniversityMajors_UniversityMajorId1",
-                        column: x => x.UniversityMajorId1,
                         principalTable: "UniversityMajors",
                         principalColumn: "Id");
                 });
@@ -4080,6 +4230,45 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                 column: "HistoryId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetRoleClaims_RoleId",
+                table: "AspNetRoleClaims",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "RoleNameIndex",
+                table: "AspNetRoles",
+                column: "NormalizedName",
+                unique: true,
+                filter: "[NormalizedName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserClaims_UserId",
+                table: "AspNetUserClaims",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserLogins_UserId",
+                table: "AspNetUserLogins",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserRoles_RoleId",
+                table: "AspNetUserRoles",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "EmailIndex",
+                table: "AspNetUsers",
+                column: "NormalizedEmail");
+
+            migrationBuilder.CreateIndex(
+                name: "UserNameIndex",
+                table: "AspNetUsers",
+                column: "NormalizedUserName",
+                unique: true,
+                filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_BankingSystems_CurrencyId",
                 table: "BankingSystems",
                 column: "CurrencyId");
@@ -4178,11 +4367,6 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                 name: "IX_Characters_UniversityMajorId",
                 table: "Characters",
                 column: "UniversityMajorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Characters_UniversityMajorId1",
-                table: "Characters",
-                column: "UniversityMajorId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CharacterSpecialisation_SpecialisationsId",
@@ -4340,24 +4524,9 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                 column: "NaturalHabitatsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Creatures_AnimalId",
-                table: "Creatures",
-                column: "AnimalId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Creatures_Fungus_AnimalId",
-                table: "Creatures",
-                column: "Fungus_AnimalId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Creatures_FungusId",
-                table: "Creatures",
-                column: "FungusId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Creatures_FungusId1",
-                table: "Creatures",
-                column: "FungusId1");
+                name: "IX_CreaturePredation_PreyId",
+                table: "CreaturePredation",
+                column: "PreyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Creatures_HistoryId",
@@ -4365,19 +4534,9 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                 column: "HistoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Creatures_Plant_AnimalId",
+                name: "IX_Creatures_ParentCreatureId",
                 table: "Creatures",
-                column: "Plant_AnimalId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Creatures_PlantId",
-                table: "Creatures",
-                column: "PlantId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Creatures_PlantId1",
-                table: "Creatures",
-                column: "PlantId1");
+                column: "ParentCreatureId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Creatures_ReligionId",
@@ -4385,9 +4544,9 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                 column: "ReligionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Creatures_ReligionId1",
-                table: "Creatures",
-                column: "ReligionId1");
+                name: "IX_CreatureSymbiosis_SymbioticPartnersId",
+                table: "CreatureSymbiosis",
+                column: "SymbioticPartnersId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cuisines_CultureId",
@@ -4778,6 +4937,11 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                 name: "IX_Locations_CityId",
                 table: "Locations",
                 column: "CityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Locations_CountryId",
+                table: "Locations",
+                column: "CountryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Locations_EconomicSystemId",
@@ -5214,6 +5378,21 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                 name: "ArtForms");
 
             migrationBuilder.DropTable(
+                name: "AspNetRoleClaims");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserClaims");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserLogins");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserRoles");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
                 name: "CharacterClothing");
 
             migrationBuilder.DropTable(
@@ -5293,6 +5472,12 @@ namespace ChronicleKeeper.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "CreatureEcosystem");
+
+            migrationBuilder.DropTable(
+                name: "CreaturePredation");
+
+            migrationBuilder.DropTable(
+                name: "CreatureSymbiosis");
 
             migrationBuilder.DropTable(
                 name: "Cuisines");
@@ -5428,6 +5613,12 @@ namespace ChronicleKeeper.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Abilities");
+
+            migrationBuilder.DropTable(
+                name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "CulturalClothings");

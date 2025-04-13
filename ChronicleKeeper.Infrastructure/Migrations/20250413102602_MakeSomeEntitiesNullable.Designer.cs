@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChronicleKeeper.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250302105259_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250413102602_MakeSomeEntitiesNullable")]
+    partial class MakeSomeEntitiesNullable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -269,7 +269,7 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Property<int?>("ReligionId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SapientSpeciesId")
+                    b.Property<int?>("SapientSpeciesId")
                         .HasColumnType("int");
 
                     b.Property<int?>("SocialClassId")
@@ -287,9 +287,6 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("UniversityMajorId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UniversityMajorId1")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -323,8 +320,6 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.HasIndex("TimelineEventId");
 
                     b.HasIndex("UniversityMajorId");
-
-                    b.HasIndex("UniversityMajorId1");
 
                     b.ToTable("Characters");
                 });
@@ -818,9 +813,6 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .HasMaxLength(21)
                         .HasColumnType("nvarchar(21)");
 
-                    b.Property<int?>("FungusId")
-                        .HasColumnType("int");
-
                     b.Property<double>("Height")
                         .HasColumnType("float");
 
@@ -837,7 +829,7 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PlantId")
+                    b.Property<int?>("ParentCreatureId")
                         .HasColumnType("int");
 
                     b.Property<int>("Type")
@@ -851,11 +843,9 @@ namespace ChronicleKeeper.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FungusId");
-
                     b.HasIndex("HistoryId");
 
-                    b.HasIndex("PlantId");
+                    b.HasIndex("ParentCreatureId");
 
                     b.ToTable("Creatures");
 
@@ -4237,6 +4227,36 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.ToTable("CountryReligion");
                 });
 
+            modelBuilder.Entity("CreatureCreature", b =>
+                {
+                    b.Property<int>("PredatorsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PreyId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PredatorsId", "PreyId");
+
+                    b.HasIndex("PreyId");
+
+                    b.ToTable("CreaturePredation", (string)null);
+                });
+
+            modelBuilder.Entity("CreatureCreature1", b =>
+                {
+                    b.Property<int>("CreatureId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SymbioticPartnersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CreatureId", "SymbioticPartnersId");
+
+                    b.HasIndex("SymbioticPartnersId");
+
+                    b.ToTable("CreatureSymbiosis", (string)null);
+                });
+
             modelBuilder.Entity("CreatureEcosystem", b =>
                 {
                     b.Property<int>("HabitantsId")
@@ -4477,6 +4497,204 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.ToTable("LocationTradeRoute");
                 });
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
+                });
+
             modelBuilder.Entity("MilitaryEquipmentMilitaryUnit", b =>
                 {
                     b.Property<int>("EquipmentId")
@@ -4614,9 +4832,6 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                 {
                     b.HasBaseType("ChronicleKeeper.Core.Entities.Geography.Creatures.Creature");
 
-                    b.Property<int?>("AnimalId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Diet")
                         .HasColumnType("int");
 
@@ -4661,8 +4876,6 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("AnimalId");
-
                     b.HasDiscriminator().HasValue("Animal");
                 });
 
@@ -4670,14 +4883,8 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                 {
                     b.HasBaseType("ChronicleKeeper.Core.Entities.Geography.Creatures.Creature");
 
-                    b.Property<int?>("AnimalId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("CanCommunicate")
                         .HasColumnType("bit");
-
-                    b.Property<int?>("FungusId1")
-                        .HasColumnType("int");
 
                     b.Property<bool>("HasMutagenicProperties")
                         .HasColumnType("bit");
@@ -4712,15 +4919,8 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("AnimalId");
-
-                    b.HasIndex("FungusId1");
-
                     b.ToTable("Creatures", t =>
                         {
-                            t.Property("AnimalId")
-                                .HasColumnName("Fungus_AnimalId");
-
                             t.Property("IsSymbiotic")
                                 .HasColumnName("Fungus_IsSymbiotic");
                         });
@@ -4731,9 +4931,6 @@ namespace ChronicleKeeper.Infrastructure.Migrations
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Creatures.Plants.Plant", b =>
                 {
                     b.HasBaseType("ChronicleKeeper.Core.Entities.Geography.Creatures.Creature");
-
-                    b.Property<int?>("AnimalId")
-                        .HasColumnType("int");
 
                     b.Property<bool>("CanMove")
                         .HasColumnType("bit");
@@ -4763,9 +4960,6 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PlantId1")
-                        .HasColumnType("int");
-
                     b.Property<int>("PlantType")
                         .HasColumnType("int");
 
@@ -4789,15 +4983,8 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Property<int>("TemperatureRange")
                         .HasColumnType("int");
 
-                    b.HasIndex("AnimalId");
-
-                    b.HasIndex("PlantId1");
-
                     b.ToTable("Creatures", t =>
                         {
-                            t.Property("AnimalId")
-                                .HasColumnName("Plant_AnimalId");
-
                             t.Property("IsBioluminescent")
                                 .HasColumnName("Plant_IsBioluminescent");
 
@@ -4834,17 +5021,12 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Property<bool>("IsHumanoid")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("ReligionId1")
-                        .HasColumnType("int");
-
                     b.Property<int>("SapientType")
                         .HasColumnType("int");
 
                     b.Property<string>("ScientificName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.HasIndex("ReligionId1");
 
                     b.ToTable("Creatures", t =>
                         {
@@ -4858,6 +5040,9 @@ namespace ChronicleKeeper.Infrastructure.Migrations
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.City", b =>
                 {
                     b.HasBaseType("ChronicleKeeper.Core.Entities.Geography.Location");
+
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("EconomicSystemId")
                         .HasColumnType("int");
@@ -4874,8 +5059,10 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Property<bool>("IsCapital")
                         .HasColumnType("bit");
 
-                    b.Property<int>("LegalSystemId")
+                    b.Property<int?>("LegalSystemId")
                         .HasColumnType("int");
+
+                    b.HasIndex("CountryId");
 
                     b.HasIndex("EconomicSystemId");
 
@@ -4919,9 +5106,6 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                 {
                     b.HasBaseType("ChronicleKeeper.Core.Entities.Geography.Location");
 
-                    b.Property<int?>("CapitalCityId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("EconomicSystemId")
                         .HasColumnType("int");
 
@@ -4934,7 +5118,7 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Property<int?>("LegalSystemId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PrimaryNationId")
+                    b.Property<int?>("PrimaryNationId")
                         .HasColumnType("int");
 
                     b.HasIndex("EconomicSystemId");
@@ -5028,9 +5212,6 @@ namespace ChronicleKeeper.Infrastructure.Migrations
 
                     b.ToTable("Creatures", t =>
                         {
-                            t.Property("AnimalId")
-                                .HasColumnName("Plant_AnimalId");
-
                             t.Property("IsBioluminescent")
                                 .HasColumnName("Plant_IsBioluminescent");
 
@@ -5074,9 +5255,6 @@ namespace ChronicleKeeper.Infrastructure.Migrations
 
                     b.ToTable("Creatures", t =>
                         {
-                            t.Property("AnimalId")
-                                .HasColumnName("Plant_AnimalId");
-
                             t.Property("IsBioluminescent")
                                 .HasColumnName("Plant_IsBioluminescent");
 
@@ -5491,9 +5669,7 @@ namespace ChronicleKeeper.Infrastructure.Migrations
 
                     b.HasOne("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.SapientSpecies", "SapientSpecies")
                         .WithMany("Characters")
-                        .HasForeignKey("SapientSpeciesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SapientSpeciesId");
 
                     b.HasOne("ChronicleKeeper.Core.Entities.Social.Structure.SocialClass", "SocialClass")
                         .WithMany("Members")
@@ -5506,10 +5682,6 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.HasOne("ChronicleKeeper.Core.Entities.Social.Education.UniversityMajor", null)
                         .WithMany("Professors")
                         .HasForeignKey("UniversityMajorId");
-
-                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Education.UniversityMajor", null)
-                        .WithMany("Students")
-                        .HasForeignKey("UniversityMajorId1");
 
                     b.OwnsOne("ChronicleKeeper.Core.Entities.Characters.CharacterInfo.BackgroundInfo", "Background", b1 =>
                         {
@@ -5744,19 +5916,18 @@ namespace ChronicleKeeper.Infrastructure.Migrations
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Creatures.Creature", b =>
                 {
-                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Creatures.Fungi.Fungus", null)
-                        .WithMany("Hosts")
-                        .HasForeignKey("FungusId");
-
                     b.HasOne("ChronicleKeeper.Core.Entities.HistoryTimelines.History", "History")
                         .WithMany()
                         .HasForeignKey("HistoryId");
 
-                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Creatures.Plants.Plant", null)
-                        .WithMany("Hosts")
-                        .HasForeignKey("PlantId");
+                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Creatures.Creature", "ParentCreature")
+                        .WithMany("Subspecies")
+                        .HasForeignKey("ParentCreatureId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("History");
+
+                    b.Navigation("ParentCreature");
                 });
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.Race", b =>
@@ -7137,6 +7308,36 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("CreatureCreature", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Creatures.Creature", null)
+                        .WithMany()
+                        .HasForeignKey("PredatorsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Creatures.Creature", null)
+                        .WithMany()
+                        .HasForeignKey("PreyId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CreatureCreature1", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Creatures.Creature", null)
+                        .WithMany()
+                        .HasForeignKey("CreatureId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Creatures.Creature", null)
+                        .WithMany()
+                        .HasForeignKey("SymbioticPartnersId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("CreatureEcosystem", b =>
                 {
                     b.HasOne("ChronicleKeeper.Core.Entities.Geography.Ecosystems.Ecosystem", null)
@@ -7377,6 +7578,57 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("MilitaryEquipmentMilitaryUnit", b =>
                 {
                     b.HasOne("ChronicleKeeper.Core.Entities.Social.Military.MilitaryEquipment", null)
@@ -7482,44 +7734,14 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Creatures.Animals.Animal", b =>
-                {
-                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Creatures.Animals.Animal", null)
-                        .WithMany("PreferredPrey")
-                        .HasForeignKey("AnimalId");
-                });
-
-            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Creatures.Fungi.Fungus", b =>
-                {
-                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Creatures.Animals.Animal", null)
-                        .WithMany("PreferredFungi")
-                        .HasForeignKey("AnimalId");
-
-                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Creatures.Fungi.Fungus", null)
-                        .WithMany("RelatedSpecies")
-                        .HasForeignKey("FungusId1");
-                });
-
-            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Creatures.Plants.Plant", b =>
-                {
-                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Creatures.Animals.Animal", null)
-                        .WithMany("PreferredPlants")
-                        .HasForeignKey("AnimalId");
-
-                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Creatures.Plants.Plant", null)
-                        .WithMany("RelatedSpecies")
-                        .HasForeignKey("PlantId1");
-                });
-
-            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.SapientSpecies", b =>
-                {
-                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Religions.Religion", null)
-                        .WithMany("Followers")
-                        .HasForeignKey("ReligionId1");
-                });
-
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.City", b =>
                 {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Country", "Country")
+                        .WithMany("Cities")
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("ChronicleKeeper.Core.Entities.Social.Economy.EconomicSystem", "EconomicSystem")
                         .WithMany("CitiesUsing")
                         .HasForeignKey("EconomicSystemId");
@@ -7538,9 +7760,9 @@ namespace ChronicleKeeper.Infrastructure.Migrations
 
                     b.HasOne("ChronicleKeeper.Core.Entities.Social.Politics.LegalSystem", "LegalSystem")
                         .WithMany("Cities")
-                        .HasForeignKey("LegalSystemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LegalSystemId");
+
+                    b.Navigation("Country");
 
                     b.Navigation("EconomicSystem");
 
@@ -7631,6 +7853,8 @@ namespace ChronicleKeeper.Infrastructure.Migrations
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Creatures.Creature", b =>
                 {
                     b.Navigation("Mutations");
+
+                    b.Navigation("Subspecies");
                 });
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Location", b =>
@@ -7787,8 +8011,6 @@ namespace ChronicleKeeper.Infrastructure.Migrations
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Education.UniversityMajor", b =>
                 {
                     b.Navigation("Professors");
-
-                    b.Navigation("Students");
                 });
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Faction", b =>
@@ -7858,8 +8080,6 @@ namespace ChronicleKeeper.Infrastructure.Migrations
 
                     b.Navigation("Deities");
 
-                    b.Navigation("Followers");
-
                     b.Navigation("HolySites");
 
                     b.Navigation("Myths");
@@ -7900,29 +8120,6 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Navigation("Episodes");
                 });
 
-            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Creatures.Animals.Animal", b =>
-                {
-                    b.Navigation("PreferredFungi");
-
-                    b.Navigation("PreferredPlants");
-
-                    b.Navigation("PreferredPrey");
-                });
-
-            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Creatures.Fungi.Fungus", b =>
-                {
-                    b.Navigation("Hosts");
-
-                    b.Navigation("RelatedSpecies");
-                });
-
-            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Creatures.Plants.Plant", b =>
-                {
-                    b.Navigation("Hosts");
-
-                    b.Navigation("RelatedSpecies");
-                });
-
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.SapientSpecies", b =>
                 {
                     b.Navigation("Characters");
@@ -7943,6 +8140,8 @@ namespace ChronicleKeeper.Infrastructure.Migrations
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Country", b =>
                 {
+                    b.Navigation("Cities");
+
                     b.Navigation("MajorIndustries");
                 });
 

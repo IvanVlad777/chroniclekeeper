@@ -15,16 +15,18 @@ namespace ChronicleKeeper.Core.Entities.Geography
         //[ForeignKey("Country")]
         //public int CountryId { get; set; }
         //public Country Country { get; set; } = null!;
+        public int CountryId { get; set; }
+        public Country Country { get; set; } = null!;
 
-        public bool IsCapital { get; set; }  // Označava je li glavni grad
+        public bool IsCapital { get; set; }
 
         //[ForeignKey("GovernmentSystem")]
         public int? GovernmentSystemId { get; set; }
         public GovernmentSystem? GovernmentSystem { get; set; }
 
         //[ForeignKey("LegalSystem")]
-        public int LegalSystemId { get; set; }
-        public LegalSystem LegalSystem { get; set; } = null!;
+        public int? LegalSystemId { get; set; }
+        public LegalSystem? LegalSystem { get; set; }
 
         public ICollection<PoliticalParty> PoliticalParties { get; set; } = new List<PoliticalParty>();
 
@@ -32,20 +34,9 @@ namespace ChronicleKeeper.Core.Entities.Geography
         //public int? ArmyId { get; set; }
         public Army? Army { get; set; }
 
-
         //[ForeignKey("EconomicSystem")]
         public int? EconomicSystemId { get; set; }
         public EconomicSystem? EconomicSystem { get; set; }
-
-
-        //[ForeignKey("TaxationSystem")]
-        //public int TaxationSystemId { get; set; }
-        //public TaxationSystem? TaxationSystem { get; set; }
-
-        //[ForeignKey("BankingSystem")]
-        //public int? BankingSystemId { get; set; }
-        //public BankingSystem? BankingSystem { get; set; }
-
 
         //[ForeignKey("EducationSystem")]
         public int? EducationSystemId { get; set; }

@@ -1,0 +1,11 @@
+{
+  "title": "Login",
+  "email": "Email",
+  "donthaveacc": "Don't have an account?",
+  "registerhere": "Register here!",
+  "password": "Password",
+  "submit": "Submit",
+  "successfullogin": "Successful login!",
+  "logsucces": "Login successful, token stored in sessionStorage.",
+  "logunknownerr": "Unknown error during login"
+}

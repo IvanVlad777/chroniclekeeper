@@ -1,6 +1,8 @@
 ﻿using ChronicleKeeper.Infrastructure.Data;
 using ChronicleKeeper.API.ServiceExtensions;
 using Serilog;
+using ChronicleKeeperAPI.Mapping;
+using ChronicleKeeperAPI.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +29,7 @@ builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddSwaggerConfiguration();
 builder.Services.AddCustomAuthorization();
 builder.Services.AddMediatRConfiguration();
+builder.Services.AddMappingProfiles();
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
@@ -47,6 +50,9 @@ if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
 }
 
 app.UseAuthentication();
+
+app.UseMiddleware<GlobalExceptionMiddleware>();
+
 app.UseAuthorization();
 app.MapControllers();
 

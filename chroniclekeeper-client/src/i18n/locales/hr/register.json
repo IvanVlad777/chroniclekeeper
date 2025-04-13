@@ -1,0 +1,10 @@
+{
+  "title": "Registracija",
+  "success": "Registracija uspješna.",
+  "logunknownerr": "Nepoznata greška tijekom registracije",
+  "alreadyhaveaccount": "Već imate račun?",
+  "loginhere": "Prijavi se ovdje!",
+  "email": "Email",
+  "password": "Lozinka",
+  "submit": "Registriraj se!"
+}
