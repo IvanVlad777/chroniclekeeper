@@ -3,15 +3,22 @@ import { JSX } from "react";
 import { useAuth } from "../hooks/useAuth";
 
 const AdminRoute = ({ children }: { children: JSX.Element }) => {
-  const { user } = useAuth();
+    const { user } = useAuth();
 
-  const roles = Array.isArray(user?.role) ? user?.role : [user?.role];
+    const roles = Array.isArray(user?.role)
+        ? user?.role
+        : user?.role
+        ? [user.role]
+        : [];
 
-  if (!roles || !roles.includes("Admin") || !roles.includes("SuperAdmin")) {
-    return <Navigate to="/login" replace />;
-  }
+    if (
+        !roles.length ||
+        (!roles.includes("Admin") && !roles.includes("SuperAdmin"))
+    ) {
+        return <Navigate to="/login" replace />;
+    }
 
-  return children;
+    return children;
 };
 
 export default AdminRoute;

@@ -1,10 +1,11 @@
 {
-  "title": "Chroicle Keeper",
-  "dashboard": "Dashboard",
-  "loggedinas": "Logged in as",
-  "role": "Role",
-  "login": "Login",
-  "register": "Register",
-  "logout": "Logout",
-  "adminaccess": "You have admin access."
+    "title": "Chronicle Keeper",
+    "dashboard": "Dashboard",
+    "loggedinas": "Logged in as",
+    "role": "Role",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "adminaccess": "You have admin access",
+    "useraccess": "Guest"
 }

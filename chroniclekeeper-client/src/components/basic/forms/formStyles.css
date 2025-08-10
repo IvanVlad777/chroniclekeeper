@@ -1,0 +1,71 @@
+/* Wrapper polja (vertikalni stack s malim razmakom) */
+.ornate-field {
+    margin-top: 0.75rem;
+}
+
+/* Label – mala, uppercase, renesansni štih */
+.ornate-label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: color-mix(in oklab, var(--color-text) 80%, transparent);
+    text-transform: uppercase;
+}
+
+/* Pomoćni tekst ispod polja */
+.ornate-help {
+    margin-top: 6px;
+    font-size: 0.85rem;
+    color: color-mix(in oklab, var(--color-text) 75%, transparent);
+}
+
+/* Poruka greške */
+.ornate-error {
+    margin-top: 6px;
+    font-size: 0.85rem;
+    color: #7f1d1d;
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    padding: 6px 10px;
+    border-radius: 10px;
+}
+
+/* Osnovni izgled input/textarea – pergament + tanki okvir */
+.ornate-input,
+.ornate-textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 10px;
+    color: var(--color-text);
+    background: color-mix(
+        in oklab,
+        var(--color-surface) 88%,
+        var(--color-surface)
+    );
+    border: 1px solid color-mix(in oklab, var(--color-primary) 40%, black 10%);
+    outline: none;
+    transition: box-shadow 0.15s ease, border-color 0.15s ease,
+        background 0.15s ease;
+}
+
+.ornate-input::placeholder,
+.ornate-textarea::placeholder {
+    color: color-mix(in oklab, var(--color-text) 55%, transparent);
+}
+
+.ornate-input:focus,
+.ornate-textarea:focus {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08), 0 0 0 3px var(--color-accent);
+}
+
+/* Veličina polja */
+.ornate-input {
+    height: 38px;
+}
+.ornate-textarea {
+    min-height: 120px;
+    resize: vertical;
+}

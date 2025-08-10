@@ -1,42 +1,72 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* Koristi postojeće varijable tema: --color-surface, --color-text, --color-primary, --color-accent */
+
+/* Koren: tamniji, “kamen” osjećaj s blagim granulama */
+.app-root {
+    min-height: 100dvh;
+    background: radial-gradient(
+            1200px 600px at 20% -10%,
+            rgba(0, 0, 0, 0.18),
+            transparent 60%
+        ),
+        radial-gradient(
+            800px 400px at 100% 10%,
+            rgba(0, 0, 0, 0.12),
+            transparent 55%
+        ),
+        color-mix(in oklab, var(--color-surface) 92%, var(--color-primary));
+    color: var(--color-text);
+    transition: background-color 300ms ease, color 300ms ease;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Pergament banner (umjesto običnog headera) */
+.app-banner {
+    padding: 0.75rem 1rem;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.28);
+    background: linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.12),
+            rgba(0, 0, 0, 0.12)
+        ),
+        color-mix(in oklab, var(--color-surface) 92%, var(--color-primary));
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+/* Naslov s malo “renesansnog” štih-a (bez mijenjanja fonta) */
+.app-title {
+    margin: 0;
+    font-size: 1.375rem; /* ~22px */
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.25),
+        0 2px 3px rgba(0, 0, 0, 0.25);
+    color: color-mix(in oklab, var(--color-text) 85%, black);
 }
 
-.card {
-  padding: 2em;
+/* Glavni layout: lagani max-width + razmaci oko sadržaja */
+.app-main {
+    padding: 1rem;
+    max-width: 1100px;
+    margin: 0 auto;
 }
 
-.read-the-docs {
-  color: #888;
+/* “Karta” za sadržaj stranica — suptilni pergament s urezom */
+.app-content {
+    margin-top: 0.75rem;
+    background: linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.06),
+            rgba(0, 0, 0, 0.06)
+        ),
+        color-mix(in oklab, var(--color-surface) 94%, var(--color-primary));
+    border: 1px solid rgba(0, 0, 0, 0.18);
+    border-radius: 14px;
+    padding: 1rem;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.06), 0 10px 20px rgba(0, 0, 0, 0.12);
+    min-height: 320px; /* da stranice ne “skaču” kad su prazne */
+}
+
+/* Ako želiš mali razmak ispod navigacije bez inline style-a */
+nav + .app-content {
+    margin-top: 0.75rem;
 }

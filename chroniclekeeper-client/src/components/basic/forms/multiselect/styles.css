@@ -1,0 +1,66 @@
+/* OrnateMultiSelect  stilovi */
+.ornate-multiselect-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.ornate-multiselect-trigger {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.ornate-multiselect-arrow {
+    margin-left: 8px;
+    font-size: 0.75rem;
+}
+
+.ornate-multiselect-dropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    z-index: 50;
+    background: var(--color-surface);
+    border: 1px solid color-mix(in oklab, var(--color-primary) 40%, black 10%);
+    border-radius: 8px;
+    padding: 6px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    min-width: 100%;
+}
+
+.ornate-multiselect-option {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+    .ornate-multiselect-option:hover {
+        background: color-mix(in oklab, var(--color-primary) 10%, transparent);
+    }
+
+    .ornate-multiselect-option.disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+.ornate-multiselect-dropdown.animate {
+    animation: ornate-dropdown-open 0.18s ease-out forwards;
+}
+
+@keyframes ornate-dropdown-open {
+    0% {
+        opacity: 0;
+        transform: translateY(-6px) scale(0.98);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
