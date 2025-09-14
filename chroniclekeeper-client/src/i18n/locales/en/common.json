@@ -7,5 +7,7 @@
     "register": "Register",
     "logout": "Logout",
     "adminaccess": "You have admin access",
-    "useraccess": "Guest"
+    "useraccess": "Guest",
+    "overview": "Overview",
+    "character": "Characters"
 }

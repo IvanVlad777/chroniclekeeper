@@ -7,5 +7,7 @@
     "register": "Registracija",
     "logout": "Odjava",
     "adminaccess": "Imate administratorski pristup",
-    "useraccess": "Gost"
+    "useraccess": "Gost",
+    "overview": "Pregled",
+    "character": "Likovi"
 }
