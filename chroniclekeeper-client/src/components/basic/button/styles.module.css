@@ -1,4 +1,4 @@
-.btn-ornate {
+.btnOrnate {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -21,15 +21,15 @@
     transition: transform 0.1s ease, filter 0.2s ease;
 }
 
-.btn-ornate:hover {
+.btnOrnate:hover {
     filter: brightness(1.05);
 }
 
-.btn-ornate:active {
+.btnOrnate:active {
     transform: translateY(1px);
 }
 
-.btn-ornate-outline {
+.btnOrnateOutline {
     color: var(--color-primary);
     background: linear-gradient(
             to bottom,
@@ -41,6 +41,6 @@
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
-.btn-ornate-outline:hover {
+.btnOrnateOutline:hover {
     background: rgba(0, 0, 0, 0.05);
 }

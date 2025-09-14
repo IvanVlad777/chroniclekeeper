@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles.css"; // [DODANO] zajednički ornate stilovi
+import styles from "./styles.module.css";
 
 type Props = {
     id?: string;
@@ -19,9 +19,9 @@ export default function OrnateField({
     className = "",
 }: Props) {
     return (
-        <div className={`ornate-field ${className}`}>
+        <div className={`${styles.ornateField} ${className}`}>
             {label ? (
-                <label htmlFor={id} className="ornate-label">
+                <label htmlFor={id} className={styles.ornateLabel}>
                     {label}
                 </label>
             ) : null}
@@ -29,8 +29,10 @@ export default function OrnateField({
             {/* [NAPOMENA] očekujemo da child (input/textarea) koristi isti id */}
             {children}
 
-            {helpText ? <div className="ornate-help">{helpText}</div> : null}
-            {error ? <div className="ornate-error">{error}</div> : null}
+            {helpText ? (
+                <div className={styles.ornateHelp}>{helpText}</div>
+            ) : null}
+            {error ? <div className={styles.ornateError}>{error}</div> : null}
         </div>
     );
 }

@@ -1,0 +1,33 @@
+/* Wrapper polja (vertikalni stack s malim razmakom) */
+.ornateField {
+    margin-top: 0.75rem;
+}
+
+/* Label – mala, uppercase, renesansni štih */
+.ornateLabel {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: color-mix(in oklab, var(--color-text) 80%, transparent);
+    text-transform: uppercase;
+}
+
+/* Pomoćni tekst ispod polja */
+.ornateHelp {
+    margin-top: 6px;
+    font-size: 0.85rem;
+    color: color-mix(in oklab, var(--color-text) 75%, transparent);
+}
+
+/* Poruka greške */
+.ornateError {
+    margin-top: 6px;
+    font-size: 0.85rem;
+    color: #7f1d1d;
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    padding: 6px 10px;
+    border-radius: 10px;
+}

@@ -2,8 +2,11 @@ import { useState } from "react";
 import { login } from "../../api/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import "./styles.css";
+import styles from "./styles.module.css";
+import formStyles from "../basic/forms/formStyles.module.css";
+import fieldStyles from "../basic/forms/field/styles.module.css";
 import Button from "../basic/button/Button";
+import { useAuth } from "../../hooks/useAuth";
 
 const LoginForm = () => {
     const [email, setEmail] = useState("");
@@ -12,6 +15,7 @@ const LoginForm = () => {
     const [success, setSuccess] = useState(false);
     const navigate = useNavigate();
     const { t } = useTranslation("login");
+    const { login: authLogin } = useAuth();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -21,9 +25,10 @@ const LoginForm = () => {
         try {
             const response = await login({ email, password });
             sessionStorage.setItem("token", response.token);
+            authLogin(response.token);
             setSuccess(true);
             console.log(t("logsucces"));
-            navigate("/dashboard");
+            navigate("/storymap");
         } catch (err) {
             if (typeof err === "string") {
                 setError(err);
@@ -35,45 +40,47 @@ const LoginForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="ornate-card">
-            <h2 className="ornate-title">{t("title")}</h2>
-            <p className="ornate-sub">
+        <form onSubmit={handleSubmit} className={styles.ornateCard}>
+            <h2 className={styles.ornateTitle}>{t("title")}</h2>
+            <p className={styles.ornateSub}>
                 {t("donthaveacc")}{" "}
-                <Link to="/register" className="ornate-link">
+                <Link to="/register" className={styles.ornateLink}>
                     {t("registerhere")}
                 </Link>
             </p>
-            <div className="field">
-                <label className="ornate-label" htmlFor="">
+            <div className={styles.field}>
+                <label className={fieldStyles.ornateLabel} htmlFor="">
                     {t("email")}:
                 </label>
                 <input
                     type="email"
-                    className="ornate-input"
+                    className={formStyles.ornateInput}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
                 />
             </div>
 
-            <div className="field">
-                <label className="ornate-label" htmlFor="">
+            <div className={styles.field}>
+                <label className={fieldStyles.ornateLabel} htmlFor="">
                     {t("password")}:
                 </label>
                 <input
                     type="password"
-                    className="ornate-input"
+                    className={formStyles.ornateInput}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
                 />
             </div>
 
-            <Button type="submit" className="btn-ornate login-submit">
+            <Button type="submit" className={`${styles.loginSubmit}`}>
                 {t("submit")}{" "}
             </Button>
-            {success && <p className="alert-success">{t("successfullogin")}</p>}
-            {error && <p className="alert-error">{error}</p>}
+            {success && (
+                <p className={styles.alertSucces}>{t("successfullogin")}</p>
+            )}
+            {error && <p className={styles.alertError}>{error}</p>}
         </form>
     );
 };

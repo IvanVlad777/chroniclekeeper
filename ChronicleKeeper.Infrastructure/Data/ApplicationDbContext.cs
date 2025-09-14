@@ -224,7 +224,7 @@ namespace ChronicleKeeper.Infrastructure.Data
             basePath = Path.GetFullPath(basePath);
 
             var appSettingsPath = Path.Combine(basePath, "appsettings.json");
-            Console.WriteLine($"📌 Using appsettings.json from: {appSettingsPath}");
+            //Console.WriteLine($"📌 Using appsettings.json from: {appSettingsPath}");
 
             if (!File.Exists(appSettingsPath))
             {

@@ -1,5 +1,6 @@
 import React from "react";
-import "../formStyles.css";
+import styles from "../formStyles.module.css";
+
 import OrnateField from "../field/OrnateField";
 import { useAuth } from "../../../../hooks/useAuth";
 import OrnateDisplayBox from "../field/OrnateDisplayBox";
@@ -58,7 +59,7 @@ export default function OrnateTextInput({
         >
             <input
                 id={inputId}
-                className="ornate-input"
+                className={styles.ornateInput}
                 value={value}
                 {...inputProps}
             />

@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
-import "../formStyles.css";
-import "./styles.css";
+import formStyles from "../formStyles.module.css";
+import styles from "./styles.module.css";
 import OrnateField from "../field/OrnateField";
 import OrnateDisplayBox from "../field/OrnateDisplayBox";
 import { useAuth } from "../../../../hooks/useAuth";
@@ -46,7 +46,7 @@ export default function OrnateMultiSelect({
             : false);
 
     const selectId =
-        id || `ornate-multiselect-${Math.random().toString(36).slice(2)}`;
+        id || `ornateMultiselect-${Math.random().toString(36).slice(2)}`;
 
     const [open, setOpen] = useState(false);
     const wrapperRef = useRef<HTMLDivElement>(null);
@@ -98,12 +98,12 @@ export default function OrnateMultiSelect({
             label={label}
             helpText={helpText}
             error={error}
-            className={`${className} ornate-multiselect`}
+            className={className}
         >
-            <div ref={wrapperRef} className="ornate-multiselect-wrapper">
+            <div ref={wrapperRef} className={styles.ornateMultiselectWrapper}>
                 <button
                     type="button"
-                    className="ornate-input ornate-multiselect-trigger"
+                    className={`${formStyles.ornateInput} ${styles.ornateMultiselectTrigger}`}
                     onClick={() => setOpen((prev) => !prev)}
                 >
                     {value.length > 0
@@ -115,17 +115,19 @@ export default function OrnateMultiSelect({
                               )
                               .join(", ")
                         : placeholder}
-                    <span className="ornate-multiselect-arrow">
+                    <span className={styles.ornateMultiselectArrow}>
                         {open ? "▲" : "▼"}
                     </span>
                 </button>
 
                 {open && (
-                    <div className={`ornate-multiselect-dropdown animate`}>
+                    <div
+                        className={`${styles.ornateMultiselectDropdown} animate`}
+                    >
                         {options.map((opt) => (
                             <label
                                 key={opt.value}
-                                className={`ornate-multiselect-option ${
+                                className={`${styles.ornateMultiselectOption} ${
                                     opt.disabled ? "disabled" : ""
                                 }`}
                             >

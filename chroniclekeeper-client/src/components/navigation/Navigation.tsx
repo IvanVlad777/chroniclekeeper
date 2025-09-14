@@ -3,7 +3,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { useTranslation } from "react-i18next";
 import { ThemeSwitcher } from "../../theme/ThemeSwitcher";
 import Button from "../basic/button/Button";
-import "./styles.css";
+import styles from "./styles.module.css";
 
 const Navigation = () => {
     const { token, user, logout } = useAuth();
@@ -25,14 +25,14 @@ const Navigation = () => {
     };
 
     return (
-        <nav className="nav-ornate">
+        <nav className={styles.navOrnate}>
             {token ? (
                 <>
-                    <Link to="/dashboard" className="nav-link">
-                        {t("dashboard")}
+                    <Link to="/storymap" className={styles.navLink}>
+                        {t("storymap")}
                     </Link>
                     {user && (
-                        <p className="nav-info">
+                        <p className={styles.navInfo}>
                             {t("loggedinas")}: <strong>{user.email}</strong>
                             <br />
                             {t("role")}:{" "}
@@ -43,10 +43,10 @@ const Navigation = () => {
                             </strong>
                         </p>
                     )}
-                    <Button onClick={handleLogout} className="nav-btn">
+                    <Button onClick={handleLogout} className={styles.navBtn}>
                         {t("logout")}
                     </Button>
-                    <p className="nav-admin-flag">
+                    <p className={styles.navAdminFlag}>
                         {roles.includes("Admin")
                             ? t("adminaccess")
                             : t("useraccess")}
@@ -55,18 +55,18 @@ const Navigation = () => {
             ) : (
                 <>
                     <Button>
-                        <Link to="/login" className="link-reset">
+                        <Link to="/login" className={styles.linkReset}>
                             {t("login")}
                         </Link>
                     </Button>
                     <Button>
-                        <Link to="/register" className="link-reset">
+                        <Link to="/register" className={styles.linkReset}>
                             {t("register")}
                         </Link>
                     </Button>
                 </>
             )}
-            <span className="nav-theme">
+            <span className={styles.navTheme}>
                 <ThemeSwitcher />
             </span>
         </nav>

@@ -45,7 +45,7 @@
 /* Glavni layout: lagani max-width + razmaci oko sadržaja */
 .app-main {
     padding: 1rem;
-    max-width: 1100px;
+    max-width: 100vw;
     margin: 0 auto;
 }
 

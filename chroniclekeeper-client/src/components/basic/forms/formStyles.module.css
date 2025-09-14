@@ -1,10 +1,10 @@
 /* Wrapper polja (vertikalni stack s malim razmakom) */
-.ornate-field {
+.ornateField {
     margin-top: 0.75rem;
 }
 
 /* Label – mala, uppercase, renesansni štih */
-.ornate-label {
+.ornateLabel {
     display: block;
     margin-bottom: 4px;
     font-size: 0.75rem;
@@ -15,14 +15,14 @@
 }
 
 /* Pomoćni tekst ispod polja */
-.ornate-help {
+.ornateHelp {
     margin-top: 6px;
     font-size: 0.85rem;
     color: color-mix(in oklab, var(--color-text) 75%, transparent);
 }
 
 /* Poruka greške */
-.ornate-error {
+.ornateError {
     margin-top: 6px;
     font-size: 0.85rem;
     color: #7f1d1d;
@@ -33,10 +33,11 @@
 }
 
 /* Osnovni izgled input/textarea – pergament + tanki okvir */
-.ornate-input,
-.ornate-textarea {
-    width: 100%;
+.ornateInput,
+.ornateTextarea {
+    width: 90%;
     padding: 8px 12px;
+    margin: 8px 12px;
     border-radius: 10px;
     color: var(--color-text);
     background: color-mix(
@@ -50,22 +51,22 @@
         background 0.15s ease;
 }
 
-.ornate-input::placeholder,
-.ornate-textarea::placeholder {
+.ornateInput::placeholder,
+.ornateTextarea::placeholder {
     color: color-mix(in oklab, var(--color-text) 55%, transparent);
 }
 
-.ornate-input:focus,
-.ornate-textarea:focus {
+.ornateInput:focus,
+.ornateTextarea:focus {
     border-color: var(--color-accent);
     box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08), 0 0 0 3px var(--color-accent);
 }
 
 /* Veličina polja */
-.ornate-input {
+.ornateInput {
     height: 38px;
 }
-.ornate-textarea {
+.ornateTextarea {
     min-height: 120px;
     resize: vertical;
 }

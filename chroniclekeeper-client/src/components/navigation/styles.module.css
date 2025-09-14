@@ -1,5 +1,5 @@
 /* Traka */
-.nav-ornate {
+.navOrnate {
     display: flex;
     align-items: center;
     gap: 0.75rem;
@@ -16,7 +16,7 @@
 }
 
 /* Linkovi u traci – blagi reljef pri hoveru */
-.nav-link {
+.navLink {
     color: var(--color-surface);
     text-decoration: none;
     font-weight: 700;
@@ -24,13 +24,13 @@
     border-radius: 8px;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.45);
 }
-.nav-link:hover {
+.navLink:hover {
     background: rgba(0, 0, 0, 0.18);
     outline: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 /* Info blok (email/role) */
-.nav-info {
+.navInfo {
     margin: 0;
     padding: 6px 10px;
     border-radius: 10px;
@@ -47,7 +47,7 @@
 }
 
 /* Gumb za odjavu */
-.nav-btn {
+.navBtn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -68,15 +68,15 @@
     cursor: pointer;
     transition: transform 0.1s ease, filter 0.2s ease;
 }
-.nav-btn:hover {
+.navBtn:hover {
     filter: brightness(1.05);
 }
-.nav-btn:active {
+.navBtn:active {
     transform: translateY(1px);
 }
 
 /* Prikaz admin oznake (ako je prisutna) */
-.nav-admin-flag {
+.navAdminFlag {
     margin: 0;
     padding: 2px 8px;
     border-radius: 8px;
@@ -93,17 +93,17 @@
 }
 
 /* ThemeSwitcher */
-.nav-theme {
+.navTheme {
     margin-left: auto;
     display: inline-flex;
     align-items: center;
 }
 
 /* Link unutar <Button> */
-.link-reset {
+.linkReset {
     color: inherit;
     text-decoration: none;
 }
-.link-reset:hover {
+.linkReset:hover {
     text-decoration: none;
 }

@@ -3,7 +3,9 @@ import { register } from "../../api/auth";
 import { IdentityError } from "../../interfaces/authInterfaces";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import "./styles.css";
+import styles from "./styles.module.css";
+import formStyles from "../basic/forms/formStyles.module.css";
+import fieldStyles from "../basic/forms/field/styles.module.css";
 import Button from "../basic/button/Button";
 
 const RegisterForm = () => {
@@ -38,42 +40,46 @@ const RegisterForm = () => {
     };
 
     return (
-        <form onSubmit={handleRegister} className="ornate-card">
-            <h2 className="ornate-title">{t("title")}</h2>
-            <p className="ornate-sub">
+        <form onSubmit={handleRegister} className={styles.ornateCard}>
+            <h2 className={styles.ornateTitle}>{t("title")}</h2>
+            <p className={styles.ornateSub}>
                 {t("alreadyhaveaccount")}{" "}
-                <Link to="/login" className="ornate-link">
+                <Link to="/login" className={styles.ornateLink}>
                     {t("loginhere")}
                 </Link>
             </p>
-            <div className="field">
-                <label className="ornate-label">{t("email")}:</label>
+            <div className={styles.field}>
+                <label className={fieldStyles.ornateLabel}>{t("email")}:</label>
                 <input
                     type="email"
-                    className="ornate-input"
+                    className={formStyles.ornateInput}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
                 />
             </div>
 
-            <div className="field">
-                <label className="ornate-label">{t("password")}:</label>
+            <div className={styles.field}>
+                <label className={fieldStyles.ornateLabel}>
+                    {t("password")}:
+                </label>
                 <input
                     type="password"
-                    className="ornate-input"
+                    className={formStyles.ornateInput}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
                 />
             </div>
 
-            <Button type="submit" className="btn-ornate login-submit">
+            <Button type="submit" className={`${styles.loginSubmit}`}>
                 {t("submit")}
             </Button>
 
-            {success && <p className="alert-success">Uspješna registracija!</p>}
-            {error && <p className="alert-error">{error}</p>}
+            {success && (
+                <p className={styles.alertSuccess}>Uspješna registracija!</p>
+            )}
+            {error && <p className={styles.alertSuccess}>{error}</p>}
         </form>
     );
 };

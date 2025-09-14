@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import "./styles.css";
+import styles from "./styles.module.css";
 
 type ButtonProps = {
     children: ReactNode;
@@ -20,8 +20,8 @@ export default function Button({
         <button
             type={type}
             onClick={onClick}
-            className={`btn-ornate ${
-                variant === "outline" ? "btn-ornate-outline" : ""
+            className={`${styles.btnOrnate} ${
+                variant === "outline" ? `${styles.btnOrnateOutline}` : ""
             } ${className}`}
         >
             {children}

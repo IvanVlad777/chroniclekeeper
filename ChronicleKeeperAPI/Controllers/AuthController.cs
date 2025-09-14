@@ -52,14 +52,15 @@ namespace ChronicleKeeperAPI.Controllers
                 return Unauthorized("Invalid credentials");
             }
 
-            var token = GenerateJwtToken(user);
+            var token = await GenerateJwtToken(user);
+            var roles = await _userManager.GetRolesAsync(user);
 
             _logger.LogInformation("Login successful for {Email}", request.Email);
-            return Ok(new { token });
+            return Ok(new { token, user = new { id = user.Id, email = user.Email, roles } });
         }
 
         // Generate JWT token
-        private string GenerateJwtToken(IdentityUser user)
+        private async Task<string> GenerateJwtToken(IdentityUser user)
         {
             var jwtSettings = _configuration.GetSection("Jwt");
             var key = Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]);
@@ -71,8 +72,13 @@ namespace ChronicleKeeperAPI.Controllers
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 
-            var userRoles = _userManager.GetRolesAsync(user).Result;
-            claims.AddRange(userRoles.Select(role => new Claim(ClaimTypes.Role, role)));
+            var userRoles = await _userManager.GetRolesAsync(user);
+            //claims.AddRange(userRoles.Select(role => new Claim(ClaimTypes.Role, role)));
+            foreach (var role in userRoles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role)); // klasični role claim (URI tip)
+                claims.Add(new Claim("role", role));          // plain "role" claim (lakše za FE)
+            }
 
             var token = new JwtSecurityToken(
                 issuer: jwtSettings["Issuer"],

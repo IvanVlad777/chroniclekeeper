@@ -1,5 +1,5 @@
 import React from "react";
-import "../formStyles.css";
+import styles from "../formStyles.module.css";
 
 type Props = {
     id?: string;
@@ -15,7 +15,7 @@ export default function OrnateDisplayBox({
     id,
     label,
     value,
-    placeholder = "�",
+    placeholder = "????",
     helpText,
     error,
     className = "",
@@ -29,9 +29,13 @@ export default function OrnateDisplayBox({
         String(value).trim().length > 0;
 
     return (
-        <div className={`ornate-field ${className}`}>
+        <div className={`${styles.ornateField} ${className}`}>
             {label ? (
-                <label className="ornate-label" id={labelId} htmlFor={boxId}>
+                <label
+                    className={styles.ornateLabel}
+                    id={labelId}
+                    htmlFor={boxId}
+                >
                     {label}
                 </label>
             ) : null}
@@ -40,7 +44,7 @@ export default function OrnateDisplayBox({
                 role="textbox"
                 aria-readonly="true"
                 aria-labelledby={label ? labelId : undefined}
-                className="ornate-textarea"
+                className={styles.ornateTextarea}
                 style={{ whiteSpace: "pre-wrap" }}
             >
                 {hasContent ? (
@@ -50,8 +54,10 @@ export default function OrnateDisplayBox({
                 )}
             </div>
 
-            {helpText ? <div className="ornate-help">{helpText}</div> : null}
-            {error ? <div className="ornate-error">{error}</div> : null}
+            {helpText ? (
+                <div className={styles.ornateHelp}>{helpText}</div>
+            ) : null}
+            {error ? <div className={styles.ornateError}>{error}</div> : null}
         </div>
     );
 }

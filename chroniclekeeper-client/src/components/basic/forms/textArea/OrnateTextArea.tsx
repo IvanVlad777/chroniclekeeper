@@ -1,5 +1,6 @@
 import React from "react";
-import "../formStyles.css";
+import styles from "../formStyles.module.css";
+
 import OrnateField from "../field/OrnateField";
 import { useAuth } from "../../../../hooks/useAuth";
 import OrnateDisplayBox from "../field/OrnateDisplayBox";
@@ -61,7 +62,7 @@ export default function OrnateTextArea({
         >
             <textarea
                 id={areaId}
-                className="ornate-textarea"
+                className={styles.ornateTextarea}
                 value={value}
                 {...textareaProps}
             />
