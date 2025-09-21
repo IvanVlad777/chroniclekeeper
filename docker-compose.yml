@@ -1,0 +1,60 @@
+services:
+  # SQL Server Database
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: chroniclekeeper-db
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=ChronicleKeeper2024!
+      - MSSQL_PID=Express
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    networks:
+      - chroniclekeeper-network
+    restart: unless-stopped
+
+  # .NET API
+  api:
+    build:
+      context: .
+      dockerfile: ChronicleKeeperAPI/Dockerfile
+    container_name: chroniclekeeper-api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - DatabaseSettings__SqlServerConnection=Server=db;Database=ChronicleKeeperDB;User Id=sa;Password=ChronicleKeeper2024!;TrustServerCertificate=True;
+    ports:
+      - "5000:80"
+    depends_on:
+      - db
+    networks:
+      - chroniclekeeper-network
+    restart: unless-stopped
+    volumes:
+      - api_logs:/app/logs
+
+  # React Client
+  client:
+    build:
+      context: ./chroniclekeeper-client
+      dockerfile: Dockerfile
+    container_name: chroniclekeeper-client
+    ports:
+      - "3000:80"
+    depends_on:
+      - api
+    networks:
+      - chroniclekeeper-network
+    restart: unless-stopped
+
+volumes:
+  sqlserver_data:
+    driver: local
+  api_logs:
+    driver: local
+
+networks:
+  chroniclekeeper-network:
+    driver: bridge
