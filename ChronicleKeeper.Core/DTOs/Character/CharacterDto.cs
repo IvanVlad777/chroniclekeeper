@@ -26,12 +26,13 @@ namespace ChronicleKeeper.Core.DTOs.Character
         public string SpecialPhysicalFeatures { get; set; } = string.Empty;
         public bool IsArtificial { get; set; }
 
-        public ReferenceDto? Species { get; set; }
-        public ReferenceDto? Religion { get; set; }
-        public ReferenceDto? Nation { get; set; }
-        public ReferenceDto? Profession { get; set; }
-        public ReferenceDto? SocialClass { get; set; }
-        public ReferenceDto? Father { get; set; }
-        public ReferenceDto? Mother { get; set; }
+        // TODO: Otkomentirati kada budem dodavao veze
+        //public ReferenceDto? Species { get; set; }
+        //public ReferenceDto? Religion { get; set; }
+        //public ReferenceDto? Nation { get; set; }
+        //public ReferenceDto? Profession { get; set; }
+        //public ReferenceDto? SocialClass { get; set; }
+        //public ReferenceDto? Father { get; set; }
+        //public ReferenceDto? Mother { get; set; }
     }
 }

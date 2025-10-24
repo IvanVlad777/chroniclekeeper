@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using ChronicleKeeper.Core.DTOs;
 using ChronicleKeeper.Core.DTOs.Character;
-using ChronicleKeeper.Core.DTOs.Character.ChronicleKeeper.API.Dtos;
+// using ChronicleKeeper.Core.DTOs.Character.ChronicleKeeper.API.Dtos;
 using ChronicleKeeper.Core.Entities.Characters;
 using ChronicleKeeper.Infrastructure.Data;
 using Microsoft.AspNetCore.Authorization;
@@ -40,13 +40,14 @@ namespace ChronicleKeeperAPI.Controllers
             _logger.LogInformation("Fetching all characters...");
 
             var characters = await _context.Characters
-                .Include(c => c.SapientSpecies)
-                .Include(c => c.Religion)
-                .Include(c => c.Nation)
-                .Include(c => c.Profession)
-                .Include(c => c.SocialClass)
-                .Include(c => c.Father)
-                .Include(c => c.Mother)
+                // TODO: Otkomentirati kada budem dodavao veze
+                //.Include(c => c.SapientSpecies)
+                //.Include(c => c.Religion)
+                //.Include(c => c.Nation)
+                //.Include(c => c.Profession)
+                //.Include(c => c.SocialClass)
+                //.Include(c => c.Father)
+                //.Include(c => c.Mother)
                 .AsNoTracking()
                 .ToListAsync();
 
@@ -66,13 +67,14 @@ namespace ChronicleKeeperAPI.Controllers
             _logger.LogInformation("Fetching character with ID {Id}", id);
 
             var character = await _context.Characters
-                .Include(c => c.SapientSpecies)
-                .Include(c => c.Religion)
-                .Include(c => c.Nation)
-                .Include(c => c.Profession)
-                .Include(c => c.SocialClass)
-                .Include(c => c.Father)
-                .Include(c => c.Mother)
+                // TODO: Otkomentirati kada budem dodavao veze
+                //.Include(c => c.SapientSpecies)
+                //.Include(c => c.Religion)
+                //.Include(c => c.Nation)
+                //.Include(c => c.Profession)
+                //.Include(c => c.SocialClass)
+                //.Include(c => c.Father)
+                //.Include(c => c.Mother)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(c => c.Id == id);
 

@@ -19,6 +19,6 @@ namespace ChronicleKeeper.Core.Interfaces
         DateTime CreatedAt { get; set; }
         [Required]
         DateTime UpdatedAt { get; set; }
-        History? History { get; set; }
+        // History? History { get; set; }
     }
 }
