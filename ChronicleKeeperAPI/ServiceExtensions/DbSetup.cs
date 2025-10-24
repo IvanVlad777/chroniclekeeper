@@ -1,4 +1,6 @@
-﻿using ChronicleKeeper.Infrastructure.Data;
+﻿using ChronicleKeeper.Core.Repositories;
+using ChronicleKeeper.Infrastructure.Data;
+using ChronicleKeeper.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,6 +28,9 @@ namespace ChronicleKeeper.API.ServiceExtensions
                     options.UseSqlServer(sqlServerConnection);
                 }
             });
+
+            // Register repositories
+            services.AddScoped<ICharacterRepository, CharacterRepository>();
 
             return services;
         }

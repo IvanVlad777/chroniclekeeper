@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using ChronicleKeeper.Core.CQRS.Characters.Commands;
+using ChronicleKeeper.Core.CQRS.Characters.Queries;
 using ChronicleKeeper.Core.DTOs;
 using ChronicleKeeper.Core.DTOs.Character;
-// using ChronicleKeeper.Core.DTOs.Character.ChronicleKeeper.API.Dtos;
 using ChronicleKeeper.Core.Entities.Characters;
 using ChronicleKeeper.Infrastructure.Data;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -20,15 +22,13 @@ namespace ChronicleKeeperAPI.Controllers
     [ApiController]
     public class CharacterController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IMediator _mediator;
         private readonly ILogger<CharacterController> _logger;
-        private readonly IMapper _mapper;
 
-        public CharacterController(ApplicationDbContext context, ILogger<CharacterController> logger, IMapper mapper)
+        public CharacterController(IMediator mediator, ILogger<CharacterController> logger)
         {
-            _context = context;
+            _mediator = mediator;
             _logger = logger;
-            _mapper = mapper;
         }
 
         // GET: /api/characters
@@ -37,56 +37,32 @@ namespace ChronicleKeeperAPI.Controllers
         [SwaggerResponse(200, "List of characters", typeof(IEnumerable<CharacterDto>))]
         public async Task<ActionResult<IEnumerable<CharacterDto>>> GetAll()
         {
-            _logger.LogInformation("Fetching all characters...");
-
-            var characters = await _context.Characters
-                // TODO: Otkomentirati kada budem dodavao veze
-                //.Include(c => c.SapientSpecies)
-                //.Include(c => c.Religion)
-                //.Include(c => c.Nation)
-                //.Include(c => c.Profession)
-                //.Include(c => c.SocialClass)
-                //.Include(c => c.Father)
-                //.Include(c => c.Mother)
-                .AsNoTracking()
-                .ToListAsync();
-
-            var dtoList = _mapper.Map<List<CharacterDto>>(characters);
-            _logger.LogInformation("Returned {Count} characters.", characters.Count);
-
-            return Ok(dtoList);
+            _logger.LogInformation("API: Fetching all characters");
+            var query = new GetAllCharactersQuery();
+            var characters = await _mediator.Send(query);
+            _logger.LogInformation("API: Returned {Count} characters", characters.Count);
+            return Ok(characters);
         }
 
         // GET: /api/characters/{id}
         [HttpGet("{id}")]
         [SwaggerOperation(Summary = "Get character by ID", Description = "Returns detailed character info")]
-        [SwaggerResponse(200, "Character found", typeof(CharacterDetailsDto))]
+        [SwaggerResponse(200, "Character found", typeof(CharacterDto))]
         [SwaggerResponse(404, "Character not found")]
-        public async Task<ActionResult<CharacterDetailsDto>> GetById(int id)
+        public async Task<ActionResult<CharacterDto>> GetById(int id)
         {
-            _logger.LogInformation("Fetching character with ID {Id}", id);
-
-            var character = await _context.Characters
-                // TODO: Otkomentirati kada budem dodavao veze
-                //.Include(c => c.SapientSpecies)
-                //.Include(c => c.Religion)
-                //.Include(c => c.Nation)
-                //.Include(c => c.Profession)
-                //.Include(c => c.SocialClass)
-                //.Include(c => c.Father)
-                //.Include(c => c.Mother)
-                .AsNoTracking()
-                .FirstOrDefaultAsync(c => c.Id == id);
-
+            _logger.LogInformation("API: Fetching character with ID {Id}", id);
+            var query = new GetCharacterByIdQuery { Id = id };
+            var character = await _mediator.Send(query);
+            
             if (character == null)
             {
-                _logger.LogWarning("Character with ID {Id} not found.", id);
+                _logger.LogWarning("API: Character with ID {Id} not found", id);
                 return NotFound();
             }
-
-            var dto = _mapper.Map<CharacterDto>(character);
-            _logger.LogInformation("Returned character with ID {Id}.", id);
-            return Ok(dto);
+            
+            _logger.LogInformation("API: Returned character with ID {Id}", id);
+            return Ok(character);
         }
 
         // POST: /api/characters
@@ -99,21 +75,46 @@ namespace ChronicleKeeperAPI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                _logger.LogWarning("Invalid character creation request.");
+                _logger.LogWarning("API: Invalid character creation request");
                 return BadRequest(ModelState);
             }
 
-            var character = _mapper.Map<Character>(dto);
-            character.CreatedAt = DateTime.UtcNow;
-            character.UpdatedAt = DateTime.UtcNow;
+            _logger.LogInformation("API: Creating character: {Name}", dto.Name);
+            var command = new CreateCharacterCommand { CharacterCreateDto = dto };
+            var result = await _mediator.Send(command);
+            _logger.LogInformation("API: Created character with ID {Id}", result.Id);
 
-            _context.Characters.Add(character);
-            await _context.SaveChangesAsync();
+            return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
+        }
 
-            var resultDto = _mapper.Map<CharacterDto>(character);
+        // PUT: /api/characters/{id}
+        [HttpPut("{id}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Update character by ID", Description = "Updates an existing character entry")]
+        [SwaggerResponse(200, "Character updated", typeof(CharacterDto))]
+        [SwaggerResponse(400, "Invalid input")]
+        [SwaggerResponse(404, "Character not found")]
+        public async Task<ActionResult<CharacterDto>> Update(int id, [FromBody] CharacterUpdateDto dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                _logger.LogWarning("API: Invalid character update request for ID {Id}", id);
+                return BadRequest(ModelState);
+            }
 
-            _logger.LogInformation("Created character with ID {Id}", character.Id);
-            return CreatedAtAction(nameof(GetById), new { id = character.Id }, resultDto);
+            try
+            {
+                _logger.LogInformation("API: Updating character with ID {Id}", id);
+                var command = new UpdateCharacterCommand { Id = id, CharacterUpdateDto = dto };
+                var result = await _mediator.Send(command);
+                _logger.LogInformation("API: Updated character with ID {Id}", id);
+                return Ok(result);
+            }
+            catch (InvalidOperationException ex)
+            {
+                _logger.LogWarning("API: Character with ID {Id} not found for update", id);
+                return NotFound(ex.Message);
+            }
         }
 
         // DELETE: /api/characters/{id}
@@ -124,19 +125,17 @@ namespace ChronicleKeeperAPI.Controllers
         [SwaggerResponse(404, "Character not found")]
         public async Task<IActionResult> Delete(int id)
         {
-            _logger.LogInformation("Deleting character with ID {Id}", id);
-
-            var character = await _context.Characters.FindAsync(id);
-            if (character == null)
+            _logger.LogInformation("API: Deleting character with ID {Id}", id);
+            var command = new DeleteCharacterCommand { Id = id };
+            var result = await _mediator.Send(command);
+            
+            if (!result)
             {
-                _logger.LogWarning("Attempted to delete non-existing character with ID {Id}", id);
+                _logger.LogWarning("API: Character with ID {Id} not found for deletion", id);
                 return NotFound();
             }
-
-            _context.Characters.Remove(character);
-            await _context.SaveChangesAsync();
-
-            _logger.LogInformation("Deleted character with ID {Id}", id);
+            
+            _logger.LogInformation("API: Deleted character with ID {Id}", id);
             return NoContent();
         }
     }

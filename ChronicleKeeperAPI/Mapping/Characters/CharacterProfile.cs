@@ -16,8 +16,9 @@ public class CharacterProfile : Profile
         //    .ForMember(dest => dest.Father, opt => opt.MapFrom(src => src.Father == null ? null : new ReferenceDto { Id = src.Father.Id, Name = src.Father.Name }))
         //    .ForMember(dest => dest.Mother, opt => opt.MapFrom(src => src.Mother == null ? null : new ReferenceDto { Id = src.Mother.Id, Name = src.Mother.Name }));
 
+        CreateMap<Character, CharacterDto>();
         CreateMap<CharacterDto, Character>();
-
         CreateMap<CharacterCreateDto, Character>();
+        CreateMap<CharacterUpdateDto, Character>();
     }
 }
