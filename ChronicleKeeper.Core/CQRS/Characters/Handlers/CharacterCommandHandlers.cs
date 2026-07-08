@@ -112,6 +112,80 @@ namespace ChronicleKeeper.Core.CQRS.Characters.Handlers
         }
     }
 
+    public class AddCharacterRelationshipCommandHandler : IRequestHandler<AddCharacterRelationshipCommand, CharacterRelationshipDto>
+    {
+        private readonly ICharacterRepository _repository;
+        private readonly ILogger<AddCharacterRelationshipCommandHandler> _logger;
+
+        public AddCharacterRelationshipCommandHandler(
+            ICharacterRepository repository,
+            ILogger<AddCharacterRelationshipCommandHandler> logger)
+        {
+            _repository = repository;
+            _logger = logger;
+        }
+
+        public async Task<CharacterRelationshipDto> Handle(AddCharacterRelationshipCommand request, CancellationToken cancellationToken)
+        {
+            var character = await _repository.FindByIdAsync(request.CharacterId, cancellationToken)
+                ?? throw new EntityNotFoundException("Character", request.CharacterId);
+
+            var dto = request.RelationshipDto;
+            if (dto.RelatedCharacterId == character.Id)
+            {
+                throw new DomainValidationException("A character cannot have a relationship with themselves.");
+            }
+            if (!await _repository.ExistsInWorldAsync(dto.RelatedCharacterId, character.WorldId, cancellationToken))
+            {
+                throw new DomainValidationException(
+                    $"Related character with ID {dto.RelatedCharacterId} does not exist in this world.");
+            }
+            if (await _repository.RelationshipExistsAsync(character.Id, dto.RelatedCharacterId, dto.Type, cancellationToken))
+            {
+                throw new DomainValidationException(
+                    $"A '{dto.Type}' relationship to that character already exists.");
+            }
+
+            var relationship = new Entities.Characters.CharacterInfo.CharacterRelationship
+            {
+                CharacterId = character.Id,
+                RelatedCharacterId = dto.RelatedCharacterId,
+                Type = dto.Type,
+                Description = dto.Description,
+                IsSecret = dto.IsSecret
+            };
+            var created = await _repository.AddRelationshipAsync(relationship, cancellationToken);
+
+            _logger.LogInformation("Added {Type} relationship {Id} for character {CharacterId}",
+                dto.Type, created.Id, character.Id);
+
+            return new CharacterRelationshipDto
+            {
+                Id = created.Id,
+                RelatedCharacterId = created.RelatedCharacterId,
+                RelatedCharacterName = created.RelatedCharacter?.Name ?? string.Empty,
+                Type = created.Type.ToString(),
+                Description = created.Description,
+                IsSecret = created.IsSecret
+            };
+        }
+    }
+
+    public class RemoveCharacterRelationshipCommandHandler : IRequestHandler<RemoveCharacterRelationshipCommand, bool>
+    {
+        private readonly ICharacterRepository _repository;
+
+        public RemoveCharacterRelationshipCommandHandler(ICharacterRepository repository)
+        {
+            _repository = repository;
+        }
+
+        public async Task<bool> Handle(RemoveCharacterRelationshipCommand request, CancellationToken cancellationToken)
+        {
+            return await _repository.RemoveRelationshipAsync(request.CharacterId, request.RelationshipId, cancellationToken);
+        }
+    }
+
     internal static class CharacterValidation
     {
         /// <summary>

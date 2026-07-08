@@ -19,6 +19,12 @@ namespace ChronicleKeeper.API.ServiceExtensions
             // Register repositories
             services.AddScoped<ICharacterRepository, CharacterRepository>();
             services.AddScoped<IWorldRepository, WorldRepository>();
+            services.AddScoped<ILocationRepository, LocationRepository>();
+            services.AddScoped<ISpeciesRepository, SpeciesRepository>();
+            services.AddScoped<IFactionRepository, FactionRepository>();
+            services.AddScoped<ITimelineRepository, TimelineRepository>();
+            services.AddScoped<ITagRepository, TagRepository>();
+            services.AddScoped<INoteRepository, NoteRepository>();
 
             return services;
         }

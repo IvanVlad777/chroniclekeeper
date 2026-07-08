@@ -112,6 +112,34 @@ namespace ChronicleKeeperAPI.Controllers
             return Ok(result);
         }
 
+        // POST: /api/characters/{id}/relationships
+        [HttpPost("{id}/relationships")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Add relationship to character", Description = "Related character must belong to the same world")]
+        [SwaggerResponse(201, "Relationship created", typeof(CharacterRelationshipDto))]
+        [SwaggerResponse(400, "Invalid input / duplicate")]
+        [SwaggerResponse(404, "Character not found")]
+        public async Task<ActionResult<CharacterRelationshipDto>> AddRelationship(int id, [FromBody] CharacterRelationshipCreateDto dto)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            var result = await _mediator.Send(new AddCharacterRelationshipCommand { CharacterId = id, RelationshipDto = dto });
+            return CreatedAtAction(nameof(GetById), new { id }, result);
+        }
+
+        // DELETE: /api/characters/{id}/relationships/{relationshipId}
+        [HttpDelete("{id}/relationships/{relationshipId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Remove relationship from character")]
+        [SwaggerResponse(204, "Relationship removed")]
+        [SwaggerResponse(404, "Relationship not found")]
+        public async Task<IActionResult> RemoveRelationship(int id, int relationshipId)
+        {
+            var result = await _mediator.Send(new RemoveCharacterRelationshipCommand { CharacterId = id, RelationshipId = relationshipId });
+            if (!result) return NotFound();
+            return NoContent();
+        }
+
         // DELETE: /api/characters/{id}
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin,SuperAdmin")]

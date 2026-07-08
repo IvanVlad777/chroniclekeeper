@@ -1,5 +1,7 @@
 using ChronicleKeeper.Core.Entities.Characters;
+using ChronicleKeeper.Core.Entities.Characters.CharacterInfo;
 using ChronicleKeeper.Core.Repositories;
+using static ChronicleKeeper.Core.Enums.LoreEnums;
 using ChronicleKeeper.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -84,6 +86,32 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .Where(r => r.Id == raceId && r.WorldId == worldId)
                 .Select(r => (int?)r.SapientSpeciesId)
                 .FirstOrDefaultAsync(cancellationToken);
+        }
+
+        public async Task<CharacterRelationship> AddRelationshipAsync(CharacterRelationship relationship, CancellationToken cancellationToken = default)
+        {
+            _context.CharacterRelationships.Add(relationship);
+            await _context.SaveChangesAsync(cancellationToken);
+
+            // Učitaj drugu stranu za mapiranje imena u DTO
+            await _context.Entry(relationship).Reference(r => r.RelatedCharacter).LoadAsync(cancellationToken);
+            return relationship;
+        }
+
+        public async Task<bool> RemoveRelationshipAsync(int characterId, int relationshipId, CancellationToken cancellationToken = default)
+        {
+            var deleted = await _context.CharacterRelationships
+                .Where(r => r.Id == relationshipId && r.CharacterId == characterId)
+                .ExecuteDeleteAsync(cancellationToken);
+            return deleted > 0;
+        }
+
+        public async Task<bool> RelationshipExistsAsync(int characterId, int relatedCharacterId, RelationshipType type, CancellationToken cancellationToken = default)
+        {
+            return await _context.CharacterRelationships
+                .AnyAsync(r => r.CharacterId == characterId
+                    && r.RelatedCharacterId == relatedCharacterId
+                    && r.Type == type, cancellationToken);
         }
 
         public async Task<bool> DeleteAsync(int id, CancellationToken cancellationToken = default)

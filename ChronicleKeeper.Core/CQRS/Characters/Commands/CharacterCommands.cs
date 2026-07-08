@@ -18,4 +18,16 @@ namespace ChronicleKeeper.Core.CQRS.Characters.Commands
     {
         public int Id { get; set; }
     }
+
+    public class AddCharacterRelationshipCommand : IRequest<CharacterRelationshipDto>
+    {
+        public int CharacterId { get; set; }
+        public CharacterRelationshipCreateDto RelationshipDto { get; set; } = new();
+    }
+
+    public class RemoveCharacterRelationshipCommand : IRequest<bool>
+    {
+        public int CharacterId { get; set; }
+        public int RelationshipId { get; set; }
+    }
 }

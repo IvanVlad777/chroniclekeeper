@@ -1,4 +1,5 @@
 using ChronicleKeeper.Core.Entities.Characters;
+using ChronicleKeeper.Core.Entities.Characters.CharacterInfo;
 
 namespace ChronicleKeeper.Core.Repositories
 {
@@ -19,5 +20,11 @@ namespace ChronicleKeeper.Core.Repositories
         Task<int?> GetSpeciesIdForRaceAsync(int raceId, int worldId, CancellationToken cancellationToken = default);
         /// <summary>Postoji li vrsta u zadanom svijetu.</summary>
         Task<bool> SpeciesExistsInWorldAsync(int speciesId, int worldId, CancellationToken cancellationToken = default);
+
+        // Relationships
+        Task<CharacterRelationship> AddRelationshipAsync(CharacterRelationship relationship, CancellationToken cancellationToken = default);
+        /// <summary>Briše vezu ako pripada zadanom liku; vraća false ako ne postoji.</summary>
+        Task<bool> RemoveRelationshipAsync(int characterId, int relationshipId, CancellationToken cancellationToken = default);
+        Task<bool> RelationshipExistsAsync(int characterId, int relatedCharacterId, Enums.LoreEnums.RelationshipType type, CancellationToken cancellationToken = default);
     }
 }

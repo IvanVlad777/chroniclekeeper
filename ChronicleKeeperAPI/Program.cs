@@ -32,7 +32,12 @@ builder.Services.AddCustomAuthorization();
 builder.Services.AddMediatRConfiguration();
 builder.Services.AddMappingProfiles();
 // DTOs su bez ciklusa pa nema potrebe za ReferenceHandler.Preserve ($id/$values u JSON-u)
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        // Enumi kroz API idu kao stringovi (kao i u bazi) — čitljivije za frontend
+        options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+    });
 
 var app = builder.Build();
 
