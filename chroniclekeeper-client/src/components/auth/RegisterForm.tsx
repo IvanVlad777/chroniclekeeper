@@ -25,7 +25,14 @@ const RegisterForm = () => {
             setSuccess(true);
             console.log(t("success"));
         } catch (err) {
-            if (err && typeof err === "object" && "$values" in err) {
+            // API vraća Identity greške kao običan JSON array [{code, description}, ...]
+            if (Array.isArray(err)) {
+                const messages = (err as IdentityError[])
+                    .map((e) => e.description)
+                    .join(" ");
+                setError(messages);
+            } else if (err && typeof err === "object" && "$values" in err) {
+                // Stari $values format (ReferenceHandler.Preserve) — fallback
                 const errorArray = (err as { $values: IdentityError[] })
                     .$values;
                 const messages = errorArray.map((e) => e.description).join(" ");

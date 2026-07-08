@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
@@ -29,6 +30,26 @@ namespace ChronicleKeeper.Infrastructure.Data
 
             // 🛠️ Ensure Admin User Exists
             await CreateUserIfNotExists(userManager, "admin@chroniclekeeper.com", "Admin@123", "Admin");
+        }
+
+        public static async Task SeedDemoWorld(IServiceProvider serviceProvider)
+        {
+            using var scope = serviceProvider.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+
+            if (await context.Worlds.AnyAsync()) return;
+
+            var superAdmin = await userManager.FindByEmailAsync("superadmin@chroniclekeeper.com");
+            if (superAdmin == null) return;
+
+            context.Worlds.Add(new Core.Entities.Worlds.World
+            {
+                Name = "Demo World",
+                Description = "Automatski stvoren svijet za isprobavanje aplikacije.",
+                OwnerId = superAdmin.Id
+            });
+            await context.SaveChangesAsync();
         }
 
         private static async Task CreateUserIfNotExists(UserManager<IdentityUser> userManager, string email, string password, string role)

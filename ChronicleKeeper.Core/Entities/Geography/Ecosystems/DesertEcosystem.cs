@@ -4,6 +4,6 @@ namespace ChronicleKeeper.Core.Entities.Geography.Ecosystems
 {
     public class DesertEcosystem : Ecosystem
     {
-        public DesertType Type { get; set; }
+        public new DesertType Type { get; set; }
     }
 }

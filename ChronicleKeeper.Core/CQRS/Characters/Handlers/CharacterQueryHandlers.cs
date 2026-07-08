@@ -25,9 +25,9 @@ namespace ChronicleKeeper.Core.CQRS.Characters.Handlers
 
         public async Task<List<CharacterDto>> Handle(GetAllCharactersQuery request, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Fetching all characters");
+            _logger.LogInformation("Fetching all characters (WorldId filter: {WorldId})", request.WorldId);
 
-            var characters = await _repository.GetAllAsync(cancellationToken);
+            var characters = await _repository.GetAllAsync(request.WorldId, cancellationToken);
 
             var result = _mapper.Map<List<CharacterDto>>(characters);
             _logger.LogInformation("Returned {Count} characters", characters.Count);
@@ -64,7 +64,9 @@ namespace ChronicleKeeper.Core.CQRS.Characters.Handlers
                 return null;
             }
 
-            var result = _mapper.Map<CharacterDto>(character);
+            // CharacterDetailsDto : CharacterDto — GetById vraća i veze (obitelj, vrsta,
+            // frakcije, tagovi); runtime tip se serijalizira u potpunosti
+            var result = _mapper.Map<CharacterDetailsDto>(character);
             _logger.LogInformation("Returned character with ID {Id}", request.Id);
 
             return result;

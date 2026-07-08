@@ -1,5 +1,6 @@
 ﻿using ChronicleKeeper.Infrastructure.Data;
 using ChronicleKeeper.API.ServiceExtensions;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 using ChronicleKeeperAPI.Mapping;
 using ChronicleKeeperAPI.Middleware;
@@ -30,11 +31,8 @@ builder.Services.AddSwaggerConfiguration();
 builder.Services.AddCustomAuthorization();
 builder.Services.AddMediatRConfiguration();
 builder.Services.AddMappingProfiles();
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-    {
-        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
-    });
+// DTOs su bez ciklusa pa nema potrebe za ReferenceHandler.Preserve ($id/$values u JSON-u)
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
@@ -56,14 +54,15 @@ app.UseMiddleware<GlobalExceptionMiddleware>();
 app.UseAuthorization();
 app.MapControllers();
 
-//  Seed Database (Roles & SuperAdmin)
+//  Apply migrations & Seed Database (Roles, SuperAdmin, Demo World)
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<ApplicationDbContext>();
-    await context.Database.EnsureCreatedAsync();
-    
+    await context.Database.MigrateAsync();
+
     await DbSeeder.SeedRolesAndAdmin(services);
+    await DbSeeder.SeedDemoWorld(services);
 }
 
 app.Run();

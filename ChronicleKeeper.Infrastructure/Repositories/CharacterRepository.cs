@@ -24,48 +24,92 @@ namespace ChronicleKeeper.Infrastructure.Repositories
         public async Task<Character?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
             return await _context.Characters
-                // TODO: Otkomentirati kada budem dodavao veze
-                //.Include(c => c.SapientSpecies)
+                .Include(c => c.Father)
+                .Include(c => c.Mother)
+                .Include(c => c.SapientSpecies)
+                .Include(c => c.Race)
+                .Include(c => c.Relationships).ThenInclude(r => r.RelatedCharacter)
+                .Include(c => c.Memberships).ThenInclude(m => m.Faction)
+                .Include(c => c.Tags).ThenInclude(t => t.Tag)
+                // TODO: Otkomentirati kada budu oživljeni
                 //.Include(c => c.Religion)
                 //.Include(c => c.Nation)
                 //.Include(c => c.Profession)
                 //.Include(c => c.SocialClass)
-                //.Include(c => c.Father)
-                //.Include(c => c.Mother)
+                .AsNoTracking()
+                .AsSplitQuery()
+                .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
+        }
+
+        public async Task<Character?> FindByIdAsync(int id, CancellationToken cancellationToken = default)
+        {
+            return await _context.Characters
                 .AsNoTracking()
                 .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
         }
 
-        public async Task<List<Character>> GetAllAsync(CancellationToken cancellationToken = default)
+        public async Task<List<Character>> GetAllAsync(int? worldId = null, CancellationToken cancellationToken = default)
         {
-            return await _context.Characters
-                // TODO: Otkomentirati kada budem dodavao veze
-                //.Include(c => c.SapientSpecies)
-                //.Include(c => c.Religion)
-                //.Include(c => c.Nation)
-                //.Include(c => c.Profession)
-                //.Include(c => c.SocialClass)
-                //.Include(c => c.Father)
-                //.Include(c => c.Mother)
-                .AsNoTracking()
-                .ToListAsync(cancellationToken);
+            var query = _context.Characters.AsNoTracking();
+            if (worldId is int wid)
+            {
+                query = query.Where(c => c.WorldId == wid);
+            }
+            return await query.ToListAsync(cancellationToken);
         }
 
         public async Task<Character> UpdateAsync(Character character, CancellationToken cancellationToken = default)
         {
-            _context.Characters.Update(character);
+            // Označi samo korijenski entitet kao izmijenjen
+            _context.Entry(character).State = EntityState.Modified;
             await _context.SaveChangesAsync(cancellationToken);
             return character;
         }
 
-        public async Task DeleteAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<bool> ExistsInWorldAsync(int characterId, int worldId, CancellationToken cancellationToken = default)
         {
-            var character = await _context.Characters.FindAsync(new object[] { id }, cancellationToken);
-            if (character != null)
-            {
-                _context.Characters.Remove(character);
-                await _context.SaveChangesAsync(cancellationToken);
-            }
+            return await _context.Characters
+                .AnyAsync(c => c.Id == characterId && c.WorldId == worldId, cancellationToken);
+        }
+
+        public async Task<bool> SpeciesExistsInWorldAsync(int speciesId, int worldId, CancellationToken cancellationToken = default)
+        {
+            return await _context.SapientSpecies
+                .AnyAsync(s => s.Id == speciesId && s.WorldId == worldId, cancellationToken);
+        }
+
+        public async Task<int?> GetSpeciesIdForRaceAsync(int raceId, int worldId, CancellationToken cancellationToken = default)
+        {
+            return await _context.Races
+                .Where(r => r.Id == raceId && r.WorldId == worldId)
+                .Select(r => (int?)r.SapientSpeciesId)
+                .FirstOrDefaultAsync(cancellationToken);
+        }
+
+        public async Task<bool> DeleteAsync(int id, CancellationToken cancellationToken = default)
+        {
+            await using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
+
+            // Self-ref FK-ovi (Restrict): djeca ostaju, samo gube vezu na roditelja
+            await _context.Characters
+                .Where(c => c.FatherId == id || c.MotherId == id)
+                .ExecuteUpdateAsync(s => s
+                    .SetProperty(c => c.FatherId, c => c.FatherId == id ? null : c.FatherId)
+                    .SetProperty(c => c.MotherId, c => c.MotherId == id ? null : c.MotherId), cancellationToken);
+
+            // Veze u kojima je ovaj lik "druga strana" (RelatedCharacterId je Restrict)
+            await _context.CharacterRelationships
+                .Where(r => r.RelatedCharacterId == id)
+                .ExecuteDeleteAsync(cancellationToken);
+
+            // Sam lik — DB kaskadira Relationships (vlasnička strana), FactionMembers,
+            // CharacterTags; SET NULL na Faction.LeaderId
+            var deleted = await _context.Characters
+                .Where(c => c.Id == id)
+                .ExecuteDeleteAsync(cancellationToken);
+
+            await transaction.CommitAsync(cancellationToken);
+            return deleted > 0;
         }
     }
 }

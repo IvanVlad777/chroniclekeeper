@@ -44,14 +44,16 @@ namespace ChronicleKeeper.Core.DTOs.Character
         public string SpecialPhysicalFeatures { get; set; } = string.Empty;
         
         public bool IsArtificial { get; set; }
-        
+
+        public int? SapientSpeciesId { get; set; }
+        public int? RaceId { get; set; }
+        public int? FatherId { get; set; }
+        public int? MotherId { get; set; }
+
         // TODO: Otkomentirati kada budem dodavao veze
-        //public int? SapientSpeciesId { get; set; }
         //public int? NationId { get; set; }
         //public int? ReligionId { get; set; }
         //public int? ProfessionId { get; set; }
         //public int? SocialClassId { get; set; }
-        //public int? FatherId { get; set; }
-        //public int? MotherId { get; set; }
     }
 }

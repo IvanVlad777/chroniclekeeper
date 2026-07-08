@@ -1,73 +1,69 @@
-﻿using ChronicleKeeper.Core.Entities.Characters;
-// using ChronicleKeeper.Core.Entities.Characters.Equipment;
+using ChronicleKeeper.Core.Entities.Characters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-public class CharacterConfiguration : IEntityTypeConfiguration<Character>
+namespace ChronicleKeeper.Infrastructure.Configurations
 {
-    public void Configure(EntityTypeBuilder<Character> builder)
-    {   
-        // Primarni ključ
-        builder.HasKey(c => c.Id);
-        
-        // Obavezna polja
-        builder.Property(c => c.Name)
-            .IsRequired()
-            .HasMaxLength(100);
-            
-        builder.Property(c => c.FirstName)
-            .IsRequired()
-            .HasMaxLength(50);
-            
-        builder.Property(c => c.CreatedAt)
-            .IsRequired();
-            
-        builder.Property(c => c.UpdatedAt)
-            .IsRequired();
-        
-        // Opcionalna polja sa maksimalnim dužinama
-        builder.Property(c => c.Description)
-            .HasMaxLength(1000);
-            
-        builder.Property(c => c.LastName)
-            .HasMaxLength(50);
-            
-        builder.Property(c => c.Nickname)
-            .HasMaxLength(50);
-            
-        builder.Property(c => c.Title)
-            .HasMaxLength(100);
-            
-        builder.Property(c => c.HairColor)
-            .HasMaxLength(50);
-            
-        builder.Property(c => c.EyeColor)
-            .HasMaxLength(50);
-            
-        builder.Property(c => c.SpecialPhysicalFeatures)
-            .HasMaxLength(500);
-        
-        // Indeksi za brže pretraživanje
-        builder.HasIndex(c => c.Name);
-        builder.HasIndex(c => c.FirstName);
-        builder.HasIndex(c => c.LastName);
-        
-        /*
-        // Self-referencing Parent-Child Relationship
-        builder.HasOne(c => c.Father)
-            .WithMany()
-            .HasForeignKey(c => c.FatherId)
-            .OnDelete(DeleteBehavior.Restrict);
+    public class CharacterConfiguration : LoreEntityConfiguration<Character>
+    {
+        protected override void ConfigureEntity(EntityTypeBuilder<Character> builder)
+        {
+            // Obavezna polja
+            builder.Property(c => c.FirstName)
+                .IsRequired()
+                .HasMaxLength(50);
 
-        builder.HasOne(c => c.Mother)
-            .WithMany()
-            .HasForeignKey(c => c.MotherId)
-            .OnDelete(DeleteBehavior.Restrict);
+            // Opcionalna polja sa maksimalnim dužinama
+            builder.Property(c => c.LastName)
+                .HasMaxLength(50);
 
-        // Sibling Relationship
-        builder.HasMany(c => c.Siblings)
-            .WithOne()
-            .OnDelete(DeleteBehavior.Restrict);
-        */
+            builder.Property(c => c.Nickname)
+                .HasMaxLength(50);
+
+            builder.Property(c => c.Title)
+                .HasMaxLength(100);
+
+            builder.Property(c => c.HairColor)
+                .HasMaxLength(50);
+
+            builder.Property(c => c.EyeColor)
+                .HasMaxLength(50);
+
+            builder.Property(c => c.SpecialPhysicalFeatures)
+                .HasMaxLength(500);
+
+            // Indeksi za brže pretraživanje (bazna klasa dodaje (WorldId, Name))
+            builder.HasIndex(c => c.FirstName);
+            builder.HasIndex(c => c.LastName);
+
+            // Self-referencing family relationships — Restrict: SQL Server ne dopušta
+            // cascade na self-ref; CharacterRepository.DeleteAsync prvo nulira FatherId/MotherId
+            builder.HasOne(c => c.Father)
+                .WithMany()
+                .HasForeignKey(c => c.FatherId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(c => c.Mother)
+                .WithMany()
+                .HasForeignKey(c => c.MotherId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Species/Race — Restrict: brisanje vrste/rase u upotrebi je friendly app greška
+            builder.HasOne(c => c.SapientSpecies)
+                .WithMany()
+                .HasForeignKey(c => c.SapientSpeciesId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(c => c.Race)
+                .WithMany()
+                .HasForeignKey(c => c.RaceId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.ToTable(t =>
+            {
+                t.HasCheckConstraint("CK_Characters_Father_NotSelf", "[FatherId] <> [Id]");
+                t.HasCheckConstraint("CK_Characters_Mother_NotSelf", "[MotherId] <> [Id]");
+            });
+        }
     }
 }

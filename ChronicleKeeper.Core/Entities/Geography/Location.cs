@@ -1,46 +1,38 @@
-﻿using ChronicleKeeper.Core.Entities.Base;
-using ChronicleKeeper.Core.Entities.Characters.Equipment;
-using ChronicleKeeper.Core.Entities.Geography.Climate;
-using ChronicleKeeper.Core.Entities.HistoryTimelines;
-using ChronicleKeeper.Core.Entities.Social.Cultures;
-using ChronicleKeeper.Core.Entities.Social.Economy;
-using ChronicleKeeper.Core.Entities.Social.Religions;
-using ChronicleKeeper.Core.Interfaces;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using ChronicleKeeper.Core.Entities.Base;
+using ChronicleKeeper.Core.Entities.Tags;
+//using ChronicleKeeper.Core.Entities.Characters.Equipment;
+//using ChronicleKeeper.Core.Entities.Geography.Climate;
+//using ChronicleKeeper.Core.Entities.HistoryTimelines;
+//using ChronicleKeeper.Core.Entities.Social.Cultures;
+//using ChronicleKeeper.Core.Entities.Social.Economy;
+//using ChronicleKeeper.Core.Entities.Social.Religions;
+using static ChronicleKeeper.Core.Enums.LoreEnums;
 
 namespace ChronicleKeeper.Core.Entities.Geography
 {
-    public abstract class Location : ILoreEntity
+    public class Location : LoreEntity
     {
-        [Key]
-        public int Id { get; set; }
-        [Required]
-        public string Name { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
-        [Required]
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        [Required]
-        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
-        public virtual History? History { get; set; }
+        public LocationType Type { get; set; }
 
-        public double Area { get; set; }  // Površina u km²
-        public int Population { get; set; }  // Broj stanovnika
-        public double Latitude { get; set; }
-        public double Longitude { get; set; }
+        public double? Area { get; set; }  // Površina u km²
+        public int? Population { get; set; }  // Broj stanovnika
+        public double? Latitude { get; set; }
+        public double? Longitude { get; set; }
 
-        public ICollection<ClimateZone> ClimateConditions { get; set; } = new List<ClimateZone>();
-        public ICollection<NaturalResource> NaturalResources { get; set; } = new List<NaturalResource>();
-        public ICollection<Location> SubLocations { get; set; } = new List<Location>(); // Regije, gradovi, distrikti unutar lokacije
-        public ICollection<Item> Items { get; set; } = new List<Item>();
-        public ICollection<CulturalFestival> Festivals { get; set; } = new List<CulturalFestival>();
-        public ICollection<HolySite> HolySites { get; set; } = new List<HolySite>();
-
+        // Hierarchy (self-referencing): regije, gradovi, distrikti unutar lokacije
         public int? ParentLocationId { get; set; }
-        public Location? ParentLocation { get; set; }
+        public virtual Location? ParentLocation { get; set; }
+        public virtual ICollection<Location> SubLocations { get; set; } = new List<Location>();
 
-        public ICollection<TimelineEvent> TimelineEvents { get; set; } = new List<TimelineEvent>();
-        public ICollection<TradeRoute> TradeRoutes { get; set; } = new List<TradeRoute>();
+        // Tags
+        public virtual ICollection<LocationTag> Tags { get; set; } = new List<LocationTag>();
 
+        //public ICollection<ClimateZone> ClimateConditions { get; set; } = new List<ClimateZone>(); // TODO: Uncomment when ClimateZone entity is revived
+        //public ICollection<NaturalResource> NaturalResources { get; set; } = new List<NaturalResource>(); // TODO: Uncomment when NaturalResource entity is revived
+        //public ICollection<Item> Items { get; set; } = new List<Item>(); // TODO: Uncomment when Item entity is revived
+        //public ICollection<CulturalFestival> Festivals { get; set; } = new List<CulturalFestival>(); // TODO: Uncomment when CulturalFestival entity is revived
+        //public ICollection<HolySite> HolySites { get; set; } = new List<HolySite>(); // TODO: Uncomment when HolySite entity is revived
+        //public ICollection<TimelineEvent> TimelineEvents { get; set; } = new List<TimelineEvent>(); // TODO: Uncomment when TimelineEvent gets its Location link
+        //public ICollection<TradeRoute> TradeRoutes { get; set; } = new List<TradeRoute>(); // TODO: Uncomment when TradeRoute entity is revived
     }
 }

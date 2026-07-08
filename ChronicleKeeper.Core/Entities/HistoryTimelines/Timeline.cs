@@ -1,24 +1,15 @@
-﻿using ChronicleKeeper.Core.Entities.Base;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
+using ChronicleKeeper.Core.Entities.Base;
 
 namespace ChronicleKeeper.Core.Entities.HistoryTimelines
 {
-    public class Timeline
+    /// <summary>
+    /// A named era/period of a world's history (Name from LoreEntity, e.g. "Golden Age").
+    /// </summary>
+    public class Timeline : LoreEntity
     {
-        public int Id { get; set; }
+        public virtual ICollection<TimelineEvent> Events { get; set; } = new List<TimelineEvent>();
 
-        [Required]
-        public string PeriodName { get; set; } = string.Empty; // e.g., "Golden Age", "Dark Era"
-        public DateTime StartDate { get; set; }
-        public DateTime? EndDate { get; set; } // Can be ongoing if null
-
-        //[ForeignKey("History")]
-        public int HistoryId { get; set; }// ✅ Linked to a historical record
-        public History History { get; set; } = null!;
-
-        public ICollection<TimelineEvent> Events { get; set; } = new List<TimelineEvent>(); // ✅ Historical events in order??
+        //public int HistoryId { get; set; } // TODO: Uncomment when History entity is revived
+        //public History History { get; set; } = null!;
     }
-
 }

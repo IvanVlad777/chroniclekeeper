@@ -1,48 +1,41 @@
-﻿using ChronicleKeeper.Core.Entities.Base;
-using ChronicleKeeper.Core.Entities.Social.Politics;
-using ChronicleKeeper.Core.Entities.Social.Religions;
-using ChronicleKeeper.Core.Entities.Social.Economy;
-using ChronicleKeeper.Core.Entities.Social.Military;
+using ChronicleKeeper.Core.Entities.Base;
 using ChronicleKeeper.Core.Entities.Characters;
 using ChronicleKeeper.Core.Entities.Geography;
+using ChronicleKeeper.Core.Entities.Tags;
+//using ChronicleKeeper.Core.Entities.Characters.Equipment;
+//using ChronicleKeeper.Core.Entities.HistoryTimelines;
+//using ChronicleKeeper.Core.Entities.Social.Economy;
+//using ChronicleKeeper.Core.Entities.Social.Military;
+//using ChronicleKeeper.Core.Entities.Social.Politics;
+//using ChronicleKeeper.Core.Entities.Social.Religions;
 using static ChronicleKeeper.Core.Enums.SocietyEnums;
-using ChronicleKeeper.Core.Entities.Characters.Equipment;
-using System.ComponentModel.DataAnnotations.Schema;
-using ChronicleKeeper.Core.Interfaces;
-using ChronicleKeeper.Core.Entities.HistoryTimelines;
-using System.ComponentModel.DataAnnotations;
 
 namespace ChronicleKeeper.Core.Entities.Social
 {
-    public class Faction : ILoreEntity
+    public class Faction : LoreEntity
     {
-        [Key]
-        public int Id { get; set; }
-        [Required]
-        public string Name { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
-        [Required]
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        [Required]
-        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
-        public virtual History? History { get; set; }
-
         public FactionType Type { get; set; } // Political, Religious, Military, Economic
         public bool IsSecretive { get; set; } // If their existence is hidden
+        public string Motto { get; set; } = string.Empty;
 
-        public ICollection<Character> Members { get; set; } = new List<Character>(); // Characters belonging to this faction
-        public ICollection<Country> OperatesInCountries { get; set; } = new List<Country>(); // Which countries allow or oppose them
-        public ICollection<City> OperatesInCities { get; set; } = new List<City>(); // Which cities allow or oppose them
-        public ICollection<Guild> ConnectedGuilds { get; set; } = new List<Guild>(); // If tied to a profession
-        public ICollection<PoliticalParty> PoliticalConnections { get; set; } = new List<PoliticalParty>(); // If they influence governments
-        public ICollection<ReligiousOrder> ReligiousConnections { get; set; } = new List<ReligiousOrder>(); // If tied to a faith
-        public ICollection<Corporation> FinancialBackers { get; set; } = new List<Corporation>(); // If backed by economic groups
-        public ICollection<Item> NotableItemsInPossesion { get; set; } = new List<Item>(); // If tied to military power
+        public int? LeaderId { get; set; }
+        public virtual Character? Leader { get; set; }
 
-        public ICollection<MilitaryOrganization> MilitaryConnections { get; set; } = new List<MilitaryOrganization>(); // If tied to military power
+        public int? HeadquartersId { get; set; }
+        public virtual Location? Headquarters { get; set; }
 
-        //[ForeignKey("Army")]
-        //public int? ArmyId { get; set; }
-        public Army? Army { get; set; }
+        public virtual ICollection<FactionMember> Members { get; set; } = new List<FactionMember>();
+        public virtual ICollection<FactionTag> Tags { get; set; } = new List<FactionTag>();
+
+        //public ICollection<Country> OperatesInCountries { get; set; } = new List<Country>(); // TODO: Uncomment when Country entity is revived
+        //public ICollection<City> OperatesInCities { get; set; } = new List<City>(); // TODO: Uncomment when City entity is revived
+        //public ICollection<Guild> ConnectedGuilds { get; set; } = new List<Guild>(); // TODO: Uncomment when Guild entity is revived
+        //public ICollection<PoliticalParty> PoliticalConnections { get; set; } = new List<PoliticalParty>(); // TODO: Uncomment when PoliticalParty entity is revived
+        //public ICollection<ReligiousOrder> ReligiousConnections { get; set; } = new List<ReligiousOrder>(); // TODO: Uncomment when ReligiousOrder entity is revived
+        //public ICollection<Corporation> FinancialBackers { get; set; } = new List<Corporation>(); // TODO: Uncomment when Corporation entity is revived
+        //public ICollection<Item> NotableItemsInPossesion { get; set; } = new List<Item>(); // TODO: Uncomment when Item entity is revived
+        //public ICollection<MilitaryOrganization> MilitaryConnections { get; set; } = new List<MilitaryOrganization>(); // TODO: Uncomment when MilitaryOrganization entity is revived
+        //public int? ArmyId { get; set; } // TODO: Uncomment when Army entity is revived
+        //public Army? Army { get; set; }
     }
 }

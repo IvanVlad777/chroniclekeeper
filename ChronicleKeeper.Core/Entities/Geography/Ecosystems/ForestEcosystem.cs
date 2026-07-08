@@ -5,6 +5,6 @@ namespace ChronicleKeeper.Core.Entities.Geography.Ecosystems
 {
     public class ForestEcosystem : Ecosystem
     {
-        public ForestType Type { get; set; } // Enum: Rainforest, Boreal, etc.
+        public new ForestType Type { get; set; } // Enum: Rainforest, Boreal, etc.
     }
 }

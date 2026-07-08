@@ -31,14 +31,15 @@ namespace ChronicleKeeperAPI.Controllers
             _logger = logger;
         }
 
-        // GET: /api/characters
+        // GET: /api/characters?worldId=1
         [HttpGet]
-        [SwaggerOperation(Summary = "Get all characters", Description = "Returns a list of all characters")]
+        [Authorize]
+        [SwaggerOperation(Summary = "Get characters", Description = "Returns characters, optionally filtered by world")]
         [SwaggerResponse(200, "List of characters", typeof(IEnumerable<CharacterDto>))]
-        public async Task<ActionResult<IEnumerable<CharacterDto>>> GetAll()
+        public async Task<ActionResult<IEnumerable<CharacterDto>>> GetAll([FromQuery] int? worldId = null)
         {
-            _logger.LogInformation("API: Fetching all characters");
-            var query = new GetAllCharactersQuery();
+            _logger.LogInformation("API: Fetching characters (worldId: {WorldId})", worldId);
+            var query = new GetAllCharactersQuery { WorldId = worldId };
             var characters = await _mediator.Send(query);
             _logger.LogInformation("API: Returned {Count} characters", characters.Count);
             return Ok(characters);
@@ -46,6 +47,7 @@ namespace ChronicleKeeperAPI.Controllers
 
         // GET: /api/characters/{id}
         [HttpGet("{id}")]
+        [Authorize]
         [SwaggerOperation(Summary = "Get character by ID", Description = "Returns detailed character info")]
         [SwaggerResponse(200, "Character found", typeof(CharacterDto))]
         [SwaggerResponse(404, "Character not found")]
@@ -102,19 +104,12 @@ namespace ChronicleKeeperAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            try
-            {
-                _logger.LogInformation("API: Updating character with ID {Id}", id);
-                var command = new UpdateCharacterCommand { Id = id, CharacterUpdateDto = dto };
-                var result = await _mediator.Send(command);
-                _logger.LogInformation("API: Updated character with ID {Id}", id);
-                return Ok(result);
-            }
-            catch (InvalidOperationException ex)
-            {
-                _logger.LogWarning("API: Character with ID {Id} not found for update", id);
-                return NotFound(ex.Message);
-            }
+            // Missing id → EntityNotFoundException → 404 kroz GlobalExceptionMiddleware
+            _logger.LogInformation("API: Updating character with ID {Id}", id);
+            var command = new UpdateCharacterCommand { Id = id, CharacterUpdateDto = dto };
+            var result = await _mediator.Send(command);
+            _logger.LogInformation("API: Updated character with ID {Id}", id);
+            return Ok(result);
         }
 
         // DELETE: /api/characters/{id}
