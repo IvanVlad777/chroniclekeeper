@@ -1,38 +1,12 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { ColumnDef, DataTable } from "../../../basic/table/DataTable";
+import { CharacterDto } from "../../../../interfaces/loreInterfaces";
+import { getCharacters } from "../../../../api/characters";
+import { useWorld } from "../../../../hooks/useWorld";
 
-type Character = {
-    id: number;
-    name: string;
-    role?: string;
-    faction?: string;
-    createdAt?: string;
-};
-
-const DATA: Character[] = [
-    {
-        id: 1,
-        name: "Eli",
-        role: "Protagonist",
-        faction: "Flora",
-        createdAt: "2025-05-01",
-    },
-    {
-        id: 2,
-        name: "Mihael",
-        role: "Knight",
-        faction: "Kanmarski red",
-        createdAt: "2025-06-10",
-    },
-    {
-        id: 3,
-        name: "Silvia",
-        role: "Healer",
-        faction: "Erelar",
-        createdAt: "2025-04-20",
-    },
-];
-
-const columns: ColumnDef<Character>[] = [
+const columns: ColumnDef<CharacterDto>[] = [
     {
         id: "id",
         header: "ID",
@@ -41,26 +15,72 @@ const columns: ColumnDef<Character>[] = [
         searchable: false,
     },
     { id: "name", header: "Name", accessor: (r) => r.name },
-    { id: "role", header: "Role", accessor: (r) => r.role ?? "" },
-    { id: "faction", header: "Faction", accessor: (r) => r.faction ?? "" },
-    // auto će prepoznati kao "date" jer je ISO string; možeš i prisiliti sortType: 'date'
-    { id: "createdAt", header: "Created", accessor: (r) => r.createdAt ?? "" },
+    { id: "title", header: "Title", accessor: (r) => r.title ?? "" },
+    {
+        id: "createdAt",
+        header: "Created",
+        accessor: (r) => r.createdAt ?? "",
+        sortType: "date",
+        cell: (value) =>
+            value ? new Date(String(value)).toLocaleDateString() : "",
+    },
 ];
 
 export default function CharactersList() {
+    const navigate = useNavigate();
+    const { t } = useTranslation("character");
+    const { selectedWorld, loading: worldLoading } = useWorld();
+
+    const [characters, setCharacters] = useState<CharacterDto[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (worldLoading) return;
+        if (!selectedWorld) {
+            setCharacters([]);
+            setLoading(false);
+            return;
+        }
+
+        let cancelled = false;
+        setLoading(true);
+        setError(null);
+
+        getCharacters(selectedWorld.id)
+            .then((data) => {
+                if (!cancelled) setCharacters(data);
+            })
+            .catch((err) => {
+                console.error("Failed to load characters:", err);
+                if (!cancelled) setError(t("loaderror") || "Failed to load characters");
+            })
+            .finally(() => {
+                if (!cancelled) setLoading(false);
+            });
+
+        return () => {
+            cancelled = true;
+        };
+    }, [selectedWorld, worldLoading, t]);
+
+    if (worldLoading || loading) return <p>{t("loading") || "Loading…"}</p>;
+    if (error) return <p>{error}</p>;
+    if (!selectedWorld) return <p>{t("noworld") || "Select a world first."}</p>;
+
     return (
-        <DataTable<Character>
-            data={DATA}
+        <DataTable<CharacterDto>
+            data={characters}
             columns={columns}
             getRowId={(r) => String(r.id)}
             onRowClick={(row) => {
-                window.location.href = `/dashboard/characters/${row.id}`;
+                navigate(`/storymap/characters/${row.id}`);
             }}
             initialSort={{ id: "name", desc: false }}
             pageSize={10}
             enableSearch
             showIndexColumn
-            searchPlaceholder="Traži likove…"
+            searchPlaceholder={t("search") || "Search characters…"}
         />
     );
 }

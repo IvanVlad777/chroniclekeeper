@@ -9,5 +9,7 @@
     "adminaccess": "Imate administratorski pristup",
     "useraccess": "Gost",
     "overview": "Pregled",
-    "character": "Likovi"
+    "character": "Likovi",
+    "world": "Svijet",
+    "noworlds": "Još nema svjetova"
 }

@@ -7,6 +7,7 @@ import NoPage from "../pages/NoPage";
 import Overview from "../components/entityViews/overview/Overview";
 import CharactersList from "../components/entityViews/character/list/CharacterList";
 import CharacterDetail from "../components/entityViews/character/detail/CharacterDetails";
+import { WorldProvider } from "../context/world/WorldProvider";
 
 const AppRoutes = () => {
     return (
@@ -18,7 +19,9 @@ const AppRoutes = () => {
                 path="/storymap"
                 element={
                     <ProtectedRoute>
-                        <StoryMapPage />
+                        <WorldProvider>
+                            <StoryMapPage />
+                        </WorldProvider>
                     </ProtectedRoute>
                 }
             >

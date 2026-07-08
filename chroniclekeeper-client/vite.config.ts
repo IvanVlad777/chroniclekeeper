@@ -7,7 +7,8 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http://localhost:5000",
+        // dotnet run (http profil) sluša na 5274; Docker API na 5000
+        target: "http://localhost:5274",
         changeOrigin: true,
         secure: false,
       },

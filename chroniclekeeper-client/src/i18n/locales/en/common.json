@@ -1,4 +1,4 @@
-{
+﻿{
     "title": "Chronicle Keeper",
     "storymap": "Story Map",
     "loggedinas": "Logged in as",
@@ -9,5 +9,7 @@
     "adminaccess": "You have admin access",
     "useraccess": "Guest",
     "overview": "Overview",
-    "character": "Characters"
+    "character": "Characters",
+    "world": "World",
+    "noworlds": "No worlds yet"
 }
