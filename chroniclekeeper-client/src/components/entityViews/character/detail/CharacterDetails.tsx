@@ -1,11 +1,31 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, type FormEvent } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Button, OrnateDisplayBox, StatusPill, Tag } from "../../../ornate";
+import {
+    Button,
+    OrnateCheckbox,
+    OrnateDisplayBox,
+    OrnateField,
+    OrnateSelect,
+    OrnateTextInput,
+    StatusPill,
+} from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
-import { CharacterDetailsDto } from "../../../../interfaces/loreInterfaces";
-import { getCharacter } from "../../../../api/characters";
+import { TagEditor } from "../../../tagging/TagEditor";
+import {
+    CharacterDetailsDto,
+    CharacterDto,
+    RelationshipType,
+    relationshipTypes,
+} from "../../../../interfaces/loreInterfaces";
+import {
+    addRelationship,
+    getCharacter,
+    getCharacters,
+    removeRelationship,
+} from "../../../../api/characters";
 import { useAuth } from "../../../../hooks/useAuth";
+import { apiErrorMessage } from "../../../../utils/apiError";
 import s from "./styles.module.css";
 
 const editorRoles = ["Editor", "Admin", "SuperAdmin"];
@@ -26,6 +46,19 @@ export default function CharacterDetail() {
     const [notFound, setNotFound] = useState(false);
     const [reloadKey, setReloadKey] = useState(0);
     const refetch = useCallback(() => setReloadKey((k) => k + 1), []);
+
+    // Likovi svijeta za select nove veze (učitava se samo za editore)
+    const [worldCharacters, setWorldCharacters] = useState<CharacterDto[]>([]);
+
+    // Inline forma za novu vezu
+    const [relOpen, setRelOpen] = useState(false);
+    const [relTarget, setRelTarget] = useState("");
+    const [relType, setRelType] = useState<RelationshipType>("Friend");
+    const [relDescription, setRelDescription] = useState("");
+    const [relSecret, setRelSecret] = useState(false);
+    const [relError, setRelError] = useState<string | null>(null);
+
+    const [busy, setBusy] = useState(false);
 
     useEffect(() => {
         const characterId = Number(id);
@@ -62,6 +95,61 @@ export default function CharacterDetail() {
         };
     }, [id, t, reloadKey]);
 
+    // Editorima trebaju likovi svijeta za add-formu veze
+    useEffect(() => {
+        if (!canEdit || !character) return;
+        let cancelled = false;
+        getCharacters(character.worldId)
+            .then((chars) => {
+                if (!cancelled) setWorldCharacters(chars);
+            })
+            .catch((err) =>
+                console.error("Failed to load world characters:", err)
+            );
+        return () => {
+            cancelled = true;
+        };
+    }, [canEdit, character?.id, character?.worldId, reloadKey]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    async function onAddRelationship(e: FormEvent) {
+        e.preventDefault();
+        if (!character || !relTarget) return;
+        setRelError(null);
+        setBusy(true);
+        try {
+            await addRelationship(character.id, {
+                relatedCharacterId: Number(relTarget),
+                type: relType,
+                description: relDescription.trim(),
+                isSecret: relSecret,
+            });
+            setRelOpen(false);
+            setRelTarget("");
+            setRelType("Friend");
+            setRelDescription("");
+            setRelSecret(false);
+            refetch();
+        } catch (err) {
+            console.error("Failed to add relationship:", err);
+            setRelError(apiErrorMessage(err, t("rel.addFailed")));
+        } finally {
+            setBusy(false);
+        }
+    }
+
+    async function onRemoveRelationship(relationshipId: number) {
+        if (!character) return;
+        setBusy(true);
+        try {
+            await removeRelationship(character.id, relationshipId);
+            refetch();
+        } catch (err) {
+            console.error("Failed to remove relationship:", err);
+            setRelError(apiErrorMessage(err, t("rel.removeFailed")));
+            setBusy(false);
+        }
+    }
+
     if (loading) return <LoadingSkeleton variant="block" rows={6} />;
     if (notFound) {
         return (
@@ -92,21 +180,18 @@ export default function CharacterDetail() {
         .join(" · ");
     const status = character.deathDate ? "dead" : "living";
 
-    const facts: { label: string; value: string }[] = [
-        { label: t("lifespan"), value: lifespan },
-        { label: t("haircolor"), value: character.hairColor || dash },
-        { label: t("eyecolor"), value: character.eyeColor || dash },
-        {
-            label: t("height"),
-            value: character.height != null ? String(character.height) : dash,
-        },
-        {
-            label: t("weight"),
-            value: character.weight != null ? String(character.weight) : dash,
-        },
-        { label: t("father"), value: character.father?.name ?? dash },
-        { label: t("mother"), value: character.mother?.name ?? dash },
-    ];
+    const parentLink = (ref?: { id: number; name: string } | null) =>
+        ref ? (
+            <Link to={`/storymap/characters/${ref.id}`} className={s.relLink}>
+                {ref.name}
+            </Link>
+        ) : (
+            dash
+        );
+
+    const relCandidates = worldCharacters.filter(
+        (c) => c.id !== character.id
+    );
 
     return (
         <div className={s.page}>
@@ -156,21 +241,52 @@ export default function CharacterDetail() {
                         {character.name?.charAt(0)}
                     </div>
                     <div className={s.facts}>
-                        {facts.map((f) => (
-                            <OrnateDisplayBox
-                                key={f.label}
-                                label={f.label}
-                                value={f.value}
-                            />
-                        ))}
+                        <OrnateDisplayBox
+                            label={t("lifespan")}
+                            value={lifespan}
+                        />
+                        <OrnateDisplayBox
+                            label={t("haircolor")}
+                            value={character.hairColor || dash}
+                        />
+                        <OrnateDisplayBox
+                            label={t("eyecolor")}
+                            value={character.eyeColor || dash}
+                        />
+                        <OrnateDisplayBox
+                            label={t("height")}
+                            value={
+                                character.height != null
+                                    ? String(character.height)
+                                    : dash
+                            }
+                        />
+                        <OrnateDisplayBox
+                            label={t("weight")}
+                            value={
+                                character.weight != null
+                                    ? String(character.weight)
+                                    : dash
+                            }
+                        />
+                        <OrnateDisplayBox
+                            label={t("father")}
+                            value={parentLink(character.father)}
+                        />
+                        <OrnateDisplayBox
+                            label={t("mother")}
+                            value={parentLink(character.mother)}
+                        />
                     </div>
-                    {character.tags.length > 0 && (
-                        <div className={s.tags}>
-                            {character.tags.map((tag) => (
-                                <Tag key={tag.id}>{tag.name}</Tag>
-                            ))}
-                        </div>
-                    )}
+
+                    <TagEditor
+                        worldId={character.worldId}
+                        targetType="Character"
+                        targetId={character.id}
+                        tags={character.tags}
+                        canEdit={canEdit}
+                        onChanged={refetch}
+                    />
                 </div>
 
                 <div>
@@ -220,14 +336,26 @@ export default function CharacterDetail() {
                         <div>
                             <div className={s.listLabel}>
                                 {t("relationships")}
+                                {canEdit && !relOpen && (
+                                    <button
+                                        type="button"
+                                        className={s.addInline}
+                                        onClick={() => setRelOpen(true)}
+                                    >
+                                        + {t("rel.add")}
+                                    </button>
+                                )}
                             </div>
-                            {character.relationships.length === 0 ? (
+                            {character.relationships.length === 0 &&
+                            !relOpen ? (
                                 <p className={s.none}>{t("none")}</p>
                             ) : (
                                 character.relationships.map((r) => (
                                     <div key={r.id} className={s.listRow}>
                                         <span className={s.relType}>
-                                            {r.type}
+                                            {t(`relTypes.${r.type}`, {
+                                                defaultValue: r.type,
+                                            })}
                                         </span>
                                         <Link
                                             to={`/storymap/characters/${r.relatedCharacterId}`}
@@ -235,8 +363,121 @@ export default function CharacterDetail() {
                                         >
                                             {r.relatedCharacterName}
                                         </Link>
+                                        {canEdit && (
+                                            <button
+                                                type="button"
+                                                className={s.chipRemove}
+                                                aria-label={t("rel.remove")}
+                                                disabled={busy}
+                                                onClick={() =>
+                                                    onRemoveRelationship(r.id)
+                                                }
+                                            >
+                                                ×
+                                            </button>
+                                        )}
                                     </div>
                                 ))
+                            )}
+                            {relOpen && (
+                                <form
+                                    className={s.miniForm}
+                                    onSubmit={onAddRelationship}
+                                >
+                                    <OrnateField
+                                        label={t("rel.target")}
+                                        required
+                                    >
+                                        <OrnateSelect
+                                            value={relTarget}
+                                            onChange={(e) =>
+                                                setRelTarget(e.target.value)
+                                            }
+                                        >
+                                            <option value="">
+                                                {t("none")}
+                                            </option>
+                                            {relCandidates.map((c) => (
+                                                <option
+                                                    key={c.id}
+                                                    value={c.id}
+                                                >
+                                                    {c.name}
+                                                </option>
+                                            ))}
+                                        </OrnateSelect>
+                                    </OrnateField>
+                                    <OrnateField label={t("rel.type")}>
+                                        <OrnateSelect
+                                            value={relType}
+                                            onChange={(e) =>
+                                                setRelType(
+                                                    e.target
+                                                        .value as RelationshipType
+                                                )
+                                            }
+                                        >
+                                            {relationshipTypes.map((rt) => (
+                                                <option key={rt} value={rt}>
+                                                    {t(`relTypes.${rt}`)}
+                                                </option>
+                                            ))}
+                                        </OrnateSelect>
+                                    </OrnateField>
+                                    <OrnateField
+                                        label={t("rel.description")}
+                                    >
+                                        <OrnateTextInput
+                                            value={relDescription}
+                                            maxLength={500}
+                                            onChange={(e) =>
+                                                setRelDescription(
+                                                    e.target.value
+                                                )
+                                            }
+                                        />
+                                    </OrnateField>
+                                    <OrnateCheckbox
+                                        label={t("rel.secret")}
+                                        checked={relSecret}
+                                        onChange={(e) =>
+                                            setRelSecret(e.target.checked)
+                                        }
+                                    />
+                                    {relError && (
+                                        <p
+                                            className={s.miniError}
+                                            role="alert"
+                                        >
+                                            {relError}
+                                        </p>
+                                    )}
+                                    <div className={s.miniActions}>
+                                        <Button
+                                            variant="ghost"
+                                            size="sm"
+                                            disabled={busy}
+                                            onClick={() => {
+                                                setRelOpen(false);
+                                                setRelError(null);
+                                            }}
+                                        >
+                                            {t("form.cancel")}
+                                        </Button>
+                                        <Button
+                                            type="submit"
+                                            size="sm"
+                                            disabled={busy || !relTarget}
+                                        >
+                                            {t("rel.addConfirm")}
+                                        </Button>
+                                    </div>
+                                </form>
+                            )}
+                            {!relOpen && relError && (
+                                <p className={s.miniError} role="alert">
+                                    {relError}
+                                </p>
                             )}
                         </div>
                     </div>

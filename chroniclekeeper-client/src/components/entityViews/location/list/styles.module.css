@@ -1,0 +1,72 @@
+.page {
+    padding: 30px 34px;
+}
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 14px;
+}
+
+.filterChip {
+    padding: 7px 13px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--o-radius-sm);
+    background: transparent;
+    font-family: var(--font-ui);
+    font-size: 12.5px;
+    color: var(--color-muted);
+    cursor: pointer;
+    transition: border-color var(--o-transition), color var(--o-transition);
+}
+
+.filterChip:hover {
+    color: var(--color-text);
+    border-color: var(--o-border-strong);
+}
+
+.filterChipActive {
+    border-color: var(--color-accent);
+    background: var(--color-accent-soft);
+    color: var(--color-accent);
+}
+
+.nameCell {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.glyph {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background: var(--color-sunken);
+    border: 1px solid var(--color-border);
+    flex: none;
+    color: var(--color-accent);
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.name {
+    font-family: var(--font-display);
+    font-size: 15.5px;
+}
+
+.type {
+    color: var(--color-muted);
+    font-size: 13px;
+}
+
+.population {
+    font-variant-numeric: tabular-nums;
+}
+
+.updated {
+    color: var(--color-muted);
+    font-size: 12.5px;
+}

@@ -1,0 +1,54 @@
+{
+    "listTitle": "Timelines",
+    "search": "Search timelines…",
+    "loaderror": "Failed to load",
+    "notfound": "Timeline not found",
+    "none": "None",
+    "backtolist": "Back to timelines",
+    "emptyTitle": "No timelines yet",
+    "emptyText": "Ages, wars, dynasties — chart the history of your world. Create the first timeline to start the chronology.",
+    "columns": {
+        "name": "Name",
+        "description": "Description",
+        "updated": "Updated"
+    },
+    "fields": {
+        "description": "Description"
+    },
+    "events": {
+        "label": "Events",
+        "add": "Event",
+        "addTitle": "New event",
+        "editTitle": "Edit event",
+        "name": "Title",
+        "date": "In-world date",
+        "dateHint": "Free text — “Year 512, Third Age”…",
+        "sortOrder": "Order",
+        "sortOrderHint": "Events are sorted by this number, ascending.",
+        "description": "Description",
+        "consequences": "Consequences",
+        "major": "Major event",
+        "save": "Save event",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete event “{{name}}”?",
+        "requiredMissing": "Event title is required.",
+        "saveFailed": "Saving the event failed.",
+        "deleteFailed": "Deleting the event failed.",
+        "empty": "No events yet — add the first moment of this chronology."
+    },
+    "form": {
+        "newTitle": "New timeline",
+        "editTitle": "Edit timeline",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "save": "Save timeline",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}” and all its events? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

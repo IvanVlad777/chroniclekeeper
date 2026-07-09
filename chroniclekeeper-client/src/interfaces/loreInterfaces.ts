@@ -45,6 +45,104 @@ export interface RaceDto {
     updatedAt: string;
 }
 
+export interface SpeciesDetailsDto extends SpeciesDto {
+    races: RaceDto[];
+}
+
+export interface SpeciesCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    commonName: string;
+    scientificName: string;
+    isHumanoid: boolean;
+    lifespan: string;
+}
+
+export type SpeciesUpdateDto = Omit<SpeciesCreateDto, "worldId">;
+
+/** Svijet rase izvodi se iz vrste — ne šalje se worldId. */
+export interface RaceCreateDto {
+    name: string;
+    description: string;
+    sapientSpeciesId: number;
+    appearanceTraits: string;
+    geneticFeatures: string;
+    adaptations: string;
+}
+
+/** Vrsta rase se ne mijenja (backend invarijanta) — zato bez sapientSpeciesId. */
+export type RaceUpdateDto = Omit<RaceCreateDto, "sapientSpeciesId">;
+
+export interface TimelineDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface TimelineEventDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    timelineId: number;
+    /** Slobodan in-world datum, npr. "Godina 512, Treće doba". */
+    date: string;
+    sortOrder: number;
+    consequences: string;
+    isMajorEvent: boolean;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface TimelineDetailsDto extends TimelineDto {
+    /** Eventi poredani po sortOrder. */
+    events: TimelineEventDto[];
+}
+
+export interface TimelineCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+}
+
+export type TimelineUpdateDto = Omit<TimelineCreateDto, "worldId">;
+
+/** Svijet eventa izvodi se iz timelinea — ne šalje se worldId. */
+export interface TimelineEventCreateDto {
+    name: string;
+    description: string;
+    date: string;
+    sortOrder: number;
+    consequences: string;
+    isMajorEvent: boolean;
+}
+
+export type TimelineEventUpdateDto = TimelineEventCreateDto;
+
+export interface NoteDto {
+    id: number;
+    /** Naslov bilješke. */
+    name: string;
+    description: string;
+    worldId: number;
+    content: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface NoteCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    content: string;
+}
+
+export type NoteUpdateDto = Omit<NoteCreateDto, "worldId">;
+
 export interface CharacterDto {
     id: number;
     name: string;
@@ -68,6 +166,124 @@ export interface CharacterDto {
     motherId?: number | null;
     sapientSpeciesId?: number | null;
     raceId?: number | null;
+}
+
+export const locationTypes = [
+    "Continent",
+    "Region",
+    "Country",
+    "City",
+    "Town",
+    "Village",
+    "District",
+    "Building",
+    "Landmark",
+    "Wilderness",
+    "Other",
+] as const;
+export type LocationType = (typeof locationTypes)[number];
+
+export interface LocationDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    type: LocationType;
+    area?: number | null;
+    population?: number | null;
+    latitude?: number | null;
+    longitude?: number | null;
+    parentLocationId?: number | null;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface LocationDetailsDto extends LocationDto {
+    parentLocation?: ReferenceDto | null;
+    subLocations: ReferenceDto[];
+    tags: ReferenceDto[];
+}
+
+export interface LocationCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    type: LocationType;
+    area?: number | null;
+    population?: number | null;
+    latitude?: number | null;
+    longitude?: number | null;
+    parentLocationId?: number | null;
+}
+
+export type LocationUpdateDto = Omit<LocationCreateDto, "worldId">;
+
+export const factionTypes = [
+    "CriminalSyndicate",
+    "ReligiousSect",
+    "PoliticalMovement",
+    "MercenaryCompany",
+    "TradeConsortium",
+    "ResistanceGroup",
+    "SecretSociety",
+    "KnightlyOrder",
+    "ScholarSociety",
+    "ArcaneCoven",
+    "TechnologicalUnion",
+    "MilitaryAlliance",
+    "PirateBrotherhood",
+    "DiplomaticLeague",
+    "RadicalExtremist",
+    "Adventurers",
+] as const;
+export type FactionType = (typeof factionTypes)[number];
+
+export interface FactionDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    type: FactionType;
+    isSecretive: boolean;
+    motto: string;
+    leaderId?: number | null;
+    headquartersId?: number | null;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface FactionMemberDto {
+    id: number;
+    characterId: number;
+    characterName: string;
+    role: string;
+    isSecret: boolean;
+}
+
+export interface FactionDetailsDto extends FactionDto {
+    leader?: ReferenceDto | null;
+    headquarters?: ReferenceDto | null;
+    members: FactionMemberDto[];
+    tags: ReferenceDto[];
+}
+
+export interface FactionCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    type: FactionType;
+    isSecretive: boolean;
+    motto: string;
+    leaderId?: number | null;
+    headquartersId?: number | null;
+}
+
+export type FactionUpdateDto = Omit<FactionCreateDto, "worldId">;
+
+export interface FactionMemberAddDto {
+    characterId: number;
+    role: string;
+    isSecret: boolean;
 }
 
 /** POST /characters — create prima samo osnovna polja; ostatak ide kroz PUT. */
@@ -108,6 +324,21 @@ export interface CharacterUpdateDto {
     motherId?: number | null;
 }
 
+/** Enumi putuju kao stringovi (globalni JsonStringEnumConverter na API-ju). */
+export const relationshipTypes = [
+    "Friend",
+    "Enemy",
+    "Rival",
+    "Ally",
+    "Mentor",
+    "Student",
+    "RomanticPartner",
+    "Spouse",
+    "ExPartner",
+    "Other",
+] as const;
+export type RelationshipType = (typeof relationshipTypes)[number];
+
 export interface CharacterRelationshipDto {
     id: number;
     relatedCharacterId: number;
@@ -115,6 +346,40 @@ export interface CharacterRelationshipDto {
     type: string;
     description: string;
     isSecret: boolean;
+}
+
+export interface CharacterRelationshipCreateDto {
+    relatedCharacterId: number;
+    type: RelationshipType;
+    description: string;
+    isSecret: boolean;
+}
+
+export type TagTargetType = "Character" | "Location" | "Faction";
+
+export interface TagDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface TagCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+}
+
+export interface TagUpdateDto {
+    name: string;
+    description: string;
+}
+
+export interface TagAttachDto {
+    targetType: TagTargetType;
+    targetId: number;
 }
 
 export interface CharacterDetailsDto extends CharacterDto {

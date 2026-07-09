@@ -7,5 +7,10 @@
     "statSpecies": "Vrste",
     "recentlyEdited": "Nedavno uređeno",
     "noRecent": "Još ničega — ovdje će se pojaviti tvoje zadnje izmjene.",
-    "characterBadge": "Lik"
+    "badges": {
+        "character": "Lik",
+        "location": "Lokacija",
+        "faction": "Frakcija",
+        "species": "Vrsta"
+    }
 }

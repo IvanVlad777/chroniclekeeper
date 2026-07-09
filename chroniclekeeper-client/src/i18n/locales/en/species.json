@@ -1,0 +1,59 @@
+{
+    "listTitle": "Species",
+    "search": "Search species…",
+    "loaderror": "Failed to load",
+    "notfound": "Species not found",
+    "none": "None",
+    "backtolist": "Back to species",
+    "emptyTitle": "No species yet",
+    "emptyText": "Elves, dragons, thinking machines — every sapient kind of your world lives here. Create the first species to people your realms.",
+    "humanoid": "Humanoid",
+    "notHumanoid": "Non-humanoid",
+    "columns": {
+        "name": "Name",
+        "commonName": "Common name",
+        "humanoid": "Form",
+        "lifespan": "Lifespan",
+        "updated": "Updated"
+    },
+    "fields": {
+        "commonName": "Common name",
+        "scientificName": "Scientific name",
+        "isHumanoid": "Humanoid form",
+        "lifespan": "Lifespan",
+        "description": "Description"
+    },
+    "races": {
+        "label": "Races",
+        "add": "add",
+        "addTitle": "New race",
+        "editTitle": "Edit race",
+        "name": "Name",
+        "description": "Description",
+        "appearanceTraits": "Appearance traits",
+        "geneticFeatures": "Genetic features",
+        "adaptations": "Adaptations",
+        "save": "Save race",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete race “{{name}}”?",
+        "requiredMissing": "Race name is required.",
+        "saveFailed": "Saving the race failed.",
+        "deleteFailed": "Deleting the race failed."
+    },
+    "form": {
+        "newTitle": "New species",
+        "editTitle": "Edit species",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "lifespanHint": "Free text — “~500 years”, “three human generations”…",
+        "save": "Save species",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

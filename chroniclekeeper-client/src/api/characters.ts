@@ -3,6 +3,8 @@ import {
     CharacterCreateDto,
     CharacterDetailsDto,
     CharacterDto,
+    CharacterRelationshipCreateDto,
+    CharacterRelationshipDto,
     CharacterUpdateDto,
 } from "../interfaces/loreInterfaces";
 
@@ -41,4 +43,24 @@ export const updateCharacter = async (
 /** Brisanje je dopušteno samo Admin/SuperAdmin rolama (API vraća 403 inače). */
 export const deleteCharacter = async (id: number): Promise<void> => {
     await api.delete(`/characters/${id}`);
+};
+
+export const addRelationship = async (
+    characterId: number,
+    data: CharacterRelationshipCreateDto
+): Promise<CharacterRelationshipDto> => {
+    const response = await api.post<CharacterRelationshipDto>(
+        `/characters/${characterId}/relationships`,
+        data
+    );
+    return response.data;
+};
+
+export const removeRelationship = async (
+    characterId: number,
+    relationshipId: number
+): Promise<void> => {
+    await api.delete(
+        `/characters/${characterId}/relationships/${relationshipId}`
+    );
 };

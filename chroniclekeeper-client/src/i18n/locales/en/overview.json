@@ -7,5 +7,10 @@
     "statSpecies": "Species",
     "recentlyEdited": "Recently edited",
     "noRecent": "Nothing here yet — your latest edits will appear here.",
-    "characterBadge": "Character"
+    "badges": {
+        "character": "Character",
+        "location": "Location",
+        "faction": "Faction",
+        "species": "Species"
+    }
 }

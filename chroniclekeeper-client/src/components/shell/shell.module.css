@@ -291,8 +291,50 @@
 }
 
 .sidebarFooter {
+    position: relative;
     padding: 14px 16px;
     border-top: 1px solid var(--color-border);
+}
+
+.newEntryMenu {
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 12px;
+    right: 12px;
+    z-index: 40;
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    background: var(--color-panel);
+    overflow: hidden;
+    box-shadow: 0 -14px 34px -18px rgba(0, 0, 0, 0.7);
+    padding: 4px;
+}
+
+.newEntryItem {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 9px 12px;
+    border: none;
+    border-radius: 7px;
+    background: transparent;
+    font-family: var(--font-ui);
+    font-size: 13.5px;
+    color: var(--color-text);
+    text-align: left;
+    cursor: pointer;
+}
+
+.newEntryItem:hover {
+    background: var(--o-row-hover);
+}
+
+.newEntryItemGlyph {
+    width: 16px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--color-accent);
 }
 
 .newEntryBtn {

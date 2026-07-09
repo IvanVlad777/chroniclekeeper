@@ -1,0 +1,25 @@
+{
+    "listTitle": "Notes",
+    "loaderror": "Failed to load",
+    "none": "None",
+    "emptyTitle": "No notes yet",
+    "emptyText": "Loose threads, naming ideas, inconsistencies to fix — the writer's desk lives here. Jot down the first note.",
+    "newNote": "New note",
+    "untitled": "Untitled note",
+    "pickHint": "Select a note from the list, or create a new one.",
+    "fields": {
+        "title": "Title",
+        "description": "Summary",
+        "content": "Content"
+    },
+    "form": {
+        "requiredMissing": "Title is required.",
+        "save": "Save note",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete note “{{name}}”?",
+        "saveFailed": "Saving failed.",
+        "deleteFailed": "Deleting failed."
+    }
+}

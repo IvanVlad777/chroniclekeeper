@@ -2,19 +2,42 @@ import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../feedback";
-import { CharacterDto } from "../../../interfaces/loreInterfaces";
 import { getCharacters } from "../../../api/characters";
+import { getLocations } from "../../../api/locations";
+import { getFactions } from "../../../api/factions";
+import { getSpecies } from "../../../api/species";
 import { useWorld } from "../../../hooks/useWorld";
 import s from "./styles.module.css";
 
-// Stats za Locations/Factions/Species čekaju svoje API vertikale — do tada "—".
-const pendingStats = ["locations", "factions", "species"] as const;
+type RecentType = "character" | "location" | "faction" | "species";
+
+interface RecentEntry {
+    type: RecentType;
+    id: number;
+    name: string;
+    updatedAt: string;
+}
+
+const detailPath: Record<RecentType, string> = {
+    character: "/storymap/characters",
+    location: "/storymap/locations",
+    faction: "/storymap/factions",
+    species: "/storymap/species",
+};
+
+interface Stats {
+    characters: number;
+    locations: number;
+    factions: number;
+    species: number;
+}
 
 export default function Overview() {
     const { t } = useTranslation("overview");
     const { selectedWorld, loading: worldLoading } = useWorld();
 
-    const [characters, setCharacters] = useState<CharacterDto[]>([]);
+    const [stats, setStats] = useState<Stats | null>(null);
+    const [recent, setRecent] = useState<RecentEntry[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [reloadKey, setReloadKey] = useState(0);
@@ -23,7 +46,8 @@ export default function Overview() {
     useEffect(() => {
         if (worldLoading) return;
         if (!selectedWorld) {
-            setCharacters([]);
+            setStats(null);
+            setRecent([]);
             setLoading(false);
             return;
         }
@@ -32,9 +56,50 @@ export default function Overview() {
         setLoading(true);
         setError(null);
 
-        getCharacters(selectedWorld.id)
-            .then((data) => {
-                if (!cancelled) setCharacters(data);
+        Promise.all([
+            getCharacters(selectedWorld.id),
+            getLocations(selectedWorld.id),
+            getFactions(selectedWorld.id),
+            getSpecies(selectedWorld.id),
+        ])
+            .then(([characters, locations, factions, species]) => {
+                if (cancelled) return;
+                setStats({
+                    characters: characters.length,
+                    locations: locations.length,
+                    factions: factions.length,
+                    species: species.length,
+                });
+                const merged: RecentEntry[] = [
+                    ...characters.map((c) => ({
+                        type: "character" as const,
+                        id: c.id,
+                        name: c.name,
+                        updatedAt: c.updatedAt ?? "",
+                    })),
+                    ...locations.map((l) => ({
+                        type: "location" as const,
+                        id: l.id,
+                        name: l.name,
+                        updatedAt: l.updatedAt ?? "",
+                    })),
+                    ...factions.map((f) => ({
+                        type: "faction" as const,
+                        id: f.id,
+                        name: f.name,
+                        updatedAt: f.updatedAt ?? "",
+                    })),
+                    ...species.map((sp) => ({
+                        type: "species" as const,
+                        id: sp.id,
+                        name: sp.name,
+                        updatedAt: sp.updatedAt ?? "",
+                    })),
+                ];
+                merged.sort((a, b) =>
+                    b.updatedAt.localeCompare(a.updatedAt)
+                );
+                setRecent(merged.slice(0, 6));
             })
             .catch((err) => {
                 console.error("Failed to load overview data:", err);
@@ -51,7 +116,7 @@ export default function Overview() {
 
     if (worldLoading || loading) return <LoadingSkeleton variant="block" />;
     if (error) return <ErrorState onRetry={refetch} detail={error} />;
-    if (!selectedWorld) {
+    if (!selectedWorld || !stats) {
         return (
             <EmptyState
                 glyph="✦"
@@ -61,9 +126,37 @@ export default function Overview() {
         );
     }
 
-    const recent = [...characters]
-        .sort((a, b) => (b.updatedAt ?? "").localeCompare(a.updatedAt ?? ""))
-        .slice(0, 5);
+    const statCards: {
+        key: keyof Stats;
+        glyph: string;
+        label: string;
+        to: string;
+    }[] = [
+        {
+            key: "characters",
+            glyph: "♟",
+            label: t("statCharacters"),
+            to: "/storymap/characters",
+        },
+        {
+            key: "locations",
+            glyph: "⚑",
+            label: t("statLocations"),
+            to: "/storymap/locations",
+        },
+        {
+            key: "factions",
+            glyph: "⚔",
+            label: t("statFactions"),
+            to: "/storymap/factions",
+        },
+        {
+            key: "species",
+            glyph: "⚘",
+            label: t("statSpecies"),
+            to: "/storymap/species",
+        },
+    ];
 
     return (
         <div className={s.page}>
@@ -78,41 +171,14 @@ export default function Overview() {
             </div>
 
             <div className={s.stats}>
-                <Link to="/storymap/characters" className={s.statCard}>
-                    <div className={s.statTop}>
-                        <span className={s.statGlyph}>♟</span>
-                        <span className={s.statLabel}>
-                            {t("statCharacters")}
-                        </span>
-                    </div>
-                    <div className={s.statValue}>{characters.length}</div>
-                </Link>
-                {pendingStats.map((key) => (
-                    <div key={key} className={s.statCard}>
+                {statCards.map((card) => (
+                    <Link key={card.key} to={card.to} className={s.statCard}>
                         <div className={s.statTop}>
-                            <span className={s.statGlyph}>
-                                {key === "locations"
-                                    ? "⚑"
-                                    : key === "factions"
-                                    ? "⚔"
-                                    : "⚘"}
-                            </span>
-                            <span className={s.statLabel}>
-                                {t(
-                                    `stat${
-                                        key.charAt(0).toUpperCase() +
-                                        key.slice(1)
-                                    }`
-                                )}
-                            </span>
+                            <span className={s.statGlyph}>{card.glyph}</span>
+                            <span className={s.statLabel}>{card.label}</span>
                         </div>
-                        <div className={`${s.statValue} ${s.statSoon}`}>
-                            —
-                            <span className={s.statSoonNote}>
-                                {t("shell.soon", { ns: "common" })}
-                            </span>
-                        </div>
-                    </div>
+                        <div className={s.statValue}>{stats[card.key]}</div>
+                    </Link>
                 ))}
             </div>
 
@@ -124,20 +190,20 @@ export default function Overview() {
                 {recent.length === 0 ? (
                     <p className={s.noRecent}>{t("noRecent")}</p>
                 ) : (
-                    recent.map((c) => (
+                    recent.map((entry) => (
                         <Link
-                            key={c.id}
-                            to={`/storymap/characters/${c.id}`}
+                            key={`${entry.type}-${entry.id}`}
+                            to={`${detailPath[entry.type]}/${entry.id}`}
                             className={s.recentRow}
                         >
                             <span className={s.typeBadge}>
-                                {t("characterBadge")}
+                                {t(`badges.${entry.type}`)}
                             </span>
-                            <span className={s.recentName}>{c.name}</span>
+                            <span className={s.recentName}>{entry.name}</span>
                             <span className={s.recentWhen}>
-                                {c.updatedAt
+                                {entry.updatedAt
                                     ? new Date(
-                                          c.updatedAt
+                                          entry.updatedAt
                                       ).toLocaleDateString()
                                     : ""}
                             </span>

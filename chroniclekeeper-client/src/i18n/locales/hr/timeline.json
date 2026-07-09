@@ -1,0 +1,54 @@
+{
+    "listTitle": "Vremenske linije",
+    "search": "Traži vremenske linije…",
+    "loaderror": "Neuspješno učitavanje",
+    "notfound": "Vremenska linija nije pronađena",
+    "none": "Nema",
+    "backtolist": "Natrag na vremenske linije",
+    "emptyTitle": "Još nema vremenskih linija",
+    "emptyText": "Doba, ratovi, dinastije — iscrtaj povijest svog svijeta. Stvori prvu vremensku liniju i započni kronologiju.",
+    "columns": {
+        "name": "Naziv",
+        "description": "Opis",
+        "updated": "Ažurirano"
+    },
+    "fields": {
+        "description": "Opis"
+    },
+    "events": {
+        "label": "Događaji",
+        "add": "Događaj",
+        "addTitle": "Novi događaj",
+        "editTitle": "Uredi događaj",
+        "name": "Naslov",
+        "date": "Datum u svijetu",
+        "dateHint": "Slobodan tekst — „Godina 512, Treće doba“…",
+        "sortOrder": "Redoslijed",
+        "sortOrderHint": "Događaji se nižu po ovom broju, uzlazno.",
+        "description": "Opis",
+        "consequences": "Posljedice",
+        "major": "Ključni događaj",
+        "save": "Spremi događaj",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati događaj „{{name}}“?",
+        "requiredMissing": "Naslov događaja je obavezan.",
+        "saveFailed": "Spremanje događaja nije uspjelo.",
+        "deleteFailed": "Brisanje događaja nije uspjelo.",
+        "empty": "Još nema događaja — dodaj prvi trenutak ove kronologije."
+    },
+    "form": {
+        "newTitle": "Nova vremenska linija",
+        "editTitle": "Uredi vremensku liniju",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "save": "Spremi vremensku liniju",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}“ i sve njezine događaje? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

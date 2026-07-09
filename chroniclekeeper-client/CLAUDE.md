@@ -25,7 +25,7 @@ This app ships in English and Croatian via `i18next` / `react-i18next` (`src/i18
 
 ## Structure & conventions
 
-- Feature UI lives under `src/components/entityViews/<entity>/{list,detail}/` (e.g. `character/list/CharacterList.tsx`, `character/detail/CharacterDetails.tsx`), each with its own `styles.module.css`. Follow the `character` vertical as the template when adding a new entity (locations, factions, species, timelines, tags, notes — see `navConfig.ts` for the planned nav, currently `disabled: true` for entities not yet built).
+- Feature UI lives under `src/components/entityViews/<entity>/{list,detail,form}/` (e.g. `character/list/CharacterList.tsx`, `character/detail/CharacterDetails.tsx`, `character/form/CharacterForm.tsx`), each with its own `styles.module.css`. All entity verticals are built (character, location, faction, species, timeline, tag, note); follow the `character` vertical as the template when adding a new one (`navConfig.ts` holds the sidebar nav; use `disabled: true` for entries whose vertical isn't built yet). Cross-entity tag attach/detach goes through the shared `src/components/tagging/TagEditor.tsx`.
 - API calls: one file per entity under `src/api/` (`characters.ts`, `worlds.ts`, `auth.ts`), using the shared `axios` instance in `src/services/api.ts` (handles the JWT bearer header and 401/403 handling — don't create a second axios instance).
 - Types mirroring backend DTOs go in `src/interfaces/loreInterfaces.ts` (lore entities) or `src/interfaces/authInterfaces.ts` (auth) — keep field names/casing identical to the C# DTOs (`ChronicleKeeper.Core/DTOs`) since these are hand-kept in sync, not generated.
 - CSS Modules only (`*.module.css` + a `cx()` helper), no inline `style={}` and no global class soup.

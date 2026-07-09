@@ -15,6 +15,29 @@
     },
     "emptyTitle": "Još nema likova",
     "emptyText": "Junaci, zlikovci i svi između žive ovdje. Stvori prvog lika i započni kroniku.",
+    "rel": {
+        "add": "dodaj",
+        "addConfirm": "Dodaj vezu",
+        "addFailed": "Dodavanje veze nije uspjelo.",
+        "remove": "Ukloni vezu",
+        "removeFailed": "Uklanjanje veze nije uspjelo.",
+        "target": "Lik",
+        "type": "Vrsta veze",
+        "description": "Bilješka",
+        "secret": "Tajna veza"
+    },
+    "relTypes": {
+        "Friend": "Prijatelj",
+        "Enemy": "Neprijatelj",
+        "Rival": "Suparnik",
+        "Ally": "Saveznik",
+        "Mentor": "Mentor",
+        "Student": "Učenik",
+        "RomanticPartner": "Romantični partner",
+        "Spouse": "Supružnik",
+        "ExPartner": "Bivši partner",
+        "Other": "Ostalo"
+    },
     "form": {
         "newTitle": "Novi lik",
         "editTitle": "Uredi lika",

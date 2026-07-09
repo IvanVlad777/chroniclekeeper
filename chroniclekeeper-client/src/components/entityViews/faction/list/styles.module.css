@@ -1,0 +1,55 @@
+.page {
+    padding: 30px 34px;
+}
+
+.nameCell {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.glyph {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background: var(--color-sunken);
+    border: 1px solid var(--color-border);
+    flex: none;
+    color: var(--color-accent);
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.name {
+    font-family: var(--font-display);
+    font-size: 15.5px;
+}
+
+.type {
+    color: var(--color-muted);
+    font-size: 13px;
+}
+
+.motto {
+    font-style: italic;
+    color: var(--color-muted);
+}
+
+.secretive {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+    color: var(--color-accent);
+    background: var(--color-accent-soft);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 2px 7px;
+}
+
+.updated {
+    color: var(--color-muted);
+    font-size: 12.5px;
+}

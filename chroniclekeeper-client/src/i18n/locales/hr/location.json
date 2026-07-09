@@ -1,0 +1,57 @@
+{
+    "listTitle": "Lokacije",
+    "search": "Traži lokacije…",
+    "loaderror": "Neuspješno učitavanje",
+    "notfound": "Lokacija nije pronađena",
+    "none": "Nema",
+    "backtolist": "Natrag na lokacije",
+    "emptyTitle": "Još nema lokacija",
+    "emptyText": "Kontinenti, gradovi, ruševine i sva mjesta između žive ovdje. Stvori prvu lokaciju i stavi svoj svijet na kartu.",
+    "filterAll": "Sve",
+    "columns": {
+        "name": "Naziv",
+        "type": "Tip",
+        "parent": "Nadređena",
+        "population": "Stanovništvo",
+        "updated": "Ažurirano"
+    },
+    "types": {
+        "Continent": "Kontinent",
+        "Region": "Regija",
+        "Country": "Zemlja",
+        "City": "Grad",
+        "Town": "Gradić",
+        "Village": "Selo",
+        "District": "Četvrt",
+        "Building": "Građevina",
+        "Landmark": "Znamenitost",
+        "Wilderness": "Divljina",
+        "Other": "Ostalo"
+    },
+    "fields": {
+        "type": "Tip",
+        "parent": "Nadređena lokacija",
+        "area": "Površina (km²)",
+        "population": "Stanovništvo",
+        "coordinates": "Koordinate",
+        "latitude": "Zemljopisna širina",
+        "longitude": "Zemljopisna dužina",
+        "description": "Opis"
+    },
+    "subLocations": "Pod-lokacije",
+    "form": {
+        "newTitle": "Nova lokacija",
+        "editTitle": "Uredi lokaciju",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "parentHint": "Kamo ovo mjesto pripada — grad u regiji, četvrt u gradu…",
+        "save": "Spremi lokaciju",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}“? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

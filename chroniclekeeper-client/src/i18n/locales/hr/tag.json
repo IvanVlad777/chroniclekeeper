@@ -1,0 +1,25 @@
+{
+    "listTitle": "Oznake",
+    "loaderror": "Neuspješno učitavanje",
+    "none": "Nema",
+    "emptyTitle": "Još nema oznaka",
+    "emptyText": "Oznake presijecaju likove, lokacije i frakcije — „uklet“, „kuća-vale“, „ključno-za-radnju“. Stvori prvu i počni plesti niti.",
+    "newTag": "Nova oznaka",
+    "detailHint": "Odaberi oznaku da vidiš i urediš detalje.",
+    "attachNote": "Oznake se kače na zapise sa stranice lika, lokacije ili frakcije.",
+    "fields": {
+        "name": "Naziv",
+        "description": "Opis"
+    },
+    "form": {
+        "requiredMissing": "Naziv oznake je obavezan.",
+        "save": "Spremi oznaku",
+        "saving": "Spremanje…",
+        "create": "Stvori oznaku",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati oznaku „{{name}}“? Bit će skinuta sa svih zapisa koji je nose.",
+        "saveFailed": "Spremanje nije uspjelo. Nazivi oznaka su jedinstveni po svijetu.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

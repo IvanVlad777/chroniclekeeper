@@ -10,6 +10,18 @@ import enOverview from "./locales/en/overview.json";
 import hrOverview from "./locales/hr/overview.json";
 import enCharacter from "./locales/en/character.json";
 import hrCharacter from "./locales/hr/character.json";
+import enLocation from "./locales/en/location.json";
+import hrLocation from "./locales/hr/location.json";
+import enFaction from "./locales/en/faction.json";
+import hrFaction from "./locales/hr/faction.json";
+import enSpecies from "./locales/en/species.json";
+import hrSpecies from "./locales/hr/species.json";
+import enTimeline from "./locales/en/timeline.json";
+import hrTimeline from "./locales/hr/timeline.json";
+import enTag from "./locales/en/tag.json";
+import hrTag from "./locales/hr/tag.json";
+import enNote from "./locales/en/note.json";
+import hrNote from "./locales/hr/note.json";
 
 i18n.use(LanguageDetector)
     .use(initReactI18next)
@@ -20,16 +32,39 @@ i18n.use(LanguageDetector)
                 auth: enAuth,
                 overview: enOverview,
                 character: enCharacter,
+                location: enLocation,
+                faction: enFaction,
+                species: enSpecies,
+                timeline: enTimeline,
+                tag: enTag,
+                note: enNote,
             },
             hr: {
                 common: hrCommon,
                 auth: hrAuth,
                 overview: hrOverview,
                 character: hrCharacter,
+                location: hrLocation,
+                faction: hrFaction,
+                species: hrSpecies,
+                timeline: hrTimeline,
+                tag: hrTag,
+                note: hrNote,
             },
         },
         fallbackLng: "en",
-        ns: ["common", "auth", "overview", "character"], //namespaces
+        ns: [
+            "common",
+            "auth",
+            "overview",
+            "character",
+            "location",
+            "faction",
+            "species",
+            "timeline",
+            "tag",
+            "note",
+        ], //namespaces
         defaultNS: "common",
         interpolation: {
             escapeValue: false,

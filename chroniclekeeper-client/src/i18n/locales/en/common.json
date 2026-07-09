@@ -19,7 +19,7 @@
     },
     "shell": {
         "newEntry": "New entry",
-        "newEntryTitle": "Create a new character",
+        "newEntryTitle": "Create a new entry",
         "noPermission": "You don't have permission to create entries",
         "comingSoon": "Coming soon",
         "soon": "soon"
@@ -48,6 +48,17 @@
     },
     "lang": {
         "label": "Language"
+    },
+    "tagEditor": {
+        "label": "Tags",
+        "add": "tag",
+        "attach": "Attach tag",
+        "pick": "Existing tag",
+        "orNew": "…or a new one",
+        "remove": "Remove tag {{name}}",
+        "addFailed": "Attaching the tag failed.",
+        "removeFailed": "Removing the tag failed.",
+        "cancel": "Cancel"
     },
     "states": {
         "loading": "Loading…",

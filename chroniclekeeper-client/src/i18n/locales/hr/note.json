@@ -1,0 +1,25 @@
+{
+    "listTitle": "Bilješke",
+    "loaderror": "Neuspješno učitavanje",
+    "none": "Nema",
+    "emptyTitle": "Još nema bilješki",
+    "emptyText": "Nedovršene niti, ideje za imena, nedosljednosti za popraviti — piščev radni stol živi ovdje. Zabilježi prvu bilješku.",
+    "newNote": "Nova bilješka",
+    "untitled": "Bilješka bez naslova",
+    "pickHint": "Odaberi bilješku s popisa ili stvori novu.",
+    "fields": {
+        "title": "Naslov",
+        "description": "Sažetak",
+        "content": "Sadržaj"
+    },
+    "form": {
+        "requiredMissing": "Naslov je obavezan.",
+        "save": "Spremi bilješku",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati bilješku „{{name}}“?",
+        "saveFailed": "Spremanje nije uspjelo.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

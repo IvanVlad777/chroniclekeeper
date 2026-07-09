@@ -1,0 +1,25 @@
+{
+    "listTitle": "Tags",
+    "loaderror": "Failed to load",
+    "none": "None",
+    "emptyTitle": "No tags yet",
+    "emptyText": "Tags cut across characters, locations and factions — “cursed”, “house-vale”, “plot-critical”. Create the first one to start weaving threads.",
+    "newTag": "New tag",
+    "detailHint": "Select a tag to see and edit its details.",
+    "attachNote": "Attach tags to entries from a character, location or faction page.",
+    "fields": {
+        "name": "Name",
+        "description": "Description"
+    },
+    "form": {
+        "requiredMissing": "Tag name is required.",
+        "save": "Save tag",
+        "saving": "Saving…",
+        "create": "Create tag",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete tag “{{name}}”? It will be removed from every entry that carries it.",
+        "saveFailed": "Saving failed. Tag names are unique per world.",
+        "deleteFailed": "Deleting failed."
+    }
+}

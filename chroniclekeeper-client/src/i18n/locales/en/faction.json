@@ -1,0 +1,68 @@
+{
+    "listTitle": "Factions",
+    "search": "Search factions…",
+    "loaderror": "Failed to load",
+    "notfound": "Faction not found",
+    "none": "None",
+    "backtolist": "Back to factions",
+    "emptyTitle": "No factions yet",
+    "emptyText": "Guilds, houses, orders and cults live here. Create your first faction to start weaving alliances and rivalries.",
+    "secretive": "Secretive",
+    "columns": {
+        "name": "Name",
+        "type": "Type",
+        "motto": "Motto",
+        "updated": "Updated"
+    },
+    "types": {
+        "CriminalSyndicate": "Criminal syndicate",
+        "ReligiousSect": "Religious sect",
+        "PoliticalMovement": "Political movement",
+        "MercenaryCompany": "Mercenary company",
+        "TradeConsortium": "Trade consortium",
+        "ResistanceGroup": "Resistance group",
+        "SecretSociety": "Secret society",
+        "KnightlyOrder": "Knightly order",
+        "ScholarSociety": "Scholar society",
+        "ArcaneCoven": "Arcane coven",
+        "TechnologicalUnion": "Technological union",
+        "MilitaryAlliance": "Military alliance",
+        "PirateBrotherhood": "Pirate brotherhood",
+        "DiplomaticLeague": "Diplomatic league",
+        "RadicalExtremist": "Radical extremists",
+        "Adventurers": "Adventurers"
+    },
+    "fields": {
+        "type": "Type",
+        "motto": "Motto",
+        "isSecretive": "Secretive organization",
+        "leader": "Leader",
+        "headquarters": "Seat",
+        "description": "Description"
+    },
+    "members": {
+        "label": "Members",
+        "add": "add",
+        "addConfirm": "Add member",
+        "addFailed": "Adding the member failed.",
+        "remove": "Remove member",
+        "removeFailed": "Removing the member failed.",
+        "character": "Character",
+        "role": "Role",
+        "secret": "Secret membership"
+    },
+    "form": {
+        "newTitle": "New faction",
+        "editTitle": "Edit faction",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "save": "Save faction",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

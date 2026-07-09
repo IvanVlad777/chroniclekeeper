@@ -1,0 +1,57 @@
+{
+    "listTitle": "Locations",
+    "search": "Search locations…",
+    "loaderror": "Failed to load",
+    "notfound": "Location not found",
+    "none": "None",
+    "backtolist": "Back to locations",
+    "emptyTitle": "No locations yet",
+    "emptyText": "Continents, cities, ruins and every place in between live here. Create your first location to put your world on the map.",
+    "filterAll": "All",
+    "columns": {
+        "name": "Name",
+        "type": "Type",
+        "parent": "Parent",
+        "population": "Population",
+        "updated": "Updated"
+    },
+    "types": {
+        "Continent": "Continent",
+        "Region": "Region",
+        "Country": "Country",
+        "City": "City",
+        "Town": "Town",
+        "Village": "Village",
+        "District": "District",
+        "Building": "Building",
+        "Landmark": "Landmark",
+        "Wilderness": "Wilderness",
+        "Other": "Other"
+    },
+    "fields": {
+        "type": "Type",
+        "parent": "Parent location",
+        "area": "Area (km²)",
+        "population": "Population",
+        "coordinates": "Coordinates",
+        "latitude": "Latitude",
+        "longitude": "Longitude",
+        "description": "Description"
+    },
+    "subLocations": "Sub-locations",
+    "form": {
+        "newTitle": "New location",
+        "editTitle": "Edit location",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "parentHint": "Where this place belongs — a city in a region, a district in a city…",
+        "save": "Save location",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

@@ -19,7 +19,7 @@
     },
     "shell": {
         "newEntry": "Novi zapis",
-        "newEntryTitle": "Stvori novog lika",
+        "newEntryTitle": "Stvori novi zapis",
         "noPermission": "Nemaš ovlasti za stvaranje zapisa",
         "comingSoon": "Uskoro",
         "soon": "uskoro"
@@ -48,6 +48,17 @@
     },
     "lang": {
         "label": "Jezik"
+    },
+    "tagEditor": {
+        "label": "Oznake",
+        "add": "oznaka",
+        "attach": "Zakači oznaku",
+        "pick": "Postojeća oznaka",
+        "orNew": "…ili nova",
+        "remove": "Ukloni oznaku {{name}}",
+        "addFailed": "Kačenje oznake nije uspjelo.",
+        "removeFailed": "Uklanjanje oznake nije uspjelo.",
+        "cancel": "Odustani"
     },
     "states": {
         "loading": "Učitavanje…",

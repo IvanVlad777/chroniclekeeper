@@ -1,0 +1,68 @@
+{
+    "listTitle": "Frakcije",
+    "search": "Traži frakcije…",
+    "loaderror": "Neuspješno učitavanje",
+    "notfound": "Frakcija nije pronađena",
+    "none": "Nema",
+    "backtolist": "Natrag na frakcije",
+    "emptyTitle": "Još nema frakcija",
+    "emptyText": "Cehovi, kuće, redovi i kultovi žive ovdje. Stvori prvu frakciju i počni plesti saveze i suparništva.",
+    "secretive": "Tajna",
+    "columns": {
+        "name": "Naziv",
+        "type": "Tip",
+        "motto": "Moto",
+        "updated": "Ažurirano"
+    },
+    "types": {
+        "CriminalSyndicate": "Kriminalni sindikat",
+        "ReligiousSect": "Vjerska sekta",
+        "PoliticalMovement": "Politički pokret",
+        "MercenaryCompany": "Plaćenička družina",
+        "TradeConsortium": "Trgovački konzorcij",
+        "ResistanceGroup": "Pokret otpora",
+        "SecretSociety": "Tajno društvo",
+        "KnightlyOrder": "Viteški red",
+        "ScholarSociety": "Učenjačko društvo",
+        "ArcaneCoven": "Arkani koven",
+        "TechnologicalUnion": "Tehnološka unija",
+        "MilitaryAlliance": "Vojni savez",
+        "PirateBrotherhood": "Gusarsko bratstvo",
+        "DiplomaticLeague": "Diplomatska liga",
+        "RadicalExtremist": "Radikalni ekstremisti",
+        "Adventurers": "Pustolovi"
+    },
+    "fields": {
+        "type": "Tip",
+        "motto": "Moto",
+        "isSecretive": "Tajna organizacija",
+        "leader": "Vođa",
+        "headquarters": "Sjedište",
+        "description": "Opis"
+    },
+    "members": {
+        "label": "Članovi",
+        "add": "dodaj",
+        "addConfirm": "Dodaj člana",
+        "addFailed": "Dodavanje člana nije uspjelo.",
+        "remove": "Ukloni člana",
+        "removeFailed": "Uklanjanje člana nije uspjelo.",
+        "character": "Lik",
+        "role": "Uloga",
+        "secret": "Tajno članstvo"
+    },
+    "form": {
+        "newTitle": "Nova frakcija",
+        "editTitle": "Uredi frakciju",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "save": "Spremi frakciju",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}“? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

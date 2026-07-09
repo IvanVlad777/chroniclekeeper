@@ -1,0 +1,59 @@
+{
+    "listTitle": "Vrste",
+    "search": "Traži vrste…",
+    "loaderror": "Neuspješno učitavanje",
+    "notfound": "Vrsta nije pronađena",
+    "none": "Nema",
+    "backtolist": "Natrag na vrste",
+    "emptyTitle": "Još nema vrsta",
+    "emptyText": "Vilenjaci, zmajevi, misleći strojevi — svaka razumna vrsta tvog svijeta živi ovdje. Stvori prvu vrstu i naseli svoja kraljevstva.",
+    "humanoid": "Humanoid",
+    "notHumanoid": "Ne-humanoid",
+    "columns": {
+        "name": "Naziv",
+        "commonName": "Uobičajeno ime",
+        "humanoid": "Oblik",
+        "lifespan": "Životni vijek",
+        "updated": "Ažurirano"
+    },
+    "fields": {
+        "commonName": "Uobičajeno ime",
+        "scientificName": "Znanstveno ime",
+        "isHumanoid": "Humanoidni oblik",
+        "lifespan": "Životni vijek",
+        "description": "Opis"
+    },
+    "races": {
+        "label": "Rase",
+        "add": "dodaj",
+        "addTitle": "Nova rasa",
+        "editTitle": "Uredi rasu",
+        "name": "Naziv",
+        "description": "Opis",
+        "appearanceTraits": "Obilježja izgleda",
+        "geneticFeatures": "Genetske osobine",
+        "adaptations": "Prilagodbe",
+        "save": "Spremi rasu",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati rasu „{{name}}“?",
+        "requiredMissing": "Naziv rase je obavezan.",
+        "saveFailed": "Spremanje rase nije uspjelo.",
+        "deleteFailed": "Brisanje rase nije uspjelo."
+    },
+    "form": {
+        "newTitle": "Nova vrsta",
+        "editTitle": "Uredi vrstu",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "lifespanHint": "Slobodan tekst — „~500 godina“, „tri ljudske generacije“…",
+        "save": "Spremi vrstu",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}“? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

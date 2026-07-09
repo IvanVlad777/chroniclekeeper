@@ -15,6 +15,29 @@
     },
     "emptyTitle": "No characters yet",
     "emptyText": "Heroes, villains and everyone in between live here. Create your first character to begin the chronicle.",
+    "rel": {
+        "add": "add",
+        "addConfirm": "Add relationship",
+        "addFailed": "Adding the relationship failed.",
+        "remove": "Remove relationship",
+        "removeFailed": "Removing the relationship failed.",
+        "target": "Character",
+        "type": "Relationship",
+        "description": "Note",
+        "secret": "Secret relationship"
+    },
+    "relTypes": {
+        "Friend": "Friend",
+        "Enemy": "Enemy",
+        "Rival": "Rival",
+        "Ally": "Ally",
+        "Mentor": "Mentor",
+        "Student": "Student",
+        "RomanticPartner": "Romantic partner",
+        "Spouse": "Spouse",
+        "ExPartner": "Ex-partner",
+        "Other": "Other"
+    },
     "form": {
         "newTitle": "New character",
         "editTitle": "Edit character",

@@ -13,10 +13,10 @@ export interface NavEntry {
 export const navEntries: NavEntry[] = [
     { key: "overview", glyph: "◈", to: "/storymap", end: true },
     { key: "characters", glyph: "♟", to: "/storymap/characters" },
-    { key: "locations", glyph: "⚑", disabled: true },
-    { key: "factions", glyph: "⚔", disabled: true },
-    { key: "species", glyph: "⚘", disabled: true },
-    { key: "timelines", glyph: "⌛", disabled: true },
-    { key: "tags", glyph: "❧", disabled: true },
-    { key: "notes", glyph: "✎", disabled: true },
+    { key: "locations", glyph: "⚑", to: "/storymap/locations" },
+    { key: "factions", glyph: "⚔", to: "/storymap/factions" },
+    { key: "species", glyph: "⚘", to: "/storymap/species" },
+    { key: "timelines", glyph: "⌛", to: "/storymap/timelines" },
+    { key: "tags", glyph: "❧", to: "/storymap/tags" },
+    { key: "notes", glyph: "✎", to: "/storymap/notes" },
 ];
