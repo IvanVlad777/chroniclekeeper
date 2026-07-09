@@ -1,0 +1,182 @@
+/* ==========================================================================
+   Dijeljena stanja: empty, error, loading skeleton (Grimoire mockupi)
+   ========================================================================== */
+
+/* --- Empty state ------------------------------------------------------------ */
+
+.empty {
+    padding: 64px 34px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: var(--color-text);
+}
+
+.emptyGlyph {
+    width: 58px;
+    height: 58px;
+    border-radius: 12px;
+    border: 1px solid var(--color-accent);
+    background: var(--color-accent-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-accent);
+    font-size: 24px;
+    margin-bottom: 18px;
+}
+
+.emptyTitle {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 24px;
+    margin: 0 0 8px;
+}
+
+.emptyText {
+    margin: 0 0 20px;
+    font-size: 15px;
+    color: var(--color-muted);
+    max-width: 380px;
+    line-height: 1.6;
+}
+
+/* --- Error state ------------------------------------------------------------- */
+
+.error {
+    padding: 70px 34px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.errorGlyph {
+    width: 60px;
+    height: 60px;
+    border-radius: 14px;
+    border: 1px solid var(--color-danger);
+    background: color-mix(in srgb, var(--color-danger) 14%, transparent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-danger);
+    font-size: 26px;
+    margin-bottom: 18px;
+}
+
+.errorTitle {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 25px;
+    margin: 0 0 8px;
+}
+
+.errorText {
+    margin: 0 0 22px;
+    font-size: 15px;
+    color: var(--color-muted);
+    max-width: 420px;
+    line-height: 1.6;
+}
+
+.errorDetail {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-muted);
+    margin-top: 20px;
+}
+
+/* --- Loading skeleton ---------------------------------------------------------- */
+
+@keyframes shimmer {
+    0% {
+        background-position: -420px 0;
+    }
+    100% {
+        background-position: 420px 0;
+    }
+}
+
+.shimmer {
+    background: linear-gradient(
+        90deg,
+        var(--color-sunken) 25%,
+        var(--color-panel) 37%,
+        var(--color-sunken) 63%
+    );
+    background-size: 420px 100%;
+    animation: shimmer 1.3s infinite linear;
+}
+
+.skeleton {
+    padding: 30px 34px;
+}
+
+.skeletonTitle {
+    composes: shimmer;
+    height: 26px;
+    width: 220px;
+    border-radius: 7px;
+    margin-bottom: 20px;
+}
+
+.skeletonTable {
+    border: 1px solid var(--color-border);
+    border-radius: 11px;
+    overflow: hidden;
+    background: var(--color-panel);
+}
+
+.skeletonHead {
+    display: grid;
+    grid-template-columns: 2fr 1.2fr 1fr 1fr;
+    gap: 10px;
+    padding: 12px 18px;
+    background: var(--color-sunken);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.skeletonHeadCell {
+    height: 11px;
+    width: 60%;
+    border-radius: 4px;
+    background: var(--color-panel);
+}
+
+.skeletonRow {
+    display: grid;
+    grid-template-columns: 2fr 1.2fr 1fr 1fr;
+    gap: 10px;
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--color-border);
+    align-items: center;
+}
+
+.skeletonCellLead {
+    composes: shimmer;
+    height: 14px;
+    border-radius: 6px;
+}
+
+.skeletonCell {
+    height: 12px;
+    width: 70%;
+    border-radius: 6px;
+    background: var(--color-sunken);
+}
+
+.skeletonPill {
+    height: 18px;
+    width: 56px;
+    border-radius: 999px;
+    background: var(--color-sunken);
+}
+
+.skeletonBlockLine {
+    composes: shimmer;
+    height: 14px;
+    border-radius: 6px;
+    margin-bottom: 14px;
+}

@@ -1,0 +1,477 @@
+/* ==========================================================================
+   Grimoire app shell — top bar, sidebar, world switcher, nav
+   Sve boje dolaze iz theme tokena; geometrija iz ornate.vars.css.
+   ========================================================================== */
+
+.shell {
+    display: grid;
+    grid-template-rows: 57px 1fr;
+    height: 100vh;
+    background: var(--color-surface);
+    color: var(--color-text);
+}
+
+.body {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    min-height: 0;
+}
+
+.main {
+    overflow: auto;
+    min-height: 0;
+}
+
+/* --- Top bar --------------------------------------------------------------- */
+
+.topbar {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 0 20px;
+    background: var(--color-panel);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logoGlyph {
+    font-size: 18px;
+    color: var(--color-accent);
+    line-height: 1;
+}
+
+.logoText {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+}
+
+.logoAccent {
+    color: var(--color-accent);
+}
+
+.spacer {
+    flex: 1;
+}
+
+.divider {
+    width: 1px;
+    height: 22px;
+    background: var(--color-border);
+}
+
+/* theme dots */
+.themeDots {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.themeDot {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    box-shadow: 0 0 0 1px var(--color-border);
+    transition: box-shadow var(--o-transition);
+}
+
+.themeDotActive {
+    box-shadow: 0 0 0 1px var(--color-border), 0 0 0 2px var(--color-accent);
+}
+
+.modeBtn {
+    border: none;
+    background: transparent;
+    padding: 0 2px;
+    font-size: 15px;
+    line-height: 1;
+    color: var(--color-muted);
+    cursor: pointer;
+}
+
+.modeBtn:hover {
+    color: var(--color-accent);
+}
+
+.themeDot:focus-visible,
+.modeBtn:focus-visible,
+.langBtn:focus-visible {
+    outline: none;
+    box-shadow: var(--o-ring);
+}
+
+/* language toggle */
+.lang {
+    display: flex;
+    border: 1px solid var(--color-border);
+    border-radius: 7px;
+    overflow: hidden;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+}
+
+.langBtn {
+    border: none;
+    background: transparent;
+    padding: 5px 10px;
+    font: inherit;
+    color: var(--color-muted);
+    cursor: pointer;
+}
+
+.langActive {
+    background: var(--color-accent);
+    color: var(--color-panel);
+}
+
+/* user */
+.user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--color-sunken);
+    border: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 14px;
+    color: var(--color-accent);
+    text-transform: uppercase;
+    flex: none;
+}
+
+.userName {
+    font-size: 13.5px;
+    color: var(--color-text);
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.logoutBtn {
+    border: none;
+    background: transparent;
+    padding: 0 2px;
+    font-size: 16px;
+    line-height: 1;
+    color: var(--color-muted);
+    cursor: pointer;
+}
+
+.logoutBtn:hover {
+    color: var(--color-danger);
+}
+
+/* --- Sidebar ---------------------------------------------------------------- */
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    background: var(--color-panel);
+    border-right: 1px solid var(--color-border);
+    min-height: 0;
+}
+
+.worldSection {
+    padding: 16px 16px 14px;
+}
+
+.sectionLabel {
+    composes: ornateLabel from global;
+    letter-spacing: 0.16em;
+    margin-bottom: 8px;
+}
+
+.ornament {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 16px 12px;
+}
+
+.ornamentLine {
+    flex: 1;
+    height: 1px;
+    background: var(--color-border);
+}
+
+.ornamentStar {
+    color: var(--color-accent);
+    font-size: 10px;
+}
+
+.nav {
+    flex: 1;
+    overflow: auto;
+    padding: 0 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.navItem {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 9px 12px;
+    border-radius: 8px;
+    color: var(--color-muted);
+    font-size: 14px;
+    transition: background var(--o-transition), color var(--o-transition);
+}
+
+.navItem:hover {
+    background: var(--o-row-hover);
+    color: var(--color-text);
+}
+
+.navItemActive {
+    background: var(--color-accent-soft);
+    color: var(--color-text);
+    font-weight: 600;
+}
+
+.navItemActive::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 8px;
+    bottom: 8px;
+    width: 3px;
+    border-radius: 3px;
+    background: var(--color-accent);
+}
+
+.navItemDisabled {
+    opacity: 0.45;
+    cursor: default;
+}
+
+.navItemDisabled:hover {
+    background: transparent;
+    color: var(--color-muted);
+}
+
+.navGlyph {
+    width: 16px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--color-muted);
+}
+
+.navItemActive .navGlyph {
+    color: var(--color-accent);
+}
+
+.navSoon {
+    margin-left: auto;
+    font-size: 9.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-muted);
+}
+
+.sidebarFooter {
+    padding: 14px 16px;
+    border-top: 1px solid var(--color-border);
+}
+
+.newEntryBtn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px;
+    border: none;
+    border-radius: 9px;
+    background: var(--color-accent);
+    color: var(--color-panel);
+    font-family: var(--font-ui);
+    font-size: 13.5px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+}
+
+.newEntryBtn:disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+.newEntryPlus {
+    font-size: 15px;
+    line-height: 1;
+}
+
+/* --- World switcher ---------------------------------------------------------- */
+
+.worldSwitcher {
+    position: relative;
+}
+
+.worldCard {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 9px 11px;
+    border: 1px solid var(--color-border);
+    border-radius: 9px;
+    background: var(--color-surface);
+    font-family: var(--font-ui);
+    text-align: left;
+    cursor: pointer;
+    transition: border-color var(--o-transition);
+}
+
+.worldCard:hover {
+    border-color: var(--o-border-strong);
+}
+
+.worldCard:focus-visible {
+    outline: none;
+    box-shadow: var(--o-ring);
+}
+
+.worldCardOpen {
+    border-color: var(--color-accent);
+    border-radius: 9px 9px 0 0;
+    background: var(--color-panel);
+}
+
+.worldThumb {
+    width: 34px;
+    height: 34px;
+    border-radius: 7px;
+    background: repeating-linear-gradient(
+        135deg,
+        var(--color-sunken) 0 6px,
+        var(--color-panel) 6px 12px
+    );
+    border: 1px solid var(--color-border);
+    flex: none;
+}
+
+.worldInfo {
+    flex: 1;
+    min-width: 0;
+}
+
+.worldName {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.15;
+    color: var(--color-text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.worldMeta {
+    display: block;
+    font-size: 11px;
+    color: var(--color-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.worldCaret {
+    color: var(--color-muted);
+    font-size: 12px;
+}
+
+.worldCardOpen .worldCaret {
+    color: var(--color-accent);
+}
+
+.worldMenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 30;
+    border: 1px solid var(--color-accent);
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    background: var(--color-panel);
+    overflow: hidden;
+    box-shadow: 0 20px 40px -22px rgba(0, 0, 0, 0.8);
+}
+
+.worldMenuItem {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 10px 11px;
+    border: none;
+    border-top: 1px solid var(--color-border);
+    background: transparent;
+    font-family: var(--font-ui);
+    text-align: left;
+    cursor: pointer;
+}
+
+.worldMenuItem:hover {
+    background: var(--o-row-hover);
+}
+
+.worldMenuItemActive {
+    background: var(--color-accent-soft);
+}
+
+.worldMenuThumb {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background: repeating-linear-gradient(
+        135deg,
+        var(--color-sunken) 0 5px,
+        var(--color-panel) 5px 10px
+    );
+    border: 1px solid var(--color-border);
+    flex: none;
+}
+
+.worldMenuName {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 14.5px;
+    color: var(--color-text);
+}
+
+.worldMenuCheck {
+    font-size: 11px;
+    color: var(--color-accent);
+}
+
+.worldEmpty {
+    font-size: 13px;
+    color: var(--color-muted);
+    padding: 9px 11px;
+    border: 1px dashed var(--color-border);
+    border-radius: 9px;
+}

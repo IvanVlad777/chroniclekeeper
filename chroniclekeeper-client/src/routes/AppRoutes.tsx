@@ -1,26 +1,31 @@
-import { Routes, Route } from "react-router-dom";
-import LoginPage from "../pages/LoginPage";
-import RegisterPage from "../pages/RegisterPage";
+import { Routes, Route, Navigate } from "react-router-dom";
+import AuthPage from "../pages/AuthPage";
 import ProtectedRoute from "./ProtectedRoute";
-import StoryMapPage from "../pages/StoryMapPage";
 import NoPage from "../pages/NoPage";
 import Overview from "../components/entityViews/overview/Overview";
 import CharactersList from "../components/entityViews/character/list/CharacterList";
 import CharacterDetail from "../components/entityViews/character/detail/CharacterDetails";
 import { WorldProvider } from "../context/world/WorldProvider";
+import { AppShell } from "../components/shell/AppShell";
 
 const AppRoutes = () => {
     return (
         <Routes>
-            <Route index element={<Overview />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
+            <Route index element={<Navigate to="/storymap" replace />} />
+            <Route
+                path="/login"
+                element={<AuthPage initialMode="signin" />}
+            />
+            <Route
+                path="/register"
+                element={<AuthPage initialMode="register" />}
+            />
             <Route
                 path="/storymap"
                 element={
                     <ProtectedRoute>
                         <WorldProvider>
-                            <StoryMapPage />
+                            <AppShell />
                         </WorldProvider>
                     </ProtectedRoute>
                 }

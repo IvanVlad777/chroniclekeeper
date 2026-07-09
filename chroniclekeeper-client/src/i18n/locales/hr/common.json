@@ -1,15 +1,45 @@
-﻿{
-    "title": "Čuvar kronika",
-    "storymap": "Pregled priče",
-    "loggedinas": "Prijavljen kao",
-    "role": "Uloga",
+{
+    "title": "ChronicleKeeper",
     "login": "Prijava",
     "register": "Registracija",
     "logout": "Odjava",
-    "adminaccess": "Imate administratorski pristup",
-    "useraccess": "Gost",
     "overview": "Pregled",
     "character": "Likovi",
     "world": "Svijet",
-    "noworlds": "Još nema svjetova"
+    "noworlds": "Još nema svjetova",
+    "nav": {
+        "overview": "Pregled",
+        "characters": "Likovi",
+        "locations": "Lokacije",
+        "factions": "Frakcije",
+        "species": "Vrste",
+        "timelines": "Vremenske linije",
+        "tags": "Oznake",
+        "notes": "Bilješke"
+    },
+    "shell": {
+        "newEntry": "Novi zapis",
+        "comingSoon": "Uskoro",
+        "soon": "uskoro"
+    },
+    "theme": {
+        "ice": "Led",
+        "forest": "Šuma",
+        "lush": "Bujno",
+        "sand": "Pijesak",
+        "stone": "Kamen",
+        "toNight": "Prebaci na noćni način",
+        "toDay": "Prebaci na dnevni način"
+    },
+    "lang": {
+        "label": "Jezik"
+    },
+    "states": {
+        "loading": "Učitavanje…",
+        "errorTitle": "Arhiva nije dostupna",
+        "errorText": "Podaci se nisu uspjeli učitati. Tvoj rad je siguran — ovo je problem s vezom, ne izgubljeni zapis.",
+        "retry": "Pokušaj ponovno",
+        "noWorldTitle": "Nijedan svijet nije odabran",
+        "noWorldText": "Odaberi ili stvori svijet da počneš voditi kroniku."
+    }
 }

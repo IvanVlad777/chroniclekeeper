@@ -1,22 +1,30 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import OrnateDisplayBox from "../../../basic/forms/field/OrnateDisplayBox";
+import { OrnateDisplayBox, StatusPill, Tag } from "../../../ornate";
+import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
 import { CharacterDetailsDto } from "../../../../interfaces/loreInterfaces";
 import { getCharacter } from "../../../../api/characters";
+import s from "./styles.module.css";
 
+// TODO: Edit gumb dolazi kad klijent dobije mutacijske endpointe (create/update).
 export default function CharacterDetail() {
     const { id } = useParams<{ id: string }>();
     const { t } = useTranslation("character");
 
-    const [character, setCharacter] = useState<CharacterDetailsDto | null>(null);
+    const [character, setCharacter] = useState<CharacterDetailsDto | null>(
+        null
+    );
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [notFound, setNotFound] = useState(false);
+    const [reloadKey, setReloadKey] = useState(0);
+    const refetch = useCallback(() => setReloadKey((k) => k + 1), []);
 
     useEffect(() => {
         const characterId = Number(id);
         if (!characterId) {
-            setError(t("notfound") || "Character not found");
+            setNotFound(true);
             setLoading(false);
             return;
         }
@@ -24,6 +32,7 @@ export default function CharacterDetail() {
         let cancelled = false;
         setLoading(true);
         setError(null);
+        setNotFound(false);
 
         getCharacter(characterId)
             .then((data) => {
@@ -31,12 +40,11 @@ export default function CharacterDetail() {
             })
             .catch((err) => {
                 console.error("Failed to load character:", err);
-                if (!cancelled) {
-                    setError(
-                        err?.response?.status === 404
-                            ? t("notfound") || "Character not found"
-                            : t("loaderror") || "Failed to load character"
-                    );
+                if (cancelled) return;
+                if (err?.response?.status === 404) {
+                    setNotFound(true);
+                } else {
+                    setError(t("loaderror"));
                 }
             })
             .finally(() => {
@@ -46,133 +54,176 @@ export default function CharacterDetail() {
         return () => {
             cancelled = true;
         };
-    }, [id, t]);
+    }, [id, t, reloadKey]);
 
-    if (loading) return <p>{t("loading") || "Loading…"}</p>;
-    if (error || !character) return <p>{error}</p>;
+    if (loading) return <LoadingSkeleton variant="block" rows={6} />;
+    if (notFound) {
+        return (
+            <EmptyState
+                glyph="♟"
+                title={t("notfound")}
+                action={
+                    <Link to="/storymap/characters" className={s.relLink}>
+                        ← {t("backtolist")}
+                    </Link>
+                }
+            />
+        );
+    }
+    if (error || !character) {
+        return <ErrorState onRetry={refetch} detail={error} />;
+    }
 
-    const lifespan = [character.birthDate, character.deathDate]
-        .map((d) => (d ? new Date(d).toLocaleDateString() : null))
+    const dash = "—";
+    const fmtDate = (d?: string | null) =>
+        d ? new Date(d).toLocaleDateString() : null;
+    const lifespan =
+        [fmtDate(character.birthDate), fmtDate(character.deathDate)]
+            .filter(Boolean)
+            .join(" — ") || dash;
+    const kicker = [character.species?.name, character.race?.name]
         .filter(Boolean)
-        .join(" — ");
+        .join(" · ");
+    const status = character.deathDate ? "dead" : "living";
+
+    const facts: { label: string; value: string }[] = [
+        { label: t("lifespan"), value: lifespan },
+        { label: t("haircolor"), value: character.hairColor || dash },
+        { label: t("eyecolor"), value: character.eyeColor || dash },
+        {
+            label: t("height"),
+            value: character.height != null ? String(character.height) : dash,
+        },
+        {
+            label: t("weight"),
+            value: character.weight != null ? String(character.weight) : dash,
+        },
+        { label: t("father"), value: character.father?.name ?? dash },
+        { label: t("mother"), value: character.mother?.name ?? dash },
+    ];
 
     return (
-        <div>
-            <p>
-                <Link to="/storymap/characters">
-                    ← {t("backtolist") || "Back to characters"}
-                </Link>
-            </p>
-
-            <h1>
-                {character.name}
-                {character.title ? <small> · {character.title}</small> : null}
-            </h1>
-
-            <div
-                style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
-                    gap: 12,
-                }}
-            >
-                <OrnateDisplayBox
-                    label={t("firstname") || "First name"}
-                    value={character.firstName}
-                />
-                <OrnateDisplayBox
-                    label={t("lastname") || "Last name"}
-                    value={character.lastName}
-                />
-                <OrnateDisplayBox
-                    label={t("nickname") || "Nickname"}
-                    value={character.nickname}
-                />
-                <OrnateDisplayBox
-                    label={t("lifespan") || "Born — died"}
-                    value={lifespan}
-                />
-                <OrnateDisplayBox
-                    label={t("species") || "Species"}
-                    value={character.species?.name}
-                />
-                <OrnateDisplayBox
-                    label={t("race") || "Race"}
-                    value={character.race?.name}
-                />
-                <OrnateDisplayBox
-                    label={t("father") || "Father"}
-                    value={character.father?.name}
-                />
-                <OrnateDisplayBox
-                    label={t("mother") || "Mother"}
-                    value={character.mother?.name}
-                />
-                <OrnateDisplayBox
-                    label={t("haircolor") || "Hair color"}
-                    value={character.hairColor}
-                />
-                <OrnateDisplayBox
-                    label={t("eyecolor") || "Eye color"}
-                    value={character.eyeColor}
-                />
-                <OrnateDisplayBox
-                    label={t("height") || "Height (cm)"}
-                    value={character.height ?? undefined}
-                />
-                <OrnateDisplayBox
-                    label={t("weight") || "Weight (kg)"}
-                    value={character.weight ?? undefined}
-                />
+        <div className={s.page}>
+            <div className={s.header}>
+                <div className={s.breadcrumb}>
+                    <Link to="/storymap/characters">{t("listTitle")}</Link>
+                    <span className={s.breadcrumbSep}>/</span>
+                    <span className={s.breadcrumbCurrent}>
+                        {character.name}
+                    </span>
+                </div>
+                <div className={s.headerRow}>
+                    <div className={s.headerMain}>
+                        {kicker && <div className={s.kicker}>{kicker}</div>}
+                        <h1 className={s.name}>{character.name}</h1>
+                        {character.title && (
+                            <div className={s.epithet}>{character.title}</div>
+                        )}
+                    </div>
+                    <div className={s.headerActions}>
+                        <StatusPill status={status}>
+                            {t(`status.${status}`)}
+                        </StatusPill>
+                    </div>
+                </div>
+                <div className={s.flourish}>
+                    <span className={s.flourishStar}>✦</span>
+                    <span className={s.flourishLine} />
+                </div>
             </div>
 
-            <OrnateDisplayBox
-                label={t("description") || "Description"}
-                value={character.description}
-            />
-            <OrnateDisplayBox
-                label={t("features") || "Special physical features"}
-                value={character.specialPhysicalFeatures}
-            />
+            <div className={s.body}>
+                <div className={s.side}>
+                    <div className={s.portrait} aria-hidden="true">
+                        {character.name?.charAt(0)}
+                    </div>
+                    <div className={s.facts}>
+                        {facts.map((f) => (
+                            <OrnateDisplayBox
+                                key={f.label}
+                                label={f.label}
+                                value={f.value}
+                            />
+                        ))}
+                    </div>
+                    {character.tags.length > 0 && (
+                        <div className={s.tags}>
+                            {character.tags.map((tag) => (
+                                <Tag key={tag.id}>{tag.name}</Tag>
+                            ))}
+                        </div>
+                    )}
+                </div>
 
-            <h2>{t("factions") || "Factions"}</h2>
-            {character.factions.length === 0 ? (
-                <p>{t("none") || "None"}</p>
-            ) : (
-                <ul>
-                    {character.factions.map((f) => (
-                        <li key={f.id}>{f.name}</li>
-                    ))}
-                </ul>
-            )}
+                <div>
+                    <div className={s.sectionHead}>
+                        <span className={s.sectionTitle}>
+                            {t("description")}
+                        </span>
+                        <span className={s.sectionLine} />
+                        <span className={s.sectionStar}>✦</span>
+                    </div>
+                    {character.description ? (
+                        <p className={`${s.prose} ${s.dropCap}`}>
+                            {character.description}
+                        </p>
+                    ) : (
+                        <p className={`${s.prose} ${s.muted}`}>{t("none")}</p>
+                    )}
 
-            <h2>{t("relationships") || "Relationships"}</h2>
-            {character.relationships.length === 0 ? (
-                <p>{t("none") || "None"}</p>
-            ) : (
-                <ul>
-                    {character.relationships.map((r) => (
-                        <li key={r.id}>
-                            <Link to={`/storymap/characters/${r.relatedCharacterId}`}>
-                                {r.relatedCharacterName}
-                            </Link>{" "}
-                            — {r.type}
-                            {r.description ? ` (${r.description})` : ""}
-                        </li>
-                    ))}
-                </ul>
-            )}
+                    <div className={`${s.sectionHead} ${s.sectionSpacer}`}>
+                        <span className={s.sectionTitle}>{t("features")}</span>
+                        <span className={s.sectionLine} />
+                    </div>
+                    {character.specialPhysicalFeatures ? (
+                        <p className={s.prose}>
+                            {character.specialPhysicalFeatures}
+                        </p>
+                    ) : (
+                        <p className={`${s.prose} ${s.muted}`}>{t("none")}</p>
+                    )}
 
-            <h2>{t("tags") || "Tags"}</h2>
-            {character.tags.length === 0 ? (
-                <p>{t("none") || "None"}</p>
-            ) : (
-                <ul style={{ display: "flex", gap: 8, listStyle: "none", padding: 0 }}>
-                    {character.tags.map((tag) => (
-                        <li key={tag.id}>#{tag.name}</li>
-                    ))}
-                </ul>
-            )}
+                    <div className={s.linkGrid}>
+                        <div>
+                            <div className={s.listLabel}>{t("factions")}</div>
+                            {character.factions.length === 0 ? (
+                                <p className={s.none}>{t("none")}</p>
+                            ) : (
+                                character.factions.map((f) => (
+                                    <div key={f.id} className={s.listRow}>
+                                        <span className={s.listThumb} />
+                                        <span className={s.listName}>
+                                            {f.name}
+                                        </span>
+                                    </div>
+                                ))
+                            )}
+                        </div>
+                        <div>
+                            <div className={s.listLabel}>
+                                {t("relationships")}
+                            </div>
+                            {character.relationships.length === 0 ? (
+                                <p className={s.none}>{t("none")}</p>
+                            ) : (
+                                character.relationships.map((r) => (
+                                    <div key={r.id} className={s.listRow}>
+                                        <span className={s.relType}>
+                                            {r.type}
+                                        </span>
+                                        <Link
+                                            to={`/storymap/characters/${r.relatedCharacterId}`}
+                                            className={s.relLink}
+                                        >
+                                            {r.relatedCharacterName}
+                                        </Link>
+                                    </div>
+                                ))
+                            )}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }

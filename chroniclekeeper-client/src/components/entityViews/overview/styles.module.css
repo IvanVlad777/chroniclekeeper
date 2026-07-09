@@ -1,0 +1,179 @@
+/* Overview dashboard (Grimoire 1b mockup) */
+
+.page {
+    padding: 30px 34px;
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+}
+
+/* header */
+.header {
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+}
+
+.headerMain {
+    flex: 1;
+    min-width: 0;
+}
+
+.kicker {
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-accent);
+    margin-bottom: 6px;
+}
+
+.worldName {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 34px;
+    margin: 0;
+    line-height: 1;
+}
+
+.meta {
+    margin: 7px 0 0;
+    font-size: 14px;
+    color: var(--color-muted);
+}
+
+/* stat cards */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+}
+
+@media (max-width: 860px) {
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.statCard {
+    border: 1px solid var(--color-border);
+    border-radius: 11px;
+    background: linear-gradient(180deg, var(--color-panel), var(--color-sunken));
+    padding: 16px 17px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.statTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.statGlyph {
+    font-size: 17px;
+    color: var(--color-accent);
+}
+
+.statLabel {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--color-muted);
+}
+
+.statValue {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 500;
+    margin-top: 8px;
+    line-height: 1;
+    color: var(--color-text);
+}
+
+.statSoon {
+    color: var(--color-muted);
+}
+
+.statSoonNote {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-muted);
+    margin-left: 8px;
+}
+
+/* recently edited panel */
+.panel {
+    border: 1px solid var(--color-border);
+    border-radius: 11px;
+    background: var(--color-panel);
+    overflow: hidden;
+    max-width: 720px;
+}
+
+.panelHead {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.panelStar {
+    color: var(--color-accent);
+    font-size: 12px;
+}
+
+.panelTitle {
+    font-family: var(--font-display);
+    font-size: 17px;
+}
+
+.recentRow {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--color-border);
+    color: inherit;
+}
+
+.recentRow:last-child {
+    border-bottom: none;
+}
+
+.recentRow:hover {
+    background: var(--o-row-hover);
+}
+
+.typeBadge {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    color: var(--color-accent);
+    border: 1px solid var(--color-border);
+    background: var(--color-accent-soft);
+    border-radius: 5px;
+    padding: 3px 8px;
+    min-width: 78px;
+    text-align: center;
+}
+
+.recentName {
+    flex: 1;
+    font-size: 15px;
+    font-family: var(--font-display);
+}
+
+.recentWhen {
+    font-size: 12.5px;
+    color: var(--color-muted);
+}
+
+.noRecent {
+    padding: 16px 18px;
+    font-size: 13.5px;
+    color: var(--color-muted);
+}

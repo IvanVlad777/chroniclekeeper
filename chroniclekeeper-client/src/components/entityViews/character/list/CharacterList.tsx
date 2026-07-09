@@ -1,30 +1,12 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { ColumnDef, DataTable } from "../../../basic/table/DataTable";
+import { Column, DataTable, StatusPill } from "../../../ornate";
+import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
 import { CharacterDto } from "../../../../interfaces/loreInterfaces";
 import { getCharacters } from "../../../../api/characters";
 import { useWorld } from "../../../../hooks/useWorld";
-
-const columns: ColumnDef<CharacterDto>[] = [
-    {
-        id: "id",
-        header: "ID",
-        accessor: (r) => r.id,
-        sortType: "number",
-        searchable: false,
-    },
-    { id: "name", header: "Name", accessor: (r) => r.name },
-    { id: "title", header: "Title", accessor: (r) => r.title ?? "" },
-    {
-        id: "createdAt",
-        header: "Created",
-        accessor: (r) => r.createdAt ?? "",
-        sortType: "date",
-        cell: (value) =>
-            value ? new Date(String(value)).toLocaleDateString() : "",
-    },
-];
+import s from "./styles.module.css";
 
 export default function CharactersList() {
     const navigate = useNavigate();
@@ -34,6 +16,8 @@ export default function CharactersList() {
     const [characters, setCharacters] = useState<CharacterDto[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [reloadKey, setReloadKey] = useState(0);
+    const refetch = useCallback(() => setReloadKey((k) => k + 1), []);
 
     useEffect(() => {
         if (worldLoading) return;
@@ -53,7 +37,7 @@ export default function CharactersList() {
             })
             .catch((err) => {
                 console.error("Failed to load characters:", err);
-                if (!cancelled) setError(t("loaderror") || "Failed to load characters");
+                if (!cancelled) setError(t("loaderror"));
             })
             .finally(() => {
                 if (!cancelled) setLoading(false);
@@ -62,25 +46,89 @@ export default function CharactersList() {
         return () => {
             cancelled = true;
         };
-    }, [selectedWorld, worldLoading, t]);
+    }, [selectedWorld, worldLoading, t, reloadKey]);
 
-    if (worldLoading || loading) return <p>{t("loading") || "Loading…"}</p>;
-    if (error) return <p>{error}</p>;
-    if (!selectedWorld) return <p>{t("noworld") || "Select a world first."}</p>;
+    if (worldLoading || loading) {
+        return <LoadingSkeleton variant="table" rows={6} />;
+    }
+    if (error) {
+        return <ErrorState onRetry={refetch} detail={error} />;
+    }
+    if (!selectedWorld) {
+        return (
+            <EmptyState
+                glyph="♟"
+                title={t("states.noWorldTitle", { ns: "common" })}
+                text={t("states.noWorldText", { ns: "common" })}
+            />
+        );
+    }
+
+    const columns: Column<CharacterDto>[] = [
+        {
+            key: "name",
+            header: t("columns.name"),
+            sortable: true,
+            render: (r) => (
+                <span className={s.nameCell}>
+                    <span className={s.avatar}>{r.name?.charAt(0)}</span>
+                    <span className={s.name}>{r.name}</span>
+                </span>
+            ),
+        },
+        {
+            key: "title",
+            header: t("columns.title"),
+            sortable: true,
+            value: (r) => r.title ?? "",
+            render: (r) =>
+                r.title ? <span className={s.title}>{r.title}</span> : "—",
+        },
+        {
+            key: "status",
+            header: t("columns.status"),
+            value: (r) => (r.deathDate ? "dead" : "living"),
+            render: (r) => (
+                <StatusPill status={r.deathDate ? "dead" : "living"}>
+                    {r.deathDate ? t("status.dead") : t("status.living")}
+                </StatusPill>
+            ),
+        },
+        {
+            key: "updatedAt",
+            header: t("columns.updated"),
+            sortable: true,
+            align: "right",
+            value: (r) => r.updatedAt ?? "",
+            render: (r) => (
+                <span className={s.updated}>
+                    {r.updatedAt
+                        ? new Date(r.updatedAt).toLocaleDateString()
+                        : "—"}
+                </span>
+            ),
+        },
+    ];
 
     return (
-        <DataTable<CharacterDto>
-            data={characters}
-            columns={columns}
-            getRowId={(r) => String(r.id)}
-            onRowClick={(row) => {
-                navigate(`/storymap/characters/${row.id}`);
-            }}
-            initialSort={{ id: "name", desc: false }}
-            pageSize={10}
-            enableSearch
-            showIndexColumn
-            searchPlaceholder={t("search") || "Search characters…"}
-        />
+        <div className={s.page}>
+            <DataTable<CharacterDto>
+                data={characters}
+                columns={columns}
+                getRowId={(r) => String(r.id)}
+                onRowClick={(row) => navigate(`/storymap/characters/${row.id}`)}
+                title={t("listTitle")}
+                initialSort={{ key: "name", dir: "asc" }}
+                pageSize={10}
+                searchPlaceholder={t("search")}
+                empty={
+                    <EmptyState
+                        glyph="♟"
+                        title={t("emptyTitle")}
+                        text={t("emptyText")}
+                    />
+                }
+            />
+        </div>
     );
 }

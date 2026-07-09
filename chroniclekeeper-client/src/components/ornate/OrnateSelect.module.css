@@ -1,0 +1,93 @@
+/* OrnateSelect.module.css
+   ------------------------------------------------------------------
+   Two ways to use, same skin:
+
+   A) Native <select> (simplest, keyboard-accessible for free):
+        <select class={s.select}> … </select>
+
+   B) Headless trigger (Radix Select / Listbox) + menu:
+        <Trigger className={s.trigger}>Aelfin <span class={s.chevron}/></Trigger>
+        <Content className={s.menu}>
+          <Item className={s.item} data-state="checked|active">Aelfin</Item>
+        </Content>
+   ------------------------------------------------------------------ */
+
+/* --- A) native --------------------------------------------------- */
+.select {
+  width: 100%;
+  font-family: var(--font-ui);
+  font-size: 14.5px;
+  color: var(--color-text);
+  background-color: var(--color-sunken);
+  border: 1px solid var(--color-border);
+  border-radius: var(--o-radius);
+  padding: var(--o-field-pad-y) 38px var(--o-field-pad-y) var(--o-field-pad-x);
+  transition: border-color var(--o-transition), box-shadow var(--o-transition);
+  appearance: none;
+  -webkit-appearance: none;
+  /* chevron (currentColor won't work in bg image, so tint with the muted hue) */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' fill='none' stroke='%239A9080' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+}
+.select:hover { border-color: var(--o-border-strong); }
+.select:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: var(--o-ring);
+  background-color: var(--color-panel);
+}
+.select:disabled { opacity: 0.55; cursor: not-allowed; }
+
+/* --- B) headless trigger ----------------------------------------- */
+.trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  font-family: var(--font-ui);
+  font-size: 14.5px;
+  color: var(--color-text);
+  background: var(--color-sunken);
+  border: 1px solid var(--color-border);
+  border-radius: var(--o-radius);
+  padding: var(--o-field-pad-y) var(--o-field-pad-x);
+  cursor: pointer;
+  transition: border-color var(--o-transition), box-shadow var(--o-transition);
+}
+.trigger:hover { border-color: var(--o-border-strong); }
+.trigger[data-state='open'], .trigger:focus-visible {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: var(--o-ring);
+}
+.trigger[data-placeholder] { color: var(--color-muted); }
+.chevron { color: var(--color-muted); font-size: 12px; line-height: 1; }
+
+/* --- shared dropdown surface (select & multiselect) -------------- */
+.menu {
+  background: var(--color-panel);
+  border: 1px solid var(--color-border);
+  border-radius: var(--o-radius);
+  padding: 5px;
+  box-shadow: 0 22px 44px -22px rgba(0, 0, 0, 0.55);
+  z-index: 50;
+}
+.item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  color: var(--color-text);
+  padding: 8px 11px;
+  border-radius: var(--o-radius-sm);
+  cursor: pointer;
+  user-select: none;
+}
+.item[data-highlighted], .item:hover { background: var(--color-sunken); outline: none; }
+.item[data-state='checked'], .item[aria-selected='true'] {
+  color: var(--color-accent);
+  background: var(--color-accent-soft);
+}

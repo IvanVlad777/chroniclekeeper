@@ -1,69 +1,166 @@
-.theme-ice-day {
-  --color-surface: #e0f7fa;
-  --color-text: #0f172a;
-  --color-primary: #00bcd4;
-  --color-accent: #4dd0e1;
+/* ==========================================================================
+   ChronicleKeeper — theme tokens
+   5 palettes (ice, forest, lush, sand, stone) x 2 modes (day, night) = 10
+   --------------------------------------------------------------------------
+   Token set (11):
+     4 originals ....... --color-surface  --color-text  --color-primary  --color-accent
+     7 added ........... --color-panel     surface raised (cards, nav, top bar)
+                         --color-sunken    inset wells (table headers, inputs)
+                         --color-muted     secondary / de-emphasised text
+                         --color-border    hairlines, dividers, field outlines
+                         --color-accent-soft  tinted fill for chips / active nav
+                         --color-danger    destructive + required + "dead" status
+                         --color-success   confirm + "living" status
+
+   Usage: set both attributes on <html> (or a wrapper):
+     <html data-theme="stone" data-mode="day">
+   The ThemeSwitcher just changes those two attributes.
+   :root falls back to stone / day if nothing is set.
+
+   Notes:
+   - Surfaces stay near-neutral (very low chroma), tinted toward the palette hue.
+   - Accent carries the palette identity (an aged-metal / jewel tone).
+   - danger/success shift slightly warmer in night mode for contrast on dark.
+   - color-mix() is handy for one-off states, e.g.
+       background: color-mix(in srgb, var(--color-success) 16%, transparent);
+   ========================================================================== */
+
+:root,
+[data-theme="stone"][data-mode="day"] {
+  --color-surface:      #E7E1D6;
+  --color-panel:        #F4EFE6;
+  --color-sunken:       #DFD8CA;
+  --color-text:         #2A2620;
+  --color-muted:        #776F60;
+  --color-border:       #CEC5B3;
+  --color-primary:      #5C5346;
+  --color-accent:       #8C6A38;
+  --color-accent-soft:  #EBE0CB;
+  --color-danger:       #9C3A2C;
+  --color-success:      #5A7038;
+}
+[data-theme="stone"][data-mode="night"] {
+  --color-surface:      #17150F;
+  --color-panel:        #211E17;
+  --color-sunken:       #100E0A;
+  --color-text:         #ECE3D2;
+  --color-muted:        #9A9080;
+  --color-border:       #3A3327;
+  --color-primary:      #CDBFA3;
+  --color-accent:       #CB9C4F;
+  --color-accent-soft:  #2E2617;
+  --color-danger:       #CC6552;
+  --color-success:      #93A65F;
 }
 
-.theme-ice-night {
-  --color-surface: #0f172a;
-  --color-text: #e0f7fa;
-  --color-primary: #00acc1;
-  --color-accent: #26c6da;
+/* --- ICE --- cool steel-blue ---------------------------------------------- */
+[data-theme="ice"][data-mode="day"] {
+  --color-surface:      #E4E8ED;
+  --color-panel:        #F1F4F7;
+  --color-sunken:       #D7DEE5;
+  --color-text:         #1E262D;
+  --color-muted:        #5C6873;
+  --color-border:       #C3CCD6;
+  --color-primary:      #3A4A57;
+  --color-accent:       #3E7595;
+  --color-accent-soft:  #DBE6EE;
+  --color-danger:       #9C3A2C;
+  --color-success:      #3E6E52;
+}
+[data-theme="ice"][data-mode="night"] {
+  --color-surface:      #111619;
+  --color-panel:        #1A2126;
+  --color-sunken:       #0C1013;
+  --color-text:         #E3EAF0;
+  --color-muted:        #8A99A5;
+  --color-border:       #29333B;
+  --color-primary:      #AEBDC9;
+  --color-accent:       #6FA8C9;
+  --color-accent-soft:  #1D2E39;
+  --color-danger:       #CC6552;
+  --color-success:      #7FA98A;
 }
 
-.theme-forest-day {
-  --color-surface: #e8f5e9;
-  --color-text: #1b4332;
-  --color-primary: #388e3c;
-  --color-accent: #66bb6a;
+/* --- FOREST --- mossy green ------------------------------------------------ */
+[data-theme="forest"][data-mode="day"] {
+  --color-surface:      #E5E9E1;
+  --color-panel:        #F1F4EC;
+  --color-sunken:       #D8DFD1;
+  --color-text:         #20261D;
+  --color-muted:        #5D6753;
+  --color-border:       #C5CDBA;
+  --color-primary:      #414A38;
+  --color-accent:       #5E7A3C;
+  --color-accent-soft:  #DFE8D2;
+  --color-danger:       #9C3A2C;
+  --color-success:      #4F7A3E;
+}
+[data-theme="forest"][data-mode="night"] {
+  --color-surface:      #121611;
+  --color-panel:        #1B2116;
+  --color-sunken:       #0D110A;
+  --color-text:         #E6ECDE;
+  --color-muted:        #8F9A82;
+  --color-border:       #2B3324;
+  --color-primary:      #B6C1A6;
+  --color-accent:       #8BA85B;
+  --color-accent-soft:  #212A17;
+  --color-danger:       #CC6552;
+  --color-success:      #8BA85B;
 }
 
-.theme-forest-night {
-  --color-surface: #1b4332;
-  --color-text: #e8f5e9;
-  --color-primary: #2e7d32;
-  --color-accent: #81c784;
+/* --- LUSH --- plum / rose -------------------------------------------------- */
+[data-theme="lush"][data-mode="day"] {
+  --color-surface:      #ECE4E8;
+  --color-panel:        #F6EFF3;
+  --color-sunken:       #E0D5DC;
+  --color-text:         #291F26;
+  --color-muted:        #6E5C67;
+  --color-border:       #D2C2CC;
+  --color-primary:      #4E3B47;
+  --color-accent:       #9C5E86;
+  --color-accent-soft:  #EADBE5;
+  --color-danger:       #A93A3A;
+  --color-success:      #5A7038;
+}
+[data-theme="lush"][data-mode="night"] {
+  --color-surface:      #171116;
+  --color-panel:        #211A20;
+  --color-sunken:       #100B0F;
+  --color-text:         #EDE1EA;
+  --color-muted:        #9E8B98;
+  --color-border:       #362A33;
+  --color-primary:      #C9AEC0;
+  --color-accent:       #C07FA5;
+  --color-accent-soft:  #2E1E2A;
+  --color-danger:       #CC6552;
+  --color-success:      #93A65F;
 }
 
-.theme-lush-day {
-  --color-surface: #f0fdf4;
-  --color-text: #064e3b;
-  --color-primary: #10b981;
-  --color-accent: #34d399;
+/* --- SAND --- warm gold ---------------------------------------------------- */
+[data-theme="sand"][data-mode="day"] {
+  --color-surface:      #EDE6D6;
+  --color-panel:        #F6F1E5;
+  --color-sunken:       #E2D9C4;
+  --color-text:         #2A2418;
+  --color-muted:        #77694F;
+  --color-border:       #D3C7AC;
+  --color-primary:      #5C4E32;
+  --color-accent:       #A9812F;
+  --color-accent-soft:  #EEE2C6;
+  --color-danger:       #9C3A2C;
+  --color-success:      #5A7038;
 }
-
-.theme-lush-night {
-  --color-surface: #064e3b;
-  --color-text: #f0fdf4;
-  --color-primary: #059669;
-  --color-accent: #6ee7b7;
-}
-
-.theme-sand-day {
-  --color-surface: #fff8e1;
-  --color-text: #4e342e;
-  --color-primary: #fbc02d;
-  --color-accent: #ffeb3b;
-}
-
-.theme-sand-night {
-  --color-surface: #4e342e;
-  --color-text: #fff8e1;
-  --color-primary: #f9a825;
-  --color-accent: #fdd835;
-}
-
-.theme-stone-day {
-  --color-surface: #f5f5f5;
-  --color-text: #212121;
-  --color-primary: #9e9e9e;
-  --color-accent: #bdbdbd;
-}
-
-.theme-stone-night {
-  --color-surface: #212121;
-  --color-text: #f5f5f5;
-  --color-primary: #757575;
-  --color-accent: #9e9e9e;
+[data-theme="sand"][data-mode="night"] {
+  --color-surface:      #17140D;
+  --color-panel:        #211D13;
+  --color-sunken:       #100E08;
+  --color-text:         #EFE7D3;
+  --color-muted:        #9C9078;
+  --color-border:       #38311F;
+  --color-primary:      #CFBF9C;
+  --color-accent:       #CBA24E;
+  --color-accent-soft:  #2E2713;
+  --color-danger:       #CC6552;
+  --color-success:      #93A65F;
 }

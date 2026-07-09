@@ -1,0 +1,68 @@
+/* Button.module.css
+   ------------------------------------------------------------------
+   Markup:
+     <button class={s.button + ' ' + s.primary}>Save character</button>
+     <button class={`${s.button} ${s.ghost}`}>Cancel</button>
+     <button class={`${s.button} ${s.danger}`}>Delete</button>
+     <button class={`${s.button} ${s.icon}`} aria-label="More">…</button>
+   Modifiers: primary | ghost | danger  ·  sizes: sm | lg  ·  icon
+   ------------------------------------------------------------------ */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  padding: 10px 20px;
+  border: 1px solid transparent;
+  border-radius: var(--o-radius-sm);
+  cursor: pointer;
+  transition: background var(--o-transition), border-color var(--o-transition),
+              color var(--o-transition), box-shadow var(--o-transition);
+  white-space: nowrap;
+  user-select: none;
+}
+.button:focus-visible { outline: none; box-shadow: var(--o-ring); }
+.button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* primary — solid accent, reads on both day & night because text is surface */
+.primary {
+  background: var(--color-accent);
+  color: var(--color-surface);
+  border-color: var(--color-accent);
+}
+.primary:hover { background: color-mix(in srgb, var(--color-accent) 88%, #000); }
+.primary:active { background: color-mix(in srgb, var(--color-accent) 78%, #000); }
+
+/* ghost / secondary — bordered, sits on panels */
+.ghost {
+  background: var(--color-panel);
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+.ghost:hover { background: var(--color-sunken); border-color: var(--o-border-strong); }
+
+/* danger — quiet by default, loud on hover */
+.danger {
+  background: transparent;
+  color: var(--color-danger);
+  border-color: var(--color-border);
+}
+.danger:hover {
+  background: color-mix(in srgb, var(--color-danger) 14%, transparent);
+  border-color: var(--color-danger);
+}
+.danger:focus-visible { box-shadow: var(--o-ring-danger); }
+
+/* sizes */
+.sm { padding: 7px 14px; font-size: 13px; }
+.lg { padding: 12px 26px; font-size: 15px; }
+
+/* icon-only — square */
+.icon { padding: 9px; width: 38px; }
+.icon.sm { padding: 6px; width: 32px; }

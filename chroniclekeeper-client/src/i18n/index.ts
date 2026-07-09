@@ -4,10 +4,8 @@ import LanguageDetector from "i18next-browser-languagedetector";
 
 import enCommon from "./locales/en/common.json";
 import hrCommon from "./locales/hr/common.json";
-import enLogin from "./locales/en/login.json";
-import hrLogin from "./locales/hr/login.json";
-import enRegister from "./locales/en/register.json";
-import hrRegister from "./locales/hr/register.json";
+import enAuth from "./locales/en/auth.json";
+import hrAuth from "./locales/hr/auth.json";
 import enOverview from "./locales/en/overview.json";
 import hrOverview from "./locales/hr/overview.json";
 import enCharacter from "./locales/en/character.json";
@@ -19,22 +17,19 @@ i18n.use(LanguageDetector)
         resources: {
             en: {
                 common: enCommon,
-                login: enLogin,
-                register: enRegister,
+                auth: enAuth,
                 overview: enOverview,
                 character: enCharacter,
             },
             hr: {
                 common: hrCommon,
-                login: hrLogin,
-                register: hrRegister,
+                auth: hrAuth,
                 overview: hrOverview,
                 character: hrCharacter,
             },
         },
-        lng: "en",
         fallbackLng: "en",
-        ns: ["login", "register", "overview", "character"], //namespaces
+        ns: ["common", "auth", "overview", "character"], //namespaces
         defaultNS: "common",
         interpolation: {
             escapeValue: false,

@@ -1,0 +1,73 @@
+/* OrnateMultiSelect.module.css
+   ------------------------------------------------------------------
+   A field-shaped box holding selected chips + an add affordance,
+   and (via a headless popover/combobox) the shared menu from
+   OrnateSelect.module.css for options.
+
+     <div class={s.control} data-state={open ? 'open' : undefined}>
+       <span class={s.chip}>Vale Archivists
+         <button class={s.remove} aria-label="Remove">×</button>
+       </span>
+       <button class={s.add}>+ add</button>
+     </div>
+   ------------------------------------------------------------------ */
+
+.control {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;               /* comfortable hit target */
+  background: var(--color-sunken);
+  border: 1px solid var(--color-border);
+  border-radius: var(--o-radius);
+  padding: 8px 10px;
+  transition: border-color var(--o-transition), box-shadow var(--o-transition);
+}
+.control:hover { border-color: var(--o-border-strong); }
+.control[data-state='open'], .control:focus-within {
+  border-color: var(--color-accent);
+  box-shadow: var(--o-ring);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--color-text);
+  background: var(--color-accent-soft);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 4px 4px 4px 9px;
+}
+.remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border: none;
+  background: transparent;
+  color: var(--color-muted);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 1;
+  transition: background var(--o-transition), color var(--o-transition);
+}
+.remove:hover { background: color-mix(in srgb, var(--color-danger) 18%, transparent); color: var(--color-danger); }
+
+.add {
+  font-family: var(--font-ui);
+  font-size: 12.5px;
+  color: var(--color-muted);
+  background: transparent;
+  border: none;
+  padding: 4px 6px;
+  cursor: pointer;
+}
+.add:hover { color: var(--color-accent); }
+
+.placeholder { font-size: 13.5px; color: var(--color-muted); padding: 2px 4px; }

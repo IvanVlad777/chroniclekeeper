@@ -1,0 +1,31 @@
+/* Tag.module.css  (chips / tags)
+   ------------------------------------------------------------------
+     <span class={s.tag}>veil-touched</span>
+     <span class={`${s.tag} ${s.interactive}`}>coastal <b class={s.count}>22</b></span>
+     <span class={`${s.tag} ${s.neutral}`}>house-vale</span>   // text-coloured
+     <span class={`${s.tag} ${s.selected}`}>veil-touched</span>
+   ------------------------------------------------------------------ */
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--color-accent);
+  background: var(--color-accent-soft);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 4px 12px;
+  line-height: 1.3;
+}
+
+/* neutral variant — for chips that shouldn't shout in accent */
+.neutral { color: var(--color-text); }
+
+.count { font-weight: 500; font-size: 11px; color: var(--color-muted); font-variant-numeric: tabular-nums; }
+
+.interactive { cursor: pointer; transition: border-color var(--o-transition), background var(--o-transition); }
+.interactive:hover { border-color: var(--color-accent); }
+
+.selected { border-color: var(--color-accent); background: var(--color-accent-soft); color: var(--color-accent); }

@@ -1,6 +1,20 @@
 {
     "title": "Character",
     "character": "character",
+    "listTitle": "Characters",
+    "columns": {
+        "name": "Name",
+        "title": "Title",
+        "status": "Status",
+        "updated": "Updated"
+    },
+    "status": {
+        "living": "living",
+        "dead": "dead",
+        "unknown": "unknown"
+    },
+    "emptyTitle": "No characters yet",
+    "emptyText": "Heroes, villains and everyone in between live here. Create your first character to begin the chronicle.",
     "loading": "Loading…",
     "loaderror": "Failed to load",
     "notfound": "Character not found",

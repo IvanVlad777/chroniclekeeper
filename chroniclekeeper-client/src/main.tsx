@@ -1,7 +1,8 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "./index.css";
 import "./themes.css";
+import "./ornate.vars.css";
+import "./index.css";
 import App from "./App.tsx";
 import { AuthProvider } from "./context/auth/AuthProvider.tsx";
 import "./i18n";

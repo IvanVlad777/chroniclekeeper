@@ -1,0 +1,33 @@
+/* OrnateTextArea.module.css
+   ------------------------------------------------------------------
+     <textarea class={s.textarea} rows={4} />
+   Same visual language as OrnateTextInput, tuned for long prose:
+   comfortable line-height, vertical resize only.
+   ------------------------------------------------------------------ */
+
+.textarea {
+  width: 100%;
+  font-family: var(--font-ui);
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--color-text);
+  background: var(--color-sunken);
+  border: 1px solid var(--color-border);
+  border-radius: var(--o-radius);
+  padding: 12px var(--o-field-pad-x);
+  min-height: 96px;
+  resize: vertical;
+  transition: border-color var(--o-transition), box-shadow var(--o-transition),
+              background var(--o-transition);
+}
+.textarea::placeholder { color: var(--color-muted); }
+.textarea:hover { border-color: var(--o-border-strong); }
+.textarea:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  background: var(--color-panel);
+  box-shadow: var(--o-ring);
+}
+.textarea:disabled { opacity: 0.55; cursor: not-allowed; background: var(--color-panel); }
+.textarea[aria-invalid='true'] { border-color: var(--color-danger); }
+.textarea[aria-invalid='true']:focus { border-color: var(--color-danger); box-shadow: var(--o-ring-danger); }

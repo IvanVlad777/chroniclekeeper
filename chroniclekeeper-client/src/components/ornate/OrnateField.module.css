@@ -1,0 +1,40 @@
+/* OrnateField.module.css
+   ------------------------------------------------------------------
+   The wrapper every input sits in: label + required marker + control
+   slot + hint/error. Keeps spacing and label styling identical across
+   text input, textarea, select and multiselect.
+
+     <div class={s.field} data-invalid={hasError || undefined}>
+       <label class={s.label} htmlFor={id}>
+         Name <span class={s.required} aria-hidden="true">*</span>
+       </label>
+       {control}
+       <span class={s.hint}>Shown on the character card.</span>
+       <span class={s.error} role="alert">Name is required.</span>
+     </div>
+   ------------------------------------------------------------------ */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.label {
+  font-family: var(--font-ui);
+  text-transform: uppercase;
+  letter-spacing: var(--o-label-track);
+  font-size: var(--o-label-size);
+  font-weight: 600;
+  color: var(--color-muted);
+  line-height: 1.2;
+}
+
+.required { color: var(--color-danger); margin-left: 2px; }
+
+.hint  { font-size: 12px; color: var(--color-muted); line-height: 1.45; }
+
+/* only shows when the field is flagged invalid */
+.error { font-size: 12px; color: var(--color-danger); line-height: 1.45; display: none; }
+.field[data-invalid] .error { display: block; }
+.field[data-invalid] .label { color: var(--color-danger); }

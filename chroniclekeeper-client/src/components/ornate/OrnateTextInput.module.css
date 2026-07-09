@@ -1,0 +1,46 @@
+/* OrnateTextInput.module.css
+   ------------------------------------------------------------------
+     <input class={s.input} />
+     <input class={`${s.input} ${s.display}`} />   // Newsreader, for names
+   Invalid state: add aria-invalid="true" (or class s.invalid).
+   ------------------------------------------------------------------ */
+
+.input {
+  width: 100%;
+  font-family: var(--font-ui);
+  font-size: 15px;
+  line-height: 1.4;
+  color: var(--color-text);
+  background: var(--color-sunken);
+  border: 1px solid var(--color-border);
+  border-radius: var(--o-radius);
+  padding: var(--o-field-pad-y) var(--o-field-pad-x);
+  transition: border-color var(--o-transition), box-shadow var(--o-transition),
+              background var(--o-transition);
+}
+.input::placeholder { color: var(--color-muted); }
+.input:hover { border-color: var(--o-border-strong); }
+.input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  background: var(--color-panel);
+  box-shadow: var(--o-ring);
+}
+.input:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  background: var(--color-panel);
+}
+.input[aria-invalid='true'], .invalid {
+  border-color: var(--color-danger);
+}
+.input[aria-invalid='true']:focus, .invalid:focus {
+  border-color: var(--color-danger);
+  box-shadow: var(--o-ring-danger);
+}
+
+/* name / title fields — the characterful serif */
+.display {
+  font-family: var(--font-display);
+  font-size: 16px;
+}

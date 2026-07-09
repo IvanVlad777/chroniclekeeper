@@ -1,0 +1,265 @@
+/* Character detail — "codex spread" (Grimoire 1b mockup) */
+
+.page {
+    padding-bottom: 34px;
+}
+
+/* --- header band ------------------------------------------------------------ */
+
+.header {
+    padding: 26px 34px 22px;
+    background: linear-gradient(180deg, var(--color-sunken), var(--color-panel));
+    border-bottom: 1px solid var(--color-border);
+}
+
+.breadcrumb {
+    font-size: 13px;
+    color: var(--color-muted);
+    margin-bottom: 14px;
+}
+
+.breadcrumb a:hover {
+    color: var(--color-accent);
+}
+
+.breadcrumbSep {
+    color: var(--color-border);
+    margin: 0 6px;
+}
+
+.breadcrumbCurrent {
+    color: var(--color-accent);
+}
+
+.headerRow {
+    display: flex;
+    align-items: flex-end;
+    gap: 22px;
+}
+
+.headerMain {
+    flex: 1;
+    min-width: 0;
+}
+
+.kicker {
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-accent);
+}
+
+.name {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 42px;
+    margin: 5px 0 3px;
+    line-height: 1;
+}
+
+.epithet {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 20px;
+    color: var(--color-muted);
+}
+
+.headerActions {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.flourish {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.flourishStar {
+    color: var(--color-accent);
+    font-size: 11px;
+}
+
+.flourishLine {
+    flex: 1;
+    height: 1px;
+    background: var(--color-border);
+}
+
+/* --- body -------------------------------------------------------------------- */
+
+.body {
+    padding: 26px 34px 0;
+    display: grid;
+    grid-template-columns: 230px 1fr;
+    gap: 34px;
+    align-items: start;
+}
+
+@media (max-width: 860px) {
+    .body {
+        grid-template-columns: 1fr;
+    }
+}
+
+.side {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.portrait {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    border-radius: 10px;
+    border: 1px solid var(--color-border);
+    background: repeating-linear-gradient(
+        135deg,
+        var(--color-sunken) 0 9px,
+        var(--color-panel) 9px 18px
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-muted);
+    font-family: var(--font-display);
+    font-size: 40px;
+}
+
+.facts {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+/* --- main column ------------------------------------------------------------- */
+
+.sectionHead {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    margin: 0 0 12px;
+}
+
+.sectionHead + .sectionHead,
+.sectionSpacer {
+    margin-top: 26px;
+}
+
+.sectionTitle {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.sectionLine {
+    flex: 1;
+    height: 1px;
+    background: var(--color-border);
+}
+
+.sectionStar {
+    color: var(--color-accent);
+    font-size: 11px;
+}
+
+.prose {
+    margin: 0 0 14px;
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--color-text);
+    white-space: pre-wrap;
+}
+
+.dropCap::first-letter {
+    float: left;
+    font-family: var(--font-display);
+    font-size: 56px;
+    line-height: 0.82;
+    font-weight: 500;
+    color: var(--color-accent);
+    padding: 5px 12px 0 0;
+}
+
+.muted {
+    color: var(--color-muted);
+}
+
+.linkGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin-top: 26px;
+}
+
+@media (max-width: 640px) {
+    .linkGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.listLabel {
+    composes: ornateLabel from global;
+    margin-bottom: 10px;
+}
+
+.listRow {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.listThumb {
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    background: var(--color-sunken);
+    border: 1px solid var(--color-border);
+    flex: none;
+}
+
+.listName {
+    flex: 1;
+    font-size: 14.5px;
+    font-family: var(--font-display);
+}
+
+.relType {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+    color: var(--color-accent);
+    min-width: 60px;
+}
+
+.relLink {
+    flex: 1;
+    font-size: 14.5px;
+    font-family: var(--font-display);
+    color: var(--color-text);
+    text-decoration: underline;
+    text-decoration-color: var(--color-border);
+    text-underline-offset: 3px;
+}
+
+.relLink:hover {
+    text-decoration-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+.none {
+    font-size: 13.5px;
+    color: var(--color-muted);
+}

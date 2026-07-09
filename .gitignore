@@ -29,3 +29,5 @@ obj/
 /chroniclekeeper-client/*.njsproj
 /chroniclekeeper-client/*.sln
 /chroniclekeeper-client/*.sw?
+
+design

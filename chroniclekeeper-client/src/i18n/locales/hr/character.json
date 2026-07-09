@@ -1,6 +1,20 @@
 {
     "title": "Lik",
     "character": "lik",
+    "listTitle": "Likovi",
+    "columns": {
+        "name": "Ime",
+        "title": "Titula",
+        "status": "Status",
+        "updated": "Ažurirano"
+    },
+    "status": {
+        "living": "živ",
+        "dead": "mrtav",
+        "unknown": "nepoznato"
+    },
+    "emptyTitle": "Još nema likova",
+    "emptyText": "Junaci, zlikovci i svi između žive ovdje. Stvori prvog lika i započni kroniku.",
     "loading": "Učitavanje…",
     "loaderror": "Neuspješno učitavanje",
     "notfound": "Lik nije pronađen",

@@ -1,0 +1,56 @@
+/* ==========================================================================
+   Ornate — shared geometry, type and interaction tokens
+   --------------------------------------------------------------------------
+   Import ONCE, globally, AFTER themes.css (which defines the --color-* tokens).
+   Everything here layers on top of the palette so all 10 themes keep working.
+
+     // main.tsx / App root
+     import './themes.css';
+     import './ornate/ornate.vars.css';
+
+   Fonts (load however you prefer — <link>, @fontsource, or self-host):
+     Newsreader          headings, entity names, display values
+     Spectral            body text, labels, most UI
+     Spline Sans Mono    years, ids, counts, technical meta
+   ========================================================================== */
+
+:root {
+  /* type ------------------------------------------------------------------ */
+  --font-display: 'Newsreader', 'Iowan Old Style', Georgia, serif;
+  --font-ui:      'Spectral', Georgia, 'Times New Roman', serif;
+  --font-mono:    'Spline Sans Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  /* geometry -------------------------------------------------------------- */
+  --o-radius-sm: 7px;    /* buttons, small controls, table page cells       */
+  --o-radius:    9px;    /* inputs, display boxes                            */
+  --o-radius-lg: 12px;   /* cards, tables, dialogs                           */
+
+  --o-field-pad-y: 11px;
+  --o-field-pad-x: 14px;
+
+  /* the one label treatment every Ornate component shares ----------------- */
+  --o-label-size: 10.5px;
+  --o-label-track: 0.14em;
+
+  /* interaction ----------------------------------------------------------- */
+  --o-transition: 140ms ease;
+  /* translucent accent halo for :focus-visible (works on any surface)      */
+  --o-ring: 0 0 0 3px color-mix(in srgb, var(--color-accent) 26%, transparent);
+  --o-ring-danger: 0 0 0 3px color-mix(in srgb, var(--color-danger) 26%, transparent);
+
+  /* derived surface states — use instead of hard-coding new colours -------- */
+  --o-row-hover: color-mix(in srgb, var(--color-accent) 7%, transparent);
+  --o-border-strong: color-mix(in srgb, var(--color-border) 60%, var(--color-accent));
+}
+
+/* Shared label class — OrnateField uses it, but any component can.
+   (Globalna klasa: ovo je običan stylesheet, :global() bi browser odbacio.) */
+.ornateLabel {
+  font-family: var(--font-ui);
+  text-transform: uppercase;
+  letter-spacing: var(--o-label-track);
+  font-size: var(--o-label-size);
+  font-weight: 600;
+  color: var(--color-muted);
+  line-height: 1.2;
+}

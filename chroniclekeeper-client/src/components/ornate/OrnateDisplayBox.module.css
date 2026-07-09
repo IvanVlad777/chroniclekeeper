@@ -1,0 +1,59 @@
+/* OrnateDisplayBox.module.css
+   ------------------------------------------------------------------
+   The small labelled fact box used all over detail pages.
+
+     <div class={s.box}>
+       <div class={s.label}>Species</div>
+       <div class={s.value}>Aelfin</div>
+     </div>
+
+   Grid helper for a row of them (set --o-cols to change column count):
+     <div class={s.grid} style={{ '--o-cols': 6 }}> …boxes… </div>
+
+   Add class s.ticked for the engraved corner-tick treatment
+   (the Grimoire flourish); leave it off for the calm Scriptorium look.
+   ------------------------------------------------------------------ */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--o-cols, 6), minmax(0, 1fr));
+  gap: 12px;
+}
+
+.box {
+  position: relative;
+  border: 1px solid var(--color-border);
+  border-radius: var(--o-radius);
+  background: var(--color-panel);
+  padding: 11px 13px;
+}
+
+.label {
+  font-family: var(--font-ui);
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  font-size: 9.5px;
+  font-weight: 600;
+  color: var(--color-muted);
+}
+
+.value {
+  font-family: var(--font-display);
+  font-size: 16px;
+  line-height: 1.2;
+  color: var(--color-text);
+  margin-top: 4px;
+}
+
+/* optional: engraved corner ticks */
+.ticked::before,
+.ticked::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-color: var(--color-accent);
+  border-style: solid;
+}
+.ticked::before { top: 5px; left: 5px; border-width: 1px 0 0 1px; }
+.ticked::after  { bottom: 5px; right: 5px; border-width: 0 1px 1px 0; }
