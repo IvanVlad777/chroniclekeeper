@@ -107,6 +107,29 @@ export interface SocialClassCreateDto {
 
 export type SocialClassUpdateDto = Omit<SocialClassCreateDto, "worldId">;
 
+export interface NationDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    population: number;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface NationDetailsDto extends NationDto {
+    citizens: ReferenceDto[];
+}
+
+export interface NationCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    population: number;
+}
+
+export type NationUpdateDto = Omit<NationCreateDto, "worldId">;
+
 export interface TimelineDto {
     id: number;
     name: string;
@@ -200,6 +223,7 @@ export interface CharacterDto {
     sapientSpeciesId?: number | null;
     raceId?: number | null;
     socialClassId?: number | null;
+    nationId?: number | null;
 }
 
 export const locationTypes = [
@@ -335,6 +359,7 @@ export interface CharacterCreateDto {
     fatherId?: number | null;
     motherId?: number | null;
     socialClassId?: number | null;
+    nationId?: number | null;
 }
 
 /** PUT /characters/{id} — full replace: izostavljena polja se resetiraju. */
@@ -358,6 +383,7 @@ export interface CharacterUpdateDto {
     fatherId?: number | null;
     motherId?: number | null;
     socialClassId?: number | null;
+    nationId?: number | null;
 }
 
 /** Enumi putuju kao stringovi (globalni JsonStringEnumConverter na API-ju). */
@@ -424,6 +450,7 @@ export interface CharacterDetailsDto extends CharacterDto {
     species?: ReferenceDto | null;
     race?: ReferenceDto | null;
     socialClass?: ReferenceDto | null;
+    nation?: ReferenceDto | null;
     factions: ReferenceDto[];
     tags: ReferenceDto[];
     relationships: CharacterRelationshipDto[];

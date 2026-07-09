@@ -26,6 +26,7 @@ namespace ChronicleKeeper.API.ServiceExtensions
             services.AddScoped<ITagRepository, TagRepository>();
             services.AddScoped<INoteRepository, NoteRepository>();
             services.AddScoped<ISocialClassRepository, SocialClassRepository>();
+            services.AddScoped<INationRepository, NationRepository>();
 
             return services;
         }

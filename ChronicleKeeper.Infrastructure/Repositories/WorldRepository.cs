@@ -116,6 +116,11 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .Where(sc => sc.WorldId == id)
                 .ExecuteDeleteAsync(cancellationToken);
 
+            // 7c. Nacije (likova više nema pa Restrict ne blokira)
+            await _context.Nations
+                .Where(n => n.WorldId == id)
+                .ExecuteDeleteAsync(cancellationToken);
+
             // 8. Tagovi i bilješke
             await _context.Tags
                 .Where(t => t.WorldId == id)

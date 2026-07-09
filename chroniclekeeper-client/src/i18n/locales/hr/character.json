@@ -70,6 +70,7 @@
     "species": "Vrsta",
     "race": "Rasa",
     "socialClass": "Društveni sloj",
+    "nation": "Nacija",
     "father": "Otac",
     "mother": "Majka",
     "haircolor": "Boja kose",

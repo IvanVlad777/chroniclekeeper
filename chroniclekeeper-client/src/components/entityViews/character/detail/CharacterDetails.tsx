@@ -292,6 +292,21 @@ export default function CharacterDetail() {
                                 )
                             }
                         />
+                        <OrnateDisplayBox
+                            label={t("nation")}
+                            value={
+                                character.nation ? (
+                                    <Link
+                                        to={`/storymap/nations/${character.nation.id}`}
+                                        className={s.relLink}
+                                    >
+                                        {character.nation.name}
+                                    </Link>
+                                ) : (
+                                    dash
+                                )
+                            }
+                        />
                     </div>
 
                     <TagEditor

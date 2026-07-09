@@ -17,6 +17,7 @@ export const navEntries: NavEntry[] = [
     { key: "factions", glyph: "⚔", to: "/storymap/factions" },
     { key: "species", glyph: "⚘", to: "/storymap/species" },
     { key: "socialClasses", glyph: "⚖", to: "/storymap/social-classes" },
+    { key: "nations", glyph: "♛", to: "/storymap/nations" },
     { key: "timelines", glyph: "⌛", to: "/storymap/timelines" },
     { key: "tags", glyph: "❧", to: "/storymap/tags" },
     { key: "notes", glyph: "✎", to: "/storymap/notes" },

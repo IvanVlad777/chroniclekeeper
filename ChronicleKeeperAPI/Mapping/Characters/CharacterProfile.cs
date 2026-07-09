@@ -18,6 +18,7 @@ public class CharacterProfile : Profile
             .ForMember(dest => dest.Species, opt => opt.MapFrom(src => src.SapientSpecies == null ? null : new ReferenceDto { Id = src.SapientSpecies.Id, Name = src.SapientSpecies.Name }))
             .ForMember(dest => dest.Race, opt => opt.MapFrom(src => src.Race == null ? null : new ReferenceDto { Id = src.Race.Id, Name = src.Race.Name }))
             .ForMember(dest => dest.SocialClass, opt => opt.MapFrom(src => src.SocialClass == null ? null : new ReferenceDto { Id = src.SocialClass.Id, Name = src.SocialClass.Name }))
+            .ForMember(dest => dest.Nation, opt => opt.MapFrom(src => src.Nation == null ? null : new ReferenceDto { Id = src.Nation.Id, Name = src.Nation.Name }))
             .ForMember(dest => dest.Factions, opt => opt.MapFrom(src => src.Memberships
                 .Where(m => m.Faction != null)
                 .Select(m => new ReferenceDto { Id = m.Faction!.Id, Name = m.Faction.Name })))

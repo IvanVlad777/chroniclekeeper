@@ -31,11 +31,11 @@ namespace ChronicleKeeper.Core.DTOs.Character
         public int? SapientSpeciesId { get; set; }
         public int? RaceId { get; set; }
         public int? SocialClassId { get; set; }
+        public int? NationId { get; set; }
         public int? FatherId { get; set; }
         public int? MotherId { get; set; }
 
         // TODO: Otkomentirati kada budem dodavao veze
-        //public int? NationId { get; set; }
         //public int? ReligionId { get; set; }
         //public int? ProfessionId { get; set; }
     }

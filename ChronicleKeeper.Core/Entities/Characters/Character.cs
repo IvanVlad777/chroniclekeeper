@@ -9,7 +9,7 @@ using ChronicleKeeper.Core.Entities.Tags;
 //using ChronicleKeeper.Core.Entities.Professions;
 //using ChronicleKeeper.Core.Entities.Social.Cultures;
 //using ChronicleKeeper.Core.Entities.Social.Education;
-//using ChronicleKeeper.Core.Entities.Social.Nationality;
+using ChronicleKeeper.Core.Entities.Social.Nationality;
 //using ChronicleKeeper.Core.Entities.Social.Religions;
 using ChronicleKeeper.Core.Entities.Social.Structure;
 using System.ComponentModel.DataAnnotations;
@@ -52,9 +52,8 @@ namespace ChronicleKeeper.Core.Entities.Characters
         public int? MotherId { get; set; }
         public virtual Character? Mother { get; set; }
 
-        //[ForeignKey("Nation")]
-        //public int? NationId { get; set; } // TODO: Uncomment when Nation entity is revived
-        //public virtual Nation? Nation { get; set; }
+        public int? NationId { get; set; }
+        public virtual Nation? Nation { get; set; }
 
         public int? SocialClassId { get; set; }
         public virtual SocialClass? SocialClass { get; set; }

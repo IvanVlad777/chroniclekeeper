@@ -70,6 +70,7 @@
     "species": "Species",
     "race": "Race",
     "socialClass": "Social class",
+    "nation": "Nation",
     "father": "Father",
     "mother": "Mother",
     "haircolor": "Hair color",

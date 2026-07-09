@@ -19,9 +19,11 @@ import {
 } from "../../../../api/characters";
 import { getRaces, getSpecies } from "../../../../api/species";
 import { getSocialClasses } from "../../../../api/socialClasses";
+import { getNations } from "../../../../api/nations";
 import {
     CharacterDto,
     CharacterUpdateDto,
+    NationDto,
     RaceDto,
     SocialClassDto,
     SpeciesDto,
@@ -51,6 +53,7 @@ interface FormState {
     sapientSpeciesId: string; // select vrijednosti su stringovi; "" = nije odabrano
     raceId: string;
     socialClassId: string;
+    nationId: string;
     fatherId: string;
     motherId: string;
 }
@@ -73,6 +76,7 @@ const emptyForm: FormState = {
     sapientSpeciesId: "",
     raceId: "",
     socialClassId: "",
+    nationId: "",
     fatherId: "",
     motherId: "",
 };
@@ -100,6 +104,7 @@ function toUpdateDto(f: FormState): CharacterUpdateDto {
         sapientSpeciesId: toId(f.sapientSpeciesId),
         raceId: toId(f.raceId),
         socialClassId: toId(f.socialClassId),
+        nationId: toId(f.nationId),
         fatherId: toId(f.fatherId),
         motherId: toId(f.motherId),
     };
@@ -122,6 +127,7 @@ export default function CharacterForm() {
     const [species, setSpecies] = useState<SpeciesDto[]>([]);
     const [races, setRaces] = useState<RaceDto[]>([]);
     const [socialClasses, setSocialClasses] = useState<SocialClassDto[]>([]);
+    const [nations, setNations] = useState<NationDto[]>([]);
     const [characters, setCharacters] = useState<CharacterDto[]>([]);
     const [loading, setLoading] = useState(true);
     const [loadError, setLoadError] = useState<string | null>(null);
@@ -144,21 +150,24 @@ export default function CharacterForm() {
             Promise<SpeciesDto[]>,
             Promise<RaceDto[]>,
             Promise<CharacterDto[]>,
-            Promise<SocialClassDto[]>
+            Promise<SocialClassDto[]>,
+            Promise<NationDto[]>
         ] = [
             getSpecies(selectedWorld.id),
             getRaces({ worldId: selectedWorld.id }),
             getCharacters(selectedWorld.id),
             getSocialClasses(selectedWorld.id),
+            getNations(selectedWorld.id),
         ];
 
         Promise.all(loads)
-            .then(async ([speciesData, racesData, charactersData, socialClassData]) => {
+            .then(async ([speciesData, racesData, charactersData, socialClassData, nationsData]) => {
                 if (cancelled) return;
                 setSpecies(speciesData);
                 setRaces(racesData);
                 setCharacters(charactersData);
                 setSocialClasses(socialClassData);
+                setNations(nationsData);
 
                 if (isEdit) {
                     const c = await getCharacter(editId);
@@ -186,6 +195,7 @@ export default function CharacterForm() {
                         socialClassId: c.socialClassId
                             ? String(c.socialClassId)
                             : "",
+                        nationId: c.nationId ? String(c.nationId) : "",
                         fatherId: c.fatherId ? String(c.fatherId) : "",
                         motherId: c.motherId ? String(c.motherId) : "",
                     });
@@ -265,6 +275,7 @@ export default function CharacterForm() {
                     sapientSpeciesId: toId(form.sapientSpeciesId),
                     raceId: toId(form.raceId),
                     socialClassId: toId(form.socialClassId),
+                    nationId: toId(form.nationId),
                     fatherId: toId(form.fatherId),
                     motherId: toId(form.motherId),
                 });
@@ -455,6 +466,21 @@ export default function CharacterForm() {
                             {socialClasses.map((sc) => (
                                 <option key={sc.id} value={sc.id}>
                                     {sc.name}
+                                </option>
+                            ))}
+                        </OrnateSelect>
+                    </OrnateField>
+                    <OrnateField label={t("nation")}>
+                        <OrnateSelect
+                            value={form.nationId}
+                            onChange={(e) =>
+                                set("nationId", e.target.value)
+                            }
+                        >
+                            <option value="">{t("none")}</option>
+                            {nations.map((n) => (
+                                <option key={n.id} value={n.id}>
+                                    {n.name}
                                 </option>
                             ))}
                         </OrnateSelect>

@@ -6,6 +6,7 @@ using ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient;
 using ChronicleKeeper.Core.Entities.HistoryTimelines;
 using ChronicleKeeper.Core.Entities.Notes;
 using ChronicleKeeper.Core.Entities.Social;
+using ChronicleKeeper.Core.Entities.Social.Nationality;
 using ChronicleKeeper.Core.Entities.Social.Structure;
 using ChronicleKeeper.Core.Entities.Tags;
 using ChronicleKeeper.Core.Entities.Worlds;
@@ -55,6 +56,7 @@ namespace ChronicleKeeper.Infrastructure.Data
 
         // Social
         public DbSet<SocialClass> SocialClasses { get; set; }
+        public DbSet<Nation> Nations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

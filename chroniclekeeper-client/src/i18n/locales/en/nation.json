@@ -1,0 +1,36 @@
+{
+    "listTitle": "Nations",
+    "search": "Search nations…",
+    "loaderror": "Failed to load",
+    "notfound": "Nation not found",
+    "none": "None",
+    "backtolist": "Back to nations",
+    "emptyTitle": "No nations yet",
+    "emptyText": "Kingdoms, empires, city-states — the powers that carve up your world's map. Create the first nation to start charting borders.",
+    "columns": {
+        "name": "Name",
+        "population": "Population",
+        "updated": "Updated"
+    },
+    "fields": {
+        "description": "Description",
+        "population": "Population"
+    },
+    "citizens": {
+        "label": "Citizens"
+    },
+    "form": {
+        "newTitle": "New nation",
+        "editTitle": "Edit nation",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "save": "Save nation",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

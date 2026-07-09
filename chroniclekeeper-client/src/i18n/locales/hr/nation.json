@@ -1,0 +1,36 @@
+{
+    "listTitle": "Nacije",
+    "search": "Traži nacije…",
+    "loaderror": "Neuspješno učitavanje",
+    "notfound": "Nacija nije pronađena",
+    "none": "Nema",
+    "backtolist": "Natrag na nacije",
+    "emptyTitle": "Još nema nacija",
+    "emptyText": "Kraljevstva, carstva, gradovi-države — sile koje dijele kartu tvog svijeta. Stvori prvu naciju i počni crtati granice.",
+    "columns": {
+        "name": "Naziv",
+        "population": "Stanovništvo",
+        "updated": "Ažurirano"
+    },
+    "fields": {
+        "description": "Opis",
+        "population": "Stanovništvo"
+    },
+    "citizens": {
+        "label": "Državljani"
+    },
+    "form": {
+        "newTitle": "Nova nacija",
+        "editTitle": "Uredi naciju",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "save": "Spremi naciju",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}“? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}
