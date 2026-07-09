@@ -1,0 +1,42 @@
+{
+    "listTitle": "Social Classes",
+    "search": "Search social classes…",
+    "loaderror": "Failed to load",
+    "notfound": "Social class not found",
+    "none": "None",
+    "backtolist": "Back to social classes",
+    "emptyTitle": "No social classes yet",
+    "emptyText": "Nobility, merchants, outcasts — the strata that shape who your characters can become. Create the first social class to lay out your world's hierarchy.",
+    "columns": {
+        "name": "Name",
+        "traits": "Traits",
+        "updated": "Updated"
+    },
+    "fields": {
+        "description": "Description",
+        "isNoble": "Noble",
+        "isMerchantClass": "Merchant class",
+        "isOutcast": "Outcast",
+        "canOwnLand": "Can own land",
+        "canHoldOffice": "Can hold office",
+        "hasTaxExemptions": "Tax exemptions"
+    },
+    "members": {
+        "label": "Members"
+    },
+    "form": {
+        "newTitle": "New social class",
+        "editTitle": "Edit social class",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "rightsLegend": "Rights & standing",
+        "save": "Save social class",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

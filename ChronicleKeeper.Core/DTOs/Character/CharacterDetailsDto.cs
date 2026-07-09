@@ -6,6 +6,7 @@ namespace ChronicleKeeper.Core.DTOs.Character
         public ReferenceDto? Mother { get; set; }
         public ReferenceDto? Species { get; set; }
         public ReferenceDto? Race { get; set; }
+        public ReferenceDto? SocialClass { get; set; }
         public List<ReferenceDto> Factions { get; set; } = new();
         public List<ReferenceDto> Tags { get; set; } = new();
         public List<CharacterRelationshipDto> Relationships { get; set; } = new();

@@ -111,6 +111,11 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .Where(s => s.WorldId == id)
                 .ExecuteDeleteAsync(cancellationToken);
 
+            // 7b. Društveni slojevi (likova više nema pa Restrict ne blokira)
+            await _context.SocialClasses
+                .Where(sc => sc.WorldId == id)
+                .ExecuteDeleteAsync(cancellationToken);
+
             // 8. Tagovi i bilješke
             await _context.Tags
                 .Where(t => t.WorldId == id)

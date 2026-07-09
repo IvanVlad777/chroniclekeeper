@@ -74,6 +74,39 @@ export interface RaceCreateDto {
 /** Vrsta rase se ne mijenja (backend invarijanta) — zato bez sapientSpeciesId. */
 export type RaceUpdateDto = Omit<RaceCreateDto, "sapientSpeciesId">;
 
+export interface SocialClassDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    isNoble: boolean;
+    isMerchantClass: boolean;
+    isOutcast: boolean;
+    canOwnLand: boolean;
+    canHoldOffice: boolean;
+    hasTaxExemptions: boolean;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface SocialClassDetailsDto extends SocialClassDto {
+    members: ReferenceDto[];
+}
+
+export interface SocialClassCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    isNoble: boolean;
+    isMerchantClass: boolean;
+    isOutcast: boolean;
+    canOwnLand: boolean;
+    canHoldOffice: boolean;
+    hasTaxExemptions: boolean;
+}
+
+export type SocialClassUpdateDto = Omit<SocialClassCreateDto, "worldId">;
+
 export interface TimelineDto {
     id: number;
     name: string;
@@ -166,6 +199,7 @@ export interface CharacterDto {
     motherId?: number | null;
     sapientSpeciesId?: number | null;
     raceId?: number | null;
+    socialClassId?: number | null;
 }
 
 export const locationTypes = [
@@ -300,6 +334,7 @@ export interface CharacterCreateDto {
     raceId?: number | null;
     fatherId?: number | null;
     motherId?: number | null;
+    socialClassId?: number | null;
 }
 
 /** PUT /characters/{id} — full replace: izostavljena polja se resetiraju. */
@@ -322,6 +357,7 @@ export interface CharacterUpdateDto {
     raceId?: number | null;
     fatherId?: number | null;
     motherId?: number | null;
+    socialClassId?: number | null;
 }
 
 /** Enumi putuju kao stringovi (globalni JsonStringEnumConverter na API-ju). */
@@ -387,6 +423,7 @@ export interface CharacterDetailsDto extends CharacterDto {
     mother?: ReferenceDto | null;
     species?: ReferenceDto | null;
     race?: ReferenceDto | null;
+    socialClass?: ReferenceDto | null;
     factions: ReferenceDto[];
     tags: ReferenceDto[];
     relationships: CharacterRelationshipDto[];

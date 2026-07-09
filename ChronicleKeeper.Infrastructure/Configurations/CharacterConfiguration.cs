@@ -59,6 +59,12 @@ namespace ChronicleKeeper.Infrastructure.Configurations
                 .HasForeignKey(c => c.RaceId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            // SocialClass — Restrict: brisanje društvenog sloja u upotrebi je friendly app greška
+            builder.HasOne(c => c.SocialClass)
+                .WithMany(sc => sc.Members)
+                .HasForeignKey(c => c.SocialClassId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             builder.ToTable(t =>
             {
                 t.HasCheckConstraint("CK_Characters_Father_NotSelf", "[FatherId] <> [Id]");

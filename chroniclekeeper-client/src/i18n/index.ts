@@ -16,6 +16,8 @@ import enFaction from "./locales/en/faction.json";
 import hrFaction from "./locales/hr/faction.json";
 import enSpecies from "./locales/en/species.json";
 import hrSpecies from "./locales/hr/species.json";
+import enSocialClass from "./locales/en/socialClass.json";
+import hrSocialClass from "./locales/hr/socialClass.json";
 import enTimeline from "./locales/en/timeline.json";
 import hrTimeline from "./locales/hr/timeline.json";
 import enTag from "./locales/en/tag.json";
@@ -35,6 +37,7 @@ i18n.use(LanguageDetector)
                 location: enLocation,
                 faction: enFaction,
                 species: enSpecies,
+                socialClass: enSocialClass,
                 timeline: enTimeline,
                 tag: enTag,
                 note: enNote,
@@ -47,6 +50,7 @@ i18n.use(LanguageDetector)
                 location: hrLocation,
                 faction: hrFaction,
                 species: hrSpecies,
+                socialClass: hrSocialClass,
                 timeline: hrTimeline,
                 tag: hrTag,
                 note: hrNote,
@@ -61,6 +65,7 @@ i18n.use(LanguageDetector)
             "location",
             "faction",
             "species",
+            "socialClass",
             "timeline",
             "tag",
             "note",

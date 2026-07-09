@@ -1,0 +1,42 @@
+{
+    "listTitle": "Društveni slojevi",
+    "search": "Traži društvene slojeve…",
+    "loaderror": "Neuspješno učitavanje",
+    "notfound": "Društveni sloj nije pronađen",
+    "none": "Nema",
+    "backtolist": "Natrag na društvene slojeve",
+    "emptyTitle": "Još nema društvenih slojeva",
+    "emptyText": "Plemstvo, trgovci, izopćenici — slojevi koji određuju tko tvoji likovi mogu postati. Stvori prvi društveni sloj i posloži hijerarhiju svog svijeta.",
+    "columns": {
+        "name": "Naziv",
+        "traits": "Obilježja",
+        "updated": "Ažurirano"
+    },
+    "fields": {
+        "description": "Opis",
+        "isNoble": "Plemić",
+        "isMerchantClass": "Trgovački stalež",
+        "isOutcast": "Izopćenik",
+        "canOwnLand": "Smije posjedovati zemlju",
+        "canHoldOffice": "Smije obnašati dužnost",
+        "hasTaxExemptions": "Porezne olakšice"
+    },
+    "members": {
+        "label": "Članovi"
+    },
+    "form": {
+        "newTitle": "Novi društveni sloj",
+        "editTitle": "Uredi društveni sloj",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "rightsLegend": "Prava i položaj",
+        "save": "Spremi društveni sloj",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}“? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

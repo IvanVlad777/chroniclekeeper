@@ -30,6 +30,7 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .Include(c => c.Mother)
                 .Include(c => c.SapientSpecies)
                 .Include(c => c.Race)
+                .Include(c => c.SocialClass)
                 .Include(c => c.Relationships).ThenInclude(r => r.RelatedCharacter)
                 .Include(c => c.Memberships).ThenInclude(m => m.Faction)
                 .Include(c => c.Tags).ThenInclude(t => t.Tag)
@@ -37,7 +38,6 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 //.Include(c => c.Religion)
                 //.Include(c => c.Nation)
                 //.Include(c => c.Profession)
-                //.Include(c => c.SocialClass)
                 .AsNoTracking()
                 .AsSplitQuery()
                 .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);

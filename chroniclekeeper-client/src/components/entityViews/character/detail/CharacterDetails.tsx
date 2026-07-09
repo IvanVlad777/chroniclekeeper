@@ -277,6 +277,21 @@ export default function CharacterDetail() {
                             label={t("mother")}
                             value={parentLink(character.mother)}
                         />
+                        <OrnateDisplayBox
+                            label={t("socialClass")}
+                            value={
+                                character.socialClass ? (
+                                    <Link
+                                        to={`/storymap/social-classes/${character.socialClass.id}`}
+                                        className={s.relLink}
+                                    >
+                                        {character.socialClass.name}
+                                    </Link>
+                                ) : (
+                                    dash
+                                )
+                            }
+                        />
                     </div>
 
                     <TagEditor

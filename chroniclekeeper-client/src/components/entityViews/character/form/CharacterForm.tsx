@@ -18,10 +18,12 @@ import {
     updateCharacter,
 } from "../../../../api/characters";
 import { getRaces, getSpecies } from "../../../../api/species";
+import { getSocialClasses } from "../../../../api/socialClasses";
 import {
     CharacterDto,
     CharacterUpdateDto,
     RaceDto,
+    SocialClassDto,
     SpeciesDto,
 } from "../../../../interfaces/loreInterfaces";
 import { useWorld } from "../../../../hooks/useWorld";
@@ -48,6 +50,7 @@ interface FormState {
     isArtificial: boolean;
     sapientSpeciesId: string; // select vrijednosti su stringovi; "" = nije odabrano
     raceId: string;
+    socialClassId: string;
     fatherId: string;
     motherId: string;
 }
@@ -69,6 +72,7 @@ const emptyForm: FormState = {
     isArtificial: false,
     sapientSpeciesId: "",
     raceId: "",
+    socialClassId: "",
     fatherId: "",
     motherId: "",
 };
@@ -95,6 +99,7 @@ function toUpdateDto(f: FormState): CharacterUpdateDto {
         isArtificial: f.isArtificial,
         sapientSpeciesId: toId(f.sapientSpeciesId),
         raceId: toId(f.raceId),
+        socialClassId: toId(f.socialClassId),
         fatherId: toId(f.fatherId),
         motherId: toId(f.motherId),
     };
@@ -116,6 +121,7 @@ export default function CharacterForm() {
     const [form, setForm] = useState<FormState>(emptyForm);
     const [species, setSpecies] = useState<SpeciesDto[]>([]);
     const [races, setRaces] = useState<RaceDto[]>([]);
+    const [socialClasses, setSocialClasses] = useState<SocialClassDto[]>([]);
     const [characters, setCharacters] = useState<CharacterDto[]>([]);
     const [loading, setLoading] = useState(true);
     const [loadError, setLoadError] = useState<string | null>(null);
@@ -137,19 +143,22 @@ export default function CharacterForm() {
         const loads: [
             Promise<SpeciesDto[]>,
             Promise<RaceDto[]>,
-            Promise<CharacterDto[]>
+            Promise<CharacterDto[]>,
+            Promise<SocialClassDto[]>
         ] = [
             getSpecies(selectedWorld.id),
             getRaces({ worldId: selectedWorld.id }),
             getCharacters(selectedWorld.id),
+            getSocialClasses(selectedWorld.id),
         ];
 
         Promise.all(loads)
-            .then(async ([speciesData, racesData, charactersData]) => {
+            .then(async ([speciesData, racesData, charactersData, socialClassData]) => {
                 if (cancelled) return;
                 setSpecies(speciesData);
                 setRaces(racesData);
                 setCharacters(charactersData);
+                setSocialClasses(socialClassData);
 
                 if (isEdit) {
                     const c = await getCharacter(editId);
@@ -174,6 +183,9 @@ export default function CharacterForm() {
                             ? String(c.sapientSpeciesId)
                             : "",
                         raceId: c.raceId ? String(c.raceId) : "",
+                        socialClassId: c.socialClassId
+                            ? String(c.socialClassId)
+                            : "",
                         fatherId: c.fatherId ? String(c.fatherId) : "",
                         motherId: c.motherId ? String(c.motherId) : "",
                     });
@@ -252,6 +264,7 @@ export default function CharacterForm() {
                     worldId: selectedWorld.id,
                     sapientSpeciesId: toId(form.sapientSpeciesId),
                     raceId: toId(form.raceId),
+                    socialClassId: toId(form.socialClassId),
                     fatherId: toId(form.fatherId),
                     motherId: toId(form.motherId),
                 });
@@ -427,6 +440,21 @@ export default function CharacterForm() {
                             {raceOptions.map((r) => (
                                 <option key={r.id} value={r.id}>
                                     {r.name}
+                                </option>
+                            ))}
+                        </OrnateSelect>
+                    </OrnateField>
+                    <OrnateField label={t("socialClass")}>
+                        <OrnateSelect
+                            value={form.socialClassId}
+                            onChange={(e) =>
+                                set("socialClassId", e.target.value)
+                            }
+                        >
+                            <option value="">{t("none")}</option>
+                            {socialClasses.map((sc) => (
+                                <option key={sc.id} value={sc.id}>
+                                    {sc.name}
                                 </option>
                             ))}
                         </OrnateSelect>

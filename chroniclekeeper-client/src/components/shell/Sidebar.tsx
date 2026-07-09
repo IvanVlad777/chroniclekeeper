@@ -14,6 +14,7 @@ const newEntryTargets: { key: string; glyph: string; to: string }[] = [
     { key: "locations", glyph: "⚑", to: "/storymap/locations/new" },
     { key: "factions", glyph: "⚔", to: "/storymap/factions/new" },
     { key: "species", glyph: "⚘", to: "/storymap/species/new" },
+    { key: "socialClasses", glyph: "⚖", to: "/storymap/social-classes/new" },
     { key: "timelines", glyph: "⌛", to: "/storymap/timelines/new" },
     { key: "tags", glyph: "❧", to: "/storymap/tags" },
     { key: "notes", glyph: "✎", to: "/storymap/notes" },

@@ -15,6 +15,9 @@ import FactionForm from "../components/entityViews/faction/form/FactionForm";
 import SpeciesList from "../components/entityViews/species/list/SpeciesList";
 import SpeciesDetails from "../components/entityViews/species/detail/SpeciesDetails";
 import SpeciesForm from "../components/entityViews/species/form/SpeciesForm";
+import SocialClassList from "../components/entityViews/socialClass/list/SocialClassList";
+import SocialClassDetails from "../components/entityViews/socialClass/detail/SocialClassDetails";
+import SocialClassForm from "../components/entityViews/socialClass/form/SocialClassForm";
 import TimelineList from "../components/entityViews/timeline/list/TimelineList";
 import TimelineDetails from "../components/entityViews/timeline/detail/TimelineDetails";
 import TimelineForm from "../components/entityViews/timeline/form/TimelineForm";
@@ -74,6 +77,22 @@ const AppRoutes = () => {
                 <Route
                     path="species/:id/edit"
                     element={<SpeciesForm />}
+                />
+                <Route
+                    path="social-classes"
+                    element={<SocialClassList />}
+                />
+                <Route
+                    path="social-classes/new"
+                    element={<SocialClassForm />}
+                />
+                <Route
+                    path="social-classes/:id"
+                    element={<SocialClassDetails />}
+                />
+                <Route
+                    path="social-classes/:id/edit"
+                    element={<SocialClassForm />}
                 />
                 <Route path="timelines" element={<TimelineList />} />
                 <Route path="timelines/new" element={<TimelineForm />} />
