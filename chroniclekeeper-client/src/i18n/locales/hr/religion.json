@@ -1,0 +1,40 @@
+{
+    "listTitle": "Religije",
+    "search": "Traži religije…",
+    "loaderror": "Neuspješno učitavanje",
+    "notfound": "Religija nije pronađena",
+    "none": "Nema",
+    "backtolist": "Natrag na religije",
+    "emptyTitle": "Još nema religija",
+    "emptyText": "Vjere, kultovi, panteoni i uvjerenja — vjerovanja koja oblikuju kako tvoji likovi vide svijet. Stvori prvu religiju i započni panteon.",
+    "columns": {
+        "name": "Naziv",
+        "isStateReligion": "Državna religija",
+        "updated": "Ažurirano"
+    },
+    "fields": {
+        "description": "Opis",
+        "coreBeliefs": "Temeljna uvjerenja",
+        "practices": "Obredi i prakse",
+        "hasDeities": "Ima božanstva",
+        "isStateReligion": "Državna religija"
+    },
+    "followers": {
+        "label": "Sljedbenici"
+    },
+    "form": {
+        "newTitle": "Nova religija",
+        "editTitle": "Uredi religiju",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "traitsLegend": "Priroda vjere",
+        "save": "Spremi religiju",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}“? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

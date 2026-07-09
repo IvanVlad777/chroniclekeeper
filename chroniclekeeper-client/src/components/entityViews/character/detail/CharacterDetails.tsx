@@ -307,6 +307,21 @@ export default function CharacterDetail() {
                                 )
                             }
                         />
+                        <OrnateDisplayBox
+                            label={t("religion")}
+                            value={
+                                character.religion ? (
+                                    <Link
+                                        to={`/storymap/religions/${character.religion.id}`}
+                                        className={s.relLink}
+                                    >
+                                        {character.religion.name}
+                                    </Link>
+                                ) : (
+                                    dash
+                                )
+                            }
+                        />
                     </div>
 
                     <TagEditor

@@ -32,11 +32,11 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .Include(c => c.Race)
                 .Include(c => c.SocialClass)
                 .Include(c => c.Nation)
+                .Include(c => c.Religion)
                 .Include(c => c.Relationships).ThenInclude(r => r.RelatedCharacter)
                 .Include(c => c.Memberships).ThenInclude(m => m.Faction)
                 .Include(c => c.Tags).ThenInclude(t => t.Tag)
                 // TODO: Otkomentirati kada budu oživljeni
-                //.Include(c => c.Religion)
                 //.Include(c => c.Profession)
                 .AsNoTracking()
                 .AsSplitQuery()

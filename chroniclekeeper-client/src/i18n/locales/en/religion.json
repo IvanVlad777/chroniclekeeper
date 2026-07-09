@@ -1,0 +1,40 @@
+{
+    "listTitle": "Religions",
+    "search": "Search religions…",
+    "loaderror": "Failed to load",
+    "notfound": "Religion not found",
+    "none": "None",
+    "backtolist": "Back to religions",
+    "emptyTitle": "No religions yet",
+    "emptyText": "Faiths, cults, pantheons and creeds — the beliefs that shape how your characters see the world. Create the first religion to begin the pantheon.",
+    "columns": {
+        "name": "Name",
+        "isStateReligion": "State religion",
+        "updated": "Updated"
+    },
+    "fields": {
+        "description": "Description",
+        "coreBeliefs": "Core beliefs",
+        "practices": "Practices",
+        "hasDeities": "Has deities",
+        "isStateReligion": "State religion"
+    },
+    "followers": {
+        "label": "Followers"
+    },
+    "form": {
+        "newTitle": "New religion",
+        "editTitle": "Edit religion",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "traitsLegend": "Nature of faith",
+        "save": "Save religion",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

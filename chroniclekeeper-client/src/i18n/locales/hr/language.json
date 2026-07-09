@@ -1,0 +1,39 @@
+{
+    "listTitle": "Jezici",
+    "search": "Traži jezike…",
+    "loaderror": "Neuspješno učitavanje",
+    "notfound": "Jezik nije pronađen",
+    "none": "Nema",
+    "backtolist": "Natrag na jezike",
+    "emptyTitle": "Još nema jezika",
+    "emptyText": "Govori, pisma i narječja — riječi kojima tvoji narodi govore i pišu. Stvori prvi jezik i podaj glas svojim kulturama.",
+    "extinct": "Izumro",
+    "columns": {
+        "name": "Naziv",
+        "writingSystem": "Pismo",
+        "updated": "Ažurirano"
+    },
+    "fields": {
+        "description": "Opis",
+        "writingSystem": "Pismo",
+        "dialects": "Narječja",
+        "isExtinct": "Izumrli jezik"
+    },
+    "cultures": {
+        "label": "Govore ga"
+    },
+    "form": {
+        "newTitle": "Novi jezik",
+        "editTitle": "Uredi jezik",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "save": "Spremi jezik",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}“? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

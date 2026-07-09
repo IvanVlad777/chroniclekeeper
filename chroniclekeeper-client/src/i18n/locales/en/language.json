@@ -1,0 +1,39 @@
+{
+    "listTitle": "Languages",
+    "search": "Search languages…",
+    "loaderror": "Failed to load",
+    "notfound": "Language not found",
+    "none": "None",
+    "backtolist": "Back to languages",
+    "emptyTitle": "No languages yet",
+    "emptyText": "Tongues, scripts and dialects — the words your peoples speak and write. Create the first language to give your cultures a voice.",
+    "extinct": "Extinct",
+    "columns": {
+        "name": "Name",
+        "writingSystem": "Writing system",
+        "updated": "Updated"
+    },
+    "fields": {
+        "description": "Description",
+        "writingSystem": "Writing system",
+        "dialects": "Dialects",
+        "isExtinct": "Extinct language"
+    },
+    "cultures": {
+        "label": "Spoken by"
+    },
+    "form": {
+        "newTitle": "New language",
+        "editTitle": "Edit language",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "save": "Save language",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

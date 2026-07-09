@@ -130,6 +130,120 @@ export interface NationCreateDto {
 
 export type NationUpdateDto = Omit<NationCreateDto, "worldId">;
 
+export interface ReligionDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    coreBeliefs: string;
+    practices: string;
+    hasDeities: boolean;
+    isStateReligion: boolean;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface ReligionDetailsDto extends ReligionDto {
+    followers: ReferenceDto[];
+}
+
+export interface ReligionCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    coreBeliefs: string;
+    practices: string;
+    hasDeities: boolean;
+    isStateReligion: boolean;
+}
+
+export type ReligionUpdateDto = Omit<ReligionCreateDto, "worldId">;
+
+export interface LanguageDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    writingSystem: string;
+    isExtinct: boolean;
+    dialects: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface LanguageDetailsDto extends LanguageDto {
+    cultures: ReferenceDto[];
+}
+
+export interface LanguageCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    writingSystem: string;
+    isExtinct: boolean;
+    dialects: string;
+}
+
+export type LanguageUpdateDto = Omit<LanguageCreateDto, "worldId">;
+
+export const xenophobiaLevels = [
+    "VeryOpen",
+    "Open",
+    "Neutral",
+    "Suspicious",
+    "Extreme",
+] as const;
+export type XenophobiaLevel = (typeof xenophobiaLevels)[number];
+
+export const technologicalLevels = [
+    "Primitive",
+    "Medieval",
+    "Industrial",
+    "Modern",
+    "Advanced",
+    "Futuristic",
+    "PostHuman",
+] as const;
+export type TechnologicalLevel = (typeof technologicalLevels)[number];
+
+export interface CultureDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    languageId: number;
+    religionId?: number | null;
+    commonValues: string;
+    hasOralTradition: boolean;
+    socialStructure: string;
+    xenophobiaLevel: XenophobiaLevel;
+    technologicalLevel: TechnologicalLevel;
+    conflictResolution: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface CultureDetailsDto extends CultureDto {
+    language: ReferenceDto | null;
+    religion: ReferenceDto | null;
+}
+
+export interface CultureCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    languageId: number;
+    religionId?: number | null;
+    commonValues: string;
+    hasOralTradition: boolean;
+    socialStructure: string;
+    xenophobiaLevel: XenophobiaLevel;
+    technologicalLevel: TechnologicalLevel;
+    conflictResolution: string;
+}
+
+export type CultureUpdateDto = Omit<CultureCreateDto, "worldId">;
+
 export interface TimelineDto {
     id: number;
     name: string;
@@ -224,6 +338,7 @@ export interface CharacterDto {
     raceId?: number | null;
     socialClassId?: number | null;
     nationId?: number | null;
+    religionId?: number | null;
 }
 
 export const locationTypes = [
@@ -360,6 +475,7 @@ export interface CharacterCreateDto {
     motherId?: number | null;
     socialClassId?: number | null;
     nationId?: number | null;
+    religionId?: number | null;
 }
 
 /** PUT /characters/{id} — full replace: izostavljena polja se resetiraju. */
@@ -384,6 +500,7 @@ export interface CharacterUpdateDto {
     motherId?: number | null;
     socialClassId?: number | null;
     nationId?: number | null;
+    religionId?: number | null;
 }
 
 /** Enumi putuju kao stringovi (globalni JsonStringEnumConverter na API-ju). */
@@ -451,6 +568,7 @@ export interface CharacterDetailsDto extends CharacterDto {
     race?: ReferenceDto | null;
     socialClass?: ReferenceDto | null;
     nation?: ReferenceDto | null;
+    religion?: ReferenceDto | null;
     factions: ReferenceDto[];
     tags: ReferenceDto[];
     relationships: CharacterRelationshipDto[];

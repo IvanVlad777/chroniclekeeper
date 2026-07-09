@@ -121,6 +121,21 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .Where(n => n.WorldId == id)
                 .ExecuteDeleteAsync(cancellationToken);
 
+            // 7d. Kulture (moraju nestati prije Religions/Languages — Culture ima Restrict FK na oboje)
+            await _context.Cultures
+                .Where(c => c.WorldId == id)
+                .ExecuteDeleteAsync(cancellationToken);
+
+            // 7e. Religije (likova i kultura više nema pa Restrict ne blokira)
+            await _context.Religions
+                .Where(r => r.WorldId == id)
+                .ExecuteDeleteAsync(cancellationToken);
+
+            // 7f. Jezici (kultura više nema pa Restrict ne blokira)
+            await _context.Languages
+                .Where(l => l.WorldId == id)
+                .ExecuteDeleteAsync(cancellationToken);
+
             // 8. Tagovi i bilješke
             await _context.Tags
                 .Where(t => t.WorldId == id)

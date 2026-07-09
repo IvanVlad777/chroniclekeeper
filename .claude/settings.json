@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tasklist)",
+      "Bash(taskkill //F //PID 30592)",
+      "Bash(dotnet build *)",
+      "Bash(dotnet ef *)",
+      "Bash(npm run *)"
+    ]
+  }
+}

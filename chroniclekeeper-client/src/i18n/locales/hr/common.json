@@ -15,6 +15,9 @@
         "species": "Vrste",
         "socialClasses": "Društveni slojevi",
         "nations": "Nacije",
+        "religions": "Religije",
+        "languages": "Jezici",
+        "cultures": "Kulture",
         "timelines": "Vremenske linije",
         "tags": "Oznake",
         "notes": "Bilješke"

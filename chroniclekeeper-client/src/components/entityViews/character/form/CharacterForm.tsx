@@ -20,11 +20,13 @@ import {
 import { getRaces, getSpecies } from "../../../../api/species";
 import { getSocialClasses } from "../../../../api/socialClasses";
 import { getNations } from "../../../../api/nations";
+import { getReligions } from "../../../../api/religions";
 import {
     CharacterDto,
     CharacterUpdateDto,
     NationDto,
     RaceDto,
+    ReligionDto,
     SocialClassDto,
     SpeciesDto,
 } from "../../../../interfaces/loreInterfaces";
@@ -54,6 +56,7 @@ interface FormState {
     raceId: string;
     socialClassId: string;
     nationId: string;
+    religionId: string;
     fatherId: string;
     motherId: string;
 }
@@ -77,6 +80,7 @@ const emptyForm: FormState = {
     raceId: "",
     socialClassId: "",
     nationId: "",
+    religionId: "",
     fatherId: "",
     motherId: "",
 };
@@ -105,6 +109,7 @@ function toUpdateDto(f: FormState): CharacterUpdateDto {
         raceId: toId(f.raceId),
         socialClassId: toId(f.socialClassId),
         nationId: toId(f.nationId),
+        religionId: toId(f.religionId),
         fatherId: toId(f.fatherId),
         motherId: toId(f.motherId),
     };
@@ -128,6 +133,7 @@ export default function CharacterForm() {
     const [races, setRaces] = useState<RaceDto[]>([]);
     const [socialClasses, setSocialClasses] = useState<SocialClassDto[]>([]);
     const [nations, setNations] = useState<NationDto[]>([]);
+    const [religions, setReligions] = useState<ReligionDto[]>([]);
     const [characters, setCharacters] = useState<CharacterDto[]>([]);
     const [loading, setLoading] = useState(true);
     const [loadError, setLoadError] = useState<string | null>(null);
@@ -151,23 +157,26 @@ export default function CharacterForm() {
             Promise<RaceDto[]>,
             Promise<CharacterDto[]>,
             Promise<SocialClassDto[]>,
-            Promise<NationDto[]>
+            Promise<NationDto[]>,
+            Promise<ReligionDto[]>
         ] = [
             getSpecies(selectedWorld.id),
             getRaces({ worldId: selectedWorld.id }),
             getCharacters(selectedWorld.id),
             getSocialClasses(selectedWorld.id),
             getNations(selectedWorld.id),
+            getReligions(selectedWorld.id),
         ];
 
         Promise.all(loads)
-            .then(async ([speciesData, racesData, charactersData, socialClassData, nationsData]) => {
+            .then(async ([speciesData, racesData, charactersData, socialClassData, nationsData, religionsData]) => {
                 if (cancelled) return;
                 setSpecies(speciesData);
                 setRaces(racesData);
                 setCharacters(charactersData);
                 setSocialClasses(socialClassData);
                 setNations(nationsData);
+                setReligions(religionsData);
 
                 if (isEdit) {
                     const c = await getCharacter(editId);
@@ -196,6 +205,7 @@ export default function CharacterForm() {
                             ? String(c.socialClassId)
                             : "",
                         nationId: c.nationId ? String(c.nationId) : "",
+                        religionId: c.religionId ? String(c.religionId) : "",
                         fatherId: c.fatherId ? String(c.fatherId) : "",
                         motherId: c.motherId ? String(c.motherId) : "",
                     });
@@ -276,6 +286,7 @@ export default function CharacterForm() {
                     raceId: toId(form.raceId),
                     socialClassId: toId(form.socialClassId),
                     nationId: toId(form.nationId),
+                    religionId: toId(form.religionId),
                     fatherId: toId(form.fatherId),
                     motherId: toId(form.motherId),
                 });
@@ -481,6 +492,21 @@ export default function CharacterForm() {
                             {nations.map((n) => (
                                 <option key={n.id} value={n.id}>
                                     {n.name}
+                                </option>
+                            ))}
+                        </OrnateSelect>
+                    </OrnateField>
+                    <OrnateField label={t("religion")}>
+                        <OrnateSelect
+                            value={form.religionId}
+                            onChange={(e) =>
+                                set("religionId", e.target.value)
+                            }
+                        >
+                            <option value="">{t("none")}</option>
+                            {religions.map((r) => (
+                                <option key={r.id} value={r.id}>
+                                    {r.name}
                                 </option>
                             ))}
                         </OrnateSelect>

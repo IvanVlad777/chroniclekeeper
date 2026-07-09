@@ -1,0 +1,60 @@
+{
+    "listTitle": "Kulture",
+    "search": "Traži kulture…",
+    "loaderror": "Neuspješno učitavanje",
+    "notfound": "Kultura nije pronađena",
+    "none": "Nema",
+    "backtolist": "Natrag na kulture",
+    "emptyTitle": "Još nema kultura",
+    "emptyText": "Zajedničke vrijednosti, običaji i način života — kulture koje povezuju tvoje narode. Stvori prvu kulturu i počni tkati tkivo svog svijeta.",
+    "columns": {
+        "name": "Naziv",
+        "xenophobiaLevel": "Otvorenost",
+        "technologicalLevel": "Tehnologija",
+        "updated": "Ažurirano"
+    },
+    "fields": {
+        "description": "Opis",
+        "commonValues": "Zajedničke vrijednosti",
+        "socialStructure": "Društvena struktura",
+        "conflictResolution": "Rješavanje sukoba",
+        "hasOralTradition": "Usmena predaja",
+        "xenophobiaLevel": "Otvorenost prema strancima",
+        "technologicalLevel": "Tehnološka razina",
+        "language": "Jezik",
+        "religion": "Religija"
+    },
+    "xenophobiaLevels": {
+        "VeryOpen": "Vrlo otvoreni",
+        "Open": "Otvoreni",
+        "Neutral": "Neutralni",
+        "Suspicious": "Sumnjičavi",
+        "Extreme": "Krajnje neprijateljski"
+    },
+    "technologicalLevels": {
+        "Primitive": "Primitivna",
+        "Medieval": "Srednjovjekovna",
+        "Industrial": "Industrijska",
+        "Modern": "Moderna",
+        "Advanced": "Napredna",
+        "Futuristic": "Futuristička",
+        "PostHuman": "Posthumana"
+    },
+    "form": {
+        "newTitle": "Nova kultura",
+        "editTitle": "Uredi kulturu",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "languageMissing": "Jezik je obavezan.",
+        "language": "Jezik",
+        "religion": "Religija",
+        "save": "Spremi kulturu",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}“? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

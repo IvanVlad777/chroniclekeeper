@@ -15,6 +15,9 @@
         "species": "Species",
         "socialClasses": "Social Classes",
         "nations": "Nations",
+        "religions": "Religions",
+        "languages": "Languages",
+        "cultures": "Cultures",
         "timelines": "Timelines",
         "tags": "Tags",
         "notes": "Notes"

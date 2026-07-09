@@ -1,0 +1,60 @@
+{
+    "listTitle": "Cultures",
+    "search": "Search cultures…",
+    "loaderror": "Failed to load",
+    "notfound": "Culture not found",
+    "none": "None",
+    "backtolist": "Back to cultures",
+    "emptyTitle": "No cultures yet",
+    "emptyText": "Shared values, customs and ways of life — the cultures that bind your peoples together. Create the first culture to start weaving your world's fabric.",
+    "columns": {
+        "name": "Name",
+        "xenophobiaLevel": "Openness",
+        "technologicalLevel": "Technology",
+        "updated": "Updated"
+    },
+    "fields": {
+        "description": "Description",
+        "commonValues": "Common values",
+        "socialStructure": "Social structure",
+        "conflictResolution": "Conflict resolution",
+        "hasOralTradition": "Oral tradition",
+        "xenophobiaLevel": "Openness to outsiders",
+        "technologicalLevel": "Technological level",
+        "language": "Language",
+        "religion": "Religion"
+    },
+    "xenophobiaLevels": {
+        "VeryOpen": "Very open",
+        "Open": "Open",
+        "Neutral": "Neutral",
+        "Suspicious": "Suspicious",
+        "Extreme": "Extremely hostile"
+    },
+    "technologicalLevels": {
+        "Primitive": "Primitive",
+        "Medieval": "Medieval",
+        "Industrial": "Industrial",
+        "Modern": "Modern",
+        "Advanced": "Advanced",
+        "Futuristic": "Futuristic",
+        "PostHuman": "Post-human"
+    },
+    "form": {
+        "newTitle": "New culture",
+        "editTitle": "Edit culture",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "languageMissing": "A language is required.",
+        "language": "Language",
+        "religion": "Religion",
+        "save": "Save culture",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

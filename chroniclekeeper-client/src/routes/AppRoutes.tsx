@@ -21,6 +21,15 @@ import SocialClassForm from "../components/entityViews/socialClass/form/SocialCl
 import NationList from "../components/entityViews/nation/list/NationList";
 import NationDetails from "../components/entityViews/nation/detail/NationDetails";
 import NationForm from "../components/entityViews/nation/form/NationForm";
+import ReligionList from "../components/entityViews/religion/list/ReligionList";
+import ReligionDetails from "../components/entityViews/religion/detail/ReligionDetails";
+import ReligionForm from "../components/entityViews/religion/form/ReligionForm";
+import LanguageList from "../components/entityViews/language/list/LanguageList";
+import LanguageDetails from "../components/entityViews/language/detail/LanguageDetails";
+import LanguageForm from "../components/entityViews/language/form/LanguageForm";
+import CultureList from "../components/entityViews/culture/list/CultureList";
+import CultureDetails from "../components/entityViews/culture/detail/CultureDetails";
+import CultureForm from "../components/entityViews/culture/form/CultureForm";
 import TimelineList from "../components/entityViews/timeline/list/TimelineList";
 import TimelineDetails from "../components/entityViews/timeline/detail/TimelineDetails";
 import TimelineForm from "../components/entityViews/timeline/form/TimelineForm";
@@ -103,6 +112,27 @@ const AppRoutes = () => {
                 <Route
                     path="nations/:id/edit"
                     element={<NationForm />}
+                />
+                <Route path="religions" element={<ReligionList />} />
+                <Route path="religions/new" element={<ReligionForm />} />
+                <Route path="religions/:id" element={<ReligionDetails />} />
+                <Route
+                    path="religions/:id/edit"
+                    element={<ReligionForm />}
+                />
+                <Route path="languages" element={<LanguageList />} />
+                <Route path="languages/new" element={<LanguageForm />} />
+                <Route path="languages/:id" element={<LanguageDetails />} />
+                <Route
+                    path="languages/:id/edit"
+                    element={<LanguageForm />}
+                />
+                <Route path="cultures" element={<CultureList />} />
+                <Route path="cultures/new" element={<CultureForm />} />
+                <Route path="cultures/:id" element={<CultureDetails />} />
+                <Route
+                    path="cultures/:id/edit"
+                    element={<CultureForm />}
                 />
                 <Route path="timelines" element={<TimelineList />} />
                 <Route path="timelines/new" element={<TimelineForm />} />

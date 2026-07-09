@@ -20,6 +20,12 @@ import enSocialClass from "./locales/en/socialClass.json";
 import hrSocialClass from "./locales/hr/socialClass.json";
 import enNation from "./locales/en/nation.json";
 import hrNation from "./locales/hr/nation.json";
+import enReligion from "./locales/en/religion.json";
+import hrReligion from "./locales/hr/religion.json";
+import enLanguage from "./locales/en/language.json";
+import hrLanguage from "./locales/hr/language.json";
+import enCulture from "./locales/en/culture.json";
+import hrCulture from "./locales/hr/culture.json";
 import enTimeline from "./locales/en/timeline.json";
 import hrTimeline from "./locales/hr/timeline.json";
 import enTag from "./locales/en/tag.json";
@@ -41,6 +47,9 @@ i18n.use(LanguageDetector)
                 species: enSpecies,
                 socialClass: enSocialClass,
                 nation: enNation,
+                religion: enReligion,
+                language: enLanguage,
+                culture: enCulture,
                 timeline: enTimeline,
                 tag: enTag,
                 note: enNote,
@@ -55,6 +64,9 @@ i18n.use(LanguageDetector)
                 species: hrSpecies,
                 socialClass: hrSocialClass,
                 nation: hrNation,
+                religion: hrReligion,
+                language: hrLanguage,
+                culture: hrCulture,
                 timeline: hrTimeline,
                 tag: hrTag,
                 note: hrNote,
@@ -71,6 +83,9 @@ i18n.use(LanguageDetector)
             "species",
             "socialClass",
             "nation",
+            "religion",
+            "language",
+            "culture",
             "timeline",
             "tag",
             "note",

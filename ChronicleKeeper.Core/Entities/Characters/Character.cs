@@ -10,7 +10,7 @@ using ChronicleKeeper.Core.Entities.Tags;
 //using ChronicleKeeper.Core.Entities.Social.Cultures;
 //using ChronicleKeeper.Core.Entities.Social.Education;
 using ChronicleKeeper.Core.Entities.Social.Nationality;
-//using ChronicleKeeper.Core.Entities.Social.Religions;
+using ChronicleKeeper.Core.Entities.Social.Religions;
 using ChronicleKeeper.Core.Entities.Social.Structure;
 using System.ComponentModel.DataAnnotations;
 
@@ -58,9 +58,8 @@ namespace ChronicleKeeper.Core.Entities.Characters
         public int? SocialClassId { get; set; }
         public virtual SocialClass? SocialClass { get; set; }
 
-        //[ForeignKey("Religion")]
-        //public int? ReligionId { get; set; } // TODO: Uncomment when Religion entity is revived
-        //public virtual Religion? Religion { get; set; }
+        public int? ReligionId { get; set; }
+        public virtual Religion? Religion { get; set; }
 
         // Personality & Background
         //public BackgroundInfo Background { get; set; } = new BackgroundInfo(); // TODO: Uncomment when BackgroundInfo entity is revived
