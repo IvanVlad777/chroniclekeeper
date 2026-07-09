@@ -19,8 +19,23 @@
     },
     "shell": {
         "newEntry": "New entry",
+        "newEntryTitle": "Create a new character",
+        "noPermission": "You don't have permission to create entries",
         "comingSoon": "Coming soon",
         "soon": "soon"
+    },
+    "worldDialog": {
+        "title": "Create a world",
+        "sub": "A world holds its own characters, places and lore — everything in the app is scoped to it.",
+        "createRow": "Create a world",
+        "createFirst": "Create your first world",
+        "name": "Name",
+        "description": "Description",
+        "nameRequired": "The world needs a name.",
+        "create": "Create world",
+        "creating": "Creating…",
+        "cancel": "Cancel",
+        "failed": "Creating the world failed. Try again."
     },
     "theme": {
         "ice": "Ice",

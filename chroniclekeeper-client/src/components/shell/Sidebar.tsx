@@ -1,11 +1,18 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { navEntries } from "./navConfig";
 import { WorldSwitcher } from "./WorldSwitcher";
+import { useAuth } from "../../hooks/useAuth";
 import s from "./shell.module.css";
+
+const editorRoles = ["Editor", "Admin", "SuperAdmin"];
 
 export function Sidebar() {
     const { t } = useTranslation();
+    const navigate = useNavigate();
+    const { userInfo } = useAuth();
+    const canCreate =
+        userInfo?.roles.some((r) => editorRoles.includes(r)) ?? false;
 
     return (
         <aside className={s.sidebar}>
@@ -57,8 +64,13 @@ export function Sidebar() {
                 <button
                     type="button"
                     className={s.newEntryBtn}
-                    disabled
-                    title={t("shell.comingSoon")}
+                    disabled={!canCreate}
+                    title={
+                        canCreate
+                            ? t("shell.newEntryTitle")
+                            : t("shell.noPermission")
+                    }
+                    onClick={() => navigate("/storymap/characters/new")}
                 >
                     <span className={s.newEntryPlus}>+</span>
                     {t("shell.newEntry")}

@@ -20,6 +20,9 @@ export type { OrnateTextAreaProps } from './OrnateTextArea';
 export { OrnateSelect } from './OrnateSelect';
 export type { OrnateSelectProps, SelectOption } from './OrnateSelect';
 
+export { OrnateCheckbox } from './OrnateCheckbox';
+export type { OrnateCheckboxProps } from './OrnateCheckbox';
+
 export { OrnateMultiSelect } from './OrnateMultiSelect';
 export type { OrnateMultiSelectProps } from './OrnateMultiSelect';
 

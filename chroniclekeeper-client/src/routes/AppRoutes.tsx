@@ -5,6 +5,7 @@ import NoPage from "../pages/NoPage";
 import Overview from "../components/entityViews/overview/Overview";
 import CharactersList from "../components/entityViews/character/list/CharacterList";
 import CharacterDetail from "../components/entityViews/character/detail/CharacterDetails";
+import CharacterForm from "../components/entityViews/character/form/CharacterForm";
 import { WorldProvider } from "../context/world/WorldProvider";
 import { AppShell } from "../components/shell/AppShell";
 
@@ -33,7 +34,12 @@ const AppRoutes = () => {
                 <Route index element={<Overview />} />
                 <Route path="overview" element={<Overview />} />
                 <Route path="characters" element={<CharactersList />} />
+                <Route path="characters/new" element={<CharacterForm />} />
                 <Route path="characters/:id" element={<CharacterDetail />} />
+                <Route
+                    path="characters/:id/edit"
+                    element={<CharacterForm />}
+                />
                 <Route path="*" element={<NoPage />} />
             </Route>
 

@@ -475,3 +475,86 @@
     border: 1px dashed var(--color-border);
     border-radius: 9px;
 }
+
+.worldCreateRow {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 11px;
+    border: none;
+    border-top: 1px solid var(--color-border);
+    background: transparent;
+    font-family: var(--font-ui);
+    font-size: 13px;
+    color: var(--color-accent);
+    text-align: left;
+    cursor: pointer;
+}
+
+.worldCreateRow:hover {
+    background: var(--o-row-hover);
+}
+
+.worldCreatePlus {
+    font-size: 15px;
+    line-height: 1;
+}
+
+/* --- Dialog ------------------------------------------------------------------- */
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(10, 8, 5, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+.dialog {
+    width: 100%;
+    max-width: 420px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--o-radius-lg);
+    background: var(--color-panel);
+    padding: 26px 24px;
+    box-shadow: 0 30px 70px -30px rgba(0, 0, 0, 0.85);
+}
+
+.dialogTitle {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 22px;
+    margin: 0 0 4px;
+}
+
+.dialogSub {
+    margin: 0 0 18px;
+    font-size: 13.5px;
+    color: var(--color-muted);
+    line-height: 1.5;
+}
+
+.dialogFields {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.dialogError {
+    font-size: 13px;
+    color: var(--color-danger);
+    margin: 0;
+}
+
+.dialogActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--color-border);
+}

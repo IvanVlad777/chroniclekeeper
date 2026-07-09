@@ -1,16 +1,22 @@
 import { useCallback, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { OrnateDisplayBox, StatusPill, Tag } from "../../../ornate";
+import { Button, OrnateDisplayBox, StatusPill, Tag } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
 import { CharacterDetailsDto } from "../../../../interfaces/loreInterfaces";
 import { getCharacter } from "../../../../api/characters";
+import { useAuth } from "../../../../hooks/useAuth";
 import s from "./styles.module.css";
 
-// TODO: Edit gumb dolazi kad klijent dobije mutacijske endpointe (create/update).
+const editorRoles = ["Editor", "Admin", "SuperAdmin"];
+
 export default function CharacterDetail() {
     const { id } = useParams<{ id: string }>();
+    const navigate = useNavigate();
     const { t } = useTranslation("character");
+    const { userInfo } = useAuth();
+    const canEdit =
+        userInfo?.roles.some((r) => editorRoles.includes(r)) ?? false;
 
     const [character, setCharacter] = useState<CharacterDetailsDto | null>(
         null
@@ -124,6 +130,18 @@ export default function CharacterDetail() {
                         <StatusPill status={status}>
                             {t(`status.${status}`)}
                         </StatusPill>
+                        {canEdit && (
+                            <Button
+                                variant="ghost"
+                                onClick={() =>
+                                    navigate(
+                                        `/storymap/characters/${character.id}/edit`
+                                    )
+                                }
+                            >
+                                {t("form.edit")}
+                            </Button>
+                        )}
                     </div>
                 </div>
                 <div className={s.flourish}>

@@ -14,6 +14,37 @@ export interface WorldDto {
     updatedAt: string;
 }
 
+export interface WorldCreateDto {
+    name: string;
+    description: string;
+}
+
+export interface SpeciesDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    commonName: string;
+    scientificName: string;
+    isHumanoid: boolean;
+    lifespan: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface RaceDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    sapientSpeciesId: number;
+    appearanceTraits: string;
+    geneticFeatures: string;
+    adaptations: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
 export interface CharacterDto {
     id: number;
     name: string;
@@ -37,6 +68,44 @@ export interface CharacterDto {
     motherId?: number | null;
     sapientSpeciesId?: number | null;
     raceId?: number | null;
+}
+
+/** POST /characters — create prima samo osnovna polja; ostatak ide kroz PUT. */
+export interface CharacterCreateDto {
+    name: string;
+    firstName: string;
+    lastName: string;
+    nickname: string;
+    title: string;
+    birthDate?: string | null;
+    isArtificial: boolean;
+    worldId: number;
+    sapientSpeciesId?: number | null;
+    raceId?: number | null;
+    fatherId?: number | null;
+    motherId?: number | null;
+}
+
+/** PUT /characters/{id} — full replace: izostavljena polja se resetiraju. */
+export interface CharacterUpdateDto {
+    name: string;
+    firstName: string;
+    lastName: string;
+    nickname: string;
+    title: string;
+    birthDate?: string | null;
+    deathDate?: string | null;
+    description: string;
+    height?: number | null;
+    weight?: number | null;
+    hairColor: string;
+    eyeColor: string;
+    specialPhysicalFeatures: string;
+    isArtificial: boolean;
+    sapientSpeciesId?: number | null;
+    raceId?: number | null;
+    fatherId?: number | null;
+    motherId?: number | null;
 }
 
 export interface CharacterRelationshipDto {

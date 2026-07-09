@@ -1,7 +1,9 @@
 import api from "../services/api";
 import {
+    CharacterCreateDto,
     CharacterDetailsDto,
     CharacterDto,
+    CharacterUpdateDto,
 } from "../interfaces/loreInterfaces";
 
 /** Likovi, opcionalno filtrirani po svijetu. */
@@ -19,4 +21,24 @@ export const getCharacter = async (
 ): Promise<CharacterDetailsDto> => {
     const response = await api.get<CharacterDetailsDto>(`/characters/${id}`);
     return response.data;
+};
+
+export const createCharacter = async (
+    data: CharacterCreateDto
+): Promise<CharacterDto> => {
+    const response = await api.post<CharacterDto>("/characters", data);
+    return response.data;
+};
+
+export const updateCharacter = async (
+    id: number,
+    data: CharacterUpdateDto
+): Promise<CharacterDto> => {
+    const response = await api.put<CharacterDto>(`/characters/${id}`, data);
+    return response.data;
+};
+
+/** Brisanje je dopušteno samo Admin/SuperAdmin rolama (API vraća 403 inače). */
+export const deleteCharacter = async (id: number): Promise<void> => {
+    await api.delete(`/characters/${id}`);
 };

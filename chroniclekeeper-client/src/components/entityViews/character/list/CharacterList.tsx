@@ -1,17 +1,23 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Column, DataTable, StatusPill } from "../../../ornate";
+import { Button, Column, DataTable, StatusPill } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
 import { CharacterDto } from "../../../../interfaces/loreInterfaces";
 import { getCharacters } from "../../../../api/characters";
 import { useWorld } from "../../../../hooks/useWorld";
+import { useAuth } from "../../../../hooks/useAuth";
 import s from "./styles.module.css";
+
+const editorRoles = ["Editor", "Admin", "SuperAdmin"];
 
 export default function CharactersList() {
     const navigate = useNavigate();
     const { t } = useTranslation("character");
     const { selectedWorld, loading: worldLoading } = useWorld();
+    const { userInfo } = useAuth();
+    const canCreate =
+        userInfo?.roles.some((r) => editorRoles.includes(r)) ?? false;
 
     const [characters, setCharacters] = useState<CharacterDto[]>([]);
     const [loading, setLoading] = useState(true);
@@ -121,11 +127,33 @@ export default function CharactersList() {
                 initialSort={{ key: "name", dir: "asc" }}
                 pageSize={10}
                 searchPlaceholder={t("search")}
+                action={
+                    canCreate ? (
+                        <Button
+                            onClick={() =>
+                                navigate("/storymap/characters/new")
+                            }
+                        >
+                            + {t("form.newTitle")}
+                        </Button>
+                    ) : undefined
+                }
                 empty={
                     <EmptyState
                         glyph="♟"
                         title={t("emptyTitle")}
                         text={t("emptyText")}
+                        action={
+                            canCreate ? (
+                                <Button
+                                    onClick={() =>
+                                        navigate("/storymap/characters/new")
+                                    }
+                                >
+                                    + {t("form.newTitle")}
+                                </Button>
+                            ) : undefined
+                        }
                     />
                 }
             />

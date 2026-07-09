@@ -1,17 +1,28 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useWorld } from "../../hooks/useWorld";
+import { useAuth } from "../../hooks/useAuth";
+import { WorldDto } from "../../interfaces/loreInterfaces";
+import { CreateWorldDialog } from "./CreateWorldDialog";
 import s from "./shell.module.css";
 
+const editorRoles = ["Editor", "Admin", "SuperAdmin"];
+
 /**
- * Kartica aktivnog svijeta + popover s listom svih svjetova korisnika.
- * Zatvara se na vanjski klik i Escape.
+ * Kartica aktivnog svijeta + popover s listom svih svjetova korisnika
+ * i opcijom stvaranja novog. Zatvara se na vanjski klik i Escape.
  */
 export function WorldSwitcher() {
     const { t } = useTranslation();
-    const { worlds, selectedWorld, selectWorld, loading, error } = useWorld();
+    const { worlds, selectedWorld, selectWorld, loading, error, refresh } =
+        useWorld();
+    const { userInfo } = useAuth();
     const [open, setOpen] = useState(false);
+    const [creating, setCreating] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
+
+    const canCreate =
+        userInfo?.roles.some((r) => editorRoles.includes(r)) ?? false;
 
     useEffect(() => {
         if (!open) return;
@@ -29,6 +40,13 @@ export function WorldSwitcher() {
         };
     }, [open]);
 
+    const handleCreated = async (world: WorldDto) => {
+        setCreating(false);
+        setOpen(false);
+        await refresh();
+        selectWorld(world.id);
+    };
+
     if (loading) {
         return <div className={s.worldEmpty}>…</div>;
     }
@@ -36,7 +54,34 @@ export function WorldSwitcher() {
         return <div className={s.worldEmpty}>{error}</div>;
     }
     if (worlds.length === 0) {
-        return <div className={s.worldEmpty}>{t("noworlds")}</div>;
+        return (
+            <>
+                {canCreate ? (
+                    <button
+                        type="button"
+                        className={s.worldCard}
+                        onClick={() => setCreating(true)}
+                    >
+                        <span className={s.worldThumb} />
+                        <span className={s.worldInfo}>
+                            <span className={s.worldName}>
+                                {t("worldDialog.createFirst")}
+                            </span>
+                            <span className={s.worldMeta}>{t("noworlds")}</span>
+                        </span>
+                        <span className={s.worldCaret}>+</span>
+                    </button>
+                ) : (
+                    <div className={s.worldEmpty}>{t("noworlds")}</div>
+                )}
+                {creating && (
+                    <CreateWorldDialog
+                        onCreated={handleCreated}
+                        onClose={() => setCreating(false)}
+                    />
+                )}
+            </>
+        );
     }
 
     return (
@@ -92,7 +137,27 @@ export function WorldSwitcher() {
                             </button>
                         );
                     })}
+                    {canCreate && (
+                        <button
+                            type="button"
+                            className={s.worldCreateRow}
+                            onClick={() => {
+                                setOpen(false);
+                                setCreating(true);
+                            }}
+                        >
+                            <span className={s.worldCreatePlus}>+</span>
+                            {t("worldDialog.createRow")}
+                        </button>
+                    )}
                 </div>
+            )}
+
+            {creating && (
+                <CreateWorldDialog
+                    onCreated={handleCreated}
+                    onClose={() => setCreating(false)}
+                />
             )}
         </div>
     );

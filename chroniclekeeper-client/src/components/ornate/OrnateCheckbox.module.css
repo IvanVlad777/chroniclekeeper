@@ -1,0 +1,52 @@
+/* Ornate checkbox — token-driven, uklapa se uz OrnateField label stil. */
+
+.wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.input {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    background: var(--color-sunken);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color var(--o-transition), background var(--o-transition);
+    flex: none;
+}
+
+.input:hover {
+    border-color: var(--o-border-strong);
+}
+
+.input:focus-visible {
+    outline: none;
+    box-shadow: var(--o-ring);
+}
+
+.input:checked {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+}
+
+.input:checked::after {
+    content: "✓";
+    font-size: 12px;
+    line-height: 1;
+    color: var(--color-panel);
+}
+
+.label {
+    font-family: var(--font-ui);
+    font-size: 14px;
+    color: var(--color-text);
+}

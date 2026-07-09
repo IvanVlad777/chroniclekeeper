@@ -19,8 +19,23 @@
     },
     "shell": {
         "newEntry": "Novi zapis",
+        "newEntryTitle": "Stvori novog lika",
+        "noPermission": "Nemaš ovlasti za stvaranje zapisa",
         "comingSoon": "Uskoro",
         "soon": "uskoro"
+    },
+    "worldDialog": {
+        "title": "Stvori svijet",
+        "sub": "Svijet drži vlastite likove, mjesta i lore — sve u aplikaciji vezano je uz njega.",
+        "createRow": "Stvori svijet",
+        "createFirst": "Stvori svoj prvi svijet",
+        "name": "Naziv",
+        "description": "Opis",
+        "nameRequired": "Svijet treba ime.",
+        "create": "Stvori svijet",
+        "creating": "Stvaranje…",
+        "cancel": "Odustani",
+        "failed": "Stvaranje svijeta nije uspjelo. Pokušaj ponovno."
     },
     "theme": {
         "ice": "Led",
