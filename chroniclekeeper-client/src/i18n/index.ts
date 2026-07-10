@@ -32,6 +32,16 @@ import enTag from "./locales/en/tag.json";
 import hrTag from "./locales/hr/tag.json";
 import enNote from "./locales/en/note.json";
 import hrNote from "./locales/hr/note.json";
+import enPoliticalIdeology from "./locales/en/politicalIdeology.json";
+import hrPoliticalIdeology from "./locales/hr/politicalIdeology.json";
+import enGovernmentSystem from "./locales/en/governmentSystem.json";
+import hrGovernmentSystem from "./locales/hr/governmentSystem.json";
+import enPoliticalParty from "./locales/en/politicalParty.json";
+import hrPoliticalParty from "./locales/hr/politicalParty.json";
+import enLegalSystem from "./locales/en/legalSystem.json";
+import hrLegalSystem from "./locales/hr/legalSystem.json";
+import enDiplomaticAgreement from "./locales/en/diplomaticAgreement.json";
+import hrDiplomaticAgreement from "./locales/hr/diplomaticAgreement.json";
 
 i18n.use(LanguageDetector)
     .use(initReactI18next)
@@ -53,6 +63,11 @@ i18n.use(LanguageDetector)
                 timeline: enTimeline,
                 tag: enTag,
                 note: enNote,
+                politicalIdeology: enPoliticalIdeology,
+                governmentSystem: enGovernmentSystem,
+                politicalParty: enPoliticalParty,
+                legalSystem: enLegalSystem,
+                diplomaticAgreement: enDiplomaticAgreement,
             },
             hr: {
                 common: hrCommon,
@@ -70,6 +85,11 @@ i18n.use(LanguageDetector)
                 timeline: hrTimeline,
                 tag: hrTag,
                 note: hrNote,
+                politicalIdeology: hrPoliticalIdeology,
+                governmentSystem: hrGovernmentSystem,
+                politicalParty: hrPoliticalParty,
+                legalSystem: hrLegalSystem,
+                diplomaticAgreement: hrDiplomaticAgreement,
             },
         },
         fallbackLng: "en",
@@ -89,6 +109,11 @@ i18n.use(LanguageDetector)
             "timeline",
             "tag",
             "note",
+            "politicalIdeology",
+            "governmentSystem",
+            "politicalParty",
+            "legalSystem",
+            "diplomaticAgreement",
         ], //namespaces
         defaultNS: "common",
         interpolation: {

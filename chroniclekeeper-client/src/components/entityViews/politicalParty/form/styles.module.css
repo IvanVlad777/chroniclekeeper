@@ -1,0 +1,57 @@
+/* Political party create/edit forma */
+
+.page {
+    padding: 30px 34px;
+    max-width: 1060px;
+}
+
+.title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 26px;
+    margin: 0 0 4px;
+}
+
+.note {
+    margin: 0 0 22px;
+    font-size: 14px;
+    color: var(--color-muted);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1.7fr 1fr;
+    gap: 30px;
+}
+
+@media (max-width: 860px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 0;
+}
+
+.formError {
+    margin: 16px 0 0;
+    font-size: 13.5px;
+    color: var(--color-danger);
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 26px;
+    padding-top: 20px;
+    border-top: 1px solid var(--color-border);
+}
+
+.footerSpacer {
+    flex: 1;
+}

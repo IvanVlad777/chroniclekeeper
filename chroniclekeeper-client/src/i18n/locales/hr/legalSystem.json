@@ -1,0 +1,50 @@
+{
+    "listTitle": "Pravni sustavi",
+    "search": "Traži pravne sustave…",
+    "loaderror": "Neuspješno učitavanje",
+    "notfound": "Pravni sustav nije pronađen",
+    "none": "Nema",
+    "backtolist": "Natrag na pravne sustave",
+    "emptyTitle": "Još nema pravnih sustava",
+    "emptyText": "Zakoni i kazne koji održavaju red — ili ne. Stvori prvi pravni sustav i počni definirati pravdu u svom svijetu.",
+    "columns": {
+        "name": "Naziv",
+        "judicialIndependence": "Neovisnost sudstva",
+        "punishmentMethods": "Kazna",
+        "updated": "Ažurirano"
+    },
+    "fields": {
+        "description": "Opis",
+        "laws": "Zakoni",
+        "judicialIndependence": "Neovisnost sudstva",
+        "punishmentMethods": "Metode kažnjavanja"
+    },
+    "scaleLevels": {
+        "Low": "Niska",
+        "Moderate": "Umjerena",
+        "High": "Visoka"
+    },
+    "punishmentMethods": {
+        "DeathPenalty": "Smrtna kazna",
+        "Imprisonment": "Zatvor",
+        "ForcedLabor": "Prisilni rad",
+        "Fines": "Novčane kazne",
+        "Exile": "Progonstvo",
+        "CorporalPunishment": "Tjelesno kažnjavanje",
+        "Rehabilitation": "Rehabilitacija"
+    },
+    "form": {
+        "newTitle": "Novi pravni sustav",
+        "editTitle": "Uredi pravni sustav",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "save": "Spremi pravni sustav",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}“? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

@@ -8,6 +8,7 @@ using ChronicleKeeper.Core.Entities.Notes;
 using ChronicleKeeper.Core.Entities.Social;
 using ChronicleKeeper.Core.Entities.Social.Cultures;
 using ChronicleKeeper.Core.Entities.Social.Nationality;
+using ChronicleKeeper.Core.Entities.Social.Politics;
 using ChronicleKeeper.Core.Entities.Social.Religions;
 using ChronicleKeeper.Core.Entities.Social.Structure;
 using ChronicleKeeper.Core.Entities.Tags;
@@ -62,6 +63,11 @@ namespace ChronicleKeeper.Infrastructure.Data
         public DbSet<Religion> Religions { get; set; }
         public DbSet<Culture> Cultures { get; set; }
         public DbSet<Language> Languages { get; set; }
+        public DbSet<PoliticalIdeology> PoliticalIdeologies { get; set; }
+        public DbSet<GovernmentSystem> GovernmentSystems { get; set; }
+        public DbSet<PoliticalParty> PoliticalParties { get; set; }
+        public DbSet<LegalSystem> LegalSystems { get; set; }
+        public DbSet<DiplomaticAgreement> DiplomaticAgreements { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

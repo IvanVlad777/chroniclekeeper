@@ -20,7 +20,12 @@
         "cultures": "Kulture",
         "timelines": "Vremenske linije",
         "tags": "Oznake",
-        "notes": "Bilješke"
+        "notes": "Bilješke",
+        "politicalIdeologies": "Političke ideologije",
+        "governmentSystems": "Sustavi vlasti",
+        "politicalParties": "Političke stranke",
+        "legalSystems": "Pravni sustavi",
+        "diplomaticAgreements": "Diplomatski ugovori"
     },
     "shell": {
         "newEntry": "Novi zapis",

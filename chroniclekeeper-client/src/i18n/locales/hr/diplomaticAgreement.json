@@ -1,0 +1,43 @@
+{
+    "listTitle": "Diplomatski ugovori",
+    "search": "Traži diplomatske ugovore…",
+    "loaderror": "Neuspješno učitavanje",
+    "notfound": "Diplomatski ugovor nije pronađen",
+    "none": "Nema",
+    "backtolist": "Natrag na diplomatske ugovore",
+    "emptyTitle": "Još nema diplomatskih ugovora",
+    "emptyText": "Sporazumi, pakti i savezi između nacija. Stvori prvi diplomatski ugovor i počni mapirati politiku svog svijeta.",
+    "columns": {
+        "name": "Naziv",
+        "agreementType": "Vrsta",
+        "signedDate": "Potpisan",
+        "updated": "Ažurirano"
+    },
+    "fields": {
+        "description": "Opis",
+        "firstNation": "Prva nacija",
+        "secondNation": "Druga nacija",
+        "agreementType": "Vrsta ugovora",
+        "signedDate": "Datum potpisivanja",
+        "terminationDate": "Datum prestanka",
+        "durationYears": "Trajanje (godine)",
+        "terms": "Uvjeti",
+        "isUnequal": "Neravnopravni uvjeti"
+    },
+    "form": {
+        "newTitle": "Novi diplomatski ugovor",
+        "editTitle": "Uredi diplomatski ugovor",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "nationsMissing": "Obje nacije su obavezne.",
+        "sameNation": "Diplomatski ugovor zahtijeva dvije različite nacije.",
+        "save": "Spremi ugovor",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}“? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

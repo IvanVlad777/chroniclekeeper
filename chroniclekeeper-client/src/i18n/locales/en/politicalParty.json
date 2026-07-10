@@ -1,0 +1,44 @@
+{
+    "listTitle": "Political parties",
+    "search": "Search political parties…",
+    "loaderror": "Failed to load",
+    "notfound": "Political party not found",
+    "none": "None",
+    "backtolist": "Back to political parties",
+    "emptyTitle": "No political parties yet",
+    "emptyText": "Movements and factions vying for power within your governments. Create the first political party to start the debate.",
+    "columns": {
+        "name": "Name",
+        "influenceLevel": "Influence",
+        "isBanned": "Banned",
+        "updated": "Updated"
+    },
+    "fields": {
+        "description": "Description",
+        "ideologyDescription": "Ideology description",
+        "politicalIdeology": "Political ideology",
+        "governmentSystem": "Government system",
+        "influenceLevel": "Influence level",
+        "isBanned": "Banned"
+    },
+    "scaleLevels": {
+        "Low": "Low",
+        "Moderate": "Moderate",
+        "High": "High"
+    },
+    "form": {
+        "newTitle": "New political party",
+        "editTitle": "Edit political party",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "ideologyMissing": "A political ideology is required.",
+        "save": "Save party",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

@@ -573,3 +573,210 @@ export interface CharacterDetailsDto extends CharacterDto {
     tags: ReferenceDto[];
     relationships: CharacterRelationshipDto[];
 }
+
+export const electionSystems = [
+    "DirectElection",
+    "Parliamentary",
+    "Hereditary",
+    "Meritocratic",
+    "DivineMandate",
+    "Oligarchic",
+    "NoElections",
+] as const;
+export type ElectionSystem = (typeof electionSystems)[number];
+
+export const scaleLevels = ["Low", "Moderate", "High"] as const;
+export type ScaleLevel = (typeof scaleLevels)[number];
+
+export const punishmentMethods = [
+    "DeathPenalty",
+    "Imprisonment",
+    "ForcedLabor",
+    "Fines",
+    "Exile",
+    "CorporalPunishment",
+    "Rehabilitation",
+] as const;
+export type PunishmentMethod = (typeof punishmentMethods)[number];
+
+export interface PoliticalIdeologyDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    isAuthoritarian: boolean;
+    isSocialist: boolean;
+    isLiberal: boolean;
+    isRadical: boolean;
+    isMilitaristic: boolean;
+    supportsFreeMarket: boolean;
+    supportsPlannedEconomy: boolean;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface PoliticalIdeologyDetailsDto extends PoliticalIdeologyDto {
+    affiliatedPoliticalParties: ReferenceDto[];
+    affiliatedGovernmentSystems: ReferenceDto[];
+}
+
+export interface PoliticalIdeologyCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    isAuthoritarian: boolean;
+    isSocialist: boolean;
+    isLiberal: boolean;
+    isRadical: boolean;
+    isMilitaristic: boolean;
+    supportsFreeMarket: boolean;
+    supportsPlannedEconomy: boolean;
+}
+
+export type PoliticalIdeologyUpdateDto = Omit<
+    PoliticalIdeologyCreateDto,
+    "worldId"
+>;
+
+export interface GovernmentSystemDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    isDemocratic: boolean;
+    isMonarchic: boolean;
+    isReligious: boolean;
+    isFederal: boolean;
+    isCentralized: boolean;
+    politicalIdeologyId?: number | null;
+    electionSystem: ElectionSystem;
+    stabilityLevel: ScaleLevel;
+    hasTermLimits: boolean;
+    maxTermLength?: number | null;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface GovernmentSystemDetailsDto extends GovernmentSystemDto {
+    politicalIdeology: ReferenceDto | null;
+    politicalParties: ReferenceDto[];
+}
+
+export interface GovernmentSystemCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    isDemocratic: boolean;
+    isMonarchic: boolean;
+    isReligious: boolean;
+    isFederal: boolean;
+    isCentralized: boolean;
+    politicalIdeologyId?: number | null;
+    electionSystem: ElectionSystem;
+    stabilityLevel: ScaleLevel;
+    hasTermLimits: boolean;
+    maxTermLength?: number | null;
+}
+
+export type GovernmentSystemUpdateDto = Omit<
+    GovernmentSystemCreateDto,
+    "worldId"
+>;
+
+export interface PoliticalPartyDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    ideologyDescription: string;
+    politicalIdeologyId: number;
+    governmentSystemId?: number | null;
+    influenceLevel: ScaleLevel;
+    isBanned: boolean;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface PoliticalPartyDetailsDto extends PoliticalPartyDto {
+    politicalIdeology: ReferenceDto | null;
+    governmentSystem: ReferenceDto | null;
+}
+
+export interface PoliticalPartyCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    ideologyDescription: string;
+    politicalIdeologyId: number;
+    governmentSystemId?: number | null;
+    influenceLevel: ScaleLevel;
+    isBanned: boolean;
+}
+
+export type PoliticalPartyUpdateDto = Omit<PoliticalPartyCreateDto, "worldId">;
+
+export interface LegalSystemDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    laws: string;
+    judicialIndependence: ScaleLevel;
+    punishmentMethods: PunishmentMethod;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export type LegalSystemDetailsDto = LegalSystemDto;
+
+export interface LegalSystemCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    laws: string;
+    judicialIndependence: ScaleLevel;
+    punishmentMethods: PunishmentMethod;
+}
+
+export type LegalSystemUpdateDto = Omit<LegalSystemCreateDto, "worldId">;
+
+export interface DiplomaticAgreementDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    agreementType: string;
+    signedDate: string;
+    terminationDate?: string | null;
+    durationYears?: number | null;
+    terms: string;
+    isUnequal: boolean;
+    firstNationId: number;
+    secondNationId: number;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface DiplomaticAgreementDetailsDto extends DiplomaticAgreementDto {
+    firstNation: ReferenceDto;
+    secondNation: ReferenceDto;
+}
+
+export interface DiplomaticAgreementCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    agreementType: string;
+    signedDate: string;
+    terminationDate?: string | null;
+    durationYears?: number | null;
+    terms: string;
+    isUnequal: boolean;
+    firstNationId: number;
+    secondNationId: number;
+}
+
+export type DiplomaticAgreementUpdateDto = Omit<
+    DiplomaticAgreementCreateDto,
+    "worldId"
+>;

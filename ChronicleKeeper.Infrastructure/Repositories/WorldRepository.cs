@@ -116,7 +116,12 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .Where(sc => sc.WorldId == id)
                 .ExecuteDeleteAsync(cancellationToken);
 
-            // 7c. Nacije (likova više nema pa Restrict ne blokira)
+            // 7bb. Diplomatski ugovori (Restrict FK na Nation s obje strane — moraju nestati prije nacija)
+            await _context.DiplomaticAgreements
+                .Where(a => a.WorldId == id)
+                .ExecuteDeleteAsync(cancellationToken);
+
+            // 7c. Nacije (agreementi i likovi više nema pa Restrict ne blokira)
             await _context.Nations
                 .Where(n => n.WorldId == id)
                 .ExecuteDeleteAsync(cancellationToken);
@@ -133,6 +138,26 @@ namespace ChronicleKeeper.Infrastructure.Repositories
 
             // 7f. Jezici (kultura više nema pa Restrict ne blokira)
             await _context.Languages
+                .Where(l => l.WorldId == id)
+                .ExecuteDeleteAsync(cancellationToken);
+
+            // 7g. Političke stranke (Restrict FK na PoliticalIdeology i GovernmentSystem — moraju nestati prve)
+            await _context.PoliticalParties
+                .Where(p => p.WorldId == id)
+                .ExecuteDeleteAsync(cancellationToken);
+
+            // 7h. Sustavi vlasti (Restrict FK na PoliticalIdeology — stranaka više nema pa Restrict ne blokira)
+            await _context.GovernmentSystems
+                .Where(g => g.WorldId == id)
+                .ExecuteDeleteAsync(cancellationToken);
+
+            // 7i. Političke ideologije (stranaka i sustava vlasti više nema pa Restrict ne blokira)
+            await _context.PoliticalIdeologies
+                .Where(i => i.WorldId == id)
+                .ExecuteDeleteAsync(cancellationToken);
+
+            // 7j. Pravni sustavi (samostalan entitet, bez ovisnosti unutar ovog bloka)
+            await _context.LegalSystems
                 .Where(l => l.WorldId == id)
                 .ExecuteDeleteAsync(cancellationToken);
 

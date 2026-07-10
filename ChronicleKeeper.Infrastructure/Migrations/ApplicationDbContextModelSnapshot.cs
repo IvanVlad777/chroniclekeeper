@@ -727,6 +727,306 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.ToTable("Nations");
                 });
 
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Politics.DiplomaticAgreement", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AgreementType")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<int?>("DurationYears")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FirstNationId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsUnequal")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("SecondNationId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SignedDate")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("TerminationDate")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Terms")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FirstNationId");
+
+                    b.HasIndex("SecondNationId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("DiplomaticAgreements");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Politics.GovernmentSystem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<string>("ElectionSystem")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<bool>("HasTermLimits")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsCentralized")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDemocratic")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsFederal")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsMonarchic")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsReligious")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("MaxTermLength")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int?>("PoliticalIdeologyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StabilityLevel")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PoliticalIdeologyId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("GovernmentSystems");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Politics.LegalSystem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<string>("JudicialIndependence")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Laws")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("PunishmentMethods")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("LegalSystems");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Politics.PoliticalIdeology", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<bool>("IsAuthoritarian")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsLiberal")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsMilitaristic")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsRadical")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSocialist")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("SupportsFreeMarket")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("SupportsPlannedEconomy")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("PoliticalIdeologies");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Politics.PoliticalParty", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<int?>("GovernmentSystemId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("IdeologyDescription")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<string>("InfluenceLevel")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<bool>("IsBanned")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("PoliticalIdeologyId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GovernmentSystemId");
+
+                    b.HasIndex("PoliticalIdeologyId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("PoliticalParties");
+                });
+
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Religions.Religion", b =>
                 {
                     b.Property<int>("Id")
@@ -1402,6 +1702,99 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Navigation("World");
                 });
 
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Politics.DiplomaticAgreement", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Nationality.Nation", "FirstNation")
+                        .WithMany()
+                        .HasForeignKey("FirstNationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Nationality.Nation", "SecondNation")
+                        .WithMany()
+                        .HasForeignKey("SecondNationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("FirstNation");
+
+                    b.Navigation("SecondNation");
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Politics.GovernmentSystem", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Politics.PoliticalIdeology", "PoliticalIdeology")
+                        .WithMany("AffiliatedGovernmentSystems")
+                        .HasForeignKey("PoliticalIdeologyId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("PoliticalIdeology");
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Politics.LegalSystem", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Politics.PoliticalIdeology", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Politics.PoliticalParty", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Politics.GovernmentSystem", "GovernmentSystem")
+                        .WithMany("PoliticalParties")
+                        .HasForeignKey("GovernmentSystemId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Politics.PoliticalIdeology", "PoliticalIdeology")
+                        .WithMany("AffiliatedPoliticalParties")
+                        .HasForeignKey("PoliticalIdeologyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("GovernmentSystem");
+
+                    b.Navigation("PoliticalIdeology");
+
+                    b.Navigation("World");
+                });
+
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Religions.Religion", b =>
                 {
                     b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
@@ -1593,6 +1986,18 @@ namespace ChronicleKeeper.Infrastructure.Migrations
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Nationality.Nation", b =>
                 {
                     b.Navigation("Characters");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Politics.GovernmentSystem", b =>
+                {
+                    b.Navigation("PoliticalParties");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Politics.PoliticalIdeology", b =>
+                {
+                    b.Navigation("AffiliatedGovernmentSystems");
+
+                    b.Navigation("AffiliatedPoliticalParties");
                 });
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Religions.Religion", b =>

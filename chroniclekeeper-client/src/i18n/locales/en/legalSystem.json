@@ -1,0 +1,50 @@
+{
+    "listTitle": "Legal systems",
+    "search": "Search legal systems…",
+    "loaderror": "Failed to load",
+    "notfound": "Legal system not found",
+    "none": "None",
+    "backtolist": "Back to legal systems",
+    "emptyTitle": "No legal systems yet",
+    "emptyText": "The laws and punishments that keep order — or don't. Create the first legal system to start defining justice in your world.",
+    "columns": {
+        "name": "Name",
+        "judicialIndependence": "Judicial independence",
+        "punishmentMethods": "Punishment",
+        "updated": "Updated"
+    },
+    "fields": {
+        "description": "Description",
+        "laws": "Laws",
+        "judicialIndependence": "Judicial independence",
+        "punishmentMethods": "Punishment methods"
+    },
+    "scaleLevels": {
+        "Low": "Low",
+        "Moderate": "Moderate",
+        "High": "High"
+    },
+    "punishmentMethods": {
+        "DeathPenalty": "Death penalty",
+        "Imprisonment": "Imprisonment",
+        "ForcedLabor": "Forced labor",
+        "Fines": "Fines",
+        "Exile": "Exile",
+        "CorporalPunishment": "Corporal punishment",
+        "Rehabilitation": "Rehabilitation"
+    },
+    "form": {
+        "newTitle": "New legal system",
+        "editTitle": "Edit legal system",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "save": "Save legal system",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

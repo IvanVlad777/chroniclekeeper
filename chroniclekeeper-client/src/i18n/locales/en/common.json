@@ -20,7 +20,12 @@
         "cultures": "Cultures",
         "timelines": "Timelines",
         "tags": "Tags",
-        "notes": "Notes"
+        "notes": "Notes",
+        "politicalIdeologies": "Political Ideologies",
+        "governmentSystems": "Government Systems",
+        "politicalParties": "Political Parties",
+        "legalSystems": "Legal Systems",
+        "diplomaticAgreements": "Diplomatic Agreements"
     },
     "shell": {
         "newEntry": "New entry",

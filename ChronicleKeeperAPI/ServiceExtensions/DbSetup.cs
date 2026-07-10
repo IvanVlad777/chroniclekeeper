@@ -30,6 +30,11 @@ namespace ChronicleKeeper.API.ServiceExtensions
             services.AddScoped<IReligionRepository, ReligionRepository>();
             services.AddScoped<ICultureRepository, CultureRepository>();
             services.AddScoped<ILanguageRepository, LanguageRepository>();
+            services.AddScoped<IPoliticalIdeologyRepository, PoliticalIdeologyRepository>();
+            services.AddScoped<IGovernmentSystemRepository, GovernmentSystemRepository>();
+            services.AddScoped<IPoliticalPartyRepository, PoliticalPartyRepository>();
+            services.AddScoped<ILegalSystemRepository, LegalSystemRepository>();
+            services.AddScoped<IDiplomaticAgreementRepository, DiplomaticAgreementRepository>();
 
             return services;
         }

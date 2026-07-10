@@ -2,10 +2,18 @@
   "permissions": {
     "allow": [
       "Bash(tasklist)",
-      "Bash(taskkill //F //PID 30592)",
+      "Bash(taskkill //F //PID *)",
       "Bash(dotnet build *)",
       "Bash(dotnet ef *)",
-      "Bash(npm run *)"
+      "Bash(dotnet run *)",
+      "Bash(npm run *)",
+      "Bash(node *)",
+      "Bash(docker ps*)",
+      "Bash(curl *)",
+      "Bash(git status*)",
+      "Bash(git diff*)",
+      "Bash(git log*)",
+      "Bash(node drive_politics.js)"
     ]
   }
 }

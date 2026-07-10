@@ -12,5 +12,6 @@ namespace ChronicleKeeper.Core.Repositories
         Task<Nation> UpdateAsync(Nation nation, CancellationToken cancellationToken = default);
         Task<bool> DeleteAsync(int id, CancellationToken cancellationToken = default);
         Task<int> CountCharactersUsingNationAsync(int nationId, CancellationToken cancellationToken = default);
+        Task<int> CountDiplomaticAgreementsUsingNationAsync(int nationId, CancellationToken cancellationToken = default);
     }
 }

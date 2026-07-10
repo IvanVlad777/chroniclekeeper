@@ -1,0 +1,61 @@
+{
+    "listTitle": "Government systems",
+    "search": "Search government systems…",
+    "loaderror": "Failed to load",
+    "notfound": "Government system not found",
+    "none": "None",
+    "backtolist": "Back to government systems",
+    "emptyTitle": "No government systems yet",
+    "emptyText": "The structures of rule — monarchies, republics, theocracies. Create the first government system to start shaping how your world is governed.",
+    "columns": {
+        "name": "Name",
+        "electionSystem": "Election system",
+        "stabilityLevel": "Stability",
+        "updated": "Updated"
+    },
+    "fields": {
+        "description": "Description",
+        "isDemocratic": "Democratic",
+        "isMonarchic": "Monarchic",
+        "isReligious": "Theocratic",
+        "isFederal": "Federal",
+        "isCentralized": "Centralized",
+        "politicalIdeology": "Political ideology",
+        "electionSystem": "Election system",
+        "stabilityLevel": "Stability level",
+        "hasTermLimits": "Term limits",
+        "maxTermLength": "Max term length (years)"
+    },
+    "parties": {
+        "label": "Political parties"
+    },
+    "electionSystems": {
+        "DirectElection": "Direct election",
+        "Parliamentary": "Parliamentary",
+        "Hereditary": "Hereditary",
+        "Meritocratic": "Meritocratic",
+        "DivineMandate": "Divine mandate",
+        "Oligarchic": "Oligarchic",
+        "NoElections": "No elections"
+    },
+    "scaleLevels": {
+        "Low": "Low",
+        "Moderate": "Moderate",
+        "High": "High"
+    },
+    "form": {
+        "newTitle": "New government system",
+        "editTitle": "Edit government system",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "traitsLegend": "Traits",
+        "save": "Save government system",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

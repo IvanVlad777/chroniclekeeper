@@ -1,42 +1,27 @@
-﻿using ChronicleKeeper.Core.Entities.Base;
-using ChronicleKeeper.Core.Entities.Geography;
-using ChronicleKeeper.Core.Entities.HistoryTimelines;
-using ChronicleKeeper.Core.Entities.Social.Nationality;
-using ChronicleKeeper.Core.Interfaces;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using ChronicleKeeper.Core.Entities.Base;
 using static ChronicleKeeper.Core.Enums.SocietyEnums;
 
 namespace ChronicleKeeper.Core.Entities.Social.Politics
 {
-    public class PoliticalParty : ILoreEntity
+    public class PoliticalParty : LoreEntity
     {
-        [Key]
-        public int Id { get; set; }
-        [Required]
-        public string Name { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
-        [Required]
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        [Required]
-        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
-        public virtual History? History { get; set; }
-
         public string IdeologyDescription { get; set; } = string.Empty;
 
-        //[ForeignKey("PoliticalIdeology")]
         public int PoliticalIdeologyId { get; set; }
         public PoliticalIdeology PoliticalIdeology { get; set; } = null!;
 
+        public int? GovernmentSystemId { get; set; }
+        public GovernmentSystem? GovernmentSystem { get; set; }
 
-        public ICollection<Country> Countries { get; set; } = new List<Country>();
-        public ICollection<City> Cities { get; set; } = new List<City>();
-        public ICollection<Faction> Factions { get; set; } = new List<Faction>();
+        public ScaleLevel InfluenceLevel { get; set; }
+        public bool IsBanned { get; set; } // Party is illegal
 
-        public ICollection<Nation> Nations { get; set; } = new List<Nation>();
+        //public ICollection<Country> Countries { get; set; } = new List<Country>(); // TODO: Uncomment when Country entity is revived
+        //public ICollection<City> Cities { get; set; } = new List<City>(); // TODO: Uncomment when City entity is revived
 
-        public ScaleLevel InfluenceLevel { get; set; } // Low, Moderate, High
-        public bool IsBanned { get; set; } // Ako je stranka ilegalna
+        // TODO: Many-to-many cross-links to already-mapped entities (Faction, Nation) —
+        // deferred to a dedicated pass so the join-table shape is decided once, holistically.
+        //public ICollection<Faction> Factions { get; set; } = new List<Faction>();
+        //public ICollection<Nation> Nations { get; set; } = new List<Nation>();
     }
-
 }

@@ -1,0 +1,44 @@
+{
+    "listTitle": "Političke stranke",
+    "search": "Traži političke stranke…",
+    "loaderror": "Neuspješno učitavanje",
+    "notfound": "Politička stranka nije pronađena",
+    "none": "Nema",
+    "backtolist": "Natrag na političke stranke",
+    "emptyTitle": "Još nema političkih stranaka",
+    "emptyText": "Pokreti i frakcije koje se bore za vlast unutar tvojih vlada. Stvori prvu političku stranku i pokreni raspravu.",
+    "columns": {
+        "name": "Naziv",
+        "influenceLevel": "Utjecaj",
+        "isBanned": "Zabranjena",
+        "updated": "Ažurirano"
+    },
+    "fields": {
+        "description": "Opis",
+        "ideologyDescription": "Opis ideologije",
+        "politicalIdeology": "Politička ideologija",
+        "governmentSystem": "Sustav vlasti",
+        "influenceLevel": "Razina utjecaja",
+        "isBanned": "Zabranjena"
+    },
+    "scaleLevels": {
+        "Low": "Niska",
+        "Moderate": "Umjerena",
+        "High": "Visoka"
+    },
+    "form": {
+        "newTitle": "Nova politička stranka",
+        "editTitle": "Uredi političku stranku",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "ideologyMissing": "Politička ideologija je obavezna.",
+        "save": "Spremi stranku",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}“? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

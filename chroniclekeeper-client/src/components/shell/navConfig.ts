@@ -24,4 +24,25 @@ export const navEntries: NavEntry[] = [
     { key: "timelines", glyph: "⌛", to: "/storymap/timelines" },
     { key: "tags", glyph: "❧", to: "/storymap/tags" },
     { key: "notes", glyph: "✎", to: "/storymap/notes" },
+    {
+        key: "politicalIdeologies",
+        glyph: "◐",
+        to: "/storymap/political-ideologies",
+    },
+    {
+        key: "governmentSystems",
+        glyph: "⌂",
+        to: "/storymap/government-systems",
+    },
+    {
+        key: "politicalParties",
+        glyph: "✪",
+        to: "/storymap/political-parties",
+    },
+    { key: "legalSystems", glyph: "⛨", to: "/storymap/legal-systems" },
+    {
+        key: "diplomaticAgreements",
+        glyph: "⚜",
+        to: "/storymap/diplomatic-agreements",
+    },
 ];

@@ -35,6 +35,21 @@ import TimelineDetails from "../components/entityViews/timeline/detail/TimelineD
 import TimelineForm from "../components/entityViews/timeline/form/TimelineForm";
 import TagsPage from "../components/entityViews/tag/TagsPage";
 import NotesPage from "../components/entityViews/note/NotesPage";
+import PoliticalIdeologyList from "../components/entityViews/politicalIdeology/list/PoliticalIdeologyList";
+import PoliticalIdeologyDetails from "../components/entityViews/politicalIdeology/detail/PoliticalIdeologyDetails";
+import PoliticalIdeologyForm from "../components/entityViews/politicalIdeology/form/PoliticalIdeologyForm";
+import GovernmentSystemList from "../components/entityViews/governmentSystem/list/GovernmentSystemList";
+import GovernmentSystemDetails from "../components/entityViews/governmentSystem/detail/GovernmentSystemDetails";
+import GovernmentSystemForm from "../components/entityViews/governmentSystem/form/GovernmentSystemForm";
+import PoliticalPartyList from "../components/entityViews/politicalParty/list/PoliticalPartyList";
+import PoliticalPartyDetails from "../components/entityViews/politicalParty/detail/PoliticalPartyDetails";
+import PoliticalPartyForm from "../components/entityViews/politicalParty/form/PoliticalPartyForm";
+import LegalSystemList from "../components/entityViews/legalSystem/list/LegalSystemList";
+import LegalSystemDetails from "../components/entityViews/legalSystem/detail/LegalSystemDetails";
+import LegalSystemForm from "../components/entityViews/legalSystem/form/LegalSystemForm";
+import DiplomaticAgreementList from "../components/entityViews/diplomaticAgreement/list/DiplomaticAgreementList";
+import DiplomaticAgreementDetails from "../components/entityViews/diplomaticAgreement/detail/DiplomaticAgreementDetails";
+import DiplomaticAgreementForm from "../components/entityViews/diplomaticAgreement/form/DiplomaticAgreementForm";
 import { WorldProvider } from "../context/world/WorldProvider";
 import { AppShell } from "../components/shell/AppShell";
 
@@ -143,6 +158,83 @@ const AppRoutes = () => {
                 />
                 <Route path="tags" element={<TagsPage />} />
                 <Route path="notes" element={<NotesPage />} />
+                <Route
+                    path="political-ideologies"
+                    element={<PoliticalIdeologyList />}
+                />
+                <Route
+                    path="political-ideologies/new"
+                    element={<PoliticalIdeologyForm />}
+                />
+                <Route
+                    path="political-ideologies/:id"
+                    element={<PoliticalIdeologyDetails />}
+                />
+                <Route
+                    path="political-ideologies/:id/edit"
+                    element={<PoliticalIdeologyForm />}
+                />
+                <Route
+                    path="government-systems"
+                    element={<GovernmentSystemList />}
+                />
+                <Route
+                    path="government-systems/new"
+                    element={<GovernmentSystemForm />}
+                />
+                <Route
+                    path="government-systems/:id"
+                    element={<GovernmentSystemDetails />}
+                />
+                <Route
+                    path="government-systems/:id/edit"
+                    element={<GovernmentSystemForm />}
+                />
+                <Route
+                    path="political-parties"
+                    element={<PoliticalPartyList />}
+                />
+                <Route
+                    path="political-parties/new"
+                    element={<PoliticalPartyForm />}
+                />
+                <Route
+                    path="political-parties/:id"
+                    element={<PoliticalPartyDetails />}
+                />
+                <Route
+                    path="political-parties/:id/edit"
+                    element={<PoliticalPartyForm />}
+                />
+                <Route path="legal-systems" element={<LegalSystemList />} />
+                <Route
+                    path="legal-systems/new"
+                    element={<LegalSystemForm />}
+                />
+                <Route
+                    path="legal-systems/:id"
+                    element={<LegalSystemDetails />}
+                />
+                <Route
+                    path="legal-systems/:id/edit"
+                    element={<LegalSystemForm />}
+                />
+                <Route
+                    path="diplomatic-agreements"
+                    element={<DiplomaticAgreementList />}
+                />
+                <Route
+                    path="diplomatic-agreements/new"
+                    element={<DiplomaticAgreementForm />}
+                />
+                <Route
+                    path="diplomatic-agreements/:id"
+                    element={<DiplomaticAgreementDetails />}
+                />
+                <Route
+                    path="diplomatic-agreements/:id/edit"
+                    element={<DiplomaticAgreementForm />}
+                />
                 <Route path="*" element={<NoPage />} />
             </Route>
 

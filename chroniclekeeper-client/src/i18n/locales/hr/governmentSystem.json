@@ -1,0 +1,61 @@
+{
+    "listTitle": "Sustavi vlasti",
+    "search": "Traži sustave vlasti…",
+    "loaderror": "Neuspješno učitavanje",
+    "notfound": "Sustav vlasti nije pronađen",
+    "none": "Nema",
+    "backtolist": "Natrag na sustave vlasti",
+    "emptyTitle": "Još nema sustava vlasti",
+    "emptyText": "Strukture vladavine — monarhije, republike, teokracije. Stvori prvi sustav vlasti i počni oblikovati kako se tvojim svijetom vlada.",
+    "columns": {
+        "name": "Naziv",
+        "electionSystem": "Izborni sustav",
+        "stabilityLevel": "Stabilnost",
+        "updated": "Ažurirano"
+    },
+    "fields": {
+        "description": "Opis",
+        "isDemocratic": "Demokratski",
+        "isMonarchic": "Monarhijski",
+        "isReligious": "Teokratski",
+        "isFederal": "Federalni",
+        "isCentralized": "Centraliziran",
+        "politicalIdeology": "Politička ideologija",
+        "electionSystem": "Izborni sustav",
+        "stabilityLevel": "Razina stabilnosti",
+        "hasTermLimits": "Ograničenje mandata",
+        "maxTermLength": "Najdulji mandat (godine)"
+    },
+    "parties": {
+        "label": "Političke stranke"
+    },
+    "electionSystems": {
+        "DirectElection": "Izravni izbori",
+        "Parliamentary": "Parlamentarni",
+        "Hereditary": "Nasljedni",
+        "Meritocratic": "Meritokratski",
+        "DivineMandate": "Božanski mandat",
+        "Oligarchic": "Oligarhijski",
+        "NoElections": "Bez izbora"
+    },
+    "scaleLevels": {
+        "Low": "Niska",
+        "Moderate": "Umjerena",
+        "High": "Visoka"
+    },
+    "form": {
+        "newTitle": "Novi sustav vlasti",
+        "editTitle": "Uredi sustav vlasti",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "traitsLegend": "Osobine",
+        "save": "Spremi sustav vlasti",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}“? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

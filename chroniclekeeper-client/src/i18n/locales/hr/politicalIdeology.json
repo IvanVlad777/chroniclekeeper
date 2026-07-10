@@ -1,0 +1,46 @@
+{
+    "listTitle": "Političke ideologije",
+    "search": "Traži političke ideologije…",
+    "loaderror": "Neuspješno učitavanje",
+    "notfound": "Politička ideologija nije pronađena",
+    "none": "Nema",
+    "backtolist": "Natrag na političke ideologije",
+    "emptyTitle": "Još nema političkih ideologija",
+    "emptyText": "Doktrine i uvjerenja koja oblikuju stranke i vlade. Stvori prvu političku ideologiju i počni mapirati ideje svog svijeta.",
+    "columns": {
+        "name": "Naziv",
+        "traits": "Osobine",
+        "updated": "Ažurirano"
+    },
+    "fields": {
+        "description": "Opis",
+        "isAuthoritarian": "Autoritarna",
+        "isSocialist": "Socijalistička",
+        "isLiberal": "Liberalna",
+        "isRadical": "Radikalna",
+        "isMilitaristic": "Militaristička",
+        "supportsFreeMarket": "Slobodno tržište",
+        "supportsPlannedEconomy": "Planska ekonomija"
+    },
+    "parties": {
+        "label": "Povezane stranke"
+    },
+    "governmentSystems": {
+        "label": "Povezani sustavi vlasti"
+    },
+    "form": {
+        "newTitle": "Nova politička ideologija",
+        "editTitle": "Uredi političku ideologiju",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "traitsLegend": "Osobine",
+        "save": "Spremi ideologiju",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}“? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

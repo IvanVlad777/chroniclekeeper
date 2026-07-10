@@ -22,6 +22,27 @@ const newEntryTargets: { key: string; glyph: string; to: string }[] = [
     { key: "timelines", glyph: "⌛", to: "/storymap/timelines/new" },
     { key: "tags", glyph: "❧", to: "/storymap/tags" },
     { key: "notes", glyph: "✎", to: "/storymap/notes" },
+    {
+        key: "politicalIdeologies",
+        glyph: "◐",
+        to: "/storymap/political-ideologies/new",
+    },
+    {
+        key: "governmentSystems",
+        glyph: "⌂",
+        to: "/storymap/government-systems/new",
+    },
+    {
+        key: "politicalParties",
+        glyph: "✪",
+        to: "/storymap/political-parties/new",
+    },
+    { key: "legalSystems", glyph: "⛨", to: "/storymap/legal-systems/new" },
+    {
+        key: "diplomaticAgreements",
+        glyph: "⚜",
+        to: "/storymap/diplomatic-agreements/new",
+    },
 ];
 
 export function Sidebar() {

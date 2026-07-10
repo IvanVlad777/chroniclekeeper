@@ -1,0 +1,46 @@
+{
+    "listTitle": "Political ideologies",
+    "search": "Search political ideologies…",
+    "loaderror": "Failed to load",
+    "notfound": "Political ideology not found",
+    "none": "None",
+    "backtolist": "Back to political ideologies",
+    "emptyTitle": "No political ideologies yet",
+    "emptyText": "The doctrines and creeds that shape parties and governments alike. Create the first political ideology to start mapping your world's ideas.",
+    "columns": {
+        "name": "Name",
+        "traits": "Traits",
+        "updated": "Updated"
+    },
+    "fields": {
+        "description": "Description",
+        "isAuthoritarian": "Authoritarian",
+        "isSocialist": "Socialist",
+        "isLiberal": "Liberal",
+        "isRadical": "Radical",
+        "isMilitaristic": "Militaristic",
+        "supportsFreeMarket": "Free market",
+        "supportsPlannedEconomy": "Planned economy"
+    },
+    "parties": {
+        "label": "Affiliated parties"
+    },
+    "governmentSystems": {
+        "label": "Affiliated government systems"
+    },
+    "form": {
+        "newTitle": "New political ideology",
+        "editTitle": "Edit political ideology",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "traitsLegend": "Traits",
+        "save": "Save ideology",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

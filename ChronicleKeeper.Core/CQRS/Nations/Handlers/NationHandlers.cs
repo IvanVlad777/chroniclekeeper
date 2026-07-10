@@ -123,6 +123,13 @@ namespace ChronicleKeeper.Core.CQRS.Nations.Handlers
                     $"This nation is used by {inUse} character(s). Reassign them first.");
             }
 
+            var agreementsInUse = await _repository.CountDiplomaticAgreementsUsingNationAsync(request.Id, cancellationToken);
+            if (agreementsInUse > 0)
+            {
+                throw new DomainValidationException(
+                    $"This nation is party to {agreementsInUse} diplomatic agreement(s). Remove them first.");
+            }
+
             return await _repository.DeleteAsync(request.Id, cancellationToken);
         }
     }

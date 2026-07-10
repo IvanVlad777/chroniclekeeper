@@ -65,5 +65,11 @@ namespace ChronicleKeeper.Infrastructure.Repositories
         {
             return await _context.Characters.CountAsync(c => c.NationId == nationId, cancellationToken);
         }
+
+        public async Task<int> CountDiplomaticAgreementsUsingNationAsync(int nationId, CancellationToken cancellationToken = default)
+        {
+            return await _context.DiplomaticAgreements
+                .CountAsync(a => a.FirstNationId == nationId || a.SecondNationId == nationId, cancellationToken);
+        }
     }
 }

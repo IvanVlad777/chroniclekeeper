@@ -65,6 +65,7 @@ Seed users: `superadmin@chroniclekeeper.com` / `SuperAdmin@123` (owns the seed "
 - Enums are stored in the DB **as strings** (`HasConversion<string>().HasMaxLength(30)`) and serialized in the API **as strings** (global `JsonStringEnumConverter` in `Program.cs`). The client mirrors them as string-union types.
 - Fictional dates (TimelineEvent.Date) are **string + SortOrder**, not DateTime.
 - Note: `FactionType` has no "Guild" member — use TradeConsortium etc.
+- **Future: custom fictional calendars.** Ivan wants worlds to eventually support user-defined calendars (custom month/day names, non-Gregorian day/month/year lengths) as an alternative to real-world dates — not just a bare string. Not designed yet; until it exists, entities with a fictional date (e.g. `DiplomaticAgreement.SignedDate`/`TerminationDate`) use the plain string + optional numeric fields stopgap, same as `TimelineEvent.Date`.
 
 ### DeleteBehavior rules (SQL Server — avoiding multiple cascade paths!)
 

@@ -1,0 +1,43 @@
+{
+    "listTitle": "Diplomatic agreements",
+    "search": "Search diplomatic agreements…",
+    "loaderror": "Failed to load",
+    "notfound": "Diplomatic agreement not found",
+    "none": "None",
+    "backtolist": "Back to diplomatic agreements",
+    "emptyTitle": "No diplomatic agreements yet",
+    "emptyText": "Treaties, pacts and alliances between nations. Create the first diplomatic agreement to start charting your world's politics.",
+    "columns": {
+        "name": "Name",
+        "agreementType": "Type",
+        "signedDate": "Signed",
+        "updated": "Updated"
+    },
+    "fields": {
+        "description": "Description",
+        "firstNation": "First nation",
+        "secondNation": "Second nation",
+        "agreementType": "Agreement type",
+        "signedDate": "Signed date",
+        "terminationDate": "Termination date",
+        "durationYears": "Duration (years)",
+        "terms": "Terms",
+        "isUnequal": "Unequal terms"
+    },
+    "form": {
+        "newTitle": "New diplomatic agreement",
+        "editTitle": "Edit diplomatic agreement",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "nationsMissing": "Both nations are required.",
+        "sameNation": "A diplomatic agreement requires two different nations.",
+        "save": "Save agreement",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}
