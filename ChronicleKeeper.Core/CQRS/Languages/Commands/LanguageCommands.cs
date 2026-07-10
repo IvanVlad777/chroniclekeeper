@@ -18,4 +18,16 @@ namespace ChronicleKeeper.Core.CQRS.Languages.Commands
     {
         public int Id { get; set; }
     }
+
+    public class AddLanguageNationCommand : IRequest<bool>
+    {
+        public int LanguageId { get; set; }
+        public int NationId { get; set; }
+    }
+
+    public class RemoveLanguageNationCommand : IRequest<bool>
+    {
+        public int LanguageId { get; set; }
+        public int NationId { get; set; }
+    }
 }

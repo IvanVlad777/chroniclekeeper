@@ -42,3 +42,17 @@ export const updateLanguage = async (
 export const deleteLanguage = async (id: number): Promise<void> => {
     await api.delete(`/languages/${id}`);
 };
+
+export const addLanguageNation = async (
+    languageId: number,
+    nationId: number
+): Promise<void> => {
+    await api.post(`/languages/${languageId}/nations/${nationId}`);
+};
+
+export const removeLanguageNation = async (
+    languageId: number,
+    nationId: number
+): Promise<void> => {
+    await api.delete(`/languages/${languageId}/nations/${nationId}`);
+};

@@ -26,6 +26,16 @@
         "Moderate": "Umjerena",
         "High": "Visoka"
     },
+    "links": {
+        "factions": "Frakcije",
+        "nations": "Nacije",
+        "add": "poveži",
+        "remove": "Odveži {{name}}",
+        "pick": "Odaberi zapis",
+        "confirm": "Poveži",
+        "addFailed": "Povezivanje nije uspjelo.",
+        "removeFailed": "Uklanjanje veze nije uspjelo."
+    },
     "form": {
         "newTitle": "Nova politička stranka",
         "editTitle": "Uredi političku stranku",

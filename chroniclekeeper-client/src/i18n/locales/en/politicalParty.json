@@ -26,6 +26,16 @@
         "Moderate": "Moderate",
         "High": "High"
     },
+    "links": {
+        "factions": "Factions",
+        "nations": "Nations",
+        "add": "link",
+        "remove": "Unlink {{name}}",
+        "pick": "Pick an entry",
+        "confirm": "Link",
+        "addFailed": "Linking failed.",
+        "removeFailed": "Unlinking failed."
+    },
     "form": {
         "newTitle": "New political party",
         "editTitle": "Edit political party",

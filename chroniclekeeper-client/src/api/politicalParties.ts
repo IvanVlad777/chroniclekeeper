@@ -48,3 +48,31 @@ export const updatePoliticalParty = async (
 export const deletePoliticalParty = async (id: number): Promise<void> => {
     await api.delete(`/politicalparties/${id}`);
 };
+
+export const addPoliticalPartyFaction = async (
+    politicalPartyId: number,
+    factionId: number
+): Promise<void> => {
+    await api.post(`/politicalparties/${politicalPartyId}/factions/${factionId}`);
+};
+
+export const removePoliticalPartyFaction = async (
+    politicalPartyId: number,
+    factionId: number
+): Promise<void> => {
+    await api.delete(`/politicalparties/${politicalPartyId}/factions/${factionId}`);
+};
+
+export const addPoliticalPartyNation = async (
+    politicalPartyId: number,
+    nationId: number
+): Promise<void> => {
+    await api.post(`/politicalparties/${politicalPartyId}/nations/${nationId}`);
+};
+
+export const removePoliticalPartyNation = async (
+    politicalPartyId: number,
+    nationId: number
+): Promise<void> => {
+    await api.delete(`/politicalparties/${politicalPartyId}/nations/${nationId}`);
+};

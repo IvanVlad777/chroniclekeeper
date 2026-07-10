@@ -19,9 +19,7 @@ namespace ChronicleKeeper.Core.Entities.Social.Politics
         //public ICollection<Country> Countries { get; set; } = new List<Country>(); // TODO: Uncomment when Country entity is revived
         //public ICollection<City> Cities { get; set; } = new List<City>(); // TODO: Uncomment when City entity is revived
 
-        // TODO: Many-to-many cross-links to already-mapped entities (Faction, Nation) —
-        // deferred to a dedicated pass so the join-table shape is decided once, holistically.
-        //public ICollection<Faction> Factions { get; set; } = new List<Faction>();
-        //public ICollection<Nation> Nations { get; set; } = new List<Nation>();
+        public virtual ICollection<PoliticalPartyFaction> Factions { get; set; } = new List<PoliticalPartyFaction>();
+        public virtual ICollection<PoliticalPartyNation> Nations { get; set; } = new List<PoliticalPartyNation>();
     }
 }

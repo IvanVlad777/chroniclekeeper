@@ -23,6 +23,8 @@ namespace ChronicleKeeper.Core.DTOs.PoliticalParty
     {
         public ReferenceDto? PoliticalIdeology { get; set; }
         public ReferenceDto? GovernmentSystem { get; set; }
+        public List<ReferenceDto> Factions { get; set; } = new();
+        public List<ReferenceDto> Nations { get; set; } = new();
     }
 
     public class PoliticalPartyCreateDto

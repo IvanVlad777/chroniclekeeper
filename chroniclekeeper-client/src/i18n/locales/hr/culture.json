@@ -40,6 +40,17 @@
         "Futuristic": "Futuristička",
         "PostHuman": "Posthumana"
     },
+    "links": {
+        "nations": "Nacije",
+        "species": "Vrste",
+        "socialClasses": "Društveni slojevi",
+        "add": "poveži",
+        "remove": "Odveži {{name}}",
+        "pick": "Odaberi zapis",
+        "confirm": "Poveži",
+        "addFailed": "Povezivanje nije uspjelo.",
+        "removeFailed": "Uklanjanje veze nije uspjelo."
+    },
     "form": {
         "newTitle": "Nova kultura",
         "editTitle": "Uredi kulturu",

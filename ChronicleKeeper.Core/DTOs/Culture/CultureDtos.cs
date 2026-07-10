@@ -26,6 +26,9 @@ namespace ChronicleKeeper.Core.DTOs.Culture
     {
         public ReferenceDto? Language { get; set; }
         public ReferenceDto? Religion { get; set; }
+        public List<ReferenceDto> Nations { get; set; } = new();
+        public List<ReferenceDto> PracticedBySpecies { get; set; } = new();
+        public List<ReferenceDto> InfluencedSocialClasses { get; set; } = new();
     }
 
     public class CultureCreateDto

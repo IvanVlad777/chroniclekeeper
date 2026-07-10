@@ -3,8 +3,17 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Button, DisplayGrid, OrnateDisplayBox, Tag } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
-import { LanguageDetailsDto } from "../../../../interfaces/loreInterfaces";
-import { getLanguageById } from "../../../../api/languages";
+import { LinkEditor } from "../../../linking/LinkEditor";
+import {
+    LanguageDetailsDto,
+    NationDto,
+} from "../../../../interfaces/loreInterfaces";
+import {
+    addLanguageNation,
+    getLanguageById,
+    removeLanguageNation,
+} from "../../../../api/languages";
+import { getNations } from "../../../../api/nations";
 import { useAuth } from "../../../../hooks/useAuth";
 import s from "./styles.module.css";
 
@@ -26,6 +35,10 @@ export default function LanguageDetails() {
     const [notFound, setNotFound] = useState(false);
     const [reloadKey, setReloadKey] = useState(0);
     const refetch = useCallback(() => setReloadKey((k) => k + 1), []);
+
+    const [nationCandidates, setNationCandidates] = useState<
+        NationDto[] | null
+    >(null);
 
     useEffect(() => {
         const languageId = Number(id);
@@ -158,6 +171,33 @@ export default function LanguageDetails() {
                     ))}
                 </div>
             )}
+
+            <div className={`${s.sectionHead} ${s.sectionSpacer}`}>
+                <span className={s.sectionTitle}>{t("links.nations")}</span>
+                <span className={s.sectionLine} />
+            </div>
+            <LinkEditor
+                items={language.nations}
+                candidates={nationCandidates}
+                onLoadCandidates={() =>
+                    getNations(language.worldId).then(setNationCandidates)
+                }
+                onAdd={(nationId) => addLanguageNation(language.id, nationId)}
+                onRemove={(nationId) =>
+                    removeLanguageNation(language.id, nationId)
+                }
+                onChanged={refetch}
+                canEdit={canEdit}
+                linkTo={(nationId) => `/storymap/nations/${nationId}`}
+                addLabel={t("links.add")}
+                noneLabel={t("none")}
+                pickLabel={t("links.pick")}
+                cancelLabel={t("form.cancel")}
+                confirmLabel={t("links.confirm")}
+                removeLabel={(name) => t("links.remove", { name })}
+                addFailedLabel={t("links.addFailed")}
+                removeFailedLabel={t("links.removeFailed")}
+            />
         </div>
     );
 }

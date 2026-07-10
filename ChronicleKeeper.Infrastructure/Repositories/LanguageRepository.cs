@@ -25,6 +25,7 @@ namespace ChronicleKeeper.Infrastructure.Repositories
         {
             return await _context.Languages
                 .Include(l => l.Cultures)
+                .Include(l => l.Nations).ThenInclude(ln => ln.Nation)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(l => l.Id == id, cancellationToken);
         }
@@ -64,6 +65,26 @@ namespace ChronicleKeeper.Infrastructure.Repositories
         public async Task<int> CountCulturesUsingLanguageAsync(int languageId, CancellationToken cancellationToken = default)
         {
             return await _context.Cultures.CountAsync(c => c.LanguageId == languageId, cancellationToken);
+        }
+
+        public async Task<bool> IsNationLinkedAsync(int languageId, int nationId, CancellationToken cancellationToken = default)
+        {
+            return await _context.LanguageNations
+                .AnyAsync(ln => ln.LanguageId == languageId && ln.NationId == nationId, cancellationToken);
+        }
+
+        public async Task AddNationAsync(int languageId, int nationId, CancellationToken cancellationToken = default)
+        {
+            _context.LanguageNations.Add(new LanguageNation { LanguageId = languageId, NationId = nationId });
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task<bool> RemoveNationAsync(int languageId, int nationId, CancellationToken cancellationToken = default)
+        {
+            var deleted = await _context.LanguageNations
+                .Where(ln => ln.LanguageId == languageId && ln.NationId == nationId)
+                .ExecuteDeleteAsync(cancellationToken);
+            return deleted > 0;
         }
     }
 }

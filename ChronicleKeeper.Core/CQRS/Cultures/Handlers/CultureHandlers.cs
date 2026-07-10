@@ -168,4 +168,148 @@ namespace ChronicleKeeper.Core.CQRS.Cultures.Handlers
             return await _repository.DeleteAsync(request.Id, cancellationToken);
         }
     }
+
+    public class AddCultureNationCommandHandler : IRequestHandler<AddCultureNationCommand, bool>
+    {
+        private readonly ICultureRepository _repository;
+        private readonly INationRepository _nationRepository;
+
+        public AddCultureNationCommandHandler(ICultureRepository repository, INationRepository nationRepository)
+        {
+            _repository = repository;
+            _nationRepository = nationRepository;
+        }
+
+        public async Task<bool> Handle(AddCultureNationCommand request, CancellationToken cancellationToken)
+        {
+            var culture = await _repository.FindByIdAsync(request.CultureId, cancellationToken)
+                ?? throw new EntityNotFoundException("Culture", request.CultureId);
+
+            var nation = await _nationRepository.FindByIdAsync(request.NationId, cancellationToken)
+                ?? throw new DomainValidationException($"Nation with ID {request.NationId} does not exist.");
+            if (nation.WorldId != culture.WorldId)
+            {
+                throw new DomainValidationException($"Nation with ID {request.NationId} does not belong to this world.");
+            }
+
+            if (await _repository.IsNationLinkedAsync(request.CultureId, request.NationId, cancellationToken))
+            {
+                throw new DomainValidationException("This nation is already linked to the culture.");
+            }
+
+            await _repository.AddNationAsync(request.CultureId, request.NationId, cancellationToken);
+            return true;
+        }
+    }
+
+    public class RemoveCultureNationCommandHandler : IRequestHandler<RemoveCultureNationCommand, bool>
+    {
+        private readonly ICultureRepository _repository;
+
+        public RemoveCultureNationCommandHandler(ICultureRepository repository)
+        {
+            _repository = repository;
+        }
+
+        public Task<bool> Handle(RemoveCultureNationCommand request, CancellationToken cancellationToken)
+        {
+            return _repository.RemoveNationAsync(request.CultureId, request.NationId, cancellationToken);
+        }
+    }
+
+    public class AddCultureSapientSpeciesCommandHandler : IRequestHandler<AddCultureSapientSpeciesCommand, bool>
+    {
+        private readonly ICultureRepository _repository;
+        private readonly ISpeciesRepository _speciesRepository;
+
+        public AddCultureSapientSpeciesCommandHandler(ICultureRepository repository, ISpeciesRepository speciesRepository)
+        {
+            _repository = repository;
+            _speciesRepository = speciesRepository;
+        }
+
+        public async Task<bool> Handle(AddCultureSapientSpeciesCommand request, CancellationToken cancellationToken)
+        {
+            var culture = await _repository.FindByIdAsync(request.CultureId, cancellationToken)
+                ?? throw new EntityNotFoundException("Culture", request.CultureId);
+
+            var species = await _speciesRepository.FindByIdAsync(request.SapientSpeciesId, cancellationToken)
+                ?? throw new DomainValidationException($"Species with ID {request.SapientSpeciesId} does not exist.");
+            if (species.WorldId != culture.WorldId)
+            {
+                throw new DomainValidationException($"Species with ID {request.SapientSpeciesId} does not belong to this world.");
+            }
+
+            if (await _repository.IsSapientSpeciesLinkedAsync(request.CultureId, request.SapientSpeciesId, cancellationToken))
+            {
+                throw new DomainValidationException("This species is already linked to the culture.");
+            }
+
+            await _repository.AddSapientSpeciesAsync(request.CultureId, request.SapientSpeciesId, cancellationToken);
+            return true;
+        }
+    }
+
+    public class RemoveCultureSapientSpeciesCommandHandler : IRequestHandler<RemoveCultureSapientSpeciesCommand, bool>
+    {
+        private readonly ICultureRepository _repository;
+
+        public RemoveCultureSapientSpeciesCommandHandler(ICultureRepository repository)
+        {
+            _repository = repository;
+        }
+
+        public Task<bool> Handle(RemoveCultureSapientSpeciesCommand request, CancellationToken cancellationToken)
+        {
+            return _repository.RemoveSapientSpeciesAsync(request.CultureId, request.SapientSpeciesId, cancellationToken);
+        }
+    }
+
+    public class AddCultureSocialClassCommandHandler : IRequestHandler<AddCultureSocialClassCommand, bool>
+    {
+        private readonly ICultureRepository _repository;
+        private readonly ISocialClassRepository _socialClassRepository;
+
+        public AddCultureSocialClassCommandHandler(ICultureRepository repository, ISocialClassRepository socialClassRepository)
+        {
+            _repository = repository;
+            _socialClassRepository = socialClassRepository;
+        }
+
+        public async Task<bool> Handle(AddCultureSocialClassCommand request, CancellationToken cancellationToken)
+        {
+            var culture = await _repository.FindByIdAsync(request.CultureId, cancellationToken)
+                ?? throw new EntityNotFoundException("Culture", request.CultureId);
+
+            var socialClass = await _socialClassRepository.FindByIdAsync(request.SocialClassId, cancellationToken)
+                ?? throw new DomainValidationException($"Social class with ID {request.SocialClassId} does not exist.");
+            if (socialClass.WorldId != culture.WorldId)
+            {
+                throw new DomainValidationException($"Social class with ID {request.SocialClassId} does not belong to this world.");
+            }
+
+            if (await _repository.IsSocialClassLinkedAsync(request.CultureId, request.SocialClassId, cancellationToken))
+            {
+                throw new DomainValidationException("This social class is already linked to the culture.");
+            }
+
+            await _repository.AddSocialClassAsync(request.CultureId, request.SocialClassId, cancellationToken);
+            return true;
+        }
+    }
+
+    public class RemoveCultureSocialClassCommandHandler : IRequestHandler<RemoveCultureSocialClassCommand, bool>
+    {
+        private readonly ICultureRepository _repository;
+
+        public RemoveCultureSocialClassCommandHandler(ICultureRepository repository)
+        {
+            _repository = repository;
+        }
+
+        public Task<bool> Handle(RemoveCultureSocialClassCommand request, CancellationToken cancellationToken)
+        {
+            return _repository.RemoveSocialClassAsync(request.CultureId, request.SocialClassId, cancellationToken);
+        }
+    }
 }

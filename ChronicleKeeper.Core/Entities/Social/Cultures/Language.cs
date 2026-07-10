@@ -1,5 +1,4 @@
 ﻿using ChronicleKeeper.Core.Entities.Base;
-//using ChronicleKeeper.Core.Entities.Social.Nationality;
 
 namespace ChronicleKeeper.Core.Entities.Social.Cultures
 {
@@ -11,7 +10,6 @@ namespace ChronicleKeeper.Core.Entities.Social.Cultures
 
         public ICollection<Culture> Cultures { get; set; } = new List<Culture>();
 
-        // TODO: Many-to-many cross-link to Nation — deferred to a dedicated pass (see Culture.cs).
-        //public ICollection<Nation> Nations { get; set; } = new List<Nation>();
+        public virtual ICollection<LanguageNation> Nations { get; set; } = new List<LanguageNation>();
     }
 }

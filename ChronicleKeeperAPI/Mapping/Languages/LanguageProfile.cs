@@ -13,6 +13,8 @@ public class LanguageProfile : Profile
 
         CreateMap<Language, LanguageDetailsDto>()
             .ForMember(dest => dest.Cultures, opt => opt.MapFrom(src => src.Cultures
-                .Select(c => new ReferenceDto { Id = c.Id, Name = c.Name })));
+                .Select(c => new ReferenceDto { Id = c.Id, Name = c.Name })))
+            .ForMember(dest => dest.Nations, opt => opt.MapFrom(src => src.Nations
+                .Select(ln => new ReferenceDto { Id = ln.Nation!.Id, Name = ln.Nation!.Name })));
     }
 }

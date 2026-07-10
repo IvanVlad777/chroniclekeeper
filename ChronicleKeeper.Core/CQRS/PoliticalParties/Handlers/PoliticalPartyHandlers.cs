@@ -168,4 +168,100 @@ namespace ChronicleKeeper.Core.CQRS.PoliticalParties.Handlers
             return await _repository.DeleteAsync(request.Id, cancellationToken);
         }
     }
+
+    public class AddPoliticalPartyFactionCommandHandler : IRequestHandler<AddPoliticalPartyFactionCommand, bool>
+    {
+        private readonly IPoliticalPartyRepository _repository;
+        private readonly IFactionRepository _factionRepository;
+
+        public AddPoliticalPartyFactionCommandHandler(IPoliticalPartyRepository repository, IFactionRepository factionRepository)
+        {
+            _repository = repository;
+            _factionRepository = factionRepository;
+        }
+
+        public async Task<bool> Handle(AddPoliticalPartyFactionCommand request, CancellationToken cancellationToken)
+        {
+            var party = await _repository.FindByIdAsync(request.PoliticalPartyId, cancellationToken)
+                ?? throw new EntityNotFoundException("PoliticalParty", request.PoliticalPartyId);
+
+            var faction = await _factionRepository.FindByIdAsync(request.FactionId, cancellationToken)
+                ?? throw new DomainValidationException($"Faction with ID {request.FactionId} does not exist.");
+            if (faction.WorldId != party.WorldId)
+            {
+                throw new DomainValidationException($"Faction with ID {request.FactionId} does not belong to this world.");
+            }
+
+            if (await _repository.IsFactionLinkedAsync(request.PoliticalPartyId, request.FactionId, cancellationToken))
+            {
+                throw new DomainValidationException("This faction is already linked to the political party.");
+            }
+
+            await _repository.AddFactionAsync(request.PoliticalPartyId, request.FactionId, cancellationToken);
+            return true;
+        }
+    }
+
+    public class RemovePoliticalPartyFactionCommandHandler : IRequestHandler<RemovePoliticalPartyFactionCommand, bool>
+    {
+        private readonly IPoliticalPartyRepository _repository;
+
+        public RemovePoliticalPartyFactionCommandHandler(IPoliticalPartyRepository repository)
+        {
+            _repository = repository;
+        }
+
+        public Task<bool> Handle(RemovePoliticalPartyFactionCommand request, CancellationToken cancellationToken)
+        {
+            return _repository.RemoveFactionAsync(request.PoliticalPartyId, request.FactionId, cancellationToken);
+        }
+    }
+
+    public class AddPoliticalPartyNationCommandHandler : IRequestHandler<AddPoliticalPartyNationCommand, bool>
+    {
+        private readonly IPoliticalPartyRepository _repository;
+        private readonly INationRepository _nationRepository;
+
+        public AddPoliticalPartyNationCommandHandler(IPoliticalPartyRepository repository, INationRepository nationRepository)
+        {
+            _repository = repository;
+            _nationRepository = nationRepository;
+        }
+
+        public async Task<bool> Handle(AddPoliticalPartyNationCommand request, CancellationToken cancellationToken)
+        {
+            var party = await _repository.FindByIdAsync(request.PoliticalPartyId, cancellationToken)
+                ?? throw new EntityNotFoundException("PoliticalParty", request.PoliticalPartyId);
+
+            var nation = await _nationRepository.FindByIdAsync(request.NationId, cancellationToken)
+                ?? throw new DomainValidationException($"Nation with ID {request.NationId} does not exist.");
+            if (nation.WorldId != party.WorldId)
+            {
+                throw new DomainValidationException($"Nation with ID {request.NationId} does not belong to this world.");
+            }
+
+            if (await _repository.IsNationLinkedAsync(request.PoliticalPartyId, request.NationId, cancellationToken))
+            {
+                throw new DomainValidationException("This nation is already linked to the political party.");
+            }
+
+            await _repository.AddNationAsync(request.PoliticalPartyId, request.NationId, cancellationToken);
+            return true;
+        }
+    }
+
+    public class RemovePoliticalPartyNationCommandHandler : IRequestHandler<RemovePoliticalPartyNationCommand, bool>
+    {
+        private readonly IPoliticalPartyRepository _repository;
+
+        public RemovePoliticalPartyNationCommandHandler(IPoliticalPartyRepository repository)
+        {
+            _repository = repository;
+        }
+
+        public Task<bool> Handle(RemovePoliticalPartyNationCommand request, CancellationToken cancellationToken)
+        {
+            return _repository.RemoveNationAsync(request.PoliticalPartyId, request.NationId, cancellationToken);
+        }
+    }
 }

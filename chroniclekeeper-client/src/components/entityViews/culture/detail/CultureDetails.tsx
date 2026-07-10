@@ -3,8 +3,25 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Button, DisplayGrid, OrnateDisplayBox } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
-import { CultureDetailsDto } from "../../../../interfaces/loreInterfaces";
-import { getCultureById } from "../../../../api/cultures";
+import { LinkEditor } from "../../../linking/LinkEditor";
+import {
+    CultureDetailsDto,
+    NationDto,
+    SocialClassDto,
+    SpeciesDto,
+} from "../../../../interfaces/loreInterfaces";
+import {
+    addCultureNation,
+    addCultureSapientSpecies,
+    addCultureSocialClass,
+    getCultureById,
+    removeCultureNation,
+    removeCultureSapientSpecies,
+    removeCultureSocialClass,
+} from "../../../../api/cultures";
+import { getNations } from "../../../../api/nations";
+import { getSpecies } from "../../../../api/species";
+import { getSocialClasses } from "../../../../api/socialClasses";
 import { useAuth } from "../../../../hooks/useAuth";
 import s from "./styles.module.css";
 
@@ -26,6 +43,16 @@ export default function CultureDetails() {
     const [notFound, setNotFound] = useState(false);
     const [reloadKey, setReloadKey] = useState(0);
     const refetch = useCallback(() => setReloadKey((k) => k + 1), []);
+
+    const [nationCandidates, setNationCandidates] = useState<
+        NationDto[] | null
+    >(null);
+    const [speciesCandidates, setSpeciesCandidates] = useState<
+        SpeciesDto[] | null
+    >(null);
+    const [socialClassCandidates, setSocialClassCandidates] = useState<
+        SocialClassDto[] | null
+    >(null);
 
     useEffect(() => {
         const cultureId = Number(id);
@@ -210,6 +237,97 @@ export default function CultureDetails() {
             ) : (
                 <p className={`${s.prose} ${s.muted}`}>{t("none")}</p>
             )}
+
+            <div className={`${s.sectionHead} ${s.sectionSpacer}`}>
+                <span className={s.sectionTitle}>{t("links.nations")}</span>
+                <span className={s.sectionLine} />
+            </div>
+            <LinkEditor
+                items={culture.nations}
+                candidates={nationCandidates}
+                onLoadCandidates={() =>
+                    getNations(culture.worldId).then(setNationCandidates)
+                }
+                onAdd={(nationId) => addCultureNation(culture.id, nationId)}
+                onRemove={(nationId) =>
+                    removeCultureNation(culture.id, nationId)
+                }
+                onChanged={refetch}
+                canEdit={canEdit}
+                linkTo={(nationId) => `/storymap/nations/${nationId}`}
+                addLabel={t("links.add")}
+                noneLabel={t("none")}
+                pickLabel={t("links.pick")}
+                cancelLabel={t("form.cancel")}
+                confirmLabel={t("links.confirm")}
+                removeLabel={(name) => t("links.remove", { name })}
+                addFailedLabel={t("links.addFailed")}
+                removeFailedLabel={t("links.removeFailed")}
+            />
+
+            <div className={`${s.sectionHead} ${s.sectionSpacer}`}>
+                <span className={s.sectionTitle}>{t("links.species")}</span>
+                <span className={s.sectionLine} />
+            </div>
+            <LinkEditor
+                items={culture.practicedBySpecies}
+                candidates={speciesCandidates}
+                onLoadCandidates={() =>
+                    getSpecies(culture.worldId).then(setSpeciesCandidates)
+                }
+                onAdd={(speciesId) =>
+                    addCultureSapientSpecies(culture.id, speciesId)
+                }
+                onRemove={(speciesId) =>
+                    removeCultureSapientSpecies(culture.id, speciesId)
+                }
+                onChanged={refetch}
+                canEdit={canEdit}
+                linkTo={(speciesId) => `/storymap/species/${speciesId}`}
+                addLabel={t("links.add")}
+                noneLabel={t("none")}
+                pickLabel={t("links.pick")}
+                cancelLabel={t("form.cancel")}
+                confirmLabel={t("links.confirm")}
+                removeLabel={(name) => t("links.remove", { name })}
+                addFailedLabel={t("links.addFailed")}
+                removeFailedLabel={t("links.removeFailed")}
+            />
+
+            <div className={`${s.sectionHead} ${s.sectionSpacer}`}>
+                <span className={s.sectionTitle}>
+                    {t("links.socialClasses")}
+                </span>
+                <span className={s.sectionLine} />
+            </div>
+            <LinkEditor
+                items={culture.influencedSocialClasses}
+                candidates={socialClassCandidates}
+                onLoadCandidates={() =>
+                    getSocialClasses(culture.worldId).then(
+                        setSocialClassCandidates
+                    )
+                }
+                onAdd={(socialClassId) =>
+                    addCultureSocialClass(culture.id, socialClassId)
+                }
+                onRemove={(socialClassId) =>
+                    removeCultureSocialClass(culture.id, socialClassId)
+                }
+                onChanged={refetch}
+                canEdit={canEdit}
+                linkTo={(socialClassId) =>
+                    `/storymap/social-classes/${socialClassId}`
+                }
+                addLabel={t("links.add")}
+                noneLabel={t("none")}
+                pickLabel={t("links.pick")}
+                cancelLabel={t("form.cancel")}
+                confirmLabel={t("links.confirm")}
+                removeLabel={(name) => t("links.remove", { name })}
+                addFailedLabel={t("links.addFailed")}
+                removeFailedLabel={t("links.removeFailed")}
+            />
         </div>
     );
 }

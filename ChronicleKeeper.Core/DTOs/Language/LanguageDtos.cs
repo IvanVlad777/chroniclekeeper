@@ -19,6 +19,7 @@ namespace ChronicleKeeper.Core.DTOs.Language
     public class LanguageDetailsDto : LanguageDto
     {
         public List<ReferenceDto> Cultures { get; set; } = new();
+        public List<ReferenceDto> Nations { get; set; } = new();
     }
 
     public class LanguageCreateDto

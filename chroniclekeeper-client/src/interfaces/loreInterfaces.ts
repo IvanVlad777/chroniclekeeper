@@ -173,6 +173,7 @@ export interface LanguageDto {
 
 export interface LanguageDetailsDto extends LanguageDto {
     cultures: ReferenceDto[];
+    nations: ReferenceDto[];
 }
 
 export interface LanguageCreateDto {
@@ -226,6 +227,9 @@ export interface CultureDto {
 export interface CultureDetailsDto extends CultureDto {
     language: ReferenceDto | null;
     religion: ReferenceDto | null;
+    nations: ReferenceDto[];
+    practicedBySpecies: ReferenceDto[];
+    influencedSocialClasses: ReferenceDto[];
 }
 
 export interface CultureCreateDto {
@@ -700,6 +704,8 @@ export interface PoliticalPartyDto {
 export interface PoliticalPartyDetailsDto extends PoliticalPartyDto {
     politicalIdeology: ReferenceDto | null;
     governmentSystem: ReferenceDto | null;
+    factions: ReferenceDto[];
+    nations: ReferenceDto[];
 }
 
 export interface PoliticalPartyCreateDto {

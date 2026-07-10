@@ -12,5 +12,9 @@ namespace ChronicleKeeper.Core.Repositories
         Task<Language> UpdateAsync(Language language, CancellationToken cancellationToken = default);
         Task<bool> DeleteAsync(int id, CancellationToken cancellationToken = default);
         Task<int> CountCulturesUsingLanguageAsync(int languageId, CancellationToken cancellationToken = default);
+
+        Task<bool> IsNationLinkedAsync(int languageId, int nationId, CancellationToken cancellationToken = default);
+        Task AddNationAsync(int languageId, int nationId, CancellationToken cancellationToken = default);
+        Task<bool> RemoveNationAsync(int languageId, int nationId, CancellationToken cancellationToken = default);
     }
 }

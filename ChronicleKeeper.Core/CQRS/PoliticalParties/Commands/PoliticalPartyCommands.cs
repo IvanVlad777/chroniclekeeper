@@ -18,4 +18,28 @@ namespace ChronicleKeeper.Core.CQRS.PoliticalParties.Commands
     {
         public int Id { get; set; }
     }
+
+    public class AddPoliticalPartyFactionCommand : IRequest<bool>
+    {
+        public int PoliticalPartyId { get; set; }
+        public int FactionId { get; set; }
+    }
+
+    public class RemovePoliticalPartyFactionCommand : IRequest<bool>
+    {
+        public int PoliticalPartyId { get; set; }
+        public int FactionId { get; set; }
+    }
+
+    public class AddPoliticalPartyNationCommand : IRequest<bool>
+    {
+        public int PoliticalPartyId { get; set; }
+        public int NationId { get; set; }
+    }
+
+    public class RemovePoliticalPartyNationCommand : IRequest<bool>
+    {
+        public int PoliticalPartyId { get; set; }
+        public int NationId { get; set; }
+    }
 }

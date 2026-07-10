@@ -126,4 +126,52 @@ namespace ChronicleKeeper.Core.CQRS.Languages.Handlers
             return await _repository.DeleteAsync(request.Id, cancellationToken);
         }
     }
+
+    public class AddLanguageNationCommandHandler : IRequestHandler<AddLanguageNationCommand, bool>
+    {
+        private readonly ILanguageRepository _repository;
+        private readonly INationRepository _nationRepository;
+
+        public AddLanguageNationCommandHandler(ILanguageRepository repository, INationRepository nationRepository)
+        {
+            _repository = repository;
+            _nationRepository = nationRepository;
+        }
+
+        public async Task<bool> Handle(AddLanguageNationCommand request, CancellationToken cancellationToken)
+        {
+            var language = await _repository.FindByIdAsync(request.LanguageId, cancellationToken)
+                ?? throw new EntityNotFoundException("Language", request.LanguageId);
+
+            var nation = await _nationRepository.FindByIdAsync(request.NationId, cancellationToken)
+                ?? throw new DomainValidationException($"Nation with ID {request.NationId} does not exist.");
+            if (nation.WorldId != language.WorldId)
+            {
+                throw new DomainValidationException($"Nation with ID {request.NationId} does not belong to this world.");
+            }
+
+            if (await _repository.IsNationLinkedAsync(request.LanguageId, request.NationId, cancellationToken))
+            {
+                throw new DomainValidationException("This nation is already linked to the language.");
+            }
+
+            await _repository.AddNationAsync(request.LanguageId, request.NationId, cancellationToken);
+            return true;
+        }
+    }
+
+    public class RemoveLanguageNationCommandHandler : IRequestHandler<RemoveLanguageNationCommand, bool>
+    {
+        private readonly ILanguageRepository _repository;
+
+        public RemoveLanguageNationCommandHandler(ILanguageRepository repository)
+        {
+            _repository = repository;
+        }
+
+        public Task<bool> Handle(RemoveLanguageNationCommand request, CancellationToken cancellationToken)
+        {
+            return _repository.RemoveNationAsync(request.LanguageId, request.NationId, cancellationToken);
+        }
+    }
 }

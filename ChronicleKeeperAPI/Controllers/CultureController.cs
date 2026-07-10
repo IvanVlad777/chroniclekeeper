@@ -86,5 +86,80 @@ namespace ChronicleKeeperAPI.Controllers
             if (!result) return NotFound();
             return NoContent();
         }
+
+        // POST: /api/cultures/{id}/nations/{nationId}
+        [HttpPost("{id}/nations/{nationId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Link a nation to the culture")]
+        [SwaggerResponse(204, "Nation linked")]
+        [SwaggerResponse(400, "Invalid target / already linked")]
+        public async Task<IActionResult> AddNation(int id, int nationId)
+        {
+            await _mediator.Send(new AddCultureNationCommand { CultureId = id, NationId = nationId });
+            return NoContent();
+        }
+
+        // DELETE: /api/cultures/{id}/nations/{nationId}
+        [HttpDelete("{id}/nations/{nationId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Unlink a nation from the culture")]
+        [SwaggerResponse(204, "Nation unlinked")]
+        [SwaggerResponse(404, "Link not found")]
+        public async Task<IActionResult> RemoveNation(int id, int nationId)
+        {
+            var result = await _mediator.Send(new RemoveCultureNationCommand { CultureId = id, NationId = nationId });
+            if (!result) return NotFound();
+            return NoContent();
+        }
+
+        // POST: /api/cultures/{id}/species/{speciesId}
+        [HttpPost("{id}/species/{speciesId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Link a species to the culture")]
+        [SwaggerResponse(204, "Species linked")]
+        [SwaggerResponse(400, "Invalid target / already linked")]
+        public async Task<IActionResult> AddSapientSpecies(int id, int speciesId)
+        {
+            await _mediator.Send(new AddCultureSapientSpeciesCommand { CultureId = id, SapientSpeciesId = speciesId });
+            return NoContent();
+        }
+
+        // DELETE: /api/cultures/{id}/species/{speciesId}
+        [HttpDelete("{id}/species/{speciesId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Unlink a species from the culture")]
+        [SwaggerResponse(204, "Species unlinked")]
+        [SwaggerResponse(404, "Link not found")]
+        public async Task<IActionResult> RemoveSapientSpecies(int id, int speciesId)
+        {
+            var result = await _mediator.Send(new RemoveCultureSapientSpeciesCommand { CultureId = id, SapientSpeciesId = speciesId });
+            if (!result) return NotFound();
+            return NoContent();
+        }
+
+        // POST: /api/cultures/{id}/social-classes/{socialClassId}
+        [HttpPost("{id}/social-classes/{socialClassId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Link a social class to the culture")]
+        [SwaggerResponse(204, "Social class linked")]
+        [SwaggerResponse(400, "Invalid target / already linked")]
+        public async Task<IActionResult> AddSocialClass(int id, int socialClassId)
+        {
+            await _mediator.Send(new AddCultureSocialClassCommand { CultureId = id, SocialClassId = socialClassId });
+            return NoContent();
+        }
+
+        // DELETE: /api/cultures/{id}/social-classes/{socialClassId}
+        [HttpDelete("{id}/social-classes/{socialClassId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Unlink a social class from the culture")]
+        [SwaggerResponse(204, "Social class unlinked")]
+        [SwaggerResponse(404, "Link not found")]
+        public async Task<IActionResult> RemoveSocialClass(int id, int socialClassId)
+        {
+            var result = await _mediator.Send(new RemoveCultureSocialClassCommand { CultureId = id, SocialClassId = socialClassId });
+            if (!result) return NotFound();
+            return NoContent();
+        }
     }
 }

@@ -40,6 +40,17 @@
         "Futuristic": "Futuristic",
         "PostHuman": "Post-human"
     },
+    "links": {
+        "nations": "Nations",
+        "species": "Species",
+        "socialClasses": "Social classes",
+        "add": "link",
+        "remove": "Unlink {{name}}",
+        "pick": "Pick an entry",
+        "confirm": "Link",
+        "addFailed": "Linking failed.",
+        "removeFailed": "Unlinking failed."
+    },
     "form": {
         "newTitle": "New culture",
         "editTitle": "Edit culture",

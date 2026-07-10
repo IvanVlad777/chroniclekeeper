@@ -68,6 +68,12 @@ namespace ChronicleKeeper.Infrastructure.Data
         public DbSet<PoliticalParty> PoliticalParties { get; set; }
         public DbSet<LegalSystem> LegalSystems { get; set; }
         public DbSet<DiplomaticAgreement> DiplomaticAgreements { get; set; }
+        public DbSet<CultureNation> CultureNations { get; set; }
+        public DbSet<CultureSapientSpecies> CultureSapientSpecies { get; set; }
+        public DbSet<CultureSocialClass> CultureSocialClasses { get; set; }
+        public DbSet<LanguageNation> LanguageNations { get; set; }
+        public DbSet<PoliticalPartyFaction> PoliticalPartyFactions { get; set; }
+        public DbSet<PoliticalPartyNation> PoliticalPartyNations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

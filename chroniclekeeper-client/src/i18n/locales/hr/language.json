@@ -22,6 +22,15 @@
     "cultures": {
         "label": "Govore ga"
     },
+    "links": {
+        "nations": "Nacije",
+        "add": "poveži",
+        "remove": "Odveži {{name}}",
+        "pick": "Odaberi zapis",
+        "confirm": "Poveži",
+        "addFailed": "Povezivanje nije uspjelo.",
+        "removeFailed": "Uklanjanje veze nije uspjelo."
+    },
     "form": {
         "newTitle": "Novi jezik",
         "editTitle": "Uredi jezik",

@@ -1,10 +1,7 @@
 ﻿using ChronicleKeeper.Core.Entities.Base;
 using ChronicleKeeper.Core.Entities.Social.Religions;
 using static ChronicleKeeper.Core.Enums.SocietyEnums;
-//using ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient;
 //using ChronicleKeeper.Core.Entities.Geography;
-//using ChronicleKeeper.Core.Entities.Social.Nationality;
-//using ChronicleKeeper.Core.Entities.Social.Structure;
 
 namespace ChronicleKeeper.Core.Entities.Social.Cultures
 {
@@ -33,11 +30,9 @@ namespace ChronicleKeeper.Core.Entities.Social.Cultures
         //public virtual ICollection<Myth> Myths { get; set; } = new List<Myth>(); // TODO: Uncomment when Myth entity is revived
         //public virtual ICollection<CulturalInstitution> CulturalInstitutions { get; set; } = new List<CulturalInstitution>(); // TODO: Uncomment when CulturalInstitution entity is revived
 
-        // TODO: Many-to-many cross-links to already-mapped entities (Nation, SapientSpecies, SocialClass) —
-        // deferred to a dedicated pass so the join-table shape is decided once, holistically.
-        //public virtual ICollection<Nation> Nation { get; set; } = new List<Nation>();
-        //public virtual ICollection<SapientSpecies> PracticedBySpecies { get; set; } = new List<SapientSpecies>();
-        //public ICollection<SocialClass> InfluencedSocialClasses { get; set; } = new List<SocialClass>();
+        public virtual ICollection<CultureNation> Nations { get; set; } = new List<CultureNation>();
+        public virtual ICollection<CultureSapientSpecies> PracticedBySpecies { get; set; } = new List<CultureSapientSpecies>();
+        public virtual ICollection<CultureSocialClass> InfluencedSocialClasses { get; set; } = new List<CultureSocialClass>();
 
         //public virtual ICollection<Country> PredominantInCountries { get; set; } = new List<Country>(); // TODO: Uncomment when Country entity is revived
         //public virtual ICollection<City> PredominantInCities { get; set; } = new List<City>(); // TODO: Uncomment when City entity is revived

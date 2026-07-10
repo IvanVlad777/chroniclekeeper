@@ -87,5 +87,30 @@ namespace ChronicleKeeperAPI.Controllers
             if (!result) return NotFound();
             return NoContent();
         }
+
+        // POST: /api/languages/{id}/nations/{nationId}
+        [HttpPost("{id}/nations/{nationId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Link a nation to the language")]
+        [SwaggerResponse(204, "Nation linked")]
+        [SwaggerResponse(400, "Invalid target / already linked")]
+        public async Task<IActionResult> AddNation(int id, int nationId)
+        {
+            await _mediator.Send(new AddLanguageNationCommand { LanguageId = id, NationId = nationId });
+            return NoContent();
+        }
+
+        // DELETE: /api/languages/{id}/nations/{nationId}
+        [HttpDelete("{id}/nations/{nationId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Unlink a nation from the language")]
+        [SwaggerResponse(204, "Nation unlinked")]
+        [SwaggerResponse(404, "Link not found")]
+        public async Task<IActionResult> RemoveNation(int id, int nationId)
+        {
+            var result = await _mediator.Send(new RemoveLanguageNationCommand { LanguageId = id, NationId = nationId });
+            if (!result) return NotFound();
+            return NoContent();
+        }
     }
 }

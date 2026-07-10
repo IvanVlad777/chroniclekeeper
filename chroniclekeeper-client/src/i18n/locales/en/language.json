@@ -22,6 +22,15 @@
     "cultures": {
         "label": "Spoken by"
     },
+    "links": {
+        "nations": "Nations",
+        "add": "link",
+        "remove": "Unlink {{name}}",
+        "pick": "Pick an entry",
+        "confirm": "Link",
+        "addFailed": "Linking failed.",
+        "removeFailed": "Unlinking failed."
+    },
     "form": {
         "newTitle": "New language",
         "editTitle": "Edit language",

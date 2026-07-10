@@ -11,5 +11,13 @@ namespace ChronicleKeeper.Core.Repositories
         Task<List<PoliticalParty>> GetAllAsync(int? worldId = null, CancellationToken cancellationToken = default);
         Task<PoliticalParty> UpdateAsync(PoliticalParty party, CancellationToken cancellationToken = default);
         Task<bool> DeleteAsync(int id, CancellationToken cancellationToken = default);
+
+        Task<bool> IsFactionLinkedAsync(int politicalPartyId, int factionId, CancellationToken cancellationToken = default);
+        Task AddFactionAsync(int politicalPartyId, int factionId, CancellationToken cancellationToken = default);
+        Task<bool> RemoveFactionAsync(int politicalPartyId, int factionId, CancellationToken cancellationToken = default);
+
+        Task<bool> IsNationLinkedAsync(int politicalPartyId, int nationId, CancellationToken cancellationToken = default);
+        Task AddNationAsync(int politicalPartyId, int nationId, CancellationToken cancellationToken = default);
+        Task<bool> RemoveNationAsync(int politicalPartyId, int nationId, CancellationToken cancellationToken = default);
     }
 }

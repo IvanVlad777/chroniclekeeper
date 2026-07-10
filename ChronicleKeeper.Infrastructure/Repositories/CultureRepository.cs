@@ -26,6 +26,9 @@ namespace ChronicleKeeper.Infrastructure.Repositories
             return await _context.Cultures
                 .Include(c => c.Language)
                 .Include(c => c.Religion)
+                .Include(c => c.Nations).ThenInclude(cn => cn.Nation)
+                .Include(c => c.PracticedBySpecies).ThenInclude(cs => cs.SapientSpecies)
+                .Include(c => c.InfluencedSocialClasses).ThenInclude(cs => cs.SocialClass)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
         }
@@ -58,6 +61,66 @@ namespace ChronicleKeeper.Infrastructure.Repositories
         {
             var deleted = await _context.Cultures
                 .Where(c => c.Id == id)
+                .ExecuteDeleteAsync(cancellationToken);
+            return deleted > 0;
+        }
+
+        public async Task<bool> IsNationLinkedAsync(int cultureId, int nationId, CancellationToken cancellationToken = default)
+        {
+            return await _context.CultureNations
+                .AnyAsync(cn => cn.CultureId == cultureId && cn.NationId == nationId, cancellationToken);
+        }
+
+        public async Task AddNationAsync(int cultureId, int nationId, CancellationToken cancellationToken = default)
+        {
+            _context.CultureNations.Add(new CultureNation { CultureId = cultureId, NationId = nationId });
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task<bool> RemoveNationAsync(int cultureId, int nationId, CancellationToken cancellationToken = default)
+        {
+            var deleted = await _context.CultureNations
+                .Where(cn => cn.CultureId == cultureId && cn.NationId == nationId)
+                .ExecuteDeleteAsync(cancellationToken);
+            return deleted > 0;
+        }
+
+        public async Task<bool> IsSapientSpeciesLinkedAsync(int cultureId, int sapientSpeciesId, CancellationToken cancellationToken = default)
+        {
+            return await _context.CultureSapientSpecies
+                .AnyAsync(cs => cs.CultureId == cultureId && cs.SapientSpeciesId == sapientSpeciesId, cancellationToken);
+        }
+
+        public async Task AddSapientSpeciesAsync(int cultureId, int sapientSpeciesId, CancellationToken cancellationToken = default)
+        {
+            _context.CultureSapientSpecies.Add(new CultureSapientSpecies { CultureId = cultureId, SapientSpeciesId = sapientSpeciesId });
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task<bool> RemoveSapientSpeciesAsync(int cultureId, int sapientSpeciesId, CancellationToken cancellationToken = default)
+        {
+            var deleted = await _context.CultureSapientSpecies
+                .Where(cs => cs.CultureId == cultureId && cs.SapientSpeciesId == sapientSpeciesId)
+                .ExecuteDeleteAsync(cancellationToken);
+            return deleted > 0;
+        }
+
+        public async Task<bool> IsSocialClassLinkedAsync(int cultureId, int socialClassId, CancellationToken cancellationToken = default)
+        {
+            return await _context.CultureSocialClasses
+                .AnyAsync(cs => cs.CultureId == cultureId && cs.SocialClassId == socialClassId, cancellationToken);
+        }
+
+        public async Task AddSocialClassAsync(int cultureId, int socialClassId, CancellationToken cancellationToken = default)
+        {
+            _context.CultureSocialClasses.Add(new CultureSocialClass { CultureId = cultureId, SocialClassId = socialClassId });
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task<bool> RemoveSocialClassAsync(int cultureId, int socialClassId, CancellationToken cancellationToken = default)
+        {
+            var deleted = await _context.CultureSocialClasses
+                .Where(cs => cs.CultureId == cultureId && cs.SocialClassId == socialClassId)
                 .ExecuteDeleteAsync(cancellationToken);
             return deleted > 0;
         }
