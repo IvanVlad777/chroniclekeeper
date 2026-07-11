@@ -13,7 +13,8 @@
         "updated": "Updated"
     },
     "fields": {
-        "description": "Description"
+        "description": "Description",
+        "history": "History"
     },
     "events": {
         "label": "Events",

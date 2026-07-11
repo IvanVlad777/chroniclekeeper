@@ -36,7 +36,8 @@
         "coordinates": "Koordinate",
         "latitude": "Zemljopisna širina",
         "longitude": "Zemljopisna dužina",
-        "description": "Opis"
+        "description": "Opis",
+        "history": "Povijest"
     },
     "subLocations": "Pod-lokacije",
     "form": {

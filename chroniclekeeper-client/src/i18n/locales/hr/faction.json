@@ -38,7 +38,8 @@
         "isSecretive": "Tajna organizacija",
         "leader": "Vođa",
         "headquarters": "Sjedište",
-        "description": "Opis"
+        "description": "Opis",
+        "history": "Povijest"
     },
     "members": {
         "label": "Članovi",

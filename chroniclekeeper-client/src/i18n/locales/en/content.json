@@ -1,0 +1,101 @@
+{
+    "listTitle": "Content",
+    "search": "Search content…",
+    "loaderror": "Failed to load",
+    "notfound": "Content not found",
+    "none": "None",
+    "backtolist": "Back to content",
+    "emptyTitle": "No content yet",
+    "emptyText": "Books, articles, movies, series — the narrative material your world's entities appear in. Create the first one to start building the appearance index.",
+    "columns": {
+        "name": "Name",
+        "type": "Type",
+        "updated": "Updated"
+    },
+    "fields": {
+        "description": "Description",
+        "source": "Source",
+        "publishDate": "Published",
+        "author": "Author",
+        "releaseDate": "Released",
+        "issueNumber": "Issue number",
+        "director": "Director",
+        "durationMinutes": "Duration (minutes)",
+        "prequel": "Prequel",
+        "creator": "Creator",
+        "seasons": "Seasons"
+    },
+    "types": {
+        "Article": "Article",
+        "Book": "Book",
+        "Comic": "Comic",
+        "Movie": "Movie",
+        "Series": "Series"
+    },
+    "sequels": {
+        "label": "Sequels"
+    },
+    "chapters": {
+        "label": "Chapters",
+        "add": "add",
+        "addTitle": "New chapter",
+        "editTitle": "Edit chapter",
+        "name": "Name",
+        "order": "Order",
+        "save": "Save",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete chapter “{{name}}”?",
+        "requiredMissing": "Chapter name is required.",
+        "saveFailed": "Saving the chapter failed.",
+        "deleteFailed": "Deleting the chapter failed."
+    },
+    "episodes": {
+        "label": "Episodes",
+        "add": "add",
+        "addTitle": "New episode",
+        "editTitle": "Edit episode",
+        "name": "Name",
+        "season": "Season",
+        "order": "Order",
+        "save": "Save",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete episode “{{name}}”?",
+        "requiredMissing": "Episode name is required.",
+        "saveFailed": "Saving the episode failed.",
+        "deleteFailed": "Deleting the episode failed."
+    },
+    "references": {
+        "label": "Appears here",
+        "add": "add",
+        "entityType": "Kind",
+        "pick": "Pick an entry",
+        "note": "Note",
+        "types": {
+            "Character": "Character",
+            "Location": "Location",
+            "Faction": "Faction",
+            "Nation": "Nation"
+        },
+        "cancel": "Cancel",
+        "confirm": "Link",
+        "remove": "Unlink {{name}}",
+        "addFailed": "Linking failed.",
+        "removeFailed": "Unlinking failed."
+    },
+    "form": {
+        "newTitle": "New content",
+        "editTitle": "Edit content",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "save": "Save content",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

@@ -54,6 +54,8 @@ const newEntryTargets: { key: string; glyph: string; to: string }[] = [
     { key: "libraries", glyph: "❖", to: "/storymap/libraries/new" },
     { key: "abilities", glyph: "✦", to: "/storymap/abilities/new" },
     { key: "items", glyph: "⚔", to: "/storymap/items/new" },
+    { key: "histories", glyph: "⌛", to: "/storymap/histories/new" },
+    { key: "contents", glyph: "📖", to: "/storymap/contents/new" },
 ];
 
 export function Sidebar() {

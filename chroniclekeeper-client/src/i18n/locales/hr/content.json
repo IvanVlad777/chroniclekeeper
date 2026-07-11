@@ -1,0 +1,101 @@
+{
+    "listTitle": "Sadržaj",
+    "search": "Pretraži sadržaj…",
+    "loaderror": "Učitavanje nije uspjelo",
+    "notfound": "Sadržaj nije pronađen",
+    "none": "Nema",
+    "backtolist": "Natrag na sadržaj",
+    "emptyTitle": "Još nema sadržaja",
+    "emptyText": "Knjige, članci, filmovi, serije — narativni materijal u kojem se pojavljuju entiteti tvog svijeta. Stvori prvi da započneš indeks pojavljivanja.",
+    "columns": {
+        "name": "Naziv",
+        "type": "Vrsta",
+        "updated": "Ažurirano"
+    },
+    "fields": {
+        "description": "Opis",
+        "source": "Izvor",
+        "publishDate": "Objavljeno",
+        "author": "Autor",
+        "releaseDate": "Izdano",
+        "issueNumber": "Broj izdanja",
+        "director": "Redatelj",
+        "durationMinutes": "Trajanje (min)",
+        "prequel": "Prednastavak",
+        "creator": "Kreator",
+        "seasons": "Sezone"
+    },
+    "types": {
+        "Article": "Članak",
+        "Book": "Knjiga",
+        "Comic": "Strip",
+        "Movie": "Film",
+        "Series": "Serija"
+    },
+    "sequels": {
+        "label": "Nastavci"
+    },
+    "chapters": {
+        "label": "Poglavlja",
+        "add": "dodaj",
+        "addTitle": "Novo poglavlje",
+        "editTitle": "Uredi poglavlje",
+        "name": "Naziv",
+        "order": "Redoslijed",
+        "save": "Spremi",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati poglavlje „{{name}}”?",
+        "requiredMissing": "Naziv poglavlja je obavezan.",
+        "saveFailed": "Spremanje poglavlja nije uspjelo.",
+        "deleteFailed": "Brisanje poglavlja nije uspjelo."
+    },
+    "episodes": {
+        "label": "Epizode",
+        "add": "dodaj",
+        "addTitle": "Nova epizoda",
+        "editTitle": "Uredi epizodu",
+        "name": "Naziv",
+        "season": "Sezona",
+        "order": "Redoslijed",
+        "save": "Spremi",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati epizodu „{{name}}”?",
+        "requiredMissing": "Naziv epizode je obavezan.",
+        "saveFailed": "Spremanje epizode nije uspjelo.",
+        "deleteFailed": "Brisanje epizode nije uspjelo."
+    },
+    "references": {
+        "label": "Pojavljuje se ovdje",
+        "add": "dodaj",
+        "entityType": "Vrsta",
+        "pick": "Odaberi zapis",
+        "note": "Bilješka",
+        "types": {
+            "Character": "Lik",
+            "Location": "Lokacija",
+            "Faction": "Frakcija",
+            "Nation": "Nacija"
+        },
+        "cancel": "Odustani",
+        "confirm": "Poveži",
+        "remove": "Odveži {{name}}",
+        "addFailed": "Povezivanje nije uspjelo.",
+        "removeFailed": "Odvezivanje nije uspjelo."
+    },
+    "form": {
+        "newTitle": "Novi sadržaj",
+        "editTitle": "Uredi sadržaj",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "save": "Spremi sadržaj",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}”? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjerite polja i pokušajte ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

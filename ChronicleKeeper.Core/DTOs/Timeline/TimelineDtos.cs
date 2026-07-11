@@ -8,12 +8,15 @@ namespace ChronicleKeeper.Core.DTOs.Timeline
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public int WorldId { get; set; }
+        public int? HistoryId { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }
 
     public class TimelineDetailsDto : TimelineDto
     {
+        public ReferenceDto? History { get; set; }
+
         /// <summary>Eventi poredani po SortOrder.</summary>
         public List<TimelineEventDto> Events { get; set; } = new();
     }
@@ -29,6 +32,8 @@ namespace ChronicleKeeper.Core.DTOs.Timeline
 
         [Required]
         public int WorldId { get; set; }
+
+        public int? HistoryId { get; set; }
     }
 
     public class TimelineUpdateDto
@@ -39,6 +44,8 @@ namespace ChronicleKeeper.Core.DTOs.Timeline
 
         [StringLength(4000, ErrorMessage = "Description cannot exceed 4000 characters")]
         public string Description { get; set; } = string.Empty;
+
+        public int? HistoryId { get; set; }
     }
 
     public class TimelineEventDto

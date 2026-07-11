@@ -72,6 +72,14 @@ import AbilityForm from "../components/entityViews/ability/form/AbilityForm";
 import ItemList from "../components/entityViews/item/list/ItemList";
 import ItemDetails from "../components/entityViews/item/detail/ItemDetails";
 import ItemForm from "../components/entityViews/item/form/ItemForm";
+import HistoryList from "../components/entityViews/history/list/HistoryList";
+import HistoryDetails from "../components/entityViews/history/detail/HistoryDetails";
+import HistoryForm from "../components/entityViews/history/form/HistoryForm";
+import ContentList from "../components/entityViews/content/list/ContentList";
+import ContentDetails from "../components/entityViews/content/detail/ContentDetails";
+import ContentForm from "../components/entityViews/content/form/ContentForm";
+import ChapterDetails from "../components/entityViews/content/detail/ChapterDetails";
+import EpisodeDetails from "../components/entityViews/content/detail/EpisodeDetails";
 import { WorldProvider } from "../context/world/WorldProvider";
 import { AppShell } from "../components/shell/AppShell";
 
@@ -326,6 +334,19 @@ const AppRoutes = () => {
                 <Route path="items/new" element={<ItemForm />} />
                 <Route path="items/:id" element={<ItemDetails />} />
                 <Route path="items/:id/edit" element={<ItemForm />} />
+                <Route path="histories" element={<HistoryList />} />
+                <Route path="histories/new" element={<HistoryForm />} />
+                <Route path="histories/:id" element={<HistoryDetails />} />
+                <Route
+                    path="histories/:id/edit"
+                    element={<HistoryForm />}
+                />
+                <Route path="contents" element={<ContentList />} />
+                <Route path="contents/new" element={<ContentForm />} />
+                <Route path="contents/:id" element={<ContentDetails />} />
+                <Route path="contents/:id/edit" element={<ContentForm />} />
+                <Route path="chapters/:id" element={<ChapterDetails />} />
+                <Route path="episodes/:id" element={<EpisodeDetails />} />
                 <Route path="*" element={<NoPage />} />
             </Route>
 

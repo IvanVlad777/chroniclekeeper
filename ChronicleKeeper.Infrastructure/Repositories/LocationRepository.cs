@@ -27,6 +27,7 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .Include(l => l.ParentLocation)
                 .Include(l => l.SubLocations)
                 .Include(l => l.Tags).ThenInclude(t => t.Tag)
+                .Include(l => l.History)
                 .AsNoTracking()
                 .AsSplitQuery()
                 .FirstOrDefaultAsync(l => l.Id == id, cancellationToken);

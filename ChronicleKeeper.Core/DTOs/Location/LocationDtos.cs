@@ -15,6 +15,7 @@ namespace ChronicleKeeper.Core.DTOs.Location
         public double? Latitude { get; set; }
         public double? Longitude { get; set; }
         public int? ParentLocationId { get; set; }
+        public int? HistoryId { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }
@@ -24,6 +25,7 @@ namespace ChronicleKeeper.Core.DTOs.Location
         public ReferenceDto? ParentLocation { get; set; }
         public List<ReferenceDto> SubLocations { get; set; } = new();
         public List<ReferenceDto> Tags { get; set; } = new();
+        public ReferenceDto? History { get; set; }
     }
 
     public class LocationCreateDto
@@ -44,6 +46,7 @@ namespace ChronicleKeeper.Core.DTOs.Location
         public double? Latitude { get; set; }
         public double? Longitude { get; set; }
         public int? ParentLocationId { get; set; }
+        public int? HistoryId { get; set; }
     }
 
     public class LocationUpdateDto
@@ -61,5 +64,6 @@ namespace ChronicleKeeper.Core.DTOs.Location
         public double? Latitude { get; set; }
         public double? Longitude { get; set; }
         public int? ParentLocationId { get; set; }
+        public int? HistoryId { get; set; }
     }
 }

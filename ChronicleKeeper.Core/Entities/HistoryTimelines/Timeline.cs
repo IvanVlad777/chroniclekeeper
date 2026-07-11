@@ -9,7 +9,7 @@ namespace ChronicleKeeper.Core.Entities.HistoryTimelines
     {
         public virtual ICollection<TimelineEvent> Events { get; set; } = new List<TimelineEvent>();
 
-        //public int HistoryId { get; set; } // TODO: Uncomment when History entity is revived
-        //public History History { get; set; } = null!;
+        public int? HistoryId { get; set; }
+        public virtual History? History { get; set; }
     }
 }

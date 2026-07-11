@@ -35,5 +35,6 @@ namespace ChronicleKeeper.Core.DTOs.Character
         public int? NationId { get; set; }
         public int? ReligionId { get; set; }
         public int? ProfessionId { get; set; }
+        public int? HistoryId { get; set; }
     }
 }

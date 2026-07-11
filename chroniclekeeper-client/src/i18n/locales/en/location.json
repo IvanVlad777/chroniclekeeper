@@ -36,7 +36,8 @@
         "coordinates": "Coordinates",
         "latitude": "Latitude",
         "longitude": "Longitude",
-        "description": "Description"
+        "description": "Description",
+        "history": "History"
     },
     "subLocations": "Sub-locations",
     "form": {

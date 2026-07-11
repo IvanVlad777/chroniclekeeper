@@ -25,7 +25,9 @@ namespace ChronicleKeeper.Infrastructure.Repositories
         {
             return await _context.Timelines
                 .Include(t => t.Events.OrderBy(e => e.SortOrder))
+                .Include(t => t.History)
                 .AsNoTracking()
+                .AsSplitQuery()
                 .FirstOrDefaultAsync(t => t.Id == id, cancellationToken);
         }
 

@@ -1,0 +1,39 @@
+{
+    "listTitle": "Histories",
+    "search": "Search histories…",
+    "loaderror": "Failed to load",
+    "notfound": "History not found",
+    "none": "None",
+    "official": "Official",
+    "unofficial": "Unofficial / speculative",
+    "backtolist": "Back to histories",
+    "emptyTitle": "No histories yet",
+    "emptyText": "A history captures the past of a character, a place, a nation — official record or contested legend. Create the first one and attach it to whatever it belongs to.",
+    "columns": {
+        "name": "Name",
+        "status": "Status",
+        "updated": "Updated"
+    },
+    "fields": {
+        "description": "Description",
+        "summary": "Summary",
+        "isOfficial": "Official history"
+    },
+    "timelines": {
+        "label": "Timelines"
+    },
+    "form": {
+        "newTitle": "New history",
+        "editTitle": "Edit history",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "save": "Save history",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

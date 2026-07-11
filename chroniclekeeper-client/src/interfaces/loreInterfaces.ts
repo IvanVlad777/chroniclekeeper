@@ -113,12 +113,14 @@ export interface NationDto {
     description: string;
     worldId: number;
     population: number;
+    historyId?: number | null;
     createdAt: string;
     updatedAt: string;
 }
 
 export interface NationDetailsDto extends NationDto {
     citizens: ReferenceDto[];
+    history?: ReferenceDto | null;
 }
 
 export interface NationCreateDto {
@@ -126,6 +128,7 @@ export interface NationCreateDto {
     description: string;
     worldId: number;
     population: number;
+    historyId?: number | null;
 }
 
 export type NationUpdateDto = Omit<NationCreateDto, "worldId">;
@@ -253,6 +256,7 @@ export interface TimelineDto {
     name: string;
     description: string;
     worldId: number;
+    historyId?: number | null;
     createdAt: string;
     updatedAt: string;
 }
@@ -275,12 +279,14 @@ export interface TimelineEventDto {
 export interface TimelineDetailsDto extends TimelineDto {
     /** Eventi poredani po sortOrder. */
     events: TimelineEventDto[];
+    history?: ReferenceDto | null;
 }
 
 export interface TimelineCreateDto {
     name: string;
     description: string;
     worldId: number;
+    historyId?: number | null;
 }
 
 export type TimelineUpdateDto = Omit<TimelineCreateDto, "worldId">;
@@ -344,6 +350,7 @@ export interface CharacterDto {
     nationId?: number | null;
     religionId?: number | null;
     professionId?: number | null;
+    historyId?: number | null;
 }
 
 export const locationTypes = [
@@ -372,6 +379,7 @@ export interface LocationDto {
     latitude?: number | null;
     longitude?: number | null;
     parentLocationId?: number | null;
+    historyId?: number | null;
     createdAt: string;
     updatedAt: string;
 }
@@ -380,6 +388,7 @@ export interface LocationDetailsDto extends LocationDto {
     parentLocation?: ReferenceDto | null;
     subLocations: ReferenceDto[];
     tags: ReferenceDto[];
+    history?: ReferenceDto | null;
 }
 
 export interface LocationCreateDto {
@@ -392,6 +401,7 @@ export interface LocationCreateDto {
     latitude?: number | null;
     longitude?: number | null;
     parentLocationId?: number | null;
+    historyId?: number | null;
 }
 
 export type LocationUpdateDto = Omit<LocationCreateDto, "worldId">;
@@ -426,6 +436,7 @@ export interface FactionDto {
     motto: string;
     leaderId?: number | null;
     headquartersId?: number | null;
+    historyId?: number | null;
     createdAt: string;
     updatedAt: string;
 }
@@ -443,6 +454,7 @@ export interface FactionDetailsDto extends FactionDto {
     headquarters?: ReferenceDto | null;
     members: FactionMemberDto[];
     tags: ReferenceDto[];
+    history?: ReferenceDto | null;
 }
 
 export interface FactionCreateDto {
@@ -454,6 +466,7 @@ export interface FactionCreateDto {
     motto: string;
     leaderId?: number | null;
     headquartersId?: number | null;
+    historyId?: number | null;
 }
 
 export type FactionUpdateDto = Omit<FactionCreateDto, "worldId">;
@@ -482,6 +495,7 @@ export interface CharacterCreateDto {
     nationId?: number | null;
     religionId?: number | null;
     professionId?: number | null;
+    historyId?: number | null;
 }
 
 /** PUT /characters/{id} — full replace: izostavljena polja se resetiraju. */
@@ -508,6 +522,7 @@ export interface CharacterUpdateDto {
     nationId?: number | null;
     religionId?: number | null;
     professionId?: number | null;
+    historyId?: number | null;
 }
 
 /** Enumi putuju kao stringovi (globalni JsonStringEnumConverter na API-ju). */
@@ -577,6 +592,7 @@ export interface CharacterDetailsDto extends CharacterDto {
     nation?: ReferenceDto | null;
     religion?: ReferenceDto | null;
     profession?: ReferenceDto | null;
+    history?: ReferenceDto | null;
     factions: ReferenceDto[];
     tags: ReferenceDto[];
     relationships: CharacterRelationshipDto[];
@@ -1292,3 +1308,159 @@ export interface OwnershipHistoryCreateDto {
 }
 
 export type OwnershipHistoryUpdateDto = Omit<OwnershipHistoryCreateDto, "itemId">;
+
+// ----- History -----
+
+export interface HistoryDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    summary: string;
+    isOfficial: boolean;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface HistoryDetailsDto extends HistoryDto {
+    timelines: ReferenceDto[];
+}
+
+export interface HistoryCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    summary: string;
+    isOfficial: boolean;
+}
+
+export type HistoryUpdateDto = Omit<HistoryCreateDto, "worldId">;
+
+// ----- Content -----
+
+export const contentTypes = ["Article", "Book", "Comic", "Movie", "Series"] as const;
+export type ContentType = (typeof contentTypes)[number];
+
+/** Ravni DTO za Article/Book/Comic/Movie/Series TPH obitelj — samo polja relevantna za `type` su popunjena. */
+export interface ContentDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    type: string;
+    source?: string | null;
+    publishDate?: string | null;
+    author?: string | null;
+    releaseDate?: string | null;
+    issueNumber?: number | null;
+    director?: string | null;
+    durationMinutes?: number | null;
+    prequelId?: number | null;
+    creator?: string | null;
+    seasons?: number | null;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface ContentReferenceEntryDto {
+    id: number;
+    note: string;
+    entityType: string;
+    entityId: number;
+    entityName: string;
+}
+
+export interface ContentDetailsDto extends ContentDto {
+    /** Popunjeno samo kad je type === "Book". */
+    chapters: ReferenceDto[];
+    /** Popunjeno samo kad je type === "Series". */
+    episodes: ReferenceDto[];
+    /** Popunjeno samo kad je type === "Movie". */
+    prequel?: ReferenceDto | null;
+    sequels: ReferenceDto[];
+    references: ContentReferenceEntryDto[];
+}
+
+export interface ContentCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    type: string;
+    source?: string | null;
+    publishDate?: string | null;
+    author?: string | null;
+    releaseDate?: string | null;
+    issueNumber?: number | null;
+    director?: string | null;
+    durationMinutes?: number | null;
+    prequelId?: number | null;
+    creator?: string | null;
+    seasons?: number | null;
+}
+
+export type ContentUpdateDto = Omit<ContentCreateDto, "worldId" | "type">;
+
+// ----- Chapter -----
+
+export interface ChapterDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    bookId: number;
+    order: number;
+    createdAt: string;
+    updatedAt: string;
+}
+
+/** Svijet poglavlja se izvodi iz knjige — ne šalje se worldId. */
+export interface ChapterCreateDto {
+    name: string;
+    description: string;
+    bookId: number;
+    order: number;
+}
+
+export type ChapterUpdateDto = Omit<ChapterCreateDto, "bookId">;
+
+// ----- Episode -----
+
+export interface EpisodeDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    seriesId: number;
+    season: number;
+    order: number;
+    createdAt: string;
+    updatedAt: string;
+}
+
+/** Svijet epizode se izvodi iz serije — ne šalje se worldId. */
+export interface EpisodeCreateDto {
+    name: string;
+    description: string;
+    seriesId: number;
+    season: number;
+    order: number;
+}
+
+export type EpisodeUpdateDto = Omit<EpisodeCreateDto, "seriesId">;
+
+// ----- Content reference links (Reference entitet) -----
+
+export interface ContentReferenceLinkDto {
+    id: number;
+    note: string;
+    contentId?: number | null;
+    chapterId?: number | null;
+    episodeId?: number | null;
+    characterId?: number | null;
+    locationId?: number | null;
+    factionId?: number | null;
+    nationId?: number | null;
+}
+
+export type ContentReferenceLinkCreateDto = Omit<ContentReferenceLinkDto, "id">;
+export type ContentReferenceLinkUpdateDto = ContentReferenceLinkCreateDto;

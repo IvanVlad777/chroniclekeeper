@@ -52,6 +52,7 @@ namespace ChronicleKeeper.Core.CQRS.Factions.Handlers
         private readonly IWorldRepository _worldRepository;
         private readonly ICharacterRepository _characterRepository;
         private readonly ILocationRepository _locationRepository;
+        private readonly IHistoryRepository _historyRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<CreateFactionCommandHandler> _logger;
 
@@ -60,6 +61,7 @@ namespace ChronicleKeeper.Core.CQRS.Factions.Handlers
             IWorldRepository worldRepository,
             ICharacterRepository characterRepository,
             ILocationRepository locationRepository,
+            IHistoryRepository historyRepository,
             IMapper mapper,
             ILogger<CreateFactionCommandHandler> logger)
         {
@@ -67,6 +69,7 @@ namespace ChronicleKeeper.Core.CQRS.Factions.Handlers
             _worldRepository = worldRepository;
             _characterRepository = characterRepository;
             _locationRepository = locationRepository;
+            _historyRepository = historyRepository;
             _mapper = mapper;
             _logger = logger;
         }
@@ -82,7 +85,7 @@ namespace ChronicleKeeper.Core.CQRS.Factions.Handlers
             }
 
             var faction = _mapper.Map<Faction>(dto);
-            await FactionValidation.ValidateReferencesAsync(_characterRepository, _locationRepository, faction, cancellationToken);
+            await FactionValidation.ValidateReferencesAsync(_characterRepository, _locationRepository, _historyRepository, faction, cancellationToken);
 
             var created = await _repository.CreateAsync(faction, cancellationToken);
             return _mapper.Map<FactionDto>(created);
@@ -94,17 +97,20 @@ namespace ChronicleKeeper.Core.CQRS.Factions.Handlers
         private readonly IFactionRepository _repository;
         private readonly ICharacterRepository _characterRepository;
         private readonly ILocationRepository _locationRepository;
+        private readonly IHistoryRepository _historyRepository;
         private readonly IMapper _mapper;
 
         public UpdateFactionCommandHandler(
             IFactionRepository repository,
             ICharacterRepository characterRepository,
             ILocationRepository locationRepository,
+            IHistoryRepository historyRepository,
             IMapper mapper)
         {
             _repository = repository;
             _characterRepository = characterRepository;
             _locationRepository = locationRepository;
+            _historyRepository = historyRepository;
             _mapper = mapper;
         }
 
@@ -114,7 +120,7 @@ namespace ChronicleKeeper.Core.CQRS.Factions.Handlers
                 ?? throw new EntityNotFoundException("Faction", request.Id);
 
             _mapper.Map(request.FactionUpdateDto, faction);
-            await FactionValidation.ValidateReferencesAsync(_characterRepository, _locationRepository, faction, cancellationToken);
+            await FactionValidation.ValidateReferencesAsync(_characterRepository, _locationRepository, _historyRepository, faction, cancellationToken);
 
             var updated = await _repository.UpdateAsync(faction, cancellationToken);
             return _mapper.Map<FactionDto>(updated);
@@ -212,6 +218,7 @@ namespace ChronicleKeeper.Core.CQRS.Factions.Handlers
         public static async Task ValidateReferencesAsync(
             ICharacterRepository characterRepository,
             ILocationRepository locationRepository,
+            IHistoryRepository historyRepository,
             Faction faction,
             CancellationToken cancellationToken)
         {
@@ -225,6 +232,16 @@ namespace ChronicleKeeper.Core.CQRS.Factions.Handlers
                 && !await locationRepository.ExistsInWorldAsync(hqId, faction.WorldId, cancellationToken))
             {
                 throw new DomainValidationException($"Headquarters location with ID {hqId} does not exist in this world.");
+            }
+
+            if (faction.HistoryId is int historyId)
+            {
+                var history = await historyRepository.FindByIdAsync(historyId, cancellationToken)
+                    ?? throw new DomainValidationException($"History with ID {historyId} does not exist.");
+                if (history.WorldId != faction.WorldId)
+                {
+                    throw new DomainValidationException($"History with ID {historyId} does not belong to this world.");
+                }
             }
         }
     }

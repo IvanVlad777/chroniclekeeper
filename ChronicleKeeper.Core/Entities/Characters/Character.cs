@@ -5,7 +5,7 @@ using ChronicleKeeper.Core.Entities.Social;
 using ChronicleKeeper.Core.Entities.Tags;
 using ChronicleKeeper.Core.Entities.Characters.Abilities;
 using ChronicleKeeper.Core.Entities.Characters.Equipment;
-//using ChronicleKeeper.Core.Entities.HistoryTimelines;
+using ChronicleKeeper.Core.Entities.HistoryTimelines;
 using ChronicleKeeper.Core.Entities.Professions;
 //using ChronicleKeeper.Core.Entities.Social.Cultures;
 using ChronicleKeeper.Core.Entities.Social.Education;
@@ -60,6 +60,9 @@ namespace ChronicleKeeper.Core.Entities.Characters
 
         public int? ReligionId { get; set; }
         public virtual Religion? Religion { get; set; }
+
+        public int? HistoryId { get; set; }
+        public virtual History? History { get; set; }
 
         // Personality & Background
         //public BackgroundInfo Background { get; set; } = new BackgroundInfo(); // TODO: Uncomment when BackgroundInfo entity is revived

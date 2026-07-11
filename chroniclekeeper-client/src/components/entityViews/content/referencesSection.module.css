@@ -1,0 +1,92 @@
+.sectionHead {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    margin: 26px 0 12px;
+}
+
+.sectionTitle {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.sectionLine {
+    flex: 1;
+    height: 1px;
+    background: var(--color-border);
+}
+
+.none {
+    font-size: 13.5px;
+    color: var(--color-muted);
+}
+
+.addInline {
+    border: none;
+    background: transparent;
+    padding: 0;
+    font-family: var(--font-ui);
+    font-size: 12px;
+    color: var(--color-accent);
+    cursor: pointer;
+}
+
+.addInline:hover {
+    text-decoration: underline;
+}
+
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.chipRow {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.chipLink {
+    text-decoration: none;
+    color: inherit;
+}
+
+.chipRemove {
+    border: none;
+    background: transparent;
+    color: var(--color-muted);
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+    padding: 0 2px;
+}
+
+.chipRemove:hover {
+    color: var(--color-danger);
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 14px;
+    padding: 16px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--o-radius-lg);
+    background: var(--color-panel);
+    max-width: 480px;
+}
+
+.error {
+    margin: 0;
+    font-size: 12.5px;
+    color: var(--color-danger);
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}

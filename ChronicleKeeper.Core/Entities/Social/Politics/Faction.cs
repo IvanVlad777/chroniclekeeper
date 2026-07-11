@@ -3,7 +3,7 @@ using ChronicleKeeper.Core.Entities.Characters;
 using ChronicleKeeper.Core.Entities.Geography;
 using ChronicleKeeper.Core.Entities.Tags;
 using ChronicleKeeper.Core.Entities.Characters.Equipment;
-//using ChronicleKeeper.Core.Entities.HistoryTimelines;
+using ChronicleKeeper.Core.Entities.HistoryTimelines;
 //using ChronicleKeeper.Core.Entities.Social.Economy;
 //using ChronicleKeeper.Core.Entities.Social.Military;
 //using ChronicleKeeper.Core.Entities.Social.Politics;
@@ -23,6 +23,9 @@ namespace ChronicleKeeper.Core.Entities.Social
 
         public int? HeadquartersId { get; set; }
         public virtual Location? Headquarters { get; set; }
+
+        public int? HistoryId { get; set; }
+        public virtual History? History { get; set; }
 
         public virtual ICollection<FactionMember> Members { get; set; } = new List<FactionMember>();
         public virtual ICollection<FactionTag> Tags { get; set; } = new List<FactionTag>();

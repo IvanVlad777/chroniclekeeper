@@ -14,7 +14,8 @@
     },
     "fields": {
         "description": "Opis",
-        "population": "Stanovništvo"
+        "population": "Stanovništvo",
+        "history": "Povijest"
     },
     "citizens": {
         "label": "Državljani"

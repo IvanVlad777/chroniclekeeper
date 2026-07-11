@@ -25,6 +25,12 @@ namespace ChronicleKeeper.Infrastructure.Configurations
                 .WithMany()
                 .HasForeignKey(f => f.HeadquartersId)
                 .OnDelete(DeleteBehavior.SetNull);
+
+            // History — pointer-only, SetNull: brisanje History profila samo odveže frakciju
+            builder.HasOne(f => f.History)
+                .WithMany()
+                .HasForeignKey(f => f.HistoryId)
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

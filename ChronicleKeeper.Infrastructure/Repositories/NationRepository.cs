@@ -25,7 +25,9 @@ namespace ChronicleKeeper.Infrastructure.Repositories
         {
             return await _context.Nations
                 .Include(n => n.Characters)
+                .Include(n => n.History)
                 .AsNoTracking()
+                .AsSplitQuery()
                 .FirstOrDefaultAsync(n => n.Id == id, cancellationToken);
         }
 

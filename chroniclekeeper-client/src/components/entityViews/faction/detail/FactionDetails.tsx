@@ -242,6 +242,21 @@ export default function FactionDetails() {
                         }
                     />
                     <OrnateDisplayBox
+                        label={t("fields.history")}
+                        value={
+                            faction.history ? (
+                                <Link
+                                    className={s.refLink}
+                                    to={`/storymap/histories/${faction.history.id}`}
+                                >
+                                    {faction.history.name}
+                                </Link>
+                            ) : (
+                                dash
+                            )
+                        }
+                    />
+                    <OrnateDisplayBox
                         label={t("fields.isSecretive")}
                         value={
                             faction.isSecretive

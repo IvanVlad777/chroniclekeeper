@@ -75,6 +75,9 @@
     "profession": {
         "label": "Profession"
     },
+    "historyProfile": {
+        "label": "History"
+    },
     "education": {
         "label": "Education",
         "add": "add",

@@ -16,7 +16,9 @@ import {
     getLocations,
     updateLocation,
 } from "../../../../api/locations";
+import { getHistories } from "../../../../api/histories";
 import {
+    HistoryDto,
     LocationDto,
     LocationType,
     LocationUpdateDto,
@@ -35,6 +37,7 @@ interface FormState {
     latitude: string;
     longitude: string;
     parentLocationId: string;
+    historyId: string;
 }
 
 const emptyForm: FormState = {
@@ -46,6 +49,7 @@ const emptyForm: FormState = {
     latitude: "",
     longitude: "",
     parentLocationId: "",
+    historyId: "",
 };
 
 const toNum = (v: string): number | null => (v.trim() ? Number(v) : null);
@@ -61,6 +65,7 @@ function toDto(f: FormState): LocationUpdateDto {
         latitude: toNum(f.latitude),
         longitude: toNum(f.longitude),
         parentLocationId: toId(f.parentLocationId),
+        historyId: toId(f.historyId),
     };
 }
 
@@ -76,6 +81,7 @@ export default function LocationForm() {
 
     const [form, setForm] = useState<FormState>(emptyForm);
     const [worldLocations, setWorldLocations] = useState<LocationDto[]>([]);
+    const [histories, setHistories] = useState<HistoryDto[]>([]);
     const [loading, setLoading] = useState(true);
     const [loadError, setLoadError] = useState<string | null>(null);
     const [saveError, setSaveError] = useState<string | null>(null);
@@ -92,10 +98,11 @@ export default function LocationForm() {
         setLoading(true);
         setLoadError(null);
 
-        getLocations(selectedWorld.id)
-            .then(async (locations) => {
+        Promise.all([getLocations(selectedWorld.id), getHistories(selectedWorld.id)])
+            .then(async ([locations, historiesData]) => {
                 if (cancelled) return;
                 setWorldLocations(locations);
+                setHistories(historiesData);
                 if (isEdit) {
                     const l = await getLocation(editId);
                     if (cancelled) return;
@@ -113,6 +120,7 @@ export default function LocationForm() {
                         parentLocationId: l.parentLocationId
                             ? String(l.parentLocationId)
                             : "",
+                        historyId: l.historyId ? String(l.historyId) : "",
                     });
                 }
             })
@@ -257,6 +265,19 @@ export default function LocationForm() {
                             {parentOptions.map((l) => (
                                 <option key={l.id} value={l.id}>
                                     {l.name}
+                                </option>
+                            ))}
+                        </OrnateSelect>
+                    </OrnateField>
+                    <OrnateField label={t("fields.history")}>
+                        <OrnateSelect
+                            value={form.historyId}
+                            onChange={(e) => set("historyId", e.target.value)}
+                        >
+                            <option value="">{t("none")}</option>
+                            {histories.map((h) => (
+                                <option key={h.id} value={h.id}>
+                                    {h.name}
                                 </option>
                             ))}
                         </OrnateSelect>

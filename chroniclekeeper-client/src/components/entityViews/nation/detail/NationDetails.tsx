@@ -109,6 +109,18 @@ export default function NationDetails() {
                         label={t("fields.population")}
                         value={nation.population.toLocaleString()}
                     />
+                    <OrnateDisplayBox
+                        label={t("fields.history")}
+                        value={
+                            nation.history ? (
+                                <Link to={`/storymap/histories/${nation.history.id}`}>
+                                    {nation.history.name}
+                                </Link>
+                            ) : (
+                                t("none")
+                            )
+                        }
+                    />
                 </DisplayGrid>
             </div>
 

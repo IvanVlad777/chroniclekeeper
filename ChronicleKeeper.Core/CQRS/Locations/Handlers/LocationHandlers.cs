@@ -50,17 +50,20 @@ namespace ChronicleKeeper.Core.CQRS.Locations.Handlers
     {
         private readonly ILocationRepository _repository;
         private readonly IWorldRepository _worldRepository;
+        private readonly IHistoryRepository _historyRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<CreateLocationCommandHandler> _logger;
 
         public CreateLocationCommandHandler(
             ILocationRepository repository,
             IWorldRepository worldRepository,
+            IHistoryRepository historyRepository,
             IMapper mapper,
             ILogger<CreateLocationCommandHandler> logger)
         {
             _repository = repository;
             _worldRepository = worldRepository;
+            _historyRepository = historyRepository;
             _mapper = mapper;
             _logger = logger;
         }
@@ -77,6 +80,7 @@ namespace ChronicleKeeper.Core.CQRS.Locations.Handlers
 
             var location = _mapper.Map<Location>(dto);
             await LocationValidation.ValidateParentAsync(_repository, location, cancellationToken);
+            await LocationValidation.ValidateHistoryAsync(_historyRepository, location, cancellationToken);
 
             var created = await _repository.CreateAsync(location, cancellationToken);
             _logger.LogInformation("Created location with ID {Id}", created.Id);
@@ -88,15 +92,18 @@ namespace ChronicleKeeper.Core.CQRS.Locations.Handlers
     public class UpdateLocationCommandHandler : IRequestHandler<UpdateLocationCommand, LocationDto>
     {
         private readonly ILocationRepository _repository;
+        private readonly IHistoryRepository _historyRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<UpdateLocationCommandHandler> _logger;
 
         public UpdateLocationCommandHandler(
             ILocationRepository repository,
+            IHistoryRepository historyRepository,
             IMapper mapper,
             ILogger<UpdateLocationCommandHandler> logger)
         {
             _repository = repository;
+            _historyRepository = historyRepository;
             _mapper = mapper;
             _logger = logger;
         }
@@ -110,6 +117,7 @@ namespace ChronicleKeeper.Core.CQRS.Locations.Handlers
 
             _mapper.Map(request.LocationUpdateDto, location);
             await LocationValidation.ValidateParentAsync(_repository, location, cancellationToken);
+            await LocationValidation.ValidateHistoryAsync(_historyRepository, location, cancellationToken);
 
             var updated = await _repository.UpdateAsync(location, cancellationToken);
             return _mapper.Map<LocationDto>(updated);
@@ -161,6 +169,19 @@ namespace ChronicleKeeper.Core.CQRS.Locations.Handlers
             if (location.Id != 0 && await repository.WouldCreateCycleAsync(location.Id, parentId, cancellationToken))
             {
                 throw new DomainValidationException("This parent assignment would create a cycle in the location hierarchy.");
+            }
+        }
+
+        public static async Task ValidateHistoryAsync(
+            IHistoryRepository historyRepository, Location location, CancellationToken cancellationToken)
+        {
+            if (location.HistoryId is not int historyId) return;
+
+            var history = await historyRepository.FindByIdAsync(historyId, cancellationToken)
+                ?? throw new DomainValidationException($"History with ID {historyId} does not exist.");
+            if (history.WorldId != location.WorldId)
+            {
+                throw new DomainValidationException($"History with ID {historyId} does not belong to this world.");
             }
         }
     }

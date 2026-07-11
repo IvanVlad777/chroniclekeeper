@@ -560,6 +560,21 @@ export default function CharacterDetail() {
                                 )
                             }
                         />
+                        <OrnateDisplayBox
+                            label={t("historyProfile.label")}
+                            value={
+                                character.history ? (
+                                    <Link
+                                        to={`/storymap/histories/${character.history.id}`}
+                                        className={s.relLink}
+                                    >
+                                        {character.history.name}
+                                    </Link>
+                                ) : (
+                                    dash
+                                )
+                            }
+                        />
                     </div>
 
                     <TagEditor

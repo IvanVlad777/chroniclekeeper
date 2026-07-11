@@ -161,6 +161,21 @@ export default function LocationDetails() {
                             )
                         }
                     />
+                    <OrnateDisplayBox
+                        label={t("fields.history")}
+                        value={
+                            location.history ? (
+                                <Link
+                                    className={s.parentLink}
+                                    to={`/storymap/histories/${location.history.id}`}
+                                >
+                                    {location.history.name}
+                                </Link>
+                            ) : (
+                                dash
+                            )
+                        }
+                    />
                 </DisplayGrid>
             </div>
 

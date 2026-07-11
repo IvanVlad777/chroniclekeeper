@@ -83,6 +83,13 @@ namespace ChronicleKeeper.Infrastructure.Configurations
                 .HasForeignKey(c => c.ProfessionId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            // History — pointer-only (poput Faction.LeaderId), SetNull: brisanje History profila
+            // samo odveže lika, ne blokira
+            builder.HasOne(c => c.History)
+                .WithMany()
+                .HasForeignKey(c => c.HistoryId)
+                .OnDelete(DeleteBehavior.SetNull);
+
             builder.ToTable(t =>
             {
                 t.HasCheckConstraint("CK_Characters_Father_NotSelf", "[FatherId] <> [Id]");

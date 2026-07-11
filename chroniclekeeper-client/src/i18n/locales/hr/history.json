@@ -1,0 +1,39 @@
+{
+    "listTitle": "Povijesti",
+    "search": "Pretraži povijesti…",
+    "loaderror": "Učitavanje nije uspjelo",
+    "notfound": "Povijest nije pronađena",
+    "none": "Nema",
+    "official": "Službena",
+    "unofficial": "Neslužbena / spekulativna",
+    "backtolist": "Natrag na povijesti",
+    "emptyTitle": "Još nema povijesti",
+    "emptyText": "Povijest bilježi prošlost lika, mjesta, nacije — službeni zapis ili osporavana legenda. Stvorite prvu i povežite je s onim čemu pripada.",
+    "columns": {
+        "name": "Naziv",
+        "status": "Status",
+        "updated": "Ažurirano"
+    },
+    "fields": {
+        "description": "Opis",
+        "summary": "Sažetak",
+        "isOfficial": "Službena povijest"
+    },
+    "timelines": {
+        "label": "Vremenske linije"
+    },
+    "form": {
+        "newTitle": "Nova povijest",
+        "editTitle": "Uredi povijest",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "save": "Spremi povijest",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}”? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjerite polja i pokušajte ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

@@ -56,4 +56,6 @@ export const navEntries: NavEntry[] = [
     { key: "libraries", glyph: "❖", to: "/storymap/libraries" },
     { key: "abilities", glyph: "✦", to: "/storymap/abilities" },
     { key: "items", glyph: "⚔", to: "/storymap/items" },
+    { key: "histories", glyph: "⌛", to: "/storymap/histories" },
+    { key: "contents", glyph: "📖", to: "/storymap/contents" },
 ];

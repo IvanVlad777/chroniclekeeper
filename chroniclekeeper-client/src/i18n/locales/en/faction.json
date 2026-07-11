@@ -38,7 +38,8 @@
         "isSecretive": "Secretive organization",
         "leader": "Leader",
         "headquarters": "Seat",
-        "description": "Description"
+        "description": "Description",
+        "history": "History"
     },
     "members": {
         "label": "Members",

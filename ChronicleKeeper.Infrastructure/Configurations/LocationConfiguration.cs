@@ -20,6 +20,12 @@ namespace ChronicleKeeper.Infrastructure.Configurations
 
             builder.HasIndex(l => l.ParentLocationId);
 
+            // History — pointer-only, SetNull: brisanje History profila samo odveže lokaciju
+            builder.HasOne(l => l.History)
+                .WithMany()
+                .HasForeignKey(l => l.HistoryId)
+                .OnDelete(DeleteBehavior.SetNull);
+
             builder.ToTable(t =>
                 t.HasCheckConstraint("CK_Locations_Parent_NotSelf", "[ParentLocationId] <> [Id]"));
         }

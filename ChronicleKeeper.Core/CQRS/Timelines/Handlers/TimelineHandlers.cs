@@ -50,17 +50,20 @@ namespace ChronicleKeeper.Core.CQRS.Timelines.Handlers
     {
         private readonly ITimelineRepository _repository;
         private readonly IWorldRepository _worldRepository;
+        private readonly IHistoryRepository _historyRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<CreateTimelineCommandHandler> _logger;
 
         public CreateTimelineCommandHandler(
             ITimelineRepository repository,
             IWorldRepository worldRepository,
+            IHistoryRepository historyRepository,
             IMapper mapper,
             ILogger<CreateTimelineCommandHandler> logger)
         {
             _repository = repository;
             _worldRepository = worldRepository;
+            _historyRepository = historyRepository;
             _mapper = mapper;
             _logger = logger;
         }
@@ -75,6 +78,16 @@ namespace ChronicleKeeper.Core.CQRS.Timelines.Handlers
                 throw new DomainValidationException($"World with ID {dto.WorldId} does not exist.");
             }
 
+            if (dto.HistoryId is int historyId)
+            {
+                var history = await _historyRepository.FindByIdAsync(historyId, cancellationToken)
+                    ?? throw new DomainValidationException($"History with ID {historyId} does not exist.");
+                if (history.WorldId != dto.WorldId)
+                {
+                    throw new DomainValidationException($"History with ID {historyId} does not belong to this world.");
+                }
+            }
+
             var created = await _repository.CreateAsync(_mapper.Map<Timeline>(dto), cancellationToken);
             return _mapper.Map<TimelineDto>(created);
         }
@@ -83,11 +96,13 @@ namespace ChronicleKeeper.Core.CQRS.Timelines.Handlers
     public class UpdateTimelineCommandHandler : IRequestHandler<UpdateTimelineCommand, TimelineDto>
     {
         private readonly ITimelineRepository _repository;
+        private readonly IHistoryRepository _historyRepository;
         private readonly IMapper _mapper;
 
-        public UpdateTimelineCommandHandler(ITimelineRepository repository, IMapper mapper)
+        public UpdateTimelineCommandHandler(ITimelineRepository repository, IHistoryRepository historyRepository, IMapper mapper)
         {
             _repository = repository;
+            _historyRepository = historyRepository;
             _mapper = mapper;
         }
 
@@ -95,6 +110,16 @@ namespace ChronicleKeeper.Core.CQRS.Timelines.Handlers
         {
             var timeline = await _repository.FindByIdAsync(request.Id, cancellationToken)
                 ?? throw new EntityNotFoundException("Timeline", request.Id);
+
+            if (request.TimelineUpdateDto.HistoryId is int historyId)
+            {
+                var history = await _historyRepository.FindByIdAsync(historyId, cancellationToken)
+                    ?? throw new DomainValidationException($"History with ID {historyId} does not exist.");
+                if (history.WorldId != timeline.WorldId)
+                {
+                    throw new DomainValidationException($"History with ID {historyId} does not belong to this world.");
+                }
+            }
 
             _mapper.Map(request.TimelineUpdateDto, timeline);
             var updated = await _repository.UpdateAsync(timeline, cancellationToken);

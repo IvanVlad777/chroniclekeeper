@@ -56,6 +56,10 @@ import enAbility from "./locales/en/ability.json";
 import hrAbility from "./locales/hr/ability.json";
 import enItem from "./locales/en/item.json";
 import hrItem from "./locales/hr/item.json";
+import enHistory from "./locales/en/history.json";
+import hrHistory from "./locales/hr/history.json";
+import enContent from "./locales/en/content.json";
+import hrContent from "./locales/hr/content.json";
 
 i18n.use(LanguageDetector)
     .use(initReactI18next)
@@ -89,6 +93,8 @@ i18n.use(LanguageDetector)
                 library: enLibrary,
                 ability: enAbility,
                 item: enItem,
+                history: enHistory,
+                content: enContent,
             },
             hr: {
                 common: hrCommon,
@@ -118,6 +124,8 @@ i18n.use(LanguageDetector)
                 library: hrLibrary,
                 ability: hrAbility,
                 item: hrItem,
+                history: hrHistory,
+                content: hrContent,
             },
         },
         fallbackLng: "en",
@@ -149,6 +157,8 @@ i18n.use(LanguageDetector)
             "library",
             "ability",
             "item",
+            "history",
+            "content",
         ], //namespaces
         defaultNS: "common",
         interpolation: {

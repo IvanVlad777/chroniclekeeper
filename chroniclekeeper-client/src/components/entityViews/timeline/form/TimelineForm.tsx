@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import {
     Button,
     OrnateField,
+    OrnateSelect,
     OrnateTextArea,
     OrnateTextInput,
 } from "../../../ornate";
@@ -14,6 +15,8 @@ import {
     getTimeline,
     updateTimeline,
 } from "../../../../api/timelines";
+import { getHistories } from "../../../../api/histories";
+import { HistoryDto } from "../../../../interfaces/loreInterfaces";
 import { useWorld } from "../../../../hooks/useWorld";
 import { apiErrorMessage } from "../../../../utils/apiError";
 import s from "./styles.module.css";
@@ -30,27 +33,35 @@ export default function TimelineForm() {
 
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
-    const [loading, setLoading] = useState(isEdit);
+    const [historyId, setHistoryId] = useState("");
+    const [histories, setHistories] = useState<HistoryDto[]>([]);
+    const [loading, setLoading] = useState(true);
     const [loadError, setLoadError] = useState<string | null>(null);
     const [saveError, setSaveError] = useState<string | null>(null);
     const [busy, setBusy] = useState(false);
     const [reloadKey, setReloadKey] = useState(0);
 
     useEffect(() => {
-        if (!isEdit) return;
+        if (!selectedWorld) return;
 
         let cancelled = false;
         setLoading(true);
         setLoadError(null);
 
-        getTimeline(editId)
-            .then((tl) => {
+        getHistories(selectedWorld.id)
+            .then(async (historiesData) => {
                 if (cancelled) return;
-                setName(tl.name ?? "");
-                setDescription(tl.description ?? "");
+                setHistories(historiesData);
+                if (isEdit) {
+                    const tl = await getTimeline(editId);
+                    if (cancelled) return;
+                    setName(tl.name ?? "");
+                    setDescription(tl.description ?? "");
+                    setHistoryId(tl.historyId ? String(tl.historyId) : "");
+                }
             })
             .catch((err) => {
-                console.error("Failed to load timeline:", err);
+                console.error("Failed to load timeline form data:", err);
                 if (!cancelled) setLoadError(t("loaderror"));
             })
             .finally(() => {
@@ -60,7 +71,7 @@ export default function TimelineForm() {
         return () => {
             cancelled = true;
         };
-    }, [isEdit, editId, t, reloadKey]);
+    }, [selectedWorld, isEdit, editId, t, reloadKey]);
 
     async function onSubmit(e: FormEvent) {
         e.preventDefault();
@@ -73,10 +84,12 @@ export default function TimelineForm() {
         setBusy(true);
         try {
             let targetId: number;
+            const historyIdValue = historyId ? Number(historyId) : null;
             if (isEdit) {
                 await updateTimeline(editId, {
                     name: name.trim(),
                     description,
+                    historyId: historyIdValue,
                 });
                 targetId = editId;
             } else {
@@ -84,6 +97,7 @@ export default function TimelineForm() {
                     name: name.trim(),
                     description,
                     worldId: selectedWorld.id,
+                    historyId: historyIdValue,
                 });
                 targetId = created.id;
             }
@@ -157,6 +171,19 @@ export default function TimelineForm() {
                         maxLength={4000}
                         onChange={(e) => setDescription(e.target.value)}
                     />
+                </OrnateField>
+                <OrnateField label={t("fields.history")}>
+                    <OrnateSelect
+                        value={historyId}
+                        onChange={(e) => setHistoryId(e.target.value)}
+                    >
+                        <option value="">{t("none")}</option>
+                        {histories.map((h) => (
+                            <option key={h.id} value={h.id}>
+                                {h.name}
+                            </option>
+                        ))}
+                    </OrnateSelect>
                 </OrnateField>
             </div>
 

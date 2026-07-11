@@ -8,6 +8,13 @@ namespace ChronicleKeeper.Infrastructure.Configurations
     {
         protected override void ConfigureEntity(EntityTypeBuilder<Timeline> builder)
         {
+            // Pointer-only reference (poput Faction.LeaderId) — SetNull, ne blokira brisanje History-ja
+            builder.HasOne(t => t.History)
+                .WithMany(h => h.Timelines)
+                .HasForeignKey(t => t.HistoryId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            builder.HasIndex(t => t.HistoryId);
         }
     }
 

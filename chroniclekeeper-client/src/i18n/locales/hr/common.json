@@ -32,7 +32,9 @@
         "educationSystems": "Sustavi obrazovanja",
         "libraries": "Knjižnice",
         "abilities": "Sposobnosti",
-        "items": "Predmeti"
+        "items": "Predmeti",
+        "histories": "Povijesti",
+        "contents": "Sadržaj"
     },
     "shell": {
         "newEntry": "Novi zapis",

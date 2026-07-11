@@ -212,6 +212,32 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .Where(a => a.WorldId == id)
                 .ExecuteDeleteAsync(cancellationToken);
 
+            // 7p. References prema Content/Chapter/Episode su Restrict (izravni Contents->References
+            //     Cascade zajedno s Contents->Chapters->References i Contents->Episodes->References
+            //     bi stvorili TRI konvergentna cascade puta — SQL Server "multiple cascade paths").
+            //     Moraju se ručno obrisati prije brisanja Contents (koji kaskadno briše Chapters/Episodes).
+            await _context.References
+                .Where(r => r.ContentId != null && r.Content!.WorldId == id)
+                .ExecuteDeleteAsync(cancellationToken);
+            await _context.References
+                .Where(r => r.ChapterId != null && r.Chapter!.WorldId == id)
+                .ExecuteDeleteAsync(cancellationToken);
+            await _context.References
+                .Where(r => r.EpisodeId != null && r.Episode!.WorldId == id)
+                .ExecuteDeleteAsync(cancellationToken);
+
+            // 7q. Sadržaj (kaskadira Chapters/Episodes preko required BookId/SeriesId;
+            //     References prema entitetima strane su Cascade pa nestaju automatski)
+            await _context.Contents
+                .Where(c => c.WorldId == id)
+                .ExecuteDeleteAsync(cancellationToken);
+
+            // 7r. Povijesti (SetNull FK-ovi na Character/Location/Faction/Nation/Timeline ne
+            //     ovise o redoslijedu)
+            await _context.Histories
+                .Where(h => h.WorldId == id)
+                .ExecuteDeleteAsync(cancellationToken);
+
             // 8. Tagovi i bilješke
             await _context.Tags
                 .Where(t => t.WorldId == id)

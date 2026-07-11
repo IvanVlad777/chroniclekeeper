@@ -52,6 +52,11 @@ namespace ChronicleKeeper.API.ServiceExtensions
             services.AddScoped<IAbilityLevelRepository, AbilityLevelRepository>();
             services.AddScoped<IItemRepository, ItemRepository>();
             services.AddScoped<IOwnershipHistoryRepository, OwnershipHistoryRepository>();
+            services.AddScoped<IHistoryRepository, HistoryRepository>();
+            services.AddScoped<IContentRepository, ContentRepository>();
+            services.AddScoped<IChapterRepository, ChapterRepository>();
+            services.AddScoped<IEpisodeRepository, EpisodeRepository>();
+            services.AddScoped<IReferenceRepository, ReferenceRepository>();
 
             return services;
         }

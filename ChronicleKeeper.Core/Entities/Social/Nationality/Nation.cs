@@ -1,5 +1,6 @@
 ﻿using ChronicleKeeper.Core.Entities.Base;
 using ChronicleKeeper.Core.Entities.Characters;
+using ChronicleKeeper.Core.Entities.HistoryTimelines;
 //using ChronicleKeeper.Core.Entities.Geography;
 //using ChronicleKeeper.Core.Entities.Social.Politics;
 //using ChronicleKeeper.Core.Entities.Social.Religions;
@@ -11,6 +12,9 @@ namespace ChronicleKeeper.Core.Entities.Social.Nationality
     public class Nation : LoreEntity
     {
         public int Population { get; set; }
+
+        public int? HistoryId { get; set; }
+        public virtual History? History { get; set; }
 
         public ICollection<Character> Characters { get; set; } = new List<Character>();
 

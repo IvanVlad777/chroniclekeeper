@@ -1,17 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.ComponentModel.DataAnnotations;
+using ChronicleKeeper.Core.Entities.Base;
 
 namespace ChronicleKeeper.Core.Entities.Content.Book
 {
-    public class Chapter
+    public class Chapter : LoreEntity
     {
-        [Key]
-        public int Id { get; set; }
-        public string Title { get; set; } = string.Empty;
         public int Order { get; set; }
-        public int BookId { get; set; }
-        public Book Book { get; set; } = null!;
 
-        public ICollection<Reference> References { get; set; } = new List<Reference>();
+        public int BookId { get; set; }
+        public virtual Book? Book { get; set; }
+
+        public virtual ICollection<Reference> References { get; set; } = new List<Reference>();
     }
 }

@@ -24,6 +24,9 @@ public class FactionProfile : Profile
             .ForMember(dest => dest.Members, opt => opt.MapFrom(src => src.Members))
             .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Tags
                 .Where(t => t.Tag != null)
-                .Select(t => new ReferenceDto { Id = t.Tag!.Id, Name = t.Tag.Name })));
+                .Select(t => new ReferenceDto { Id = t.Tag!.Id, Name = t.Tag.Name })))
+            .ForMember(dest => dest.History, opt => opt.MapFrom(src => src.History == null
+                ? null
+                : new ReferenceDto { Id = src.History.Id, Name = src.History.Name }));
     }
 }

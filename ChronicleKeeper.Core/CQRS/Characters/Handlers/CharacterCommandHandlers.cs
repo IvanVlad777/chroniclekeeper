@@ -13,17 +13,20 @@ namespace ChronicleKeeper.Core.CQRS.Characters.Handlers
     {
         private readonly ICharacterRepository _repository;
         private readonly IWorldRepository _worldRepository;
+        private readonly IHistoryRepository _historyRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<CreateCharacterCommandHandler> _logger;
 
         public CreateCharacterCommandHandler(
             ICharacterRepository repository,
             IWorldRepository worldRepository,
+            IHistoryRepository historyRepository,
             IMapper mapper,
             ILogger<CreateCharacterCommandHandler> logger)
         {
             _repository = repository;
             _worldRepository = worldRepository;
+            _historyRepository = historyRepository;
             _mapper = mapper;
             _logger = logger;
         }
@@ -39,7 +42,7 @@ namespace ChronicleKeeper.Core.CQRS.Characters.Handlers
             }
 
             var character = _mapper.Map<Character>(dto);
-            await CharacterValidation.ValidateReferencesAsync(_repository, character, cancellationToken);
+            await CharacterValidation.ValidateReferencesAsync(_repository, _historyRepository, character, cancellationToken);
 
             var createdCharacter = await _repository.CreateAsync(character, cancellationToken);
 
@@ -53,15 +56,18 @@ namespace ChronicleKeeper.Core.CQRS.Characters.Handlers
     public class UpdateCharacterCommandHandler : IRequestHandler<UpdateCharacterCommand, CharacterDto>
     {
         private readonly ICharacterRepository _repository;
+        private readonly IHistoryRepository _historyRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<UpdateCharacterCommandHandler> _logger;
 
         public UpdateCharacterCommandHandler(
             ICharacterRepository repository,
+            IHistoryRepository historyRepository,
             IMapper mapper,
             ILogger<UpdateCharacterCommandHandler> logger)
         {
             _repository = repository;
+            _historyRepository = historyRepository;
             _mapper = mapper;
             _logger = logger;
         }
@@ -75,7 +81,7 @@ namespace ChronicleKeeper.Core.CQRS.Characters.Handlers
                 ?? throw new EntityNotFoundException("Character", request.Id);
 
             _mapper.Map(request.CharacterUpdateDto, character);
-            await CharacterValidation.ValidateReferencesAsync(_repository, character, cancellationToken);
+            await CharacterValidation.ValidateReferencesAsync(_repository, _historyRepository, character, cancellationToken);
 
             var updatedCharacter = await _repository.UpdateAsync(character, cancellationToken);
 
@@ -243,7 +249,7 @@ namespace ChronicleKeeper.Core.CQRS.Characters.Handlers
         /// ako su zadane obje, moraju se slagati.
         /// </summary>
         public static async Task ValidateReferencesAsync(
-            ICharacterRepository repository, Character character, CancellationToken cancellationToken)
+            ICharacterRepository repository, IHistoryRepository historyRepository, Character character, CancellationToken cancellationToken)
         {
             if (character.FatherId is int fatherId)
             {
@@ -291,6 +297,16 @@ namespace ChronicleKeeper.Core.CQRS.Characters.Handlers
                 && !await repository.SpeciesExistsInWorldAsync(speciesId, character.WorldId, cancellationToken))
             {
                 throw new DomainValidationException($"Species with ID {speciesId} does not exist in this world.");
+            }
+
+            if (character.HistoryId is int historyId)
+            {
+                var history = await historyRepository.FindByIdAsync(historyId, cancellationToken)
+                    ?? throw new DomainValidationException($"History with ID {historyId} does not exist.");
+                if (history.WorldId != character.WorldId)
+                {
+                    throw new DomainValidationException($"History with ID {historyId} does not belong to this world.");
+                }
             }
         }
     }

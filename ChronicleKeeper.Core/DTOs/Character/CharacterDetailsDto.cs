@@ -13,6 +13,7 @@ namespace ChronicleKeeper.Core.DTOs.Character
         public ReferenceDto? Nation { get; set; }
         public ReferenceDto? Religion { get; set; }
         public ReferenceDto? Profession { get; set; }
+        public ReferenceDto? History { get; set; }
         public List<ReferenceDto> Factions { get; set; } = new();
         public List<ReferenceDto> Tags { get; set; } = new();
         public List<CharacterRelationshipDto> Relationships { get; set; } = new();

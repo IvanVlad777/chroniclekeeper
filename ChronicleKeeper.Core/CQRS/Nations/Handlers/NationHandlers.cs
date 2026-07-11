@@ -49,17 +49,20 @@ namespace ChronicleKeeper.Core.CQRS.Nations.Handlers
     {
         private readonly INationRepository _repository;
         private readonly IWorldRepository _worldRepository;
+        private readonly IHistoryRepository _historyRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<CreateNationCommandHandler> _logger;
 
         public CreateNationCommandHandler(
             INationRepository repository,
             IWorldRepository worldRepository,
+            IHistoryRepository historyRepository,
             IMapper mapper,
             ILogger<CreateNationCommandHandler> logger)
         {
             _repository = repository;
             _worldRepository = worldRepository;
+            _historyRepository = historyRepository;
             _mapper = mapper;
             _logger = logger;
         }
@@ -74,6 +77,16 @@ namespace ChronicleKeeper.Core.CQRS.Nations.Handlers
                 throw new DomainValidationException($"World with ID {dto.WorldId} does not exist.");
             }
 
+            if (dto.HistoryId is int createHistoryId)
+            {
+                var history = await _historyRepository.FindByIdAsync(createHistoryId, cancellationToken)
+                    ?? throw new DomainValidationException($"History with ID {createHistoryId} does not exist.");
+                if (history.WorldId != dto.WorldId)
+                {
+                    throw new DomainValidationException($"History with ID {createHistoryId} does not belong to this world.");
+                }
+            }
+
             var created = await _repository.CreateAsync(_mapper.Map<Entities.Social.Nationality.Nation>(dto), cancellationToken);
             return _mapper.Map<NationDto>(created);
         }
@@ -82,11 +95,13 @@ namespace ChronicleKeeper.Core.CQRS.Nations.Handlers
     public class UpdateNationCommandHandler : IRequestHandler<UpdateNationCommand, NationDto>
     {
         private readonly INationRepository _repository;
+        private readonly IHistoryRepository _historyRepository;
         private readonly IMapper _mapper;
 
-        public UpdateNationCommandHandler(INationRepository repository, IMapper mapper)
+        public UpdateNationCommandHandler(INationRepository repository, IHistoryRepository historyRepository, IMapper mapper)
         {
             _repository = repository;
+            _historyRepository = historyRepository;
             _mapper = mapper;
         }
 
@@ -94,6 +109,16 @@ namespace ChronicleKeeper.Core.CQRS.Nations.Handlers
         {
             var nation = await _repository.FindByIdAsync(request.Id, cancellationToken)
                 ?? throw new EntityNotFoundException("Nation", request.Id);
+
+            if (request.NationUpdateDto.HistoryId is int updateHistoryId)
+            {
+                var history = await _historyRepository.FindByIdAsync(updateHistoryId, cancellationToken)
+                    ?? throw new DomainValidationException($"History with ID {updateHistoryId} does not exist.");
+                if (history.WorldId != nation.WorldId)
+                {
+                    throw new DomainValidationException($"History with ID {updateHistoryId} does not belong to this world.");
+                }
+            }
 
             _mapper.Map(request.NationUpdateDto, nation);
             var updated = await _repository.UpdateAsync(nation, cancellationToken);

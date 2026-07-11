@@ -28,6 +28,7 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .Include(f => f.Headquarters)
                 .Include(f => f.Members).ThenInclude(m => m.Character)
                 .Include(f => f.Tags).ThenInclude(t => t.Tag)
+                .Include(f => f.History)
                 .AsNoTracking()
                 .AsSplitQuery()
                 .FirstOrDefaultAsync(f => f.Id == id, cancellationToken);

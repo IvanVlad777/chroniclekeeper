@@ -1,8 +1,8 @@
 using ChronicleKeeper.Core.Entities.Base;
 using ChronicleKeeper.Core.Entities.Tags;
 using ChronicleKeeper.Core.Entities.Characters.Equipment;
+using ChronicleKeeper.Core.Entities.HistoryTimelines;
 //using ChronicleKeeper.Core.Entities.Geography.Climate;
-//using ChronicleKeeper.Core.Entities.HistoryTimelines;
 //using ChronicleKeeper.Core.Entities.Social.Cultures;
 //using ChronicleKeeper.Core.Entities.Social.Economy;
 //using ChronicleKeeper.Core.Entities.Social.Religions;
@@ -23,6 +23,9 @@ namespace ChronicleKeeper.Core.Entities.Geography
         public int? ParentLocationId { get; set; }
         public virtual Location? ParentLocation { get; set; }
         public virtual ICollection<Location> SubLocations { get; set; } = new List<Location>();
+
+        public int? HistoryId { get; set; }
+        public virtual History? History { get; set; }
 
         // Tags
         public virtual ICollection<LocationTag> Tags { get; set; } = new List<LocationTag>();

@@ -13,6 +13,9 @@ public class NationProfile : Profile
 
         CreateMap<Nation, NationDetailsDto>()
             .ForMember(dest => dest.Citizens, opt => opt.MapFrom(src => src.Characters
-                .Select(c => new ReferenceDto { Id = c.Id, Name = c.Name })));
+                .Select(c => new ReferenceDto { Id = c.Id, Name = c.Name })))
+            .ForMember(dest => dest.History, opt => opt.MapFrom(src => src.History == null
+                ? null
+                : new ReferenceDto { Id = src.History.Id, Name = src.History.Name }));
     }
 }

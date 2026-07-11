@@ -13,7 +13,8 @@
         "updated": "Ažurirano"
     },
     "fields": {
-        "description": "Opis"
+        "description": "Opis",
+        "history": "Povijest"
     },
     "events": {
         "label": "Događaji",

@@ -3,6 +3,10 @@ using ChronicleKeeper.Core.Entities.Characters;
 using ChronicleKeeper.Core.Entities.Characters.Abilities;
 using ChronicleKeeper.Core.Entities.Characters.CharacterInfo;
 using ChronicleKeeper.Core.Entities.Characters.Equipment;
+using ChronicleKeeper.Core.Entities.Content;
+using ChronicleKeeper.Core.Entities.Content.Article;
+using ChronicleKeeper.Core.Entities.Content.Book;
+using ChronicleKeeper.Core.Entities.Content.Movie;
 using ChronicleKeeper.Core.Entities.Geography;
 using ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient;
 using ChronicleKeeper.Core.Entities.HistoryTimelines;
@@ -51,6 +55,20 @@ namespace ChronicleKeeper.Infrastructure.Data
         // Timelines
         public DbSet<Timeline> Timelines { get; set; }
         public DbSet<TimelineEvent> TimelineEvents { get; set; }
+
+        // History
+        public DbSet<History> Histories { get; set; }
+
+        // Content
+        public DbSet<Content> Contents { get; set; }
+        public DbSet<Article> Articles { get; set; }
+        public DbSet<Book> Books { get; set; }
+        public DbSet<Comic> Comics { get; set; }
+        public DbSet<Movie> Movies { get; set; }
+        public DbSet<Series> Series { get; set; }
+        public DbSet<Chapter> Chapters { get; set; }
+        public DbSet<Episode> Episodes { get; set; }
+        public DbSet<Reference> References { get; set; }
 
         // Tags
         public DbSet<Tag> Tags { get; set; }

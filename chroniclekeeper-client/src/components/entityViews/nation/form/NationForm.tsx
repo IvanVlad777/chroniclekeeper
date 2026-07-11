@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import {
     Button,
     OrnateField,
+    OrnateSelect,
     OrnateTextArea,
     OrnateTextInput,
 } from "../../../ornate";
@@ -14,7 +15,8 @@ import {
     getNationById,
     updateNation,
 } from "../../../../api/nations";
-import { NationUpdateDto } from "../../../../interfaces/loreInterfaces";
+import { getHistories } from "../../../../api/histories";
+import { HistoryDto, NationUpdateDto } from "../../../../interfaces/loreInterfaces";
 import { useWorld } from "../../../../hooks/useWorld";
 import { useAuth } from "../../../../hooks/useAuth";
 import { apiErrorMessage } from "../../../../utils/apiError";
@@ -26,19 +28,24 @@ interface FormState {
     name: string;
     description: string;
     population: string;
+    historyId: string;
 }
 
 const emptyForm: FormState = {
     name: "",
     description: "",
     population: "",
+    historyId: "",
 };
+
+const toId = (v: string): number | null => (v ? Number(v) : null);
 
 function toDto(f: FormState): NationUpdateDto {
     return {
         name: f.name.trim(),
         description: f.description,
         population: f.population.trim() ? Number(f.population) : 0,
+        historyId: toId(f.historyId),
     };
 }
 
@@ -56,7 +63,8 @@ export default function NationForm() {
         userInfo?.roles.some((r) => editorRoles.includes(r)) ?? false;
 
     const [form, setForm] = useState<FormState>(emptyForm);
-    const [loading, setLoading] = useState(isEdit);
+    const [histories, setHistories] = useState<HistoryDto[]>([]);
+    const [loading, setLoading] = useState(true);
     const [loadError, setLoadError] = useState<string | null>(null);
     const [saveError, setSaveError] = useState<string | null>(null);
     const [busy, setBusy] = useState(false);
@@ -66,24 +74,30 @@ export default function NationForm() {
         setForm((f) => ({ ...f, [key]: value }));
 
     useEffect(() => {
-        if (!isEdit) return;
+        if (!selectedWorld) return;
 
         let cancelled = false;
         setLoading(true);
         setLoadError(null);
 
-        getNationById(editId)
-            .then((n) => {
+        getHistories(selectedWorld.id)
+            .then(async (historiesData) => {
                 if (cancelled) return;
-                setForm({
-                    name: n.name ?? "",
-                    description: n.description ?? "",
-                    population:
-                        n.population != null ? String(n.population) : "",
-                });
+                setHistories(historiesData);
+                if (isEdit) {
+                    const n = await getNationById(editId);
+                    if (cancelled) return;
+                    setForm({
+                        name: n.name ?? "",
+                        description: n.description ?? "",
+                        population:
+                            n.population != null ? String(n.population) : "",
+                        historyId: n.historyId ? String(n.historyId) : "",
+                    });
+                }
             })
             .catch((err) => {
-                console.error("Failed to load nation:", err);
+                console.error("Failed to load nation form data:", err);
                 if (!cancelled) setLoadError(t("loaderror"));
             })
             .finally(() => {
@@ -93,7 +107,7 @@ export default function NationForm() {
         return () => {
             cancelled = true;
         };
-    }, [isEdit, editId, t, reloadKey]);
+    }, [selectedWorld, isEdit, editId, t, reloadKey]);
 
     async function onSubmit(e: FormEvent) {
         e.preventDefault();
@@ -202,6 +216,19 @@ export default function NationForm() {
                                 set("population", e.target.value)
                             }
                         />
+                    </OrnateField>
+                    <OrnateField label={t("fields.history")}>
+                        <OrnateSelect
+                            value={form.historyId}
+                            onChange={(e) => set("historyId", e.target.value)}
+                        >
+                            <option value="">{t("none")}</option>
+                            {histories.map((h) => (
+                                <option key={h.id} value={h.id}>
+                                    {h.name}
+                                </option>
+                            ))}
+                        </OrnateSelect>
                     </OrnateField>
                 </div>
             </div>

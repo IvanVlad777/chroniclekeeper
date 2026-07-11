@@ -14,7 +14,8 @@
     },
     "fields": {
         "description": "Description",
-        "population": "Population"
+        "population": "Population",
+        "history": "History"
     },
     "citizens": {
         "label": "Citizens"

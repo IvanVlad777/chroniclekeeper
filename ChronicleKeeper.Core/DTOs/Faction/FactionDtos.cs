@@ -14,6 +14,7 @@ namespace ChronicleKeeper.Core.DTOs.Faction
         public string Motto { get; set; } = string.Empty;
         public int? LeaderId { get; set; }
         public int? HeadquartersId { get; set; }
+        public int? HistoryId { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }
@@ -24,6 +25,7 @@ namespace ChronicleKeeper.Core.DTOs.Faction
         public ReferenceDto? Headquarters { get; set; }
         public List<FactionMemberDto> Members { get; set; } = new();
         public List<ReferenceDto> Tags { get; set; } = new();
+        public ReferenceDto? History { get; set; }
     }
 
     public class FactionMemberDto
@@ -55,6 +57,7 @@ namespace ChronicleKeeper.Core.DTOs.Faction
 
         public int? LeaderId { get; set; }
         public int? HeadquartersId { get; set; }
+        public int? HistoryId { get; set; }
     }
 
     public class FactionUpdateDto
@@ -74,6 +77,7 @@ namespace ChronicleKeeper.Core.DTOs.Faction
 
         public int? LeaderId { get; set; }
         public int? HeadquartersId { get; set; }
+        public int? HistoryId { get; set; }
     }
 
     public class FactionMemberAddDto

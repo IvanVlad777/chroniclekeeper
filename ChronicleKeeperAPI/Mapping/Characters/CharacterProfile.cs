@@ -22,6 +22,7 @@ public class CharacterProfile : Profile
             .ForMember(dest => dest.Nation, opt => opt.MapFrom(src => src.Nation == null ? null : new ReferenceDto { Id = src.Nation.Id, Name = src.Nation.Name }))
             .ForMember(dest => dest.Religion, opt => opt.MapFrom(src => src.Religion == null ? null : new ReferenceDto { Id = src.Religion.Id, Name = src.Religion.Name }))
             .ForMember(dest => dest.Profession, opt => opt.MapFrom(src => src.Profession == null ? null : new ReferenceDto { Id = src.Profession.Id, Name = src.Profession.Name }))
+            .ForMember(dest => dest.History, opt => opt.MapFrom(src => src.History == null ? null : new ReferenceDto { Id = src.History.Id, Name = src.History.Name }))
             .ForMember(dest => dest.Educations, opt => opt.MapFrom(src => src.Educations))
             .ForMember(dest => dest.ReligiousEducations, opt => opt.Ignore())
             .ForMember(dest => dest.Abilities, opt => opt.MapFrom(src => src.Abilities

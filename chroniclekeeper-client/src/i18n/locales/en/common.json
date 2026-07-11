@@ -32,7 +32,9 @@
         "educationSystems": "Education Systems",
         "libraries": "Libraries",
         "abilities": "Abilities",
-        "items": "Items"
+        "items": "Items",
+        "histories": "Histories",
+        "contents": "Content"
     },
     "shell": {
         "newEntry": "New entry",

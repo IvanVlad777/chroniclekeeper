@@ -163,6 +163,9 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Property<double?>("Height")
                         .HasColumnType("float");
 
+                    b.Property<int?>("HistoryId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsArtificial")
                         .HasColumnType("bit");
 
@@ -226,6 +229,8 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.HasIndex("FatherId");
 
                     b.HasIndex("FirstName");
+
+                    b.HasIndex("HistoryId");
 
                     b.HasIndex("LastName");
 
@@ -424,6 +429,189 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.ToTable("OwnershipHistories");
                 });
 
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Content.Book.Chapter", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("Chapters");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Content.Content", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ContentType")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("Contents");
+
+                    b.HasDiscriminator<string>("ContentType").HasValue("Content");
+
+                    b.UseTphMappingStrategy();
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Content.Movie.Episode", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Season")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SeriesId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SeriesId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("Episodes");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Content.Reference", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("ChapterId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CharacterId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ContentId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("EpisodeId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("FactionId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("LocationId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("NationId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Note")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChapterId");
+
+                    b.HasIndex("CharacterId");
+
+                    b.HasIndex("ContentId");
+
+                    b.HasIndex("EpisodeId");
+
+                    b.HasIndex("FactionId");
+
+                    b.HasIndex("LocationId");
+
+                    b.HasIndex("NationId");
+
+                    b.ToTable("References");
+                });
+
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.Race", b =>
                 {
                     b.Property<int>("Id")
@@ -549,6 +737,9 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .HasMaxLength(4000)
                         .HasColumnType("nvarchar(4000)");
 
+                    b.Property<int?>("HistoryId")
+                        .HasColumnType("int");
+
                     b.Property<double?>("Latitude")
                         .HasColumnType("float");
 
@@ -579,6 +770,8 @@ namespace ChronicleKeeper.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("HistoryId");
+
                     b.HasIndex("ParentLocationId");
 
                     b.HasIndex("WorldId", "Name");
@@ -587,6 +780,48 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         {
                             t.HasCheckConstraint("CK_Locations_Parent_NotSelf", "[ParentLocationId] <> [Id]");
                         });
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.HistoryTimelines.History", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<bool>("IsOfficial")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Summary")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("Histories");
                 });
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.HistoryTimelines.Timeline", b =>
@@ -605,6 +840,9 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .HasMaxLength(4000)
                         .HasColumnType("nvarchar(4000)");
 
+                    b.Property<int?>("HistoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -617,6 +855,8 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("HistoryId");
 
                     b.HasIndex("WorldId", "Name");
 
@@ -1567,6 +1807,9 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Property<int?>("HeadquartersId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("HistoryId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsSecretive")
                         .HasColumnType("bit");
 
@@ -1597,6 +1840,8 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("HeadquartersId");
+
+                    b.HasIndex("HistoryId");
 
                     b.HasIndex("LeaderId");
 
@@ -1653,6 +1898,9 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .HasMaxLength(4000)
                         .HasColumnType("nvarchar(4000)");
 
+                    b.Property<int?>("HistoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -1668,6 +1916,8 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("HistoryId");
 
                     b.HasIndex("WorldId", "Name");
 
@@ -2419,6 +2669,103 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Content.Article.Article", b =>
+                {
+                    b.HasBaseType("ChronicleKeeper.Core.Entities.Content.Content");
+
+                    b.Property<DateTime>("PublishDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Source")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasDiscriminator().HasValue("Article");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Content.Book.Book", b =>
+                {
+                    b.HasBaseType("ChronicleKeeper.Core.Entities.Content.Content");
+
+                    b.Property<string>("Author")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("ReleaseDate")
+                        .HasColumnType("datetime2");
+
+                    b.ToTable("Contents", t =>
+                        {
+                            t.Property("Author")
+                                .HasColumnName("Book_Author");
+                        });
+
+                    b.HasDiscriminator().HasValue("Book");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Content.Book.Comic", b =>
+                {
+                    b.HasBaseType("ChronicleKeeper.Core.Entities.Content.Content");
+
+                    b.Property<string>("Author")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("IssueNumber")
+                        .HasColumnType("int");
+
+                    b.HasDiscriminator().HasValue("Comic");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Content.Movie.Movie", b =>
+                {
+                    b.HasBaseType("ChronicleKeeper.Core.Entities.Content.Content");
+
+                    b.Property<string>("Director")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("DurationMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PrequelId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ReleaseDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasIndex("PrequelId");
+
+                    b.ToTable("Contents", t =>
+                        {
+                            t.HasCheckConstraint("CK_Movies_Prequel_NotSelf", "[PrequelId] <> [Id]");
+
+                            t.Property("ReleaseDate")
+                                .HasColumnName("Movie_ReleaseDate");
+                        });
+
+                    b.HasDiscriminator().HasValue("Movie");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Content.Movie.Series", b =>
+                {
+                    b.HasBaseType("ChronicleKeeper.Core.Entities.Content.Content");
+
+                    b.Property<string>("Creator")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("Seasons")
+                        .HasColumnType("int");
+
+                    b.HasDiscriminator().HasValue("Series");
+                });
+
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Professions.TradeSchool", b =>
                 {
                     b.HasBaseType("ChronicleKeeper.Core.Entities.Social.Education.School");
@@ -2493,6 +2840,11 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .HasForeignKey("FatherId")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("ChronicleKeeper.Core.Entities.HistoryTimelines.History", "History")
+                        .WithMany()
+                        .HasForeignKey("HistoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("ChronicleKeeper.Core.Entities.Characters.Character", "Mother")
                         .WithMany()
                         .HasForeignKey("MotherId")
@@ -2535,6 +2887,8 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Father");
+
+                    b.Navigation("History");
 
                     b.Navigation("Mother");
 
@@ -2637,6 +2991,107 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Navigation("World");
                 });
 
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Content.Book.Chapter", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Content.Book.Book", "Book")
+                        .WithMany("Chapters")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Content.Content", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Content.Movie.Episode", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Content.Movie.Series", "Series")
+                        .WithMany("Episodes")
+                        .HasForeignKey("SeriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Series");
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Content.Reference", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Content.Book.Chapter", "Chapter")
+                        .WithMany("References")
+                        .HasForeignKey("ChapterId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Characters.Character", "Character")
+                        .WithMany()
+                        .HasForeignKey("CharacterId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Content.Content", "Content")
+                        .WithMany("References")
+                        .HasForeignKey("ContentId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Content.Movie.Episode", "Episode")
+                        .WithMany("References")
+                        .HasForeignKey("EpisodeId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Faction", "Faction")
+                        .WithMany()
+                        .HasForeignKey("FactionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Nationality.Nation", "Nation")
+                        .WithMany()
+                        .HasForeignKey("NationId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("Chapter");
+
+                    b.Navigation("Character");
+
+                    b.Navigation("Content");
+
+                    b.Navigation("Episode");
+
+                    b.Navigation("Faction");
+
+                    b.Navigation("Location");
+
+                    b.Navigation("Nation");
+                });
+
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.Race", b =>
                 {
                     b.HasOne("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.SapientSpecies", "SapientSpecies")
@@ -2669,6 +3124,11 @@ namespace ChronicleKeeper.Infrastructure.Migrations
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Location", b =>
                 {
+                    b.HasOne("ChronicleKeeper.Core.Entities.HistoryTimelines.History", "History")
+                        .WithMany()
+                        .HasForeignKey("HistoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("ChronicleKeeper.Core.Entities.Geography.Location", "ParentLocation")
                         .WithMany("SubLocations")
                         .HasForeignKey("ParentLocationId")
@@ -2680,18 +3140,38 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.Navigation("History");
+
                     b.Navigation("ParentLocation");
 
                     b.Navigation("World");
                 });
 
-            modelBuilder.Entity("ChronicleKeeper.Core.Entities.HistoryTimelines.Timeline", b =>
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.HistoryTimelines.History", b =>
                 {
                     b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
                         .WithMany()
                         .HasForeignKey("WorldId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.HistoryTimelines.Timeline", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.HistoryTimelines.History", "History")
+                        .WithMany("Timelines")
+                        .HasForeignKey("HistoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("History");
 
                     b.Navigation("World");
                 });
@@ -3147,6 +3627,11 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .HasForeignKey("HeadquartersId")
                         .OnDelete(DeleteBehavior.SetNull);
 
+                    b.HasOne("ChronicleKeeper.Core.Entities.HistoryTimelines.History", "History")
+                        .WithMany()
+                        .HasForeignKey("HistoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("ChronicleKeeper.Core.Entities.Characters.Character", "Leader")
                         .WithMany()
                         .HasForeignKey("LeaderId")
@@ -3159,6 +3644,8 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Headquarters");
+
+                    b.Navigation("History");
 
                     b.Navigation("Leader");
 
@@ -3186,11 +3673,18 @@ namespace ChronicleKeeper.Infrastructure.Migrations
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Nationality.Nation", b =>
                 {
+                    b.HasOne("ChronicleKeeper.Core.Entities.HistoryTimelines.History", "History")
+                        .WithMany()
+                        .HasForeignKey("HistoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
                         .WithMany()
                         .HasForeignKey("WorldId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("History");
 
                     b.Navigation("World");
                 });
@@ -3476,6 +3970,16 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Content.Movie.Movie", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Content.Movie.Movie", "Prequel")
+                        .WithMany("Sequels")
+                        .HasForeignKey("PrequelId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Prequel");
+                });
+
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Characters.Abilities.Ability", b =>
                 {
                     b.Navigation("AbilityLevels");
@@ -3503,6 +4007,21 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Navigation("OwnershipHistory");
                 });
 
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Content.Book.Chapter", b =>
+                {
+                    b.Navigation("References");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Content.Content", b =>
+                {
+                    b.Navigation("References");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Content.Movie.Episode", b =>
+                {
+                    b.Navigation("References");
+                });
+
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.SapientSpecies", b =>
                 {
                     b.Navigation("Races");
@@ -3515,6 +4034,11 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Navigation("SubLocations");
 
                     b.Navigation("Tags");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.HistoryTimelines.History", b =>
+                {
+                    b.Navigation("Timelines");
                 });
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.HistoryTimelines.Timeline", b =>
@@ -3617,6 +4141,21 @@ namespace ChronicleKeeper.Infrastructure.Migrations
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Structure.SocialClass", b =>
                 {
                     b.Navigation("Members");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Content.Book.Book", b =>
+                {
+                    b.Navigation("Chapters");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Content.Movie.Movie", b =>
+                {
+                    b.Navigation("Sequels");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Content.Movie.Series", b =>
+                {
+                    b.Navigation("Episodes");
                 });
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Professions.TradeSchool", b =>

@@ -314,6 +314,14 @@ export default function TimelineDetails() {
             {timeline.description && (
                 <p className={s.description}>{timeline.description}</p>
             )}
+            {timeline.history && (
+                <p className={s.description}>
+                    {t("fields.history")}:{" "}
+                    <Link to={`/storymap/histories/${timeline.history.id}`}>
+                        {timeline.history.name}
+                    </Link>
+                </p>
+            )}
 
             {eventFormFor === 0 && eventFormNode}
 

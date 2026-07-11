@@ -19,6 +19,9 @@ public class LocationProfile : Profile
                 .Select(c => new ReferenceDto { Id = c.Id, Name = c.Name })))
             .ForMember(dest => dest.Tags, opt => opt.MapFrom(src => src.Tags
                 .Where(t => t.Tag != null)
-                .Select(t => new ReferenceDto { Id = t.Tag!.Id, Name = t.Tag.Name })));
+                .Select(t => new ReferenceDto { Id = t.Tag!.Id, Name = t.Tag.Name })))
+            .ForMember(dest => dest.History, opt => opt.MapFrom(src => src.History == null
+                ? null
+                : new ReferenceDto { Id = src.History.Id, Name = src.History.Name }));
     }
 }

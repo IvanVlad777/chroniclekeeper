@@ -54,5 +54,6 @@ namespace ChronicleKeeper.Core.DTOs.Character
         public int? MotherId { get; set; }
 
         public int? ProfessionId { get; set; }
+        public int? HistoryId { get; set; }
     }
 }
