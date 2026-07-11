@@ -1,0 +1,63 @@
+{
+    "listTitle": "Climate Details",
+    "search": "Search climate details…",
+    "loaderror": "Failed to load",
+    "notfound": "Climate detail not found",
+    "none": "None",
+    "backtolist": "Back to climate details",
+    "emptyTitle": "No climate details yet",
+    "emptyText": "Reusable weather profiles — temperature, humidity, wind — that can be attached to any number of climate zones. Create the first one to start describing your world's weather in detail.",
+    "columns": {
+        "name": "Name",
+        "windDirection": "Wind direction",
+        "isExtremeClimate": "Extreme",
+        "updated": "Updated"
+    },
+    "fields": {
+        "description": "Description",
+        "averageTemperature": "Average temperature",
+        "humidity": "Humidity",
+        "precipitation": "Precipitation",
+        "windSpeed": "Wind speed",
+        "windDirection": "Wind direction",
+        "isExtremeClimate": "Extreme climate",
+        "notableWeatherPhenomena": "Notable weather phenomena"
+    },
+    "windDirections": {
+        "North": "North",
+        "South": "South",
+        "East": "East",
+        "West": "West",
+        "Northeast": "Northeast",
+        "Northwest": "Northwest",
+        "Southeast": "Southeast",
+        "Southwest": "Southwest",
+        "Variable": "Variable"
+    },
+    "notableWeatherPhenomena": {
+        "None": "None",
+        "Tornado": "Tornado",
+        "Hurricane": "Hurricane",
+        "Monsoon": "Monsoon",
+        "Sandstorm": "Sandstorm",
+        "Blizzard": "Blizzard",
+        "Thunderstorm": "Thunderstorm",
+        "Drought": "Drought",
+        "Fog": "Fog"
+    },
+    "form": {
+        "newTitle": "New climate detail",
+        "editTitle": "Edit climate detail",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "history": "History",
+        "save": "Save climate detail",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

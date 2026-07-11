@@ -56,6 +56,9 @@ const newEntryTargets: { key: string; glyph: string; to: string }[] = [
     { key: "items", glyph: "⚔", to: "/storymap/items/new" },
     { key: "histories", glyph: "⌛", to: "/storymap/histories/new" },
     { key: "contents", glyph: "📖", to: "/storymap/contents/new" },
+    { key: "climateZones", glyph: "☁", to: "/storymap/climate-zones/new" },
+    { key: "climateDetails", glyph: "☂", to: "/storymap/climate-details/new" },
+    { key: "seasons", glyph: "☀", to: "/storymap/seasons/new" },
 ];
 
 export function Sidebar() {

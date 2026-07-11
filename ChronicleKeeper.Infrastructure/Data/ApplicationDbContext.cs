@@ -8,6 +8,7 @@ using ChronicleKeeper.Core.Entities.Content.Article;
 using ChronicleKeeper.Core.Entities.Content.Book;
 using ChronicleKeeper.Core.Entities.Content.Movie;
 using ChronicleKeeper.Core.Entities.Geography;
+using ChronicleKeeper.Core.Entities.Geography.Climate;
 using ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient;
 using ChronicleKeeper.Core.Entities.HistoryTimelines;
 using ChronicleKeeper.Core.Entities.Notes;
@@ -43,6 +44,15 @@ namespace ChronicleKeeper.Infrastructure.Data
 
         // Geography
         public DbSet<Location> Locations { get; set; }
+
+        // Climate
+        public DbSet<ClimateZone> ClimateZones { get; set; }
+        public DbSet<ClimateDetail> ClimateDetails { get; set; }
+        public DbSet<Season> Seasons { get; set; }
+        public DbSet<WeatherPattern> WeatherPatterns { get; set; }
+        public DbSet<ClimateZoneDetail> ClimateZoneDetails { get; set; }
+        public DbSet<ClimateZoneSeason> ClimateZoneSeasons { get; set; }
+        public DbSet<LocationClimateZone> LocationClimateZones { get; set; }
 
         // Species
         public DbSet<SapientSpecies> SapientSpecies { get; set; }

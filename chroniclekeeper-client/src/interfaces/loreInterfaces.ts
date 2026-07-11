@@ -1464,3 +1464,185 @@ export interface ContentReferenceLinkDto {
 
 export type ContentReferenceLinkCreateDto = Omit<ContentReferenceLinkDto, "id">;
 export type ContentReferenceLinkUpdateDto = ContentReferenceLinkCreateDto;
+
+// ----- Climate -----
+
+export const climateZoneTypes = [
+    "Tropical",
+    "Arid",
+    "Temperate",
+    "Continental",
+    "Polar",
+] as const;
+export type ClimateZoneType = (typeof climateZoneTypes)[number];
+
+export const windDirections = [
+    "North",
+    "South",
+    "East",
+    "West",
+    "Northeast",
+    "Northwest",
+    "Southeast",
+    "Southwest",
+    "Variable",
+] as const;
+export type WindDirection = (typeof windDirections)[number];
+
+export const notableWeatherPhenomena = [
+    "None",
+    "Tornado",
+    "Hurricane",
+    "Monsoon",
+    "Sandstorm",
+    "Blizzard",
+    "Thunderstorm",
+    "Drought",
+    "Fog",
+] as const;
+export type NotableWeatherPhenomena = (typeof notableWeatherPhenomena)[number];
+
+export const weatherPatternTypes = [
+    "Normal",
+    "Monsoon",
+    "DesertStorm",
+    "HurricaneSeason",
+    "ArcticBlast",
+    "HeatWave",
+] as const;
+export type WeatherPatternType = (typeof weatherPatternTypes)[number];
+
+export const weatherFrequencies = ["Rare", "Seasonal", "Frequent", "Constant"] as const;
+export type WeatherFrequency = (typeof weatherFrequencies)[number];
+
+export const weatherEffects = [
+    "None",
+    "Flooding",
+    "Drought",
+    "HighWinds",
+    "ExtremeCold",
+    "ExtremeHeat",
+] as const;
+export type WeatherEffect = (typeof weatherEffects)[number];
+
+export interface WeatherPatternDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    climateZoneId: number;
+    patternType: WeatherPatternType;
+    frequency: WeatherFrequency;
+    effects: WeatherEffect;
+    historyId?: number | null;
+    createdAt: string;
+    updatedAt: string;
+}
+
+/** Svijet vremenskog obrasca se izvodi iz klimatske zone — ne šalje se worldId. */
+export interface WeatherPatternCreateDto {
+    name: string;
+    description: string;
+    climateZoneId: number;
+    patternType: WeatherPatternType;
+    frequency: WeatherFrequency;
+    effects: WeatherEffect;
+    historyId?: number | null;
+}
+
+export type WeatherPatternUpdateDto = Omit<WeatherPatternCreateDto, "climateZoneId">;
+
+export interface ClimateZoneDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    zoneType: ClimateZoneType;
+    averageTemperature: number;
+    averageHumidity: number;
+    averagePrecipitation: number;
+    hasDistinctSeasons: boolean;
+    historyId?: number | null;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface ClimateZoneDetailsDto extends ClimateZoneDto {
+    history: ReferenceDto | null;
+    climates: ReferenceDto[];
+    seasons: ReferenceDto[];
+    locations: ReferenceDto[];
+    weatherPatterns: WeatherPatternDto[];
+}
+
+export interface ClimateZoneCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    zoneType: ClimateZoneType;
+    averageTemperature: number;
+    averageHumidity: number;
+    averagePrecipitation: number;
+    hasDistinctSeasons: boolean;
+    historyId?: number | null;
+}
+
+export type ClimateZoneUpdateDto = Omit<ClimateZoneCreateDto, "worldId">;
+
+export interface ClimateDetailDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    averageTemperature: number;
+    humidity: number;
+    precipitation: number;
+    windSpeed: number;
+    windDirection: WindDirection;
+    isExtremeClimate: boolean;
+    notableWeatherPhenomena: NotableWeatherPhenomena;
+    historyId?: number | null;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface ClimateDetailCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    averageTemperature: number;
+    humidity: number;
+    precipitation: number;
+    windSpeed: number;
+    windDirection: WindDirection;
+    isExtremeClimate: boolean;
+    notableWeatherPhenomena: NotableWeatherPhenomena;
+    historyId?: number | null;
+}
+
+export type ClimateDetailUpdateDto = Omit<ClimateDetailCreateDto, "worldId">;
+
+export interface SeasonDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    durationInDays: number;
+    typicalTemperature: number;
+    typicalPrecipitation: number;
+    historyId?: number | null;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface SeasonCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    durationInDays: number;
+    typicalTemperature: number;
+    typicalPrecipitation: number;
+    historyId?: number | null;
+}
+
+export type SeasonUpdateDto = Omit<SeasonCreateDto, "worldId">;

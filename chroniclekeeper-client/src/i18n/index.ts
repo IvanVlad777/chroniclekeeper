@@ -60,6 +60,12 @@ import enHistory from "./locales/en/history.json";
 import hrHistory from "./locales/hr/history.json";
 import enContent from "./locales/en/content.json";
 import hrContent from "./locales/hr/content.json";
+import enClimateZone from "./locales/en/climateZone.json";
+import hrClimateZone from "./locales/hr/climateZone.json";
+import enClimateDetail from "./locales/en/climateDetail.json";
+import hrClimateDetail from "./locales/hr/climateDetail.json";
+import enSeason from "./locales/en/season.json";
+import hrSeason from "./locales/hr/season.json";
 
 i18n.use(LanguageDetector)
     .use(initReactI18next)
@@ -95,6 +101,9 @@ i18n.use(LanguageDetector)
                 item: enItem,
                 history: enHistory,
                 content: enContent,
+                climateZone: enClimateZone,
+                climateDetail: enClimateDetail,
+                season: enSeason,
             },
             hr: {
                 common: hrCommon,
@@ -126,6 +135,9 @@ i18n.use(LanguageDetector)
                 item: hrItem,
                 history: hrHistory,
                 content: hrContent,
+                climateZone: hrClimateZone,
+                climateDetail: hrClimateDetail,
+                season: hrSeason,
             },
         },
         fallbackLng: "en",
@@ -159,6 +171,9 @@ i18n.use(LanguageDetector)
             "item",
             "history",
             "content",
+            "climateZone",
+            "climateDetail",
+            "season",
         ], //namespaces
         defaultNS: "common",
         interpolation: {

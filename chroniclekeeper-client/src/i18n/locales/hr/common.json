@@ -34,7 +34,10 @@
         "abilities": "Sposobnosti",
         "items": "Predmeti",
         "histories": "Povijesti",
-        "contents": "Sadržaj"
+        "contents": "Sadržaj",
+        "climateZones": "Klimatske zone",
+        "climateDetails": "Klimatski detalji",
+        "seasons": "Godišnja doba"
     },
     "shell": {
         "newEntry": "Novi zapis",

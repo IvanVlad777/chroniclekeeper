@@ -58,4 +58,7 @@ export const navEntries: NavEntry[] = [
     { key: "items", glyph: "⚔", to: "/storymap/items" },
     { key: "histories", glyph: "⌛", to: "/storymap/histories" },
     { key: "contents", glyph: "📖", to: "/storymap/contents" },
+    { key: "climateZones", glyph: "☁", to: "/storymap/climate-zones" },
+    { key: "climateDetails", glyph: "☂", to: "/storymap/climate-details" },
+    { key: "seasons", glyph: "☀", to: "/storymap/seasons" },
 ];

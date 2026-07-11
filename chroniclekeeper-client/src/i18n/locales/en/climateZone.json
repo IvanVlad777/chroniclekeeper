@@ -1,0 +1,97 @@
+{
+    "listTitle": "Climate Zones",
+    "search": "Search climate zones…",
+    "loaderror": "Failed to load",
+    "notfound": "Climate zone not found",
+    "none": "None",
+    "backtolist": "Back to climate zones",
+    "emptyTitle": "No climate zones yet",
+    "emptyText": "Broad climate belts — tropical, arid, polar — that give your world's regions their weather. Create the first zone to start mapping your world's atmosphere.",
+    "columns": {
+        "name": "Name",
+        "zoneType": "Zone type",
+        "averageTemperature": "Avg. temperature",
+        "updated": "Updated"
+    },
+    "fields": {
+        "description": "Description",
+        "zoneType": "Zone type",
+        "averageTemperature": "Average temperature",
+        "averageHumidity": "Average humidity",
+        "averagePrecipitation": "Average precipitation",
+        "hasDistinctSeasons": "Has distinct seasons"
+    },
+    "zoneTypes": {
+        "Tropical": "Tropical",
+        "Arid": "Arid",
+        "Temperate": "Temperate",
+        "Continental": "Continental",
+        "Polar": "Polar"
+    },
+    "weatherPatternTypes": {
+        "Normal": "Normal",
+        "Monsoon": "Monsoon",
+        "DesertStorm": "Desert storm",
+        "HurricaneSeason": "Hurricane season",
+        "ArcticBlast": "Arctic blast",
+        "HeatWave": "Heat wave"
+    },
+    "weatherFrequencies": {
+        "Rare": "Rare",
+        "Seasonal": "Seasonal",
+        "Frequent": "Frequent",
+        "Constant": "Constant"
+    },
+    "weatherEffects": {
+        "None": "None",
+        "Flooding": "Flooding",
+        "Drought": "Drought",
+        "HighWinds": "High winds",
+        "ExtremeCold": "Extreme cold",
+        "ExtremeHeat": "Extreme heat"
+    },
+    "weatherPatterns": {
+        "label": "Weather patterns",
+        "add": "add",
+        "addTitle": "New weather pattern",
+        "editTitle": "Edit weather pattern",
+        "name": "Name",
+        "description": "Description",
+        "patternType": "Pattern type",
+        "frequency": "Frequency",
+        "effects": "Effects",
+        "requiredMissing": "Name is required.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed.",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "cancel": "Cancel",
+        "save": "Save",
+        "delete": "Delete"
+    },
+    "links": {
+        "climates": "Climate details",
+        "seasons": "Seasons",
+        "locations": "Locations",
+        "add": "link",
+        "remove": "Unlink {{name}}",
+        "pick": "Pick an entry",
+        "confirm": "Link",
+        "addFailed": "Linking failed.",
+        "removeFailed": "Unlinking failed."
+    },
+    "form": {
+        "newTitle": "New climate zone",
+        "editTitle": "Edit climate zone",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "history": "History",
+        "save": "Save climate zone",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

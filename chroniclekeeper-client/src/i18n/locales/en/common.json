@@ -34,7 +34,10 @@
         "abilities": "Abilities",
         "items": "Items",
         "histories": "Histories",
-        "contents": "Content"
+        "contents": "Content",
+        "climateZones": "Climate Zones",
+        "climateDetails": "Climate Details",
+        "seasons": "Seasons"
     },
     "shell": {
         "newEntry": "New entry",

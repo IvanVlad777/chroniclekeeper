@@ -1,0 +1,37 @@
+{
+    "listTitle": "Godišnja doba",
+    "search": "Pretraži godišnja doba…",
+    "loaderror": "Učitavanje nije uspjelo",
+    "notfound": "Godišnje doba nije pronađeno",
+    "none": "Nema",
+    "backtolist": "Natrag na godišnja doba",
+    "emptyTitle": "Još nema godišnjih doba",
+    "emptyText": "Ponovno iskoristiva godišnja doba — proljeće, monsun, dugu zimu — koja se mogu povezati s bilo kojim brojem klimatskih zona. Stvori prvo da započneš oblikovati vremenski kalendar svog svijeta.",
+    "columns": {
+        "name": "Naziv",
+        "durationInDays": "Trajanje (dani)",
+        "typicalTemperature": "Tipična temperatura",
+        "updated": "Ažurirano"
+    },
+    "fields": {
+        "description": "Opis",
+        "durationInDays": "Trajanje u danima",
+        "typicalTemperature": "Tipična temperatura",
+        "typicalPrecipitation": "Tipične padaline"
+    },
+    "form": {
+        "newTitle": "Novo godišnje doba",
+        "editTitle": "Uredi godišnje doba",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "history": "Povijest",
+        "save": "Spremi godišnje doba",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}”? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

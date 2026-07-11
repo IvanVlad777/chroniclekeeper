@@ -612,6 +612,278 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.ToTable("References");
                 });
 
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Climate.ClimateDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<double>("AverageTemperature")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<int?>("HistoryId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Humidity")
+                        .HasColumnType("float");
+
+                    b.Property<bool>("IsExtremeClimate")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("NotableWeatherPhenomena")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<double>("Precipitation")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("WindDirection")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<double>("WindSpeed")
+                        .HasColumnType("float");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HistoryId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("ClimateDetails");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Climate.ClimateZone", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<double>("AverageHumidity")
+                        .HasColumnType("float");
+
+                    b.Property<double>("AveragePrecipitation")
+                        .HasColumnType("float");
+
+                    b.Property<double>("AverageTemperature")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<bool>("HasDistinctSeasons")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("HistoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ZoneType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HistoryId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("ClimateZones");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Climate.ClimateZoneDetail", b =>
+                {
+                    b.Property<int>("ClimateZoneId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ClimateDetailId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ClimateZoneId", "ClimateDetailId");
+
+                    b.HasIndex("ClimateDetailId");
+
+                    b.ToTable("ClimateZoneDetails");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Climate.ClimateZoneSeason", b =>
+                {
+                    b.Property<int>("ClimateZoneId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SeasonId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ClimateZoneId", "SeasonId");
+
+                    b.HasIndex("SeasonId");
+
+                    b.ToTable("ClimateZoneSeasons");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Climate.LocationClimateZone", b =>
+                {
+                    b.Property<int>("LocationId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ClimateZoneId")
+                        .HasColumnType("int");
+
+                    b.HasKey("LocationId", "ClimateZoneId");
+
+                    b.HasIndex("ClimateZoneId");
+
+                    b.ToTable("LocationClimateZones");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Climate.Season", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<int>("DurationInDays")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("HistoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<double>("TypicalPrecipitation")
+                        .HasColumnType("float");
+
+                    b.Property<double>("TypicalTemperature")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HistoryId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("Seasons");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Climate.WeatherPattern", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ClimateZoneId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<string>("Effects")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Frequency")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<int?>("HistoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("PatternType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClimateZoneId");
+
+                    b.HasIndex("HistoryId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("WeatherPatterns");
+                });
+
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.Race", b =>
                 {
                     b.Property<int>("Id")
@@ -3092,6 +3364,143 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Navigation("Nation");
                 });
 
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Climate.ClimateDetail", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.HistoryTimelines.History", "History")
+                        .WithMany()
+                        .HasForeignKey("HistoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("History");
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Climate.ClimateZone", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.HistoryTimelines.History", "History")
+                        .WithMany()
+                        .HasForeignKey("HistoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("History");
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Climate.ClimateZoneDetail", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Climate.ClimateDetail", "ClimateDetail")
+                        .WithMany("ClimateZones")
+                        .HasForeignKey("ClimateDetailId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Climate.ClimateZone", "ClimateZone")
+                        .WithMany("Climates")
+                        .HasForeignKey("ClimateZoneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ClimateDetail");
+
+                    b.Navigation("ClimateZone");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Climate.ClimateZoneSeason", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Climate.ClimateZone", "ClimateZone")
+                        .WithMany("Seasons")
+                        .HasForeignKey("ClimateZoneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Climate.Season", "Season")
+                        .WithMany("ClimateZones")
+                        .HasForeignKey("SeasonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ClimateZone");
+
+                    b.Navigation("Season");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Climate.LocationClimateZone", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Climate.ClimateZone", "ClimateZone")
+                        .WithMany("Locations")
+                        .HasForeignKey("ClimateZoneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ClimateZone");
+
+                    b.Navigation("Location");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Climate.Season", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.HistoryTimelines.History", "History")
+                        .WithMany()
+                        .HasForeignKey("HistoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("History");
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Climate.WeatherPattern", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Climate.ClimateZone", "ClimateZone")
+                        .WithMany("TypicalWeatherPatterns")
+                        .HasForeignKey("ClimateZoneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.HistoryTimelines.History", "History")
+                        .WithMany()
+                        .HasForeignKey("HistoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ClimateZone");
+
+                    b.Navigation("History");
+
+                    b.Navigation("World");
+                });
+
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.Race", b =>
                 {
                     b.HasOne("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.SapientSpecies", "SapientSpecies")
@@ -4020,6 +4429,27 @@ namespace ChronicleKeeper.Infrastructure.Migrations
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Content.Movie.Episode", b =>
                 {
                     b.Navigation("References");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Climate.ClimateDetail", b =>
+                {
+                    b.Navigation("ClimateZones");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Climate.ClimateZone", b =>
+                {
+                    b.Navigation("Climates");
+
+                    b.Navigation("Locations");
+
+                    b.Navigation("Seasons");
+
+                    b.Navigation("TypicalWeatherPatterns");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Climate.Season", b =>
+                {
+                    b.Navigation("ClimateZones");
                 });
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.SapientSpecies", b =>

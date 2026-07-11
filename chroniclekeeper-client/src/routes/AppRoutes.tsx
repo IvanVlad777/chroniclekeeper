@@ -80,6 +80,15 @@ import ContentDetails from "../components/entityViews/content/detail/ContentDeta
 import ContentForm from "../components/entityViews/content/form/ContentForm";
 import ChapterDetails from "../components/entityViews/content/detail/ChapterDetails";
 import EpisodeDetails from "../components/entityViews/content/detail/EpisodeDetails";
+import ClimateZoneList from "../components/entityViews/climateZone/list/ClimateZoneList";
+import ClimateZoneDetails from "../components/entityViews/climateZone/detail/ClimateZoneDetails";
+import ClimateZoneForm from "../components/entityViews/climateZone/form/ClimateZoneForm";
+import ClimateDetailList from "../components/entityViews/climateDetail/list/ClimateDetailList";
+import ClimateDetailDetails from "../components/entityViews/climateDetail/detail/ClimateDetailDetails";
+import ClimateDetailForm from "../components/entityViews/climateDetail/form/ClimateDetailForm";
+import SeasonList from "../components/entityViews/season/list/SeasonList";
+import SeasonDetails from "../components/entityViews/season/detail/SeasonDetails";
+import SeasonForm from "../components/entityViews/season/form/SeasonForm";
 import { WorldProvider } from "../context/world/WorldProvider";
 import { AppShell } from "../components/shell/AppShell";
 
@@ -347,6 +356,39 @@ const AppRoutes = () => {
                 <Route path="contents/:id/edit" element={<ContentForm />} />
                 <Route path="chapters/:id" element={<ChapterDetails />} />
                 <Route path="episodes/:id" element={<EpisodeDetails />} />
+                <Route path="climate-zones" element={<ClimateZoneList />} />
+                <Route
+                    path="climate-zones/new"
+                    element={<ClimateZoneForm />}
+                />
+                <Route
+                    path="climate-zones/:id"
+                    element={<ClimateZoneDetails />}
+                />
+                <Route
+                    path="climate-zones/:id/edit"
+                    element={<ClimateZoneForm />}
+                />
+                <Route
+                    path="climate-details"
+                    element={<ClimateDetailList />}
+                />
+                <Route
+                    path="climate-details/new"
+                    element={<ClimateDetailForm />}
+                />
+                <Route
+                    path="climate-details/:id"
+                    element={<ClimateDetailDetails />}
+                />
+                <Route
+                    path="climate-details/:id/edit"
+                    element={<ClimateDetailForm />}
+                />
+                <Route path="seasons" element={<SeasonList />} />
+                <Route path="seasons/new" element={<SeasonForm />} />
+                <Route path="seasons/:id" element={<SeasonDetails />} />
+                <Route path="seasons/:id/edit" element={<SeasonForm />} />
                 <Route path="*" element={<NoPage />} />
             </Route>
 

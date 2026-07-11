@@ -238,6 +238,22 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .Where(h => h.WorldId == id)
                 .ExecuteDeleteAsync(cancellationToken);
 
+            // 7s. Klimatske zone (kaskadira WeatherPatterns preko required ClimateZoneId FK-a,
+            //     te ClimateZoneDetail/ClimateZoneSeason/LocationClimateZone join tablice)
+            await _context.ClimateZones
+                .Where(z => z.WorldId == id)
+                .ExecuteDeleteAsync(cancellationToken);
+
+            // 7t. Klimatski detalji (samostalan entitet — join redovi već nestali u 7s)
+            await _context.ClimateDetails
+                .Where(d => d.WorldId == id)
+                .ExecuteDeleteAsync(cancellationToken);
+
+            // 7u. Godišnja doba (samostalan entitet — join redovi već nestali u 7s)
+            await _context.Seasons
+                .Where(s => s.WorldId == id)
+                .ExecuteDeleteAsync(cancellationToken);
+
             // 8. Tagovi i bilješke
             await _context.Tags
                 .Where(t => t.WorldId == id)

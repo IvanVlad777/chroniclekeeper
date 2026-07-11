@@ -1,0 +1,37 @@
+{
+    "listTitle": "Seasons",
+    "search": "Search seasons…",
+    "loaderror": "Failed to load",
+    "notfound": "Season not found",
+    "none": "None",
+    "backtolist": "Back to seasons",
+    "emptyTitle": "No seasons yet",
+    "emptyText": "Reusable seasons — spring, monsoon, the long winter — that can be attached to any number of climate zones. Create the first one to start shaping your world's calendar of weather.",
+    "columns": {
+        "name": "Name",
+        "durationInDays": "Duration (days)",
+        "typicalTemperature": "Typical temperature",
+        "updated": "Updated"
+    },
+    "fields": {
+        "description": "Description",
+        "durationInDays": "Duration in days",
+        "typicalTemperature": "Typical temperature",
+        "typicalPrecipitation": "Typical precipitation"
+    },
+    "form": {
+        "newTitle": "New season",
+        "editTitle": "Edit season",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "history": "History",
+        "save": "Save season",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

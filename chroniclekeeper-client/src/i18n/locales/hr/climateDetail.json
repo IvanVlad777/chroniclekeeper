@@ -1,0 +1,63 @@
+{
+    "listTitle": "Klimatski detalji",
+    "search": "Pretraži klimatske detalje…",
+    "loaderror": "Učitavanje nije uspjelo",
+    "notfound": "Klimatski detalj nije pronađen",
+    "none": "Nema",
+    "backtolist": "Natrag na klimatske detalje",
+    "emptyTitle": "Još nema klimatskih detalja",
+    "emptyText": "Ponovno iskoristivi profili vremena — temperatura, vlažnost, vjetar — koji se mogu povezati s bilo kojim brojem klimatskih zona. Stvori prvi da započneš detaljan opis vremena u svom svijetu.",
+    "columns": {
+        "name": "Naziv",
+        "windDirection": "Smjer vjetra",
+        "isExtremeClimate": "Ekstremno",
+        "updated": "Ažurirano"
+    },
+    "fields": {
+        "description": "Opis",
+        "averageTemperature": "Prosječna temperatura",
+        "humidity": "Vlažnost",
+        "precipitation": "Padaline",
+        "windSpeed": "Brzina vjetra",
+        "windDirection": "Smjer vjetra",
+        "isExtremeClimate": "Ekstremna klima",
+        "notableWeatherPhenomena": "Značajne vremenske pojave"
+    },
+    "windDirections": {
+        "North": "Sjever",
+        "South": "Jug",
+        "East": "Istok",
+        "West": "Zapad",
+        "Northeast": "Sjeveroistok",
+        "Northwest": "Sjeverozapad",
+        "Southeast": "Jugoistok",
+        "Southwest": "Jugozapad",
+        "Variable": "Promjenjiv"
+    },
+    "notableWeatherPhenomena": {
+        "None": "Nema",
+        "Tornado": "Tornado",
+        "Hurricane": "Uragan",
+        "Monsoon": "Monsun",
+        "Sandstorm": "Pješčana oluja",
+        "Blizzard": "Mećava",
+        "Thunderstorm": "Grmljavinska oluja",
+        "Drought": "Suša",
+        "Fog": "Magla"
+    },
+    "form": {
+        "newTitle": "Novi klimatski detalj",
+        "editTitle": "Uredi klimatski detalj",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "history": "Povijest",
+        "save": "Spremi klimatski detalj",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}”? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

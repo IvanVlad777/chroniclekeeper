@@ -1,0 +1,97 @@
+{
+    "listTitle": "Klimatske zone",
+    "search": "Pretraži klimatske zone…",
+    "loaderror": "Učitavanje nije uspjelo",
+    "notfound": "Klimatska zona nije pronađena",
+    "none": "Nema",
+    "backtolist": "Natrag na klimatske zone",
+    "emptyTitle": "Još nema klimatskih zona",
+    "emptyText": "Široki klimatski pojasevi — tropski, sušni, polarni — koji oblikuju vrijeme u regijama tvog svijeta. Stvori prvu zonu da započneš mapiranje atmosfere svog svijeta.",
+    "columns": {
+        "name": "Naziv",
+        "zoneType": "Tip zone",
+        "averageTemperature": "Prosj. temperatura",
+        "updated": "Ažurirano"
+    },
+    "fields": {
+        "description": "Opis",
+        "zoneType": "Tip zone",
+        "averageTemperature": "Prosječna temperatura",
+        "averageHumidity": "Prosječna vlažnost",
+        "averagePrecipitation": "Prosječne padaline",
+        "hasDistinctSeasons": "Ima izražena godišnja doba"
+    },
+    "zoneTypes": {
+        "Tropical": "Tropska",
+        "Arid": "Sušna",
+        "Temperate": "Umjerena",
+        "Continental": "Kontinentalna",
+        "Polar": "Polarna"
+    },
+    "weatherPatternTypes": {
+        "Normal": "Uobičajen",
+        "Monsoon": "Monsun",
+        "DesertStorm": "Pustinjska oluja",
+        "HurricaneSeason": "Sezona uragana",
+        "ArcticBlast": "Arktički udar",
+        "HeatWave": "Toplinski val"
+    },
+    "weatherFrequencies": {
+        "Rare": "Rijetko",
+        "Seasonal": "Sezonski",
+        "Frequent": "Često",
+        "Constant": "Stalno"
+    },
+    "weatherEffects": {
+        "None": "Nema",
+        "Flooding": "Poplave",
+        "Drought": "Suša",
+        "HighWinds": "Jaki vjetrovi",
+        "ExtremeCold": "Ekstremna hladnoća",
+        "ExtremeHeat": "Ekstremna vrućina"
+    },
+    "weatherPatterns": {
+        "label": "Vremenski obrasci",
+        "add": "dodaj",
+        "addTitle": "Novi vremenski obrazac",
+        "editTitle": "Uredi vremenski obrazac",
+        "name": "Naziv",
+        "description": "Opis",
+        "patternType": "Tip obrasca",
+        "frequency": "Učestalost",
+        "effects": "Učinci",
+        "requiredMissing": "Naziv je obavezan.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo.",
+        "deleteConfirm": "Obrisati „{{name}}”? Ovo se ne može poništiti.",
+        "cancel": "Odustani",
+        "save": "Spremi",
+        "delete": "Obriši"
+    },
+    "links": {
+        "climates": "Klimatski detalji",
+        "seasons": "Godišnja doba",
+        "locations": "Lokacije",
+        "add": "poveži",
+        "remove": "Ukloni vezu s {{name}}",
+        "pick": "Odaberi zapis",
+        "confirm": "Poveži",
+        "addFailed": "Povezivanje nije uspjelo.",
+        "removeFailed": "Uklanjanje veze nije uspjelo."
+    },
+    "form": {
+        "newTitle": "Nova klimatska zona",
+        "editTitle": "Uredi klimatsku zonu",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "history": "Povijest",
+        "save": "Spremi klimatsku zonu",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}”? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}
