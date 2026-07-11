@@ -42,6 +42,16 @@ import enLegalSystem from "./locales/en/legalSystem.json";
 import hrLegalSystem from "./locales/hr/legalSystem.json";
 import enDiplomaticAgreement from "./locales/en/diplomaticAgreement.json";
 import hrDiplomaticAgreement from "./locales/hr/diplomaticAgreement.json";
+import enProfession from "./locales/en/profession.json";
+import hrProfession from "./locales/hr/profession.json";
+import enSchool from "./locales/en/school.json";
+import hrSchool from "./locales/hr/school.json";
+import enUniversity from "./locales/en/university.json";
+import hrUniversity from "./locales/hr/university.json";
+import enEducationSystem from "./locales/en/educationSystem.json";
+import hrEducationSystem from "./locales/hr/educationSystem.json";
+import enLibrary from "./locales/en/library.json";
+import hrLibrary from "./locales/hr/library.json";
 
 i18n.use(LanguageDetector)
     .use(initReactI18next)
@@ -68,6 +78,11 @@ i18n.use(LanguageDetector)
                 politicalParty: enPoliticalParty,
                 legalSystem: enLegalSystem,
                 diplomaticAgreement: enDiplomaticAgreement,
+                profession: enProfession,
+                school: enSchool,
+                university: enUniversity,
+                educationSystem: enEducationSystem,
+                library: enLibrary,
             },
             hr: {
                 common: hrCommon,
@@ -90,6 +105,11 @@ i18n.use(LanguageDetector)
                 politicalParty: hrPoliticalParty,
                 legalSystem: hrLegalSystem,
                 diplomaticAgreement: hrDiplomaticAgreement,
+                profession: hrProfession,
+                school: hrSchool,
+                university: hrUniversity,
+                educationSystem: hrEducationSystem,
+                library: hrLibrary,
             },
         },
         fallbackLng: "en",
@@ -114,6 +134,11 @@ i18n.use(LanguageDetector)
             "politicalParty",
             "legalSystem",
             "diplomaticAgreement",
+            "profession",
+            "school",
+            "university",
+            "educationSystem",
+            "library",
         ], //namespaces
         defaultNS: "common",
         interpolation: {

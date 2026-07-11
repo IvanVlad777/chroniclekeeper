@@ -72,6 +72,36 @@
     "socialClass": "Društveni sloj",
     "nation": "Nacija",
     "religion": "Religija",
+    "profession": {
+        "label": "Zanimanje"
+    },
+    "education": {
+        "label": "Obrazovanje",
+        "add": "dodaj",
+        "institution": "Ustanova",
+        "degree": "Titula / potvrda",
+        "startDate": "Početak",
+        "endDate": "Završetak",
+        "save": "Spremi",
+        "delete": "Ukloni obrazovni zapis",
+        "deleteConfirm": "Ukloniti ovaj obrazovni zapis?",
+        "saveFailed": "Spremanje obrazovnog zapisa nije uspjelo.",
+        "deleteFailed": "Uklanjanje obrazovnog zapisa nije uspjelo."
+    },
+    "religiousEducation": {
+        "label": "Vjersko obrazovanje",
+        "add": "dodaj",
+        "religion": "Religija",
+        "ordained": "Zaređen",
+        "startDate": "Početak",
+        "completionDate": "Završetak",
+        "save": "Spremi",
+        "delete": "Ukloni vjersko obrazovanje",
+        "deleteConfirm": "Ukloniti ovaj zapis vjerskog obrazovanja?",
+        "requiredMissing": "Religija je obavezna.",
+        "saveFailed": "Spremanje vjerskog obrazovanja nije uspjelo.",
+        "deleteFailed": "Uklanjanje vjerskog obrazovanja nije uspjelo."
+    },
     "father": "Otac",
     "mother": "Majka",
     "haircolor": "Boja kose",

@@ -25,7 +25,12 @@
         "governmentSystems": "Sustavi vlasti",
         "politicalParties": "Političke stranke",
         "legalSystems": "Pravni sustavi",
-        "diplomaticAgreements": "Diplomatski ugovori"
+        "diplomaticAgreements": "Diplomatski ugovori",
+        "professions": "Zanimanja",
+        "schools": "Škole",
+        "universities": "Sveučilišta",
+        "educationSystems": "Sustavi obrazovanja",
+        "libraries": "Knjižnice"
     },
     "shell": {
         "newEntry": "Novi zapis",

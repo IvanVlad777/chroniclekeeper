@@ -25,7 +25,12 @@
         "governmentSystems": "Government Systems",
         "politicalParties": "Political Parties",
         "legalSystems": "Legal Systems",
-        "diplomaticAgreements": "Diplomatic Agreements"
+        "diplomaticAgreements": "Diplomatic Agreements",
+        "professions": "Professions",
+        "schools": "Schools",
+        "universities": "Universities",
+        "educationSystems": "Education Systems",
+        "libraries": "Libraries"
     },
     "shell": {
         "newEntry": "New entry",

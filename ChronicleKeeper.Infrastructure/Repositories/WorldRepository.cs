@@ -81,6 +81,15 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .Where(r => r.Character!.WorldId == id || r.RelatedCharacter!.WorldId == id)
                 .ExecuteDeleteAsync(cancellationToken);
 
+            // 2c. Vjerska obrazovanja (Restrict→Character) i knjižnice (Restrict→University/Location)
+            //     moraju nestati prije likova (korak 3) odn. lokacija (korak 6)
+            await _context.ReligiousEducations
+                .Where(re => re.WorldId == id)
+                .ExecuteDeleteAsync(cancellationToken);
+            await _context.Libraries
+                .Where(l => l.WorldId == id)
+                .ExecuteDeleteAsync(cancellationToken);
+
             // 3. Likovi (DB kaskadira FactionMembers + CharacterTags; SET NULL na Faction.LeaderId)
             await _context.Characters
                 .Where(c => c.WorldId == id)
@@ -159,6 +168,27 @@ namespace ChronicleKeeper.Infrastructure.Repositories
             // 7j. Pravni sustavi (samostalan entitet, bez ovisnosti unutar ovog bloka)
             await _context.LegalSystems
                 .Where(l => l.WorldId == id)
+                .ExecuteDeleteAsync(cancellationToken);
+
+            // 7k. Zanimanja (kaskadira JobRanks, Apprenticeships, Specialisations,
+            //     ProfessionSapientSpecies/ProfessionSocialClass/ProfessionTradeSchool join tablice).
+            //     Mora ići prije 7m: Apprenticeship.TradeSchoolId je Restrict, a ovim se
+            //     korakom uklanjaju SVI Apprenticeship redovi (ProfessionId je required),
+            //     pa TradeSchool poslije može nesmetano nestati.
+            await _context.Professions
+                .Where(p => p.WorldId == id)
+                .ExecuteDeleteAsync(cancellationToken);
+
+            // 7l. Preostali obrazovni zapisi (Restrict→School/University; CharacterId-Cascade
+            //     dio je već očišćen u koraku 3, ovo hvata institucijske zapise bez lika)
+            await _context.EducationRecords
+                .Where(e => e.WorldId == id)
+                .ExecuteDeleteAsync(cancellationToken);
+
+            // 7m. Sustavi obrazovanja (kaskadira Schools/TradeSchools/Universities preko
+            //     required EducationSystemId FK-a, što dalje kaskadira SchoolSubjects/UniversityMajors)
+            await _context.EducationSystems
+                .Where(e => e.WorldId == id)
                 .ExecuteDeleteAsync(cancellationToken);
 
             // 8. Tagovi i bilješke

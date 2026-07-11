@@ -72,6 +72,36 @@
     "socialClass": "Social class",
     "nation": "Nation",
     "religion": "Religion",
+    "profession": {
+        "label": "Profession"
+    },
+    "education": {
+        "label": "Education",
+        "add": "add",
+        "institution": "Institution",
+        "degree": "Degree / certification",
+        "startDate": "Started",
+        "endDate": "Finished",
+        "save": "Save",
+        "delete": "Remove education record",
+        "deleteConfirm": "Remove this education record?",
+        "saveFailed": "Saving the education record failed.",
+        "deleteFailed": "Removing the education record failed."
+    },
+    "religiousEducation": {
+        "label": "Religious education",
+        "add": "add",
+        "religion": "Religion",
+        "ordained": "Ordained",
+        "startDate": "Started",
+        "completionDate": "Completed",
+        "save": "Save",
+        "delete": "Remove religious education",
+        "deleteConfirm": "Remove this religious education record?",
+        "requiredMissing": "A religion is required.",
+        "saveFailed": "Saving the religious education failed.",
+        "deleteFailed": "Removing the religious education failed."
+    },
     "father": "Father",
     "mother": "Mother",
     "haircolor": "Hair color",

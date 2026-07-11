@@ -1,45 +1,31 @@
-﻿using ChronicleKeeper.Core.Entities.Base;
-using ChronicleKeeper.Core.Entities.Characters;
-using ChronicleKeeper.Core.Entities.Geography;
-using ChronicleKeeper.Core.Entities.HistoryTimelines;
-using ChronicleKeeper.Core.Entities.Social.Structure;
-using ChronicleKeeper.Core.Interfaces;
-using System.Collections.Generic;
+using ChronicleKeeper.Core.Entities.Base;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ChronicleKeeper.Core.Entities.Social.Education
 {
-    public class School : ILoreEntity
+    /// <summary>
+    /// TPH root: shared "Schools" table with TradeSchool (Professions namespace),
+    /// distinguished by the "SchoolType" discriminator column.
+    /// </summary>
+    public class School : LoreEntity
     {
-        [Key]
-        public int Id { get; set; }
-        [Required]
-        public string Name { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
-        [Required]
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        [Required]
-        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
-        public virtual History? History { get; set; }
-
         public bool IsPublic { get; set; } // True = Free for all citizens
         public bool IsReligious { get; set; } // Theology-based education
 
+        [Required]
         public int EducationSystemId { get; set; }
-        public EducationSystem EducationSystem { get; set; } = null!;
+        public virtual EducationSystem EducationSystem { get; set; } = null!;
 
-        //public ICollection<Character> Students { get; set; } = new List<Character>();
-        //public ICollection<Character> Teachers { get; set; } = new List<Character>();
-        public ICollection<EducationRecord> Alumni { get; set; } = new List<EducationRecord>();
-        public ICollection<SchoolSubject> Subjects { get; set; } = new List<SchoolSubject>();
+        public virtual ICollection<EducationRecord> Alumni { get; set; } = new List<EducationRecord>();
+        public virtual ICollection<SchoolSubject> Subjects { get; set; } = new List<SchoolSubject>();
 
-        ////[ForeignKey("Country")]
-        //public int? CountryId { get; set; }
-        //public Country? Country { get; set; }
+        //public virtual ICollection<Characters.Character> Students { get; set; } = new List<Characters.Character>(); // TODO: Uncomment when Character many-to-many cross-links are revived
+        //public virtual ICollection<Characters.Character> Teachers { get; set; } = new List<Characters.Character>(); // TODO: Uncomment when Character many-to-many cross-links are revived
 
-        ////[ForeignKey("City")]
-        //public int? CityId { get; set; }
-        //public City? City { get; set; }
+        //public int? CountryId { get; set; } // TODO: Uncomment when Country entity is revived
+        //public virtual Geography.Country? Country { get; set; }
+
+        //public int? CityId { get; set; } // TODO: Uncomment when City entity is revived
+        //public virtual Geography.City? City { get; set; }
     }
 }

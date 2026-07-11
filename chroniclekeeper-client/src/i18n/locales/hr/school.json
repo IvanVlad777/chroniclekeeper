@@ -1,0 +1,74 @@
+{
+    "listTitle": "Škole",
+    "search": "Traži škole…",
+    "loaderror": "Neuspješno učitavanje",
+    "notfound": "Škola nije pronađena",
+    "none": "Nema",
+    "backtolist": "Natrag na škole",
+    "emptyTitle": "Još nema škola",
+    "emptyText": "Seoske škole, cehovske akademije, strukovne škole — mjesta gdje tvoji likovi uče zanat. Stvori prvu školu za početak.",
+    "columns": {
+        "name": "Naziv",
+        "type": "Vrsta",
+        "updated": "Ažurirano"
+    },
+    "fields": {
+        "description": "Opis",
+        "isPublic": "Javna",
+        "isReligious": "Vjerska",
+        "specialization": "Specijalizacija",
+        "durationYears": "Trajanje (godine)",
+        "isGovernmentRecognized": "Državno priznata"
+    },
+    "schoolTypeLabel": {
+        "School": "Škola",
+        "TradeSchool": "Strukovna škola"
+    },
+    "subjects": {
+        "label": "Predmeti",
+        "add": "dodaj",
+        "addTitle": "Novi predmet",
+        "editTitle": "Uredi predmet",
+        "name": "Naziv",
+        "description": "Opis",
+        "subjectName": "Predmet",
+        "isMandatory": "Obavezan",
+        "mandatory": "obavezan",
+        "optional": "izborni",
+        "save": "Spremi",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati predmet „{{name}}“?",
+        "requiredMissing": "Naziv predmeta je obavezan.",
+        "saveFailed": "Spremanje predmeta nije uspjelo.",
+        "deleteFailed": "Brisanje predmeta nije uspjelo."
+    },
+    "alumni": {
+        "label": "Alumni"
+    },
+    "trainedProfessions": {
+        "label": "Zanimanja koja se poučavaju"
+    },
+    "apprenticeships": {
+        "label": "Naukovanja ovdje"
+    },
+    "form": {
+        "newTitle": "Nova škola",
+        "newTradeTitle": "Nova strukovna škola",
+        "editTitle": "Uredi školu",
+        "editTradeTitle": "Uredi strukovnu školu",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "educationSystem": "Sustav obrazovanja",
+        "educationSystemMissing": "Sustav obrazovanja je obavezan.",
+        "educationSystemLocked": "Sustav obrazovanja se ne može promijeniti nakon stvaranja.",
+        "save": "Spremi školu",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}“? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

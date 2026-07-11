@@ -1,0 +1,39 @@
+{
+    "listTitle": "Knjižnice",
+    "search": "Traži knjižnice…",
+    "loaderror": "Neuspješno učitavanje",
+    "notfound": "Knjižnica nije pronađena",
+    "none": "Nema",
+    "backtolist": "Natrag na knjižnice",
+    "emptyTitle": "Još nema knjižnica",
+    "emptyText": "Arhivi, čitaonice, tajanstvene zbirke — gdje tvoj svijet čuva pisano znanje. Stvori prvu knjižnicu za početak.",
+    "columns": {
+        "name": "Naziv",
+        "isPublic": "Javna",
+        "updated": "Ažurirano"
+    },
+    "fields": {
+        "description": "Opis",
+        "isPublic": "Javna",
+        "focusesOnMagic": "Fokus na magiju",
+        "focusesOnHistory": "Fokus na povijest",
+        "university": "Sveučilište",
+        "location": "Lokacija"
+    },
+    "form": {
+        "newTitle": "Nova knjižnica",
+        "editTitle": "Uredi knjižnicu",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "university": "Sveučilište",
+        "location": "Lokacija",
+        "save": "Spremi knjižnicu",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}“? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

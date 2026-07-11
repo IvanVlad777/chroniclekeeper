@@ -1,6 +1,7 @@
 using AutoMapper;
 using ChronicleKeeper.Core.CQRS.Characters.Queries;
 using ChronicleKeeper.Core.DTOs.Character;
+using ChronicleKeeper.Core.DTOs.ReligiousEducation;
 using ChronicleKeeper.Core.Repositories;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -39,15 +40,18 @@ namespace ChronicleKeeper.Core.CQRS.Characters.Handlers
     public class GetCharacterByIdQueryHandler : IRequestHandler<GetCharacterByIdQuery, CharacterDto?>
     {
         private readonly ICharacterRepository _repository;
+        private readonly IReligiousEducationRepository _religiousEducationRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<GetCharacterByIdQueryHandler> _logger;
 
         public GetCharacterByIdQueryHandler(
-            ICharacterRepository repository, 
-            IMapper mapper, 
+            ICharacterRepository repository,
+            IReligiousEducationRepository religiousEducationRepository,
+            IMapper mapper,
             ILogger<GetCharacterByIdQueryHandler> logger)
         {
             _repository = repository;
+            _religiousEducationRepository = religiousEducationRepository;
             _mapper = mapper;
             _logger = logger;
         }
@@ -67,6 +71,13 @@ namespace ChronicleKeeper.Core.CQRS.Characters.Handlers
             // CharacterDetailsDto : CharacterDto — GetById vraća i veze (obitelj, vrsta,
             // frakcije, tagovi); runtime tip se serijalizira u potpunosti
             var result = _mapper.Map<CharacterDetailsDto>(character);
+
+            // ReligiousEducation.CharacterId je jednosmjeran FK (bez reverse nava na
+            // Characteru), pa se dohvaća zasebnim upitom umjesto Include()-a
+            var religiousEducations = await _religiousEducationRepository.GetAllAsync(
+                worldId: null, characterId: request.Id, religionId: null, cancellationToken);
+            result.ReligiousEducations = _mapper.Map<List<ReligiousEducationDto>>(religiousEducations);
+
             _logger.LogInformation("Returned character with ID {Id}", request.Id);
 
             return result;

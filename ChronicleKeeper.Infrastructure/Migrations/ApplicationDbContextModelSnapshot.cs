@@ -89,6 +89,9 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int?>("ProfessionId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("RaceId")
                         .HasColumnType("int");
 
@@ -131,6 +134,8 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.HasIndex("MotherId");
 
                     b.HasIndex("NationId");
+
+                    b.HasIndex("ProfessionId");
 
                     b.HasIndex("RaceId");
 
@@ -482,6 +487,246 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.ToTable("Notes");
                 });
 
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Professions.Apprenticeship", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<int>("DurationYears")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsPaid")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("ProfessionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SkillsTaught")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<int?>("TradeSchoolId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProfessionId");
+
+                    b.HasIndex("TradeSchoolId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("Apprenticeships");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Professions.JobRank", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("ProfessionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RankLevel")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RankTitle")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Responsibilities")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProfessionId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("JobRanks");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Professions.Profession", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("RequiredSkills")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("WorkEnvironment")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("Professions");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Professions.ProfessionSapientSpecies", b =>
+                {
+                    b.Property<int>("ProfessionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SapientSpeciesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProfessionId", "SapientSpeciesId");
+
+                    b.HasIndex("SapientSpeciesId");
+
+                    b.ToTable("ProfessionSapientSpecies");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Professions.ProfessionSocialClass", b =>
+                {
+                    b.Property<int>("ProfessionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SocialClassId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProfessionId", "SocialClassId");
+
+                    b.HasIndex("SocialClassId");
+
+                    b.ToTable("ProfessionSocialClasses");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Professions.ProfessionTradeSchool", b =>
+                {
+                    b.Property<int>("ProfessionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TradeSchoolId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProfessionId", "TradeSchoolId");
+
+                    b.HasIndex("TradeSchoolId");
+
+                    b.ToTable("ProfessionTradeSchools");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Professions.Specialisation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<string>("Field")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int?>("ProfessionId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProfessionId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("Specialisations");
+                });
+
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Cultures.Culture", b =>
                 {
                     b.Property<int>("Id")
@@ -659,6 +904,419 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.HasIndex("NationId");
 
                     b.ToTable("LanguageNations");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Education.EducationRecord", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CharacterId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Degree")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int?>("SchoolId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("UniversityId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CharacterId");
+
+                    b.HasIndex("SchoolId");
+
+                    b.HasIndex("UniversityId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("EducationRecords");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Education.EducationSystem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("AllowsPrivateInstitutions")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<bool>("IncludesReligiousEducation")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsStateControlled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("SupportsGuildTraining")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("EducationSystems");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Education.Library", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<bool>("FocusesOnHistory")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("FocusesOnMagic")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPublic")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("LocationId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int?>("UniversityId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LocationId");
+
+                    b.HasIndex("UniversityId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("Libraries");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Education.ReligiousEducation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CharacterId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("CompletionDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("Ordained")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ReligionId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CharacterId");
+
+                    b.HasIndex("ReligionId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("ReligiousEducations");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Education.School", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<int>("EducationSystemId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsPublic")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsReligious")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("SchoolType")
+                        .IsRequired()
+                        .HasMaxLength(13)
+                        .HasColumnType("nvarchar(13)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EducationSystemId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("Schools");
+
+                    b.HasDiscriminator<string>("SchoolType").HasValue("School");
+
+                    b.UseTphMappingStrategy();
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Education.SchoolSubject", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<bool>("IsMandatory")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("SchoolId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SubjectName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SchoolId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("SchoolSubjects");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Education.University", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<int>("EducationSystemId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("FocusesOnMagic")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("FocusesOnMilitaryStudies")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("FocusesOnPhilosophy")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("FocusesOnScience")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EducationSystemId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("Universities");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Education.UniversityMajor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DegreeLevel")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<string>("MajorName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("UniversityId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UniversityId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("UniversityMajors");
                 });
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Faction", b =>
@@ -1532,6 +2190,24 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Professions.TradeSchool", b =>
+                {
+                    b.HasBaseType("ChronicleKeeper.Core.Entities.Social.Education.School");
+
+                    b.Property<int>("DurationYears")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsGovernmentRecognized")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Specialization")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasDiscriminator().HasValue("TradeSchool");
+                });
+
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Characters.Character", b =>
                 {
                     b.HasOne("ChronicleKeeper.Core.Entities.Characters.Character", "Father")
@@ -1547,6 +2223,11 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.HasOne("ChronicleKeeper.Core.Entities.Social.Nationality.Nation", "Nation")
                         .WithMany("Characters")
                         .HasForeignKey("NationId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Professions.Profession", "Profession")
+                        .WithMany("Characters")
+                        .HasForeignKey("ProfessionId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.Race", "Race")
@@ -1580,6 +2261,8 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Navigation("Mother");
 
                     b.Navigation("Nation");
+
+                    b.Navigation("Profession");
 
                     b.Navigation("Race");
 
@@ -1700,6 +2383,137 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Navigation("World");
                 });
 
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Professions.Apprenticeship", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Professions.Profession", "Profession")
+                        .WithMany("Apprenticeships")
+                        .HasForeignKey("ProfessionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Professions.TradeSchool", "TradeSchool")
+                        .WithMany("Apprenticeships")
+                        .HasForeignKey("TradeSchoolId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Profession");
+
+                    b.Navigation("TradeSchool");
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Professions.JobRank", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Professions.Profession", "Profession")
+                        .WithMany("JobRanks")
+                        .HasForeignKey("ProfessionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Profession");
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Professions.Profession", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Professions.ProfessionSapientSpecies", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Professions.Profession", "Profession")
+                        .WithMany("PracticedBySpecies")
+                        .HasForeignKey("ProfessionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.SapientSpecies", "SapientSpecies")
+                        .WithMany()
+                        .HasForeignKey("SapientSpeciesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Profession");
+
+                    b.Navigation("SapientSpecies");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Professions.ProfessionSocialClass", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Professions.Profession", "Profession")
+                        .WithMany("SocialClasses")
+                        .HasForeignKey("ProfessionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Structure.SocialClass", "SocialClass")
+                        .WithMany()
+                        .HasForeignKey("SocialClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Profession");
+
+                    b.Navigation("SocialClass");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Professions.ProfessionTradeSchool", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Professions.Profession", "Profession")
+                        .WithMany("TradeSchools")
+                        .HasForeignKey("ProfessionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Professions.TradeSchool", "TradeSchool")
+                        .WithMany("TrainedProfessions")
+                        .HasForeignKey("TradeSchoolId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Profession");
+
+                    b.Navigation("TradeSchool");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Professions.Specialisation", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Professions.Profession", "Profession")
+                        .WithMany("Specialisations")
+                        .HasForeignKey("ProfessionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Profession");
+
+                    b.Navigation("World");
+                });
+
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Cultures.Culture", b =>
                 {
                     b.HasOne("ChronicleKeeper.Core.Entities.Social.Cultures.Language", "Language")
@@ -1811,6 +2625,176 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Navigation("Language");
 
                     b.Navigation("Nation");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Education.EducationRecord", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Characters.Character", "Character")
+                        .WithMany("Educations")
+                        .HasForeignKey("CharacterId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Education.School", "School")
+                        .WithMany("Alumni")
+                        .HasForeignKey("SchoolId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Education.University", "University")
+                        .WithMany("Alumni")
+                        .HasForeignKey("UniversityId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Character");
+
+                    b.Navigation("School");
+
+                    b.Navigation("University");
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Education.EducationSystem", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Education.Library", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Education.University", "University")
+                        .WithMany()
+                        .HasForeignKey("UniversityId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Location");
+
+                    b.Navigation("University");
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Education.ReligiousEducation", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Characters.Character", "Character")
+                        .WithMany()
+                        .HasForeignKey("CharacterId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Religions.Religion", "Religion")
+                        .WithMany()
+                        .HasForeignKey("ReligionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Character");
+
+                    b.Navigation("Religion");
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Education.School", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Education.EducationSystem", "EducationSystem")
+                        .WithMany("Schools")
+                        .HasForeignKey("EducationSystemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("EducationSystem");
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Education.SchoolSubject", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Education.School", "School")
+                        .WithMany("Subjects")
+                        .HasForeignKey("SchoolId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("School");
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Education.University", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Education.EducationSystem", "EducationSystem")
+                        .WithMany("Universities")
+                        .HasForeignKey("EducationSystemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("EducationSystem");
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Education.UniversityMajor", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Education.University", "University")
+                        .WithMany("Majors")
+                        .HasForeignKey("UniversityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("University");
+
+                    b.Navigation("World");
                 });
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Faction", b =>
@@ -2151,6 +3135,8 @@ namespace ChronicleKeeper.Infrastructure.Migrations
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Characters.Character", b =>
                 {
+                    b.Navigation("Educations");
+
                     b.Navigation("Memberships");
 
                     b.Navigation("Relationships");
@@ -2175,6 +3161,23 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Navigation("Events");
                 });
 
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Professions.Profession", b =>
+                {
+                    b.Navigation("Apprenticeships");
+
+                    b.Navigation("Characters");
+
+                    b.Navigation("JobRanks");
+
+                    b.Navigation("PracticedBySpecies");
+
+                    b.Navigation("SocialClasses");
+
+                    b.Navigation("Specialisations");
+
+                    b.Navigation("TradeSchools");
+                });
+
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Cultures.Culture", b =>
                 {
                     b.Navigation("InfluencedSocialClasses");
@@ -2189,6 +3192,27 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Navigation("Cultures");
 
                     b.Navigation("Nations");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Education.EducationSystem", b =>
+                {
+                    b.Navigation("Schools");
+
+                    b.Navigation("Universities");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Education.School", b =>
+                {
+                    b.Navigation("Alumni");
+
+                    b.Navigation("Subjects");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Education.University", b =>
+                {
+                    b.Navigation("Alumni");
+
+                    b.Navigation("Majors");
                 });
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Faction", b =>
@@ -2230,6 +3254,13 @@ namespace ChronicleKeeper.Infrastructure.Migrations
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Structure.SocialClass", b =>
                 {
                     b.Navigation("Members");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Professions.TradeSchool", b =>
+                {
+                    b.Navigation("Apprenticeships");
+
+                    b.Navigation("TrainedProfessions");
                 });
 #pragma warning restore 612, 618
         }

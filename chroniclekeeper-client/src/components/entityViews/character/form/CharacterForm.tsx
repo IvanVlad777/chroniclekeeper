@@ -21,10 +21,12 @@ import { getRaces, getSpecies } from "../../../../api/species";
 import { getSocialClasses } from "../../../../api/socialClasses";
 import { getNations } from "../../../../api/nations";
 import { getReligions } from "../../../../api/religions";
+import { getProfessions } from "../../../../api/professions";
 import {
     CharacterDto,
     CharacterUpdateDto,
     NationDto,
+    ProfessionDto,
     RaceDto,
     ReligionDto,
     SocialClassDto,
@@ -57,6 +59,7 @@ interface FormState {
     socialClassId: string;
     nationId: string;
     religionId: string;
+    professionId: string;
     fatherId: string;
     motherId: string;
 }
@@ -81,6 +84,7 @@ const emptyForm: FormState = {
     socialClassId: "",
     nationId: "",
     religionId: "",
+    professionId: "",
     fatherId: "",
     motherId: "",
 };
@@ -110,6 +114,7 @@ function toUpdateDto(f: FormState): CharacterUpdateDto {
         socialClassId: toId(f.socialClassId),
         nationId: toId(f.nationId),
         religionId: toId(f.religionId),
+        professionId: toId(f.professionId),
         fatherId: toId(f.fatherId),
         motherId: toId(f.motherId),
     };
@@ -134,6 +139,7 @@ export default function CharacterForm() {
     const [socialClasses, setSocialClasses] = useState<SocialClassDto[]>([]);
     const [nations, setNations] = useState<NationDto[]>([]);
     const [religions, setReligions] = useState<ReligionDto[]>([]);
+    const [professions, setProfessions] = useState<ProfessionDto[]>([]);
     const [characters, setCharacters] = useState<CharacterDto[]>([]);
     const [loading, setLoading] = useState(true);
     const [loadError, setLoadError] = useState<string | null>(null);
@@ -158,7 +164,8 @@ export default function CharacterForm() {
             Promise<CharacterDto[]>,
             Promise<SocialClassDto[]>,
             Promise<NationDto[]>,
-            Promise<ReligionDto[]>
+            Promise<ReligionDto[]>,
+            Promise<ProfessionDto[]>
         ] = [
             getSpecies(selectedWorld.id),
             getRaces({ worldId: selectedWorld.id }),
@@ -166,10 +173,11 @@ export default function CharacterForm() {
             getSocialClasses(selectedWorld.id),
             getNations(selectedWorld.id),
             getReligions(selectedWorld.id),
+            getProfessions(selectedWorld.id),
         ];
 
         Promise.all(loads)
-            .then(async ([speciesData, racesData, charactersData, socialClassData, nationsData, religionsData]) => {
+            .then(async ([speciesData, racesData, charactersData, socialClassData, nationsData, religionsData, professionsData]) => {
                 if (cancelled) return;
                 setSpecies(speciesData);
                 setRaces(racesData);
@@ -177,6 +185,7 @@ export default function CharacterForm() {
                 setSocialClasses(socialClassData);
                 setNations(nationsData);
                 setReligions(religionsData);
+                setProfessions(professionsData);
 
                 if (isEdit) {
                     const c = await getCharacter(editId);
@@ -206,6 +215,9 @@ export default function CharacterForm() {
                             : "",
                         nationId: c.nationId ? String(c.nationId) : "",
                         religionId: c.religionId ? String(c.religionId) : "",
+                        professionId: c.professionId
+                            ? String(c.professionId)
+                            : "",
                         fatherId: c.fatherId ? String(c.fatherId) : "",
                         motherId: c.motherId ? String(c.motherId) : "",
                     });
@@ -287,6 +299,7 @@ export default function CharacterForm() {
                     socialClassId: toId(form.socialClassId),
                     nationId: toId(form.nationId),
                     religionId: toId(form.religionId),
+                    professionId: toId(form.professionId),
                     fatherId: toId(form.fatherId),
                     motherId: toId(form.motherId),
                 });
@@ -507,6 +520,21 @@ export default function CharacterForm() {
                             {religions.map((r) => (
                                 <option key={r.id} value={r.id}>
                                     {r.name}
+                                </option>
+                            ))}
+                        </OrnateSelect>
+                    </OrnateField>
+                    <OrnateField label={t("profession.label")}>
+                        <OrnateSelect
+                            value={form.professionId}
+                            onChange={(e) =>
+                                set("professionId", e.target.value)
+                            }
+                        >
+                            <option value="">{t("none")}</option>
+                            {professions.map((p) => (
+                                <option key={p.id} value={p.id}>
+                                    {p.name}
                                 </option>
                             ))}
                         </OrnateSelect>

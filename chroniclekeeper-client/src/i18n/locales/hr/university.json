@@ -1,0 +1,59 @@
+{
+    "listTitle": "Sveučilišta",
+    "search": "Traži sveučilišta…",
+    "loaderror": "Neuspješno učitavanje",
+    "notfound": "Sveučilište nije pronađeno",
+    "none": "Nema",
+    "backtolist": "Natrag na sveučilišta",
+    "emptyTitle": "Još nema sveučilišta",
+    "emptyText": "Dvorane visokog obrazovanja — gdje se stvaraju učenjaci, magovi i stratezi. Stvori prvo sveučilište za početak.",
+    "columns": {
+        "name": "Naziv",
+        "focus": "Fokus",
+        "updated": "Ažurirano"
+    },
+    "fields": {
+        "description": "Opis",
+        "focusesOnScience": "Znanost",
+        "focusesOnMagic": "Magija",
+        "focusesOnPhilosophy": "Filozofija",
+        "focusesOnMilitaryStudies": "Vojne studije"
+    },
+    "majors": {
+        "label": "Smjerovi",
+        "add": "dodaj",
+        "addTitle": "Novi smjer",
+        "editTitle": "Uredi smjer",
+        "name": "Naziv",
+        "description": "Opis",
+        "majorName": "Smjer",
+        "degreeLevel": "Razina studija",
+        "save": "Spremi",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati smjer „{{name}}“?",
+        "requiredMissing": "Naziv smjera je obavezan.",
+        "saveFailed": "Spremanje smjera nije uspjelo.",
+        "deleteFailed": "Brisanje smjera nije uspjelo."
+    },
+    "alumni": {
+        "label": "Alumni"
+    },
+    "form": {
+        "newTitle": "Novo sveučilište",
+        "editTitle": "Uredi sveučilište",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "educationSystem": "Sustav obrazovanja",
+        "educationSystemMissing": "Sustav obrazovanja je obavezan.",
+        "educationSystemLocked": "Sustav obrazovanja se ne može promijeniti nakon stvaranja.",
+        "save": "Spremi sveučilište",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}“? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

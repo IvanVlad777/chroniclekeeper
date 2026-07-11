@@ -1,3 +1,6 @@
+using ChronicleKeeper.Core.DTOs.EducationRecord;
+using ChronicleKeeper.Core.DTOs.ReligiousEducation;
+
 namespace ChronicleKeeper.Core.DTOs.Character
 {
     public class CharacterDetailsDto : CharacterDto
@@ -9,16 +12,18 @@ namespace ChronicleKeeper.Core.DTOs.Character
         public ReferenceDto? SocialClass { get; set; }
         public ReferenceDto? Nation { get; set; }
         public ReferenceDto? Religion { get; set; }
+        public ReferenceDto? Profession { get; set; }
         public List<ReferenceDto> Factions { get; set; } = new();
         public List<ReferenceDto> Tags { get; set; } = new();
         public List<CharacterRelationshipDto> Relationships { get; set; } = new();
+        public List<EducationRecordDto> Educations { get; set; } = new();
+        public List<ReligiousEducationDto> ReligiousEducations { get; set; } = new();
 
         // TODO: Otkomentirati kada budem dodavao veze
         //public List<ReferenceDto> Abilities { get; set; } = new();
         //public List<ReferenceDto> Hobbies { get; set; } = new();
         //public List<ReferenceDto> Equipments { get; set; } = new();
         //public List<ReferenceDto> Clothing { get; set; } = new();
-        //public List<ReferenceDto> Educations { get; set; } = new();
         //public List<ReferenceDto> Specialisations { get; set; } = new();
         //public List<ReferenceDto> Siblings { get; set; } = new();
     }

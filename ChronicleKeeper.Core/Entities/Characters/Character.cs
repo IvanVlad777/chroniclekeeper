@@ -6,9 +6,9 @@ using ChronicleKeeper.Core.Entities.Tags;
 //using ChronicleKeeper.Core.Entities.Characters.Abilities;
 //using ChronicleKeeper.Core.Entities.Characters.Equipment;
 //using ChronicleKeeper.Core.Entities.HistoryTimelines;
-//using ChronicleKeeper.Core.Entities.Professions;
+using ChronicleKeeper.Core.Entities.Professions;
 //using ChronicleKeeper.Core.Entities.Social.Cultures;
-//using ChronicleKeeper.Core.Entities.Social.Education;
+using ChronicleKeeper.Core.Entities.Social.Education;
 using ChronicleKeeper.Core.Entities.Social.Nationality;
 using ChronicleKeeper.Core.Entities.Social.Religions;
 using ChronicleKeeper.Core.Entities.Social.Structure;
@@ -69,12 +69,11 @@ namespace ChronicleKeeper.Core.Entities.Characters
         //public virtual ICollection<Ability> Abilities { get; set; } = new List<Ability>(); // TODO: Uncomment when Ability entity is revived
 
         // Education & Career
-        //[ForeignKey("Profession")]
-        //public int? ProfessionId { get; set; } // TODO: Uncomment when Profession entity is revived
-        //public virtual Profession? Profession { get; set; }
+        public int? ProfessionId { get; set; }
+        public virtual Profession? Profession { get; set; }
 
-        //public virtual ICollection<EducationRecord> Educations { get; set; } = new List<EducationRecord>(); // TODO: Uncomment when EducationRecord entity is revived
-        //public virtual ICollection<Specialisation> Specialisations { get; set; } = new List<Specialisation>(); // TODO: Uncomment when Specialisation entity is revived
+        public virtual ICollection<EducationRecord> Educations { get; set; } = new List<EducationRecord>();
+        //public virtual ICollection<Specialisation> Specialisations { get; set; } = new List<Specialisation>(); // TODO: Uncomment when Character many-to-many cross-links are revived
 
         // Relationships & Social Interactions
         public virtual ICollection<CharacterRelationship> Relationships { get; set; } = new List<CharacterRelationship>();

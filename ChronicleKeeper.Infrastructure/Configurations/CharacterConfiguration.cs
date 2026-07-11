@@ -77,6 +77,12 @@ namespace ChronicleKeeper.Infrastructure.Configurations
                 .HasForeignKey(c => c.ReligionId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            // Profession — Restrict: brisanje zanimanja u upotrebi je friendly app greška
+            builder.HasOne(c => c.Profession)
+                .WithMany(p => p.Characters)
+                .HasForeignKey(c => c.ProfessionId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             builder.ToTable(t =>
             {
                 t.HasCheckConstraint("CK_Characters_Father_NotSelf", "[FatherId] <> [Id]");

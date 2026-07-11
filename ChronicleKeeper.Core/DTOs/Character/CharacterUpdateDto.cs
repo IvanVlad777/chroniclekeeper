@@ -53,7 +53,6 @@ namespace ChronicleKeeper.Core.DTOs.Character
         public int? FatherId { get; set; }
         public int? MotherId { get; set; }
 
-        // TODO: Otkomentirati kada budem dodavao veze
-        //public int? ProfessionId { get; set; }
+        public int? ProfessionId { get; set; }
     }
 }

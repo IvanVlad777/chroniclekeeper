@@ -43,6 +43,15 @@ const newEntryTargets: { key: string; glyph: string; to: string }[] = [
         glyph: "⚜",
         to: "/storymap/diplomatic-agreements/new",
     },
+    { key: "professions", glyph: "⚒", to: "/storymap/professions/new" },
+    { key: "schools", glyph: "☰", to: "/storymap/schools/new" },
+    { key: "universities", glyph: "⚛", to: "/storymap/universities/new" },
+    {
+        key: "educationSystems",
+        glyph: "▦",
+        to: "/storymap/education-systems/new",
+    },
+    { key: "libraries", glyph: "❖", to: "/storymap/libraries/new" },
 ];
 
 export function Sidebar() {

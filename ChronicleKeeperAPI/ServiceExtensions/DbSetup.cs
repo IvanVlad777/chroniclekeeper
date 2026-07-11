@@ -35,6 +35,19 @@ namespace ChronicleKeeper.API.ServiceExtensions
             services.AddScoped<IPoliticalPartyRepository, PoliticalPartyRepository>();
             services.AddScoped<ILegalSystemRepository, LegalSystemRepository>();
             services.AddScoped<IDiplomaticAgreementRepository, DiplomaticAgreementRepository>();
+            services.AddScoped<IProfessionRepository, ProfessionRepository>();
+            services.AddScoped<IJobRankRepository, JobRankRepository>();
+            services.AddScoped<IApprenticeshipRepository, ApprenticeshipRepository>();
+            services.AddScoped<ISpecialisationRepository, SpecialisationRepository>();
+            services.AddScoped<IEducationSystemRepository, EducationSystemRepository>();
+            services.AddScoped<ISchoolRepository, SchoolRepository>();
+            services.AddScoped<ITradeSchoolRepository, TradeSchoolRepository>();
+            services.AddScoped<ISchoolSubjectRepository, SchoolSubjectRepository>();
+            services.AddScoped<IUniversityRepository, UniversityRepository>();
+            services.AddScoped<IUniversityMajorRepository, UniversityMajorRepository>();
+            services.AddScoped<ILibraryRepository, LibraryRepository>();
+            services.AddScoped<IEducationRecordRepository, EducationRecordRepository>();
+            services.AddScoped<IReligiousEducationRepository, ReligiousEducationRepository>();
 
             return services;
         }

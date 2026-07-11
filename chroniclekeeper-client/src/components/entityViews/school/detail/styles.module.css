@@ -1,0 +1,231 @@
+/* School/TradeSchool detail — header + fact boxovi + predmeti + alumni */
+
+.page {
+    padding: 30px 34px;
+}
+
+.headerRow {
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+    margin-bottom: 22px;
+}
+
+.headerMain {
+    flex: 1;
+    min-width: 0;
+}
+
+.breadcrumb {
+    font-size: 13px;
+    color: var(--color-muted);
+    margin-bottom: 14px;
+}
+
+.breadcrumb a:hover {
+    color: var(--color-accent);
+}
+
+.breadcrumbSep {
+    color: var(--color-border);
+    margin: 0 6px;
+}
+
+.breadcrumbCurrent {
+    color: var(--color-accent);
+}
+
+.kicker {
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-accent);
+}
+
+.name {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 36px;
+    margin: 4px 0 0;
+    line-height: 1;
+}
+
+.facts {
+    margin-bottom: 26px;
+}
+
+.sectionHead {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    margin: 26px 0 12px;
+}
+
+.sectionHead:first-of-type {
+    margin-top: 0;
+}
+
+.sectionSpacer {
+    margin-top: 26px;
+}
+
+.sectionTitle {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.sectionLine {
+    flex: 1;
+    height: 1px;
+    background: var(--color-border);
+}
+
+.sectionStar {
+    color: var(--color-accent);
+    font-size: 11px;
+}
+
+.prose {
+    margin: 0 0 14px;
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--color-text);
+    max-width: 720px;
+    white-space: pre-wrap;
+}
+
+.dropCap::first-letter {
+    float: left;
+    font-family: var(--font-display);
+    font-size: 56px;
+    line-height: 0.82;
+    font-weight: 500;
+    color: var(--color-accent);
+    padding: 5px 12px 0 0;
+}
+
+.muted {
+    color: var(--color-muted);
+}
+
+.none {
+    font-size: 13.5px;
+    color: var(--color-muted);
+}
+
+.addInline {
+    border: none;
+    background: transparent;
+    padding: 0;
+    font-family: var(--font-ui);
+    font-size: 12px;
+    color: var(--color-accent);
+    cursor: pointer;
+}
+
+.addInline:hover {
+    text-decoration: underline;
+}
+
+.childRow {
+    display: flex;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--color-border);
+    align-items: baseline;
+}
+
+.childName {
+    font-family: var(--font-display);
+    font-size: 15.5px;
+    color: var(--color-accent);
+    min-width: 130px;
+}
+
+.childBody {
+    flex: 1;
+    min-width: 0;
+}
+
+.childDesc {
+    margin: 0;
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--color-text);
+}
+
+.childMeta {
+    margin: 4px 0 0;
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--color-muted);
+}
+
+.childActions {
+    display: flex;
+    gap: 8px;
+    flex: none;
+}
+
+.childActionBtn {
+    border: none;
+    background: transparent;
+    padding: 0;
+    font-family: var(--font-ui);
+    font-size: 12px;
+    color: var(--color-muted);
+    cursor: pointer;
+}
+
+.childActionBtn:hover {
+    color: var(--color-accent);
+}
+
+.childActionDanger:hover {
+    color: var(--color-danger);
+}
+
+.childForm {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 14px;
+    padding: 16px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--o-radius-lg);
+    background: var(--color-panel);
+    max-width: 720px;
+}
+
+.childFormTitle {
+    font-family: var(--font-display);
+    font-size: 17px;
+    margin: 0;
+}
+
+.miniError {
+    margin: 0;
+    font-size: 12.5px;
+    color: var(--color-danger);
+}
+
+.miniActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.backLink {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: var(--color-border);
+    text-underline-offset: 3px;
+}

@@ -1,0 +1,39 @@
+{
+    "listTitle": "Libraries",
+    "search": "Search libraries…",
+    "loaderror": "Failed to load",
+    "notfound": "Library not found",
+    "none": "None",
+    "backtolist": "Back to libraries",
+    "emptyTitle": "No libraries yet",
+    "emptyText": "Archives, reading rooms, arcane stacks — where your world keeps its written knowledge. Create the first library to begin.",
+    "columns": {
+        "name": "Name",
+        "isPublic": "Public",
+        "updated": "Updated"
+    },
+    "fields": {
+        "description": "Description",
+        "isPublic": "Public",
+        "focusesOnMagic": "Focuses on magic",
+        "focusesOnHistory": "Focuses on history",
+        "university": "University",
+        "location": "Location"
+    },
+    "form": {
+        "newTitle": "New library",
+        "editTitle": "Edit library",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "university": "University",
+        "location": "Location",
+        "save": "Save library",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

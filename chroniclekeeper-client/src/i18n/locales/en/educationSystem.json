@@ -1,0 +1,42 @@
+{
+    "listTitle": "Education systems",
+    "search": "Search education systems…",
+    "loaderror": "Failed to load",
+    "notfound": "Education system not found",
+    "none": "None",
+    "backtolist": "Back to education systems",
+    "emptyTitle": "No education systems yet",
+    "emptyText": "State curricula, guild apprenticeships, private academies — how your world organizes the passing-on of knowledge. Create the first education system to begin.",
+    "columns": {
+        "name": "Name",
+        "stateControlled": "State-controlled",
+        "updated": "Updated"
+    },
+    "fields": {
+        "description": "Description",
+        "isStateControlled": "State-controlled",
+        "allowsPrivateInstitutions": "Allows private institutions",
+        "includesReligiousEducation": "Includes religious education",
+        "supportsGuildTraining": "Supports guild training"
+    },
+    "schools": {
+        "label": "Schools"
+    },
+    "universities": {
+        "label": "Universities"
+    },
+    "form": {
+        "newTitle": "New education system",
+        "editTitle": "Edit education system",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "save": "Save education system",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

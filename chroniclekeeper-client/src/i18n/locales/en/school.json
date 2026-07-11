@@ -1,0 +1,74 @@
+{
+    "listTitle": "Schools",
+    "search": "Search schools…",
+    "loaderror": "Failed to load",
+    "notfound": "School not found",
+    "none": "None",
+    "backtolist": "Back to schools",
+    "emptyTitle": "No schools yet",
+    "emptyText": "Village schoolhouses, guild academies, trade colleges — the places your people learn a craft. Create the first school to begin.",
+    "columns": {
+        "name": "Name",
+        "type": "Type",
+        "updated": "Updated"
+    },
+    "fields": {
+        "description": "Description",
+        "isPublic": "Public",
+        "isReligious": "Religious",
+        "specialization": "Specialization",
+        "durationYears": "Duration (years)",
+        "isGovernmentRecognized": "Government recognized"
+    },
+    "schoolTypeLabel": {
+        "School": "School",
+        "TradeSchool": "Trade school"
+    },
+    "subjects": {
+        "label": "Subjects",
+        "add": "add",
+        "addTitle": "New subject",
+        "editTitle": "Edit subject",
+        "name": "Name",
+        "description": "Description",
+        "subjectName": "Subject",
+        "isMandatory": "Mandatory",
+        "mandatory": "mandatory",
+        "optional": "optional",
+        "save": "Save",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete subject “{{name}}”?",
+        "requiredMissing": "Subject name is required.",
+        "saveFailed": "Saving the subject failed.",
+        "deleteFailed": "Deleting the subject failed."
+    },
+    "alumni": {
+        "label": "Alumni"
+    },
+    "trainedProfessions": {
+        "label": "Trained professions"
+    },
+    "apprenticeships": {
+        "label": "Apprenticeships hosted here"
+    },
+    "form": {
+        "newTitle": "New school",
+        "newTradeTitle": "New trade school",
+        "editTitle": "Edit school",
+        "editTradeTitle": "Edit trade school",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "educationSystem": "Education system",
+        "educationSystemMissing": "An education system is required.",
+        "educationSystemLocked": "The education system cannot be changed after creation.",
+        "save": "Save school",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

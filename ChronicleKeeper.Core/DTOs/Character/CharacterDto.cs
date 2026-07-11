@@ -34,8 +34,6 @@ namespace ChronicleKeeper.Core.DTOs.Character
         public int? SocialClassId { get; set; }
         public int? NationId { get; set; }
         public int? ReligionId { get; set; }
-
-        // TODO: Otkomentirati kada budem dodavao veze
-        //public ReferenceDto? Profession { get; set; }
+        public int? ProfessionId { get; set; }
     }
 }

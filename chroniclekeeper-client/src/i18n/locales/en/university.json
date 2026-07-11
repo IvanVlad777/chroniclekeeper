@@ -1,0 +1,59 @@
+{
+    "listTitle": "Universities",
+    "search": "Search universities…",
+    "loaderror": "Failed to load",
+    "notfound": "University not found",
+    "none": "None",
+    "backtolist": "Back to universities",
+    "emptyTitle": "No universities yet",
+    "emptyText": "Halls of higher learning — where scholars, mages and strategists are made. Create the first university to begin.",
+    "columns": {
+        "name": "Name",
+        "focus": "Focus",
+        "updated": "Updated"
+    },
+    "fields": {
+        "description": "Description",
+        "focusesOnScience": "Science",
+        "focusesOnMagic": "Magic",
+        "focusesOnPhilosophy": "Philosophy",
+        "focusesOnMilitaryStudies": "Military studies"
+    },
+    "majors": {
+        "label": "Majors",
+        "add": "add",
+        "addTitle": "New major",
+        "editTitle": "Edit major",
+        "name": "Name",
+        "description": "Description",
+        "majorName": "Major",
+        "degreeLevel": "Degree level",
+        "save": "Save",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete major “{{name}}”?",
+        "requiredMissing": "Major name is required.",
+        "saveFailed": "Saving the major failed.",
+        "deleteFailed": "Deleting the major failed."
+    },
+    "alumni": {
+        "label": "Alumni"
+    },
+    "form": {
+        "newTitle": "New university",
+        "editTitle": "Edit university",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "educationSystem": "Education system",
+        "educationSystemMissing": "An education system is required.",
+        "educationSystemLocked": "The education system cannot be changed after creation.",
+        "save": "Save university",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

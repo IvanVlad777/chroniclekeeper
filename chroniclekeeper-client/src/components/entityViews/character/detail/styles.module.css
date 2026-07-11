@@ -273,6 +273,12 @@
     background: var(--color-panel);
 }
 
+.row2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
 .miniError {
     margin: 0;
     font-size: 12.5px;

@@ -5,8 +5,10 @@ using ChronicleKeeper.Core.Entities.Geography;
 using ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient;
 using ChronicleKeeper.Core.Entities.HistoryTimelines;
 using ChronicleKeeper.Core.Entities.Notes;
+using ChronicleKeeper.Core.Entities.Professions;
 using ChronicleKeeper.Core.Entities.Social;
 using ChronicleKeeper.Core.Entities.Social.Cultures;
+using ChronicleKeeper.Core.Entities.Social.Education;
 using ChronicleKeeper.Core.Entities.Social.Nationality;
 using ChronicleKeeper.Core.Entities.Social.Politics;
 using ChronicleKeeper.Core.Entities.Social.Religions;
@@ -74,6 +76,26 @@ namespace ChronicleKeeper.Infrastructure.Data
         public DbSet<LanguageNation> LanguageNations { get; set; }
         public DbSet<PoliticalPartyFaction> PoliticalPartyFactions { get; set; }
         public DbSet<PoliticalPartyNation> PoliticalPartyNations { get; set; }
+
+        // Professions
+        public DbSet<Profession> Professions { get; set; }
+        public DbSet<JobRank> JobRanks { get; set; }
+        public DbSet<Specialisation> Specialisations { get; set; }
+        public DbSet<Apprenticeship> Apprenticeships { get; set; }
+        public DbSet<ProfessionSapientSpecies> ProfessionSapientSpecies { get; set; }
+        public DbSet<ProfessionSocialClass> ProfessionSocialClasses { get; set; }
+        public DbSet<ProfessionTradeSchool> ProfessionTradeSchools { get; set; }
+
+        // Education
+        public DbSet<EducationSystem> EducationSystems { get; set; }
+        public DbSet<School> Schools { get; set; }
+        public DbSet<TradeSchool> TradeSchools { get; set; }
+        public DbSet<University> Universities { get; set; }
+        public DbSet<Library> Libraries { get; set; }
+        public DbSet<SchoolSubject> SchoolSubjects { get; set; }
+        public DbSet<EducationRecord> EducationRecords { get; set; }
+        public DbSet<UniversityMajor> UniversityMajors { get; set; }
+        public DbSet<ReligiousEducation> ReligiousEducations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

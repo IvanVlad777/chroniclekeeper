@@ -1,0 +1,42 @@
+{
+    "listTitle": "Sustavi obrazovanja",
+    "search": "Traži sustave obrazovanja…",
+    "loaderror": "Neuspješno učitavanje",
+    "notfound": "Sustav obrazovanja nije pronađen",
+    "none": "Nema",
+    "backtolist": "Natrag na sustave obrazovanja",
+    "emptyTitle": "Još nema sustava obrazovanja",
+    "emptyText": "Državni kurikulumi, cehovska naukovanja, privatne akademije — kako tvoj svijet organizira prenošenje znanja. Stvori prvi sustav obrazovanja za početak.",
+    "columns": {
+        "name": "Naziv",
+        "stateControlled": "Državno kontroliran",
+        "updated": "Ažurirano"
+    },
+    "fields": {
+        "description": "Opis",
+        "isStateControlled": "Državno kontroliran",
+        "allowsPrivateInstitutions": "Dopušta privatne ustanove",
+        "includesReligiousEducation": "Uključuje vjersko obrazovanje",
+        "supportsGuildTraining": "Podržava cehovsko osposobljavanje"
+    },
+    "schools": {
+        "label": "Škole"
+    },
+    "universities": {
+        "label": "Sveučilišta"
+    },
+    "form": {
+        "newTitle": "Novi sustav obrazovanja",
+        "editTitle": "Uredi sustav obrazovanja",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "save": "Spremi sustav obrazovanja",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}“? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

@@ -45,4 +45,13 @@ export const navEntries: NavEntry[] = [
         glyph: "⚜",
         to: "/storymap/diplomatic-agreements",
     },
+    { key: "professions", glyph: "⚒", to: "/storymap/professions" },
+    { key: "schools", glyph: "☰", to: "/storymap/schools" },
+    { key: "universities", glyph: "⚛", to: "/storymap/universities" },
+    {
+        key: "educationSystems",
+        glyph: "▦",
+        to: "/storymap/education-systems",
+    },
+    { key: "libraries", glyph: "❖", to: "/storymap/libraries" },
 ];

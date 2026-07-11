@@ -50,6 +50,22 @@ import LegalSystemForm from "../components/entityViews/legalSystem/form/LegalSys
 import DiplomaticAgreementList from "../components/entityViews/diplomaticAgreement/list/DiplomaticAgreementList";
 import DiplomaticAgreementDetails from "../components/entityViews/diplomaticAgreement/detail/DiplomaticAgreementDetails";
 import DiplomaticAgreementForm from "../components/entityViews/diplomaticAgreement/form/DiplomaticAgreementForm";
+import ProfessionList from "../components/entityViews/profession/list/ProfessionList";
+import ProfessionDetails from "../components/entityViews/profession/detail/ProfessionDetails";
+import ProfessionForm from "../components/entityViews/profession/form/ProfessionForm";
+import SchoolList from "../components/entityViews/school/list/SchoolList";
+import SchoolDetails from "../components/entityViews/school/detail/SchoolDetails";
+import SchoolForm from "../components/entityViews/school/form/SchoolForm";
+import TradeSchoolForm from "../components/entityViews/school/form/TradeSchoolForm";
+import UniversityList from "../components/entityViews/university/list/UniversityList";
+import UniversityDetails from "../components/entityViews/university/detail/UniversityDetails";
+import UniversityForm from "../components/entityViews/university/form/UniversityForm";
+import EducationSystemList from "../components/entityViews/educationSystem/list/EducationSystemList";
+import EducationSystemDetails from "../components/entityViews/educationSystem/detail/EducationSystemDetails";
+import EducationSystemForm from "../components/entityViews/educationSystem/form/EducationSystemForm";
+import LibraryList from "../components/entityViews/library/list/LibraryList";
+import LibraryDetails from "../components/entityViews/library/detail/LibraryDetails";
+import LibraryForm from "../components/entityViews/library/form/LibraryForm";
 import { WorldProvider } from "../context/world/WorldProvider";
 import { AppShell } from "../components/shell/AppShell";
 
@@ -234,6 +250,64 @@ const AppRoutes = () => {
                 <Route
                     path="diplomatic-agreements/:id/edit"
                     element={<DiplomaticAgreementForm />}
+                />
+                <Route path="professions" element={<ProfessionList />} />
+                <Route path="professions/new" element={<ProfessionForm />} />
+                <Route
+                    path="professions/:id"
+                    element={<ProfessionDetails />}
+                />
+                <Route
+                    path="professions/:id/edit"
+                    element={<ProfessionForm />}
+                />
+                <Route path="schools" element={<SchoolList />} />
+                <Route path="schools/new" element={<SchoolForm />} />
+                <Route
+                    path="schools/new-trade"
+                    element={<TradeSchoolForm />}
+                />
+                <Route path="schools/:id" element={<SchoolDetails />} />
+                <Route path="schools/:id/edit" element={<SchoolForm />} />
+                <Route
+                    path="schools/:id/edit-trade"
+                    element={<TradeSchoolForm />}
+                />
+                <Route path="universities" element={<UniversityList />} />
+                <Route
+                    path="universities/new"
+                    element={<UniversityForm />}
+                />
+                <Route
+                    path="universities/:id"
+                    element={<UniversityDetails />}
+                />
+                <Route
+                    path="universities/:id/edit"
+                    element={<UniversityForm />}
+                />
+                <Route
+                    path="education-systems"
+                    element={<EducationSystemList />}
+                />
+                <Route
+                    path="education-systems/new"
+                    element={<EducationSystemForm />}
+                />
+                <Route
+                    path="education-systems/:id"
+                    element={<EducationSystemDetails />}
+                />
+                <Route
+                    path="education-systems/:id/edit"
+                    element={<EducationSystemForm />}
+                />
+                <Route path="libraries" element={<LibraryList />} />
+                <Route path="libraries/new" element={<LibraryForm />} />
+                <Route path="libraries/:id" element={<LibraryDetails />} />
+                <Route
+                    path="libraries/:id/edit"
+                    element={<LibraryForm />}
                 />
                 <Route path="*" element={<NoPage />} />
             </Route>

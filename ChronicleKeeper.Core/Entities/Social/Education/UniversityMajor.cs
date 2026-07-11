@@ -1,33 +1,19 @@
-﻿using ChronicleKeeper.Core.Entities.Base;
-using ChronicleKeeper.Core.Entities.Characters;
-using ChronicleKeeper.Core.Entities.HistoryTimelines;
-using ChronicleKeeper.Core.Interfaces;
+using ChronicleKeeper.Core.Entities.Base;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ChronicleKeeper.Core.Entities.Social.Education
 {
-    public class UniversityMajor : ILoreEntity
+    public class UniversityMajor : LoreEntity
     {
-        [Key]
-        public int Id { get; set; }
-        [Required]
-        public string Name { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
-        [Required]
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        [Required]
-        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
-        public virtual History? History { get; set; }
-
         public string MajorName { get; set; } = string.Empty; // Arcane Studies, Engineering, Political Science
         public string DegreeLevel { get; set; } = string.Empty; // Bachelor's, Master's, Doctorate
 
-        //[ForeignKey("University")]
+        [Required]
         public int UniversityId { get; set; }
-        public University University { get; set; } = null!;
+        public virtual University University { get; set; } = null!;
 
-        public ICollection<Character> Professors { get; set; } = new List<Character>();
-        //public ICollection<Character> Students { get; set; } = new List<Character>();
+        // Professors/Students: TODO: Uncomment when Character many-to-many cross-links are revived
+        //public virtual ICollection<Characters.Character> Professors { get; set; } = new List<Characters.Character>();
+        //public virtual ICollection<Characters.Character> Students { get; set; } = new List<Characters.Character>();
     }
 }

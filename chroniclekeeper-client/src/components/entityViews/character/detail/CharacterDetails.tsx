@@ -17,6 +17,9 @@ import {
     CharacterDto,
     RelationshipType,
     relationshipTypes,
+    ReligionDto,
+    SchoolDto,
+    UniversityDto,
 } from "../../../../interfaces/loreInterfaces";
 import {
     addRelationship,
@@ -24,9 +27,59 @@ import {
     getCharacters,
     removeRelationship,
 } from "../../../../api/characters";
+import {
+    createEducationRecord,
+    deleteEducationRecord,
+    updateEducationRecord,
+} from "../../../../api/educationRecords";
+import {
+    createReligiousEducation,
+    deleteReligiousEducation,
+    updateReligiousEducation,
+} from "../../../../api/religiousEducations";
+import { getSchools } from "../../../../api/schools";
+import { getUniversities } from "../../../../api/universities";
+import { getReligions } from "../../../../api/religions";
 import { useAuth } from "../../../../hooks/useAuth";
 import { apiErrorMessage } from "../../../../utils/apiError";
 import s from "./styles.module.css";
+
+interface EducationFormState {
+    name: string;
+    description: string;
+    /** "" | `school:{id}` | `university:{id}` — jedan select za oba tipa ustanove. */
+    institution: string;
+    startDate: string;
+    endDate: string;
+    degree: string;
+}
+
+const emptyEducationForm: EducationFormState = {
+    name: "",
+    description: "",
+    institution: "",
+    startDate: "",
+    endDate: "",
+    degree: "",
+};
+
+interface ReligiousEducationFormState {
+    name: string;
+    description: string;
+    religionId: string;
+    startDate: string;
+    completionDate: string;
+    ordained: boolean;
+}
+
+const emptyReligiousEducationForm: ReligiousEducationFormState = {
+    name: "",
+    description: "",
+    religionId: "",
+    startDate: "",
+    completionDate: "",
+    ordained: false,
+};
 
 const editorRoles = ["Editor", "Admin", "SuperAdmin"];
 
@@ -49,6 +102,11 @@ export default function CharacterDetail() {
 
     // Likovi svijeta za select nove veze (učitava se samo za editore)
     const [worldCharacters, setWorldCharacters] = useState<CharacterDto[]>([]);
+    const [worldSchools, setWorldSchools] = useState<SchoolDto[]>([]);
+    const [worldUniversities, setWorldUniversities] = useState<
+        UniversityDto[]
+    >([]);
+    const [worldReligions, setWorldReligions] = useState<ReligionDto[]>([]);
 
     // Inline forma za novu vezu
     const [relOpen, setRelOpen] = useState(false);
@@ -57,6 +115,20 @@ export default function CharacterDetail() {
     const [relDescription, setRelDescription] = useState("");
     const [relSecret, setRelSecret] = useState(false);
     const [relError, setRelError] = useState<string | null>(null);
+
+    // Inline forma obrazovanja: null = zatvorena, 0 = novo, >0 = edit tog id-a
+    const [eduFormFor, setEduFormFor] = useState<number | null>(null);
+    const [eduForm, setEduForm] = useState<EducationFormState>(
+        emptyEducationForm
+    );
+    const [eduError, setEduError] = useState<string | null>(null);
+
+    // Inline forma vjerskog obrazovanja
+    const [relEduFormFor, setRelEduFormFor] = useState<number | null>(null);
+    const [relEduForm, setRelEduForm] = useState<ReligiousEducationFormState>(
+        emptyReligiousEducationForm
+    );
+    const [relEduError, setRelEduError] = useState<string | null>(null);
 
     const [busy, setBusy] = useState(false);
 
@@ -111,6 +183,29 @@ export default function CharacterDetail() {
         };
     }, [canEdit, character?.id, character?.worldId, reloadKey]); // eslint-disable-line react-hooks/exhaustive-deps
 
+    // Editorima trebaju škole/sveučilišta/religije za forme obrazovanja
+    useEffect(() => {
+        if (!canEdit || !character) return;
+        let cancelled = false;
+        Promise.all([
+            getSchools({ worldId: character.worldId }),
+            getUniversities({ worldId: character.worldId }),
+            getReligions(character.worldId),
+        ])
+            .then(([schools, universities, religions]) => {
+                if (cancelled) return;
+                setWorldSchools(schools);
+                setWorldUniversities(universities);
+                setWorldReligions(religions);
+            })
+            .catch((err) =>
+                console.error("Failed to load education form data:", err)
+            );
+        return () => {
+            cancelled = true;
+        };
+    }, [canEdit, character?.id, character?.worldId, reloadKey]); // eslint-disable-line react-hooks/exhaustive-deps
+
     async function onAddRelationship(e: FormEvent) {
         e.preventDefault();
         if (!character || !relTarget) return;
@@ -146,6 +241,126 @@ export default function CharacterDetail() {
         } catch (err) {
             console.error("Failed to remove relationship:", err);
             setRelError(apiErrorMessage(err, t("rel.removeFailed")));
+            setBusy(false);
+        }
+    }
+
+    // ----- Obrazovanje (EducationRecord) -----
+
+    const openNewEducation = () => {
+        setEduForm(emptyEducationForm);
+        setEduError(null);
+        setEduFormFor(0);
+    };
+
+    async function onSaveEducation(e: FormEvent) {
+        e.preventDefault();
+        if (!character || eduFormFor === null) return;
+        setEduError(null);
+        setBusy(true);
+        try {
+            const [instType, instId] = eduForm.institution.split(":");
+            const payload = {
+                name: eduForm.name.trim() || eduForm.degree.trim() || t("education.label"),
+                description: eduForm.description,
+                characterId: character.id,
+                schoolId: instType === "school" ? Number(instId) : null,
+                universityId: instType === "university" ? Number(instId) : null,
+                startDate: eduForm.startDate,
+                endDate: eduForm.endDate || null,
+                degree: eduForm.degree.trim(),
+            };
+            if (eduFormFor === 0) {
+                await createEducationRecord({ ...payload, worldId: character.worldId });
+            } else {
+                await updateEducationRecord(eduFormFor, payload);
+            }
+            setEduFormFor(null);
+            refetch();
+        } catch (err) {
+            console.error("Failed to save education record:", err);
+            setEduError(apiErrorMessage(err, t("education.saveFailed")));
+        } finally {
+            setBusy(false);
+        }
+    }
+
+    async function onDeleteEducation(id: number) {
+        if (!window.confirm(t("education.deleteConfirm"))) return;
+        setEduError(null);
+        setBusy(true);
+        try {
+            await deleteEducationRecord(id);
+            refetch();
+        } catch (err) {
+            console.error("Failed to delete education record:", err);
+            setEduError(apiErrorMessage(err, t("education.deleteFailed")));
+        } finally {
+            setBusy(false);
+        }
+    }
+
+    // ----- Vjersko obrazovanje (ReligiousEducation) -----
+
+    const openNewReligiousEducation = () => {
+        setRelEduForm(emptyReligiousEducationForm);
+        setRelEduError(null);
+        setRelEduFormFor(0);
+    };
+
+    async function onSaveReligiousEducation(e: FormEvent) {
+        e.preventDefault();
+        if (!character || relEduFormFor === null) return;
+        if (!relEduForm.religionId) {
+            setRelEduError(t("religiousEducation.requiredMissing"));
+            return;
+        }
+        setRelEduError(null);
+        setBusy(true);
+        try {
+            if (relEduFormFor === 0) {
+                await createReligiousEducation({
+                    name: relEduForm.name.trim() || t("religiousEducation.label"),
+                    description: relEduForm.description,
+                    religionId: Number(relEduForm.religionId),
+                    characterId: character.id,
+                    startDate: relEduForm.startDate,
+                    completionDate: relEduForm.completionDate || null,
+                    ordained: relEduForm.ordained,
+                });
+            } else {
+                await updateReligiousEducation(relEduFormFor, {
+                    name: relEduForm.name.trim() || t("religiousEducation.label"),
+                    description: relEduForm.description,
+                    characterId: character.id,
+                    startDate: relEduForm.startDate,
+                    completionDate: relEduForm.completionDate || null,
+                    ordained: relEduForm.ordained,
+                });
+            }
+            setRelEduFormFor(null);
+            refetch();
+        } catch (err) {
+            console.error("Failed to save religious education:", err);
+            setRelEduError(apiErrorMessage(err, t("religiousEducation.saveFailed")));
+        } finally {
+            setBusy(false);
+        }
+    }
+
+    async function onDeleteReligiousEducation(id: number) {
+        if (!window.confirm(t("religiousEducation.deleteConfirm"))) return;
+        setRelEduError(null);
+        setBusy(true);
+        try {
+            await deleteReligiousEducation(id);
+            refetch();
+        } catch (err) {
+            console.error("Failed to delete religious education:", err);
+            setRelEduError(
+                apiErrorMessage(err, t("religiousEducation.deleteFailed"))
+            );
+        } finally {
             setBusy(false);
         }
     }
@@ -316,6 +531,21 @@ export default function CharacterDetail() {
                                         className={s.relLink}
                                     >
                                         {character.religion.name}
+                                    </Link>
+                                ) : (
+                                    dash
+                                )
+                            }
+                        />
+                        <OrnateDisplayBox
+                            label={t("profession.label")}
+                            value={
+                                character.profession ? (
+                                    <Link
+                                        to={`/storymap/professions/${character.profession.id}`}
+                                        className={s.relLink}
+                                    >
+                                        {character.profession.name}
                                     </Link>
                                 ) : (
                                     dash
@@ -526,6 +756,291 @@ export default function CharacterDetail() {
                             )}
                         </div>
                     </div>
+
+                    <div className={`${s.sectionHead} ${s.sectionSpacer}`}>
+                        <span className={s.sectionTitle}>
+                            {t("education.label")}
+                        </span>
+                        <span className={s.sectionLine} />
+                        {canEdit && eduFormFor === null && (
+                            <button
+                                type="button"
+                                className={s.addInline}
+                                onClick={openNewEducation}
+                            >
+                                + {t("education.add")}
+                            </button>
+                        )}
+                    </div>
+                    {character.educations.length === 0 && eduFormFor === null ? (
+                        <p className={s.none}>{t("none")}</p>
+                    ) : (
+                        character.educations.map((edu) => (
+                            <div key={edu.id} className={s.listRow}>
+                                <span className={s.relType}>
+                                    {edu.degree || edu.name}
+                                </span>
+                                <span className={s.listName}>
+                                    {edu.schoolId
+                                        ? worldSchools.find(
+                                              (sc) => sc.id === edu.schoolId
+                                          )?.name
+                                        : edu.universityId
+                                        ? worldUniversities.find(
+                                              (u) => u.id === edu.universityId
+                                          )?.name
+                                        : dash}
+                                </span>
+                                {canEdit && (
+                                    <button
+                                        type="button"
+                                        className={s.chipRemove}
+                                        aria-label={t("education.delete")}
+                                        disabled={busy}
+                                        onClick={() => onDeleteEducation(edu.id)}
+                                    >
+                                        ×
+                                    </button>
+                                )}
+                            </div>
+                        ))
+                    )}
+                    {eduFormFor !== null && (
+                        <form className={s.miniForm} onSubmit={onSaveEducation}>
+                            <OrnateField label={t("education.institution")}>
+                                <OrnateSelect
+                                    value={eduForm.institution}
+                                    onChange={(e) =>
+                                        setEduForm((f) => ({
+                                            ...f,
+                                            institution: e.target.value,
+                                        }))
+                                    }
+                                >
+                                    <option value="">{t("none")}</option>
+                                    {worldSchools.map((sc) => (
+                                        <option
+                                            key={`school:${sc.id}`}
+                                            value={`school:${sc.id}`}
+                                        >
+                                            {sc.name}
+                                        </option>
+                                    ))}
+                                    {worldUniversities.map((u) => (
+                                        <option
+                                            key={`university:${u.id}`}
+                                            value={`university:${u.id}`}
+                                        >
+                                            {u.name}
+                                        </option>
+                                    ))}
+                                </OrnateSelect>
+                            </OrnateField>
+                            <OrnateField label={t("education.degree")}>
+                                <OrnateTextInput
+                                    value={eduForm.degree}
+                                    maxLength={100}
+                                    onChange={(e) =>
+                                        setEduForm((f) => ({
+                                            ...f,
+                                            degree: e.target.value,
+                                        }))
+                                    }
+                                />
+                            </OrnateField>
+                            <div className={s.row2}>
+                                <OrnateField label={t("education.startDate")}>
+                                    <OrnateTextInput
+                                        type="date"
+                                        value={eduForm.startDate}
+                                        onChange={(e) =>
+                                            setEduForm((f) => ({
+                                                ...f,
+                                                startDate: e.target.value,
+                                            }))
+                                        }
+                                    />
+                                </OrnateField>
+                                <OrnateField label={t("education.endDate")}>
+                                    <OrnateTextInput
+                                        type="date"
+                                        value={eduForm.endDate}
+                                        onChange={(e) =>
+                                            setEduForm((f) => ({
+                                                ...f,
+                                                endDate: e.target.value,
+                                            }))
+                                        }
+                                    />
+                                </OrnateField>
+                            </div>
+                            {eduError && (
+                                <p className={s.miniError} role="alert">
+                                    {eduError}
+                                </p>
+                            )}
+                            <div className={s.miniActions}>
+                                <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    disabled={busy}
+                                    onClick={() => setEduFormFor(null)}
+                                >
+                                    {t("form.cancel")}
+                                </Button>
+                                <Button type="submit" size="sm" disabled={busy}>
+                                    {t("education.save")}
+                                </Button>
+                            </div>
+                        </form>
+                    )}
+                    {!eduFormFor && eduError && (
+                        <p className={s.miniError} role="alert">
+                            {eduError}
+                        </p>
+                    )}
+
+                    <div className={`${s.sectionHead} ${s.sectionSpacer}`}>
+                        <span className={s.sectionTitle}>
+                            {t("religiousEducation.label")}
+                        </span>
+                        <span className={s.sectionLine} />
+                        {canEdit && relEduFormFor === null && (
+                            <button
+                                type="button"
+                                className={s.addInline}
+                                onClick={openNewReligiousEducation}
+                            >
+                                + {t("religiousEducation.add")}
+                            </button>
+                        )}
+                    </div>
+                    {character.religiousEducations.length === 0 &&
+                    relEduFormFor === null ? (
+                        <p className={s.none}>{t("none")}</p>
+                    ) : (
+                        character.religiousEducations.map((re) => (
+                            <div key={re.id} className={s.listRow}>
+                                <span className={s.relType}>
+                                    {re.ordained
+                                        ? t("religiousEducation.ordained")
+                                        : t("religiousEducation.label")}
+                                </span>
+                                <span className={s.listName}>
+                                    {worldReligions.find(
+                                        (r) => r.id === re.religionId
+                                    )?.name ?? dash}
+                                </span>
+                                {canEdit && (
+                                    <button
+                                        type="button"
+                                        className={s.chipRemove}
+                                        aria-label={t("religiousEducation.delete")}
+                                        disabled={busy}
+                                        onClick={() =>
+                                            onDeleteReligiousEducation(re.id)
+                                        }
+                                    >
+                                        ×
+                                    </button>
+                                )}
+                            </div>
+                        ))
+                    )}
+                    {relEduFormFor !== null && (
+                        <form
+                            className={s.miniForm}
+                            onSubmit={onSaveReligiousEducation}
+                        >
+                            <OrnateField
+                                label={t("religiousEducation.religion")}
+                                required
+                            >
+                                <OrnateSelect
+                                    value={relEduForm.religionId}
+                                    onChange={(e) =>
+                                        setRelEduForm((f) => ({
+                                            ...f,
+                                            religionId: e.target.value,
+                                        }))
+                                    }
+                                >
+                                    <option value="">{t("none")}</option>
+                                    {worldReligions.map((r) => (
+                                        <option key={r.id} value={r.id}>
+                                            {r.name}
+                                        </option>
+                                    ))}
+                                </OrnateSelect>
+                            </OrnateField>
+                            <div className={s.row2}>
+                                <OrnateField
+                                    label={t("religiousEducation.startDate")}
+                                >
+                                    <OrnateTextInput
+                                        type="date"
+                                        value={relEduForm.startDate}
+                                        onChange={(e) =>
+                                            setRelEduForm((f) => ({
+                                                ...f,
+                                                startDate: e.target.value,
+                                            }))
+                                        }
+                                    />
+                                </OrnateField>
+                                <OrnateField
+                                    label={t(
+                                        "religiousEducation.completionDate"
+                                    )}
+                                >
+                                    <OrnateTextInput
+                                        type="date"
+                                        value={relEduForm.completionDate}
+                                        onChange={(e) =>
+                                            setRelEduForm((f) => ({
+                                                ...f,
+                                                completionDate:
+                                                    e.target.value,
+                                            }))
+                                        }
+                                    />
+                                </OrnateField>
+                            </div>
+                            <OrnateCheckbox
+                                label={t("religiousEducation.ordained")}
+                                checked={relEduForm.ordained}
+                                onChange={(e) =>
+                                    setRelEduForm((f) => ({
+                                        ...f,
+                                        ordained: e.target.checked,
+                                    }))
+                                }
+                            />
+                            {relEduError && (
+                                <p className={s.miniError} role="alert">
+                                    {relEduError}
+                                </p>
+                            )}
+                            <div className={s.miniActions}>
+                                <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    disabled={busy}
+                                    onClick={() => setRelEduFormFor(null)}
+                                >
+                                    {t("form.cancel")}
+                                </Button>
+                                <Button type="submit" size="sm" disabled={busy}>
+                                    {t("religiousEducation.save")}
+                                </Button>
+                            </div>
+                        </form>
+                    )}
+                    {!relEduFormFor && relEduError && (
+                        <p className={s.miniError} role="alert">
+                            {relEduError}
+                        </p>
+                    )}
                 </div>
             </div>
         </div>
