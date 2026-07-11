@@ -2,7 +2,7 @@ using ChronicleKeeper.Core.Entities.Base;
 using ChronicleKeeper.Core.Entities.Characters;
 using ChronicleKeeper.Core.Entities.Geography;
 using ChronicleKeeper.Core.Entities.Tags;
-//using ChronicleKeeper.Core.Entities.Characters.Equipment;
+using ChronicleKeeper.Core.Entities.Characters.Equipment;
 //using ChronicleKeeper.Core.Entities.HistoryTimelines;
 //using ChronicleKeeper.Core.Entities.Social.Economy;
 //using ChronicleKeeper.Core.Entities.Social.Military;
@@ -33,7 +33,7 @@ namespace ChronicleKeeper.Core.Entities.Social
         //public ICollection<PoliticalParty> PoliticalConnections { get; set; } = new List<PoliticalParty>(); // TODO: Uncomment when PoliticalParty entity is revived
         //public ICollection<ReligiousOrder> ReligiousConnections { get; set; } = new List<ReligiousOrder>(); // TODO: Uncomment when ReligiousOrder entity is revived
         //public ICollection<Corporation> FinancialBackers { get; set; } = new List<Corporation>(); // TODO: Uncomment when Corporation entity is revived
-        //public ICollection<Item> NotableItemsInPossesion { get; set; } = new List<Item>(); // TODO: Uncomment when Item entity is revived
+        public virtual ICollection<Item> NotableItemsInPossesion { get; set; } = new List<Item>();
         //public ICollection<MilitaryOrganization> MilitaryConnections { get; set; } = new List<MilitaryOrganization>(); // TODO: Uncomment when MilitaryOrganization entity is revived
         //public int? ArmyId { get; set; } // TODO: Uncomment when Army entity is revived
         //public Army? Army { get; set; }

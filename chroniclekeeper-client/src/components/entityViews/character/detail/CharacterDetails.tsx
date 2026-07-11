@@ -12,7 +12,9 @@ import {
 } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
 import { TagEditor } from "../../../tagging/TagEditor";
+import { LinkEditor } from "../../../linking/LinkEditor";
 import {
+    AbilityDto,
     CharacterDetailsDto,
     CharacterDto,
     RelationshipType,
@@ -22,11 +24,14 @@ import {
     UniversityDto,
 } from "../../../../interfaces/loreInterfaces";
 import {
+    addCharacterAbility,
     addRelationship,
     getCharacter,
     getCharacters,
+    removeCharacterAbility,
     removeRelationship,
 } from "../../../../api/characters";
+import { getAbilities } from "../../../../api/abilities";
 import {
     createEducationRecord,
     deleteEducationRecord,
@@ -107,6 +112,9 @@ export default function CharacterDetail() {
         UniversityDto[]
     >([]);
     const [worldReligions, setWorldReligions] = useState<ReligionDto[]>([]);
+    const [abilityCandidates, setAbilityCandidates] = useState<
+        AbilityDto[] | null
+    >(null);
 
     // Inline forma za novu vezu
     const [relOpen, setRelOpen] = useState(false);
@@ -1040,6 +1048,60 @@ export default function CharacterDetail() {
                         <p className={s.miniError} role="alert">
                             {relEduError}
                         </p>
+                    )}
+
+                    <div className={`${s.sectionHead} ${s.sectionSpacer}`}>
+                        <span className={s.sectionTitle}>
+                            {t("abilities.label")}
+                        </span>
+                        <span className={s.sectionLine} />
+                    </div>
+                    <LinkEditor
+                        items={character.abilities}
+                        candidates={abilityCandidates}
+                        onLoadCandidates={() =>
+                            getAbilities(character.worldId).then(
+                                setAbilityCandidates
+                            )
+                        }
+                        onAdd={(abilityId) =>
+                            addCharacterAbility(character.id, abilityId)
+                        }
+                        onRemove={(abilityId) =>
+                            removeCharacterAbility(character.id, abilityId)
+                        }
+                        onChanged={refetch}
+                        canEdit={canEdit}
+                        linkTo={(abilityId) => `/storymap/abilities/${abilityId}`}
+                        addLabel={t("abilities.add")}
+                        noneLabel={t("none")}
+                        pickLabel={t("abilities.pick")}
+                        cancelLabel={t("form.cancel")}
+                        confirmLabel={t("abilities.confirm")}
+                        removeLabel={(name) => t("abilities.remove", { name })}
+                        addFailedLabel={t("abilities.addFailed")}
+                        removeFailedLabel={t("abilities.removeFailed")}
+                    />
+
+                    <div className={`${s.sectionHead} ${s.sectionSpacer}`}>
+                        <span className={s.sectionTitle}>
+                            {t("equipment.label")}
+                        </span>
+                        <span className={s.sectionLine} />
+                    </div>
+                    {character.equipments.length === 0 ? (
+                        <p className={s.none}>{t("none")}</p>
+                    ) : (
+                        character.equipments.map((item) => (
+                            <div key={item.id} className={s.listRow}>
+                                <Link
+                                    to={`/storymap/items/${item.id}`}
+                                    className={s.listName}
+                                >
+                                    {item.name}
+                                </Link>
+                            </div>
+                        ))
                     )}
                 </div>
             </div>

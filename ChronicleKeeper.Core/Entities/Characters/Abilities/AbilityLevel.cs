@@ -1,27 +1,17 @@
-﻿using ChronicleKeeper.Core.Entities.Base;
-using ChronicleKeeper.Core.Entities.HistoryTimelines;
-using ChronicleKeeper.Core.Interfaces;
+using ChronicleKeeper.Core.Entities.Base;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using static ChronicleKeeper.Core.Enums.EquipmentEnums;
 
 namespace ChronicleKeeper.Core.Entities.Characters.Abilities
 {
-    public class AbilityLevel : ILoreEntity
+    public class AbilityLevel : LoreEntity
     {
-        [Key]
-        public int Id { get; set; }
-        [Required]
-        public string Name { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
-        [Required]
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        [Required]
-        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
-        public virtual History? History { get; set; }
-        public string Rank { get; set; } = string.Empty; // Beginner, Expert, Master
+        //public virtual History? History { get; set; } // TODO: Uncomment when History entity is revived
 
-        //[ForeignKey("AbilityId")]
-        public int? AbilityId { get; set; }
-        public Ability? Ability { get; set; }
+        [Required]
+        public AbilityRank Rank { get; set; }
+
+        public int AbilityId { get; set; }
+        public virtual Ability? Ability { get; set; }
     }
 }

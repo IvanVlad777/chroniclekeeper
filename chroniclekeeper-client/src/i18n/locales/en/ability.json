@@ -1,0 +1,59 @@
+{
+    "listTitle": "Abilities",
+    "search": "Search abilities…",
+    "loaderror": "Failed to load",
+    "notfound": "Ability not found",
+    "none": "None",
+    "backtolist": "Back to abilities",
+    "emptyTitle": "No abilities yet",
+    "emptyText": "Swordplay, fire magic, lockpicking — the talents and powers your characters can wield. Create the first ability to start building your world's skill tree.",
+    "columns": {
+        "name": "Name",
+        "type": "Type",
+        "updated": "Updated"
+    },
+    "fields": {
+        "description": "Description"
+    },
+    "types": {
+        "Physical": "Physical",
+        "Magical": "Magical",
+        "Mental": "Mental",
+        "Technical": "Technical"
+    },
+    "ranks": {
+        "Beginner": "Beginner",
+        "Expert": "Expert",
+        "Master": "Master"
+    },
+    "levels": {
+        "label": "Levels",
+        "add": "add",
+        "addTitle": "New level",
+        "editTitle": "Edit level",
+        "name": "Name",
+        "description": "Description",
+        "rank": "Rank",
+        "save": "Save",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete level “{{name}}”?",
+        "requiredMissing": "Level name is required.",
+        "saveFailed": "Saving the level failed.",
+        "deleteFailed": "Deleting the level failed."
+    },
+    "form": {
+        "newTitle": "New ability",
+        "editTitle": "Edit ability",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "save": "Save ability",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

@@ -30,7 +30,9 @@
         "schools": "Schools",
         "universities": "Universities",
         "educationSystems": "Education Systems",
-        "libraries": "Libraries"
+        "libraries": "Libraries",
+        "abilities": "Abilities",
+        "items": "Items"
     },
     "shell": {
         "newEntry": "New entry",

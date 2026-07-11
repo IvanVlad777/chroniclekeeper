@@ -1,4 +1,5 @@
 using ChronicleKeeper.Core.Entities.Characters;
+using ChronicleKeeper.Core.Entities.Characters.Abilities;
 using ChronicleKeeper.Core.Entities.Characters.CharacterInfo;
 using ChronicleKeeper.Core.Repositories;
 using static ChronicleKeeper.Core.Enums.LoreEnums;
@@ -38,6 +39,8 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .Include(c => c.Tags).ThenInclude(t => t.Tag)
                 .Include(c => c.Profession)
                 .Include(c => c.Educations)
+                .Include(c => c.Abilities).ThenInclude(ca => ca.Ability)
+                .Include(c => c.Equipments)
                 .AsNoTracking()
                 .AsSplitQuery()
                 .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
@@ -114,6 +117,26 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                     && r.Type == type, cancellationToken);
         }
 
+        public async Task<bool> IsAbilityLinkedAsync(int characterId, int abilityId, CancellationToken cancellationToken = default)
+        {
+            return await _context.CharacterAbilities
+                .AnyAsync(ca => ca.CharacterId == characterId && ca.AbilityId == abilityId, cancellationToken);
+        }
+
+        public async Task AddAbilityAsync(int characterId, int abilityId, CancellationToken cancellationToken = default)
+        {
+            _context.CharacterAbilities.Add(new CharacterAbility { CharacterId = characterId, AbilityId = abilityId });
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task<bool> RemoveAbilityAsync(int characterId, int abilityId, CancellationToken cancellationToken = default)
+        {
+            var deleted = await _context.CharacterAbilities
+                .Where(ca => ca.CharacterId == characterId && ca.AbilityId == abilityId)
+                .ExecuteDeleteAsync(cancellationToken);
+            return deleted > 0;
+        }
+
         public async Task<bool> DeleteAsync(int id, CancellationToken cancellationToken = default)
         {
             await using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
@@ -130,8 +153,16 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .Where(r => r.RelatedCharacterId == id)
                 .ExecuteDeleteAsync(cancellationToken);
 
+            // OwnershipHistory.PreviousOwnerId/NewOwnerId su Restrict (dva FK-a na Character
+            // sa iste tablice ne smiju oba biti SetNull) — null-aj prije brisanja lika
+            await _context.OwnershipHistories
+                .Where(o => o.PreviousOwnerId == id || o.NewOwnerId == id)
+                .ExecuteUpdateAsync(s => s
+                    .SetProperty(o => o.PreviousOwnerId, o => o.PreviousOwnerId == id ? null : o.PreviousOwnerId)
+                    .SetProperty(o => o.NewOwnerId, o => o.NewOwnerId == id ? null : o.NewOwnerId), cancellationToken);
+
             // Sam lik — DB kaskadira Relationships (vlasnička strana), FactionMembers,
-            // CharacterTags; SET NULL na Faction.LeaderId
+            // CharacterTags, CharacterAbilities; SET NULL na Faction.LeaderId i Item.CurrentOwnerId
             var deleted = await _context.Characters
                 .Where(c => c.Id == id)
                 .ExecuteDeleteAsync(cancellationToken);

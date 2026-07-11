@@ -26,5 +26,10 @@ namespace ChronicleKeeper.Core.Repositories
         /// <summary>Briše vezu ako pripada zadanom liku; vraća false ako ne postoji.</summary>
         Task<bool> RemoveRelationshipAsync(int characterId, int relationshipId, CancellationToken cancellationToken = default);
         Task<bool> RelationshipExistsAsync(int characterId, int relatedCharacterId, Enums.LoreEnums.RelationshipType type, CancellationToken cancellationToken = default);
+
+        // Abilities (CharacterAbility join)
+        Task<bool> IsAbilityLinkedAsync(int characterId, int abilityId, CancellationToken cancellationToken = default);
+        Task AddAbilityAsync(int characterId, int abilityId, CancellationToken cancellationToken = default);
+        Task<bool> RemoveAbilityAsync(int characterId, int abilityId, CancellationToken cancellationToken = default);
     }
 }

@@ -75,6 +75,16 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .Where(l => l.WorldId == id)
                 .ExecuteUpdateAsync(s => s.SetProperty(l => l.ParentLocationId, (int?)null), cancellationToken);
 
+            // OwnershipHistory.PreviousOwnerId/NewOwnerId su Restrict (dva FK-a na Character
+            // sa iste tablice ne smiju oba biti SetNull — SQL Server "multiple cascade paths").
+            // Moraju se null-ati prije brisanja likova (korak 3); redovi kasnije nestaju
+            // kaskadno kad se obriše njihov Item (korak 7n).
+            await _context.OwnershipHistories
+                .Where(o => o.WorldId == id)
+                .ExecuteUpdateAsync(s => s
+                    .SetProperty(o => o.PreviousOwnerId, (int?)null)
+                    .SetProperty(o => o.NewOwnerId, (int?)null), cancellationToken);
+
             // 2. Veze među likovima — po OBJE strane (RelatedCharacterId je Restrict;
             //    red čiji je vlasnik izvan svijeta inače bi blokirao brisanje likova)
             await _context.CharacterRelationships
@@ -189,6 +199,17 @@ namespace ChronicleKeeper.Infrastructure.Repositories
             //     required EducationSystemId FK-a, što dalje kaskadira SchoolSubjects/UniversityMajors)
             await _context.EducationSystems
                 .Where(e => e.WorldId == id)
+                .ExecuteDeleteAsync(cancellationToken);
+
+            // 7n. Predmeti (Restrict WorldId; SetNull FK-ovi na Character/Location/Faction ne
+            //     ovise o redoslijedu — kaskadira OwnershipHistories preko Item.WorldId)
+            await _context.Items
+                .Where(i => i.WorldId == id)
+                .ExecuteDeleteAsync(cancellationToken);
+
+            // 7o. Sposobnosti (kaskadira AbilityLevels i CharacterAbility join tablicu)
+            await _context.Abilities
+                .Where(a => a.WorldId == id)
                 .ExecuteDeleteAsync(cancellationToken);
 
             // 8. Tagovi i bilješke

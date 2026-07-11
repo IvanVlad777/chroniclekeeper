@@ -24,6 +24,11 @@ public class CharacterProfile : Profile
             .ForMember(dest => dest.Profession, opt => opt.MapFrom(src => src.Profession == null ? null : new ReferenceDto { Id = src.Profession.Id, Name = src.Profession.Name }))
             .ForMember(dest => dest.Educations, opt => opt.MapFrom(src => src.Educations))
             .ForMember(dest => dest.ReligiousEducations, opt => opt.Ignore())
+            .ForMember(dest => dest.Abilities, opt => opt.MapFrom(src => src.Abilities
+                .Where(a => a.Ability != null)
+                .Select(a => new ReferenceDto { Id = a.Ability!.Id, Name = a.Ability.Name })))
+            .ForMember(dest => dest.Equipments, opt => opt.MapFrom(src => src.Equipments
+                .Select(i => new ReferenceDto { Id = i.Id, Name = i.Name })))
             .ForMember(dest => dest.Factions, opt => opt.MapFrom(src => src.Memberships
                 .Where(m => m.Faction != null)
                 .Select(m => new ReferenceDto { Id = m.Faction!.Id, Name = m.Faction.Name })))

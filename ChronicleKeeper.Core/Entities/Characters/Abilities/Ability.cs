@@ -1,31 +1,18 @@
-﻿using ChronicleKeeper.Core.Entities.Base;
-using ChronicleKeeper.Core.Entities.HistoryTimelines;
-using ChronicleKeeper.Core.Entities.Professions;
-using ChronicleKeeper.Core.Interfaces;
+using ChronicleKeeper.Core.Entities.Base;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Reflection.Emit;
+using static ChronicleKeeper.Core.Enums.EquipmentEnums;
 
 namespace ChronicleKeeper.Core.Entities.Characters.Abilities
 {
-    public class Ability : ILoreEntity
+    public class Ability : LoreEntity
     {
-        [Key]
-        public int Id { get; set; }
-        [Required]
-        public string Name { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
-        [Required]
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        [Required]
-        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
-        public virtual History? History { get; set; }
-        public string Type { get; set; } = string.Empty; // Physical, Magical, Mental, Technical
+        //public virtual History? History { get; set; } // TODO: Uncomment when History entity is revived
 
-        //public int? AbilityLevelId { get; set; }
-        public AbilityLevel? AbilityLevel { get; set; }
+        [Required]
+        public AbilityType Type { get; set; }
 
-        public ICollection<Character> Characters { get; set; } = new List<Character>();
+        public virtual ICollection<AbilityLevel> AbilityLevels { get; set; } = new List<AbilityLevel>();
+
+        public virtual ICollection<CharacterAbility> Characters { get; set; } = new List<CharacterAbility>();
     }
-
 }

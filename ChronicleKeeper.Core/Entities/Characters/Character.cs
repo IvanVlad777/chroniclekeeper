@@ -3,8 +3,8 @@ using ChronicleKeeper.Core.Entities.Characters.CharacterInfo;
 using ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient;
 using ChronicleKeeper.Core.Entities.Social;
 using ChronicleKeeper.Core.Entities.Tags;
-//using ChronicleKeeper.Core.Entities.Characters.Abilities;
-//using ChronicleKeeper.Core.Entities.Characters.Equipment;
+using ChronicleKeeper.Core.Entities.Characters.Abilities;
+using ChronicleKeeper.Core.Entities.Characters.Equipment;
 //using ChronicleKeeper.Core.Entities.HistoryTimelines;
 using ChronicleKeeper.Core.Entities.Professions;
 //using ChronicleKeeper.Core.Entities.Social.Cultures;
@@ -66,7 +66,7 @@ namespace ChronicleKeeper.Core.Entities.Characters
         //public PersonalityInfo Personality { get; set; } = new PersonalityInfo(); // TODO: Uncomment when PersonalityInfo entity is revived
 
         // Abilities & Skills
-        //public virtual ICollection<Ability> Abilities { get; set; } = new List<Ability>(); // TODO: Uncomment when Ability entity is revived
+        public virtual ICollection<CharacterAbility> Abilities { get; set; } = new List<CharacterAbility>();
 
         // Education & Career
         public int? ProfessionId { get; set; }
@@ -83,7 +83,7 @@ namespace ChronicleKeeper.Core.Entities.Characters
         public virtual ICollection<CharacterTag> Tags { get; set; } = new List<CharacterTag>();
 
         // Equipment & Inventory
-        //public virtual ICollection<Item> Equipments { get; set; } = new List<Item>(); // TODO: Uncomment when Item entity is revived
+        public virtual ICollection<Item> Equipments { get; set; } = new List<Item>();
         //public ICollection<Clothing> Clothing { get; set; } = new List<Clothing>(); // TODO: Uncomment when Clothing entity is revived
 
         // Hobbies & Interests

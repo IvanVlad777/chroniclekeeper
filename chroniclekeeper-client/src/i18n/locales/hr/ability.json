@@ -1,0 +1,59 @@
+{
+    "listTitle": "Sposobnosti",
+    "search": "Pretraži sposobnosti…",
+    "loaderror": "Učitavanje nije uspjelo",
+    "notfound": "Sposobnost nije pronađena",
+    "none": "Nema",
+    "backtolist": "Natrag na sposobnosti",
+    "emptyTitle": "Još nema sposobnosti",
+    "emptyText": "Mačevanje, vatrena magija, otvaranje brava — vještine i moći kojima vaši likovi vladaju. Stvorite prvu sposobnost i započnite graditi stablo vještina svog svijeta.",
+    "columns": {
+        "name": "Naziv",
+        "type": "Vrsta",
+        "updated": "Ažurirano"
+    },
+    "fields": {
+        "description": "Opis"
+    },
+    "types": {
+        "Physical": "Fizička",
+        "Magical": "Magijska",
+        "Mental": "Mentalna",
+        "Technical": "Tehnička"
+    },
+    "ranks": {
+        "Beginner": "Početnik",
+        "Expert": "Stručnjak",
+        "Master": "Majstor"
+    },
+    "levels": {
+        "label": "Razine",
+        "add": "dodaj",
+        "addTitle": "Nova razina",
+        "editTitle": "Uredi razinu",
+        "name": "Naziv",
+        "description": "Opis",
+        "rank": "Rang",
+        "save": "Spremi",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati razinu „{{name}}”?",
+        "requiredMissing": "Naziv razine je obavezan.",
+        "saveFailed": "Spremanje razine nije uspjelo.",
+        "deleteFailed": "Brisanje razine nije uspjelo."
+    },
+    "form": {
+        "newTitle": "Nova sposobnost",
+        "editTitle": "Uredi sposobnost",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "save": "Spremi sposobnost",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}”? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjerite polja i pokušajte ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

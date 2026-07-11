@@ -1,0 +1,38 @@
+.page {
+    padding: 30px 34px;
+}
+
+.nameCell {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.glyph {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background: var(--color-sunken);
+    border: 1px solid var(--color-border);
+    flex: none;
+    color: var(--color-accent);
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.name {
+    font-family: var(--font-display);
+    font-size: 15.5px;
+}
+
+.type {
+    font-size: 13.5px;
+    color: var(--color-text);
+}
+
+.updated {
+    color: var(--color-muted);
+    font-size: 12.5px;
+}

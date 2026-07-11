@@ -54,4 +54,6 @@ export const navEntries: NavEntry[] = [
         to: "/storymap/education-systems",
     },
     { key: "libraries", glyph: "❖", to: "/storymap/libraries" },
+    { key: "abilities", glyph: "✦", to: "/storymap/abilities" },
+    { key: "items", glyph: "⚔", to: "/storymap/items" },
 ];

@@ -186,6 +186,54 @@ namespace ChronicleKeeper.Core.CQRS.Characters.Handlers
         }
     }
 
+    public class AddCharacterAbilityCommandHandler : IRequestHandler<AddCharacterAbilityCommand, bool>
+    {
+        private readonly ICharacterRepository _repository;
+        private readonly IAbilityRepository _abilityRepository;
+
+        public AddCharacterAbilityCommandHandler(ICharacterRepository repository, IAbilityRepository abilityRepository)
+        {
+            _repository = repository;
+            _abilityRepository = abilityRepository;
+        }
+
+        public async Task<bool> Handle(AddCharacterAbilityCommand request, CancellationToken cancellationToken)
+        {
+            var character = await _repository.FindByIdAsync(request.CharacterId, cancellationToken)
+                ?? throw new EntityNotFoundException("Character", request.CharacterId);
+
+            var ability = await _abilityRepository.FindByIdAsync(request.AbilityId, cancellationToken)
+                ?? throw new DomainValidationException($"Ability with ID {request.AbilityId} does not exist.");
+            if (ability.WorldId != character.WorldId)
+            {
+                throw new DomainValidationException($"Ability with ID {request.AbilityId} does not belong to this world.");
+            }
+
+            if (await _repository.IsAbilityLinkedAsync(request.CharacterId, request.AbilityId, cancellationToken))
+            {
+                throw new DomainValidationException("This ability is already linked to the character.");
+            }
+
+            await _repository.AddAbilityAsync(request.CharacterId, request.AbilityId, cancellationToken);
+            return true;
+        }
+    }
+
+    public class RemoveCharacterAbilityCommandHandler : IRequestHandler<RemoveCharacterAbilityCommand, bool>
+    {
+        private readonly ICharacterRepository _repository;
+
+        public RemoveCharacterAbilityCommandHandler(ICharacterRepository repository)
+        {
+            _repository = repository;
+        }
+
+        public Task<bool> Handle(RemoveCharacterAbilityCommand request, CancellationToken cancellationToken)
+        {
+            return _repository.RemoveAbilityAsync(request.CharacterId, request.AbilityId, cancellationToken);
+        }
+    }
+
     internal static class CharacterValidation
     {
         /// <summary>

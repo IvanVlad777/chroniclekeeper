@@ -18,11 +18,11 @@ namespace ChronicleKeeper.Core.DTOs.Character
         public List<CharacterRelationshipDto> Relationships { get; set; } = new();
         public List<EducationRecordDto> Educations { get; set; } = new();
         public List<ReligiousEducationDto> ReligiousEducations { get; set; } = new();
+        public List<ReferenceDto> Abilities { get; set; } = new();
+        public List<ReferenceDto> Equipments { get; set; } = new();
 
         // TODO: Otkomentirati kada budem dodavao veze
-        //public List<ReferenceDto> Abilities { get; set; } = new();
         //public List<ReferenceDto> Hobbies { get; set; } = new();
-        //public List<ReferenceDto> Equipments { get; set; } = new();
         //public List<ReferenceDto> Clothing { get; set; } = new();
         //public List<ReferenceDto> Specialisations { get; set; } = new();
         //public List<ReferenceDto> Siblings { get; set; } = new();

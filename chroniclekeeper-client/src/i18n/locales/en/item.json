@@ -1,0 +1,79 @@
+{
+    "listTitle": "Items",
+    "search": "Search items…",
+    "loaderror": "Failed to load",
+    "notfound": "Item not found",
+    "none": "None",
+    "yes": "Yes",
+    "no": "No",
+    "backtolist": "Back to items",
+    "emptyTitle": "No items yet",
+    "emptyText": "Blades, relics, tools of the trade — the objects that pass through your characters' hands. Create the first item to start filling the world's coffers.",
+    "columns": {
+        "name": "Name",
+        "category": "Category",
+        "rarity": "Rarity",
+        "updated": "Updated"
+    },
+    "fields": {
+        "description": "Description",
+        "material": "Material",
+        "specialProperties": "Special properties",
+        "isUnique": "Unique",
+        "currentOwner": "Current owner",
+        "storedAt": "Stored at",
+        "faction": "Faction"
+    },
+    "categories": {
+        "Weapon": "Weapon",
+        "Armor": "Armor",
+        "Tool": "Tool",
+        "MagicalItem": "Magical item"
+    },
+    "rarities": {
+        "Common": "Common",
+        "Uncommon": "Uncommon",
+        "Rare": "Rare",
+        "Legendary": "Legendary",
+        "Mythical": "Mythical"
+    },
+    "history": {
+        "label": "Ownership history",
+        "add": "add",
+        "addTitle": "New ownership record",
+        "editTitle": "Edit ownership record",
+        "name": "Name",
+        "previousOwner": "Previous owner",
+        "newOwner": "New owner",
+        "dateAcquired": "Date acquired",
+        "transferReason": "Transfer reason",
+        "reasons": {
+            "Stolen": "Stolen",
+            "Inherited": "Inherited",
+            "Gifted": "Gifted",
+            "Lost": "Lost",
+            "Found": "Found"
+        },
+        "save": "Save",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete record “{{name}}”?",
+        "requiredMissing": "Record name is required.",
+        "saveFailed": "Saving the record failed.",
+        "deleteFailed": "Deleting the record failed."
+    },
+    "form": {
+        "newTitle": "New item",
+        "editTitle": "Edit item",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "save": "Save item",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

@@ -582,6 +582,8 @@ export interface CharacterDetailsDto extends CharacterDto {
     relationships: CharacterRelationshipDto[];
     educations: EducationRecordDto[];
     religiousEducations: ReligiousEducationDto[];
+    abilities: ReferenceDto[];
+    equipments: ReferenceDto[];
 }
 
 export const electionSystems = [
@@ -1164,3 +1166,129 @@ export interface ReligiousEducationCreateDto {
 }
 
 export type ReligiousEducationUpdateDto = Omit<ReligiousEducationCreateDto, "religionId">;
+
+// ----- Abilities -----
+
+export const abilityTypes = ["Physical", "Magical", "Mental", "Technical"] as const;
+export type AbilityType = (typeof abilityTypes)[number];
+
+export const abilityRanks = ["Beginner", "Expert", "Master"] as const;
+export type AbilityRank = (typeof abilityRanks)[number];
+
+export interface AbilityDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    type: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface AbilityCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    type: string;
+}
+
+export type AbilityUpdateDto = Omit<AbilityCreateDto, "worldId">;
+
+export interface AbilityLevelDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    abilityId: number;
+    rank: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
+/** Svijet razine se izvodi iz sposobnosti — ne šalje se worldId. */
+export interface AbilityLevelCreateDto {
+    name: string;
+    description: string;
+    abilityId: number;
+    rank: string;
+}
+
+export type AbilityLevelUpdateDto = Omit<AbilityLevelCreateDto, "abilityId">;
+
+// ----- Equipment -----
+
+export const itemCategories = ["Weapon", "Armor", "Tool", "MagicalItem"] as const;
+export type ItemCategory = (typeof itemCategories)[number];
+
+export const itemRarities = ["Common", "Uncommon", "Rare", "Legendary", "Mythical"] as const;
+export type ItemRarity = (typeof itemRarities)[number];
+
+export const ownershipTransferReasons = ["Stolen", "Inherited", "Gifted", "Lost", "Found"] as const;
+export type OwnershipTransferReason = (typeof ownershipTransferReasons)[number];
+
+export interface ItemDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    category: string;
+    isUnique: boolean;
+    material: string;
+    specialProperties: string;
+    rarity: string;
+    currentOwnerId?: number | null;
+    storedAtId?: number | null;
+    factionId?: number | null;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface ItemDetailsDto extends ItemDto {
+    currentOwner?: ReferenceDto | null;
+    storedAt?: ReferenceDto | null;
+    faction?: ReferenceDto | null;
+    ownershipHistory: OwnershipHistoryDto[];
+}
+
+export interface ItemCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    category: string;
+    isUnique: boolean;
+    material: string;
+    specialProperties: string;
+    rarity: string;
+    currentOwnerId?: number | null;
+    storedAtId?: number | null;
+    factionId?: number | null;
+}
+
+export type ItemUpdateDto = Omit<ItemCreateDto, "worldId">;
+
+export interface OwnershipHistoryDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    itemId: number;
+    previousOwnerId?: number | null;
+    newOwnerId?: number | null;
+    dateAcquired: string;
+    transferReason: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
+/** Svijet zapisa se izvodi iz predmeta — ne šalje se worldId. */
+export interface OwnershipHistoryCreateDto {
+    name: string;
+    description: string;
+    itemId: number;
+    previousOwnerId?: number | null;
+    newOwnerId?: number | null;
+    dateAcquired: string;
+    transferReason: string;
+}
+
+export type OwnershipHistoryUpdateDto = Omit<OwnershipHistoryCreateDto, "itemId">;

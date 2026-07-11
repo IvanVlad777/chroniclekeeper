@@ -66,6 +66,12 @@ import EducationSystemForm from "../components/entityViews/educationSystem/form/
 import LibraryList from "../components/entityViews/library/list/LibraryList";
 import LibraryDetails from "../components/entityViews/library/detail/LibraryDetails";
 import LibraryForm from "../components/entityViews/library/form/LibraryForm";
+import AbilityList from "../components/entityViews/ability/list/AbilityList";
+import AbilityDetails from "../components/entityViews/ability/detail/AbilityDetails";
+import AbilityForm from "../components/entityViews/ability/form/AbilityForm";
+import ItemList from "../components/entityViews/item/list/ItemList";
+import ItemDetails from "../components/entityViews/item/detail/ItemDetails";
+import ItemForm from "../components/entityViews/item/form/ItemForm";
 import { WorldProvider } from "../context/world/WorldProvider";
 import { AppShell } from "../components/shell/AppShell";
 
@@ -309,6 +315,17 @@ const AppRoutes = () => {
                     path="libraries/:id/edit"
                     element={<LibraryForm />}
                 />
+                <Route path="abilities" element={<AbilityList />} />
+                <Route path="abilities/new" element={<AbilityForm />} />
+                <Route path="abilities/:id" element={<AbilityDetails />} />
+                <Route
+                    path="abilities/:id/edit"
+                    element={<AbilityForm />}
+                />
+                <Route path="items" element={<ItemList />} />
+                <Route path="items/new" element={<ItemForm />} />
+                <Route path="items/:id" element={<ItemDetails />} />
+                <Route path="items/:id/edit" element={<ItemForm />} />
                 <Route path="*" element={<NoPage />} />
             </Route>
 

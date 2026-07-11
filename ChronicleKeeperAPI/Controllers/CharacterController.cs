@@ -140,6 +140,31 @@ namespace ChronicleKeeperAPI.Controllers
             return NoContent();
         }
 
+        // POST: /api/characters/{id}/abilities/{abilityId}
+        [HttpPost("{id}/abilities/{abilityId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Link an ability to the character")]
+        [SwaggerResponse(204, "Ability linked")]
+        [SwaggerResponse(400, "Invalid target / already linked")]
+        public async Task<IActionResult> AddAbility(int id, int abilityId)
+        {
+            await _mediator.Send(new AddCharacterAbilityCommand { CharacterId = id, AbilityId = abilityId });
+            return NoContent();
+        }
+
+        // DELETE: /api/characters/{id}/abilities/{abilityId}
+        [HttpDelete("{id}/abilities/{abilityId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Unlink an ability from the character")]
+        [SwaggerResponse(204, "Ability unlinked")]
+        [SwaggerResponse(404, "Link not found")]
+        public async Task<IActionResult> RemoveAbility(int id, int abilityId)
+        {
+            var result = await _mediator.Send(new RemoveCharacterAbilityCommand { CharacterId = id, AbilityId = abilityId });
+            if (!result) return NotFound();
+            return NoContent();
+        }
+
         // DELETE: /api/characters/{id}
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin,SuperAdmin")]

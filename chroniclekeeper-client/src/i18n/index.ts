@@ -52,6 +52,10 @@ import enEducationSystem from "./locales/en/educationSystem.json";
 import hrEducationSystem from "./locales/hr/educationSystem.json";
 import enLibrary from "./locales/en/library.json";
 import hrLibrary from "./locales/hr/library.json";
+import enAbility from "./locales/en/ability.json";
+import hrAbility from "./locales/hr/ability.json";
+import enItem from "./locales/en/item.json";
+import hrItem from "./locales/hr/item.json";
 
 i18n.use(LanguageDetector)
     .use(initReactI18next)
@@ -83,6 +87,8 @@ i18n.use(LanguageDetector)
                 university: enUniversity,
                 educationSystem: enEducationSystem,
                 library: enLibrary,
+                ability: enAbility,
+                item: enItem,
             },
             hr: {
                 common: hrCommon,
@@ -110,6 +116,8 @@ i18n.use(LanguageDetector)
                 university: hrUniversity,
                 educationSystem: hrEducationSystem,
                 library: hrLibrary,
+                ability: hrAbility,
+                item: hrItem,
             },
         },
         fallbackLng: "en",
@@ -139,6 +147,8 @@ i18n.use(LanguageDetector)
             "university",
             "educationSystem",
             "library",
+            "ability",
+            "item",
         ], //namespaces
         defaultNS: "common",
         interpolation: {

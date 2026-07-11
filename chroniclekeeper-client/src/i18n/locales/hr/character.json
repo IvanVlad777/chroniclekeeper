@@ -113,5 +113,17 @@
     "factions": "Frakcije",
     "relationships": "Odnosi",
     "tags": "Oznake",
-    "none": "Nema"
+    "none": "Nema",
+    "abilities": {
+        "label": "Sposobnosti",
+        "add": "poveži",
+        "remove": "Odveži {{name}}",
+        "pick": "Odaberi sposobnost",
+        "confirm": "Poveži",
+        "addFailed": "Povezivanje sposobnosti nije uspjelo.",
+        "removeFailed": "Odvezivanje sposobnosti nije uspjelo."
+    },
+    "equipment": {
+        "label": "Oprema"
+    }
 }

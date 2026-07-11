@@ -64,3 +64,17 @@ export const removeRelationship = async (
         `/characters/${characterId}/relationships/${relationshipId}`
     );
 };
+
+export const addCharacterAbility = async (
+    characterId: number,
+    abilityId: number
+): Promise<void> => {
+    await api.post(`/characters/${characterId}/abilities/${abilityId}`);
+};
+
+export const removeCharacterAbility = async (
+    characterId: number,
+    abilityId: number
+): Promise<void> => {
+    await api.delete(`/characters/${characterId}/abilities/${abilityId}`);
+};

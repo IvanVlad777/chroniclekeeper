@@ -30,7 +30,9 @@
         "schools": "Škole",
         "universities": "Sveučilišta",
         "educationSystems": "Sustavi obrazovanja",
-        "libraries": "Knjižnice"
+        "libraries": "Knjižnice",
+        "abilities": "Sposobnosti",
+        "items": "Predmeti"
     },
     "shell": {
         "newEntry": "Novi zapis",

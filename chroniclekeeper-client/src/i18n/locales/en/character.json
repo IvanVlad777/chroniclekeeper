@@ -113,5 +113,17 @@
     "factions": "Factions",
     "relationships": "Relationships",
     "tags": "Tags",
-    "none": "None"
+    "none": "None",
+    "abilities": {
+        "label": "Abilities",
+        "add": "link",
+        "remove": "Unlink {{name}}",
+        "pick": "Pick an ability",
+        "confirm": "Link",
+        "addFailed": "Linking the ability failed.",
+        "removeFailed": "Unlinking the ability failed."
+    },
+    "equipment": {
+        "label": "Equipment"
+    }
 }

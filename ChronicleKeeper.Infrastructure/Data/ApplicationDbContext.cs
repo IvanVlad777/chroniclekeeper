@@ -1,6 +1,8 @@
 using ChronicleKeeper.Core.Entities.Base;
 using ChronicleKeeper.Core.Entities.Characters;
+using ChronicleKeeper.Core.Entities.Characters.Abilities;
 using ChronicleKeeper.Core.Entities.Characters.CharacterInfo;
+using ChronicleKeeper.Core.Entities.Characters.Equipment;
 using ChronicleKeeper.Core.Entities.Geography;
 using ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient;
 using ChronicleKeeper.Core.Entities.HistoryTimelines;
@@ -96,6 +98,15 @@ namespace ChronicleKeeper.Infrastructure.Data
         public DbSet<EducationRecord> EducationRecords { get; set; }
         public DbSet<UniversityMajor> UniversityMajors { get; set; }
         public DbSet<ReligiousEducation> ReligiousEducations { get; set; }
+
+        // Abilities
+        public DbSet<Ability> Abilities { get; set; }
+        public DbSet<AbilityLevel> AbilityLevels { get; set; }
+        public DbSet<CharacterAbility> CharacterAbilities { get; set; }
+
+        // Equipment
+        public DbSet<Item> Items { get; set; }
+        public DbSet<OwnershipHistory> OwnershipHistories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

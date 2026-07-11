@@ -52,6 +52,8 @@ const newEntryTargets: { key: string; glyph: string; to: string }[] = [
         to: "/storymap/education-systems/new",
     },
     { key: "libraries", glyph: "❖", to: "/storymap/libraries/new" },
+    { key: "abilities", glyph: "✦", to: "/storymap/abilities/new" },
+    { key: "items", glyph: "⚔", to: "/storymap/items/new" },
 ];
 
 export function Sidebar() {

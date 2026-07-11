@@ -30,4 +30,16 @@ namespace ChronicleKeeper.Core.CQRS.Characters.Commands
         public int CharacterId { get; set; }
         public int RelationshipId { get; set; }
     }
+
+    public class AddCharacterAbilityCommand : IRequest<bool>
+    {
+        public int CharacterId { get; set; }
+        public int AbilityId { get; set; }
+    }
+
+    public class RemoveCharacterAbilityCommand : IRequest<bool>
+    {
+        public int CharacterId { get; set; }
+        public int AbilityId { get; set; }
+    }
 }

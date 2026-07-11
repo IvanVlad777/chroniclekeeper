@@ -22,6 +22,104 @@ namespace ChronicleKeeper.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Characters.Abilities.Ability", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("Abilities");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Characters.Abilities.AbilityLevel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AbilityId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Rank")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AbilityId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("AbilityLevels");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Characters.Abilities.CharacterAbility", b =>
+                {
+                    b.Property<int>("CharacterId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AbilityId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CharacterId", "AbilityId");
+
+                    b.HasIndex("AbilityId");
+
+                    b.ToTable("CharacterAbilities");
+                });
+
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Characters.Character", b =>
                 {
                     b.Property<int>("Id")
@@ -193,6 +291,137 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         {
                             t.HasCheckConstraint("CK_CharacterRelationships_NotSelf", "[CharacterId] <> [RelatedCharacterId]");
                         });
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Characters.Equipment.Item", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("CurrentOwnerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<int?>("FactionId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsUnique")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Material")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Rarity")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("SpecialProperties")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<int?>("StoredAtId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CurrentOwnerId");
+
+                    b.HasIndex("FactionId");
+
+                    b.HasIndex("StoredAtId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("Items");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Characters.Equipment.OwnershipHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DateAcquired")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<int>("ItemId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int?>("NewOwnerId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PreviousOwnerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TransferReason")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ItemId");
+
+                    b.HasIndex("NewOwnerId");
+
+                    b.HasIndex("PreviousOwnerId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("OwnershipHistories");
                 });
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.Race", b =>
@@ -2208,6 +2437,55 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.HasDiscriminator().HasValue("TradeSchool");
                 });
 
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Characters.Abilities.Ability", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Characters.Abilities.AbilityLevel", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Characters.Abilities.Ability", "Ability")
+                        .WithMany("AbilityLevels")
+                        .HasForeignKey("AbilityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Ability");
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Characters.Abilities.CharacterAbility", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Characters.Abilities.Ability", "Ability")
+                        .WithMany("Characters")
+                        .HasForeignKey("AbilityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Characters.Character", "Character")
+                        .WithMany("Abilities")
+                        .HasForeignKey("CharacterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Ability");
+
+                    b.Navigation("Character");
+                });
+
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Characters.Character", b =>
                 {
                     b.HasOne("ChronicleKeeper.Core.Entities.Characters.Character", "Father")
@@ -2292,6 +2570,71 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Navigation("Character");
 
                     b.Navigation("RelatedCharacter");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Characters.Equipment.Item", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Characters.Character", "CurrentOwner")
+                        .WithMany("Equipments")
+                        .HasForeignKey("CurrentOwnerId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Faction", "Faction")
+                        .WithMany("NotableItemsInPossesion")
+                        .HasForeignKey("FactionId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Location", "StoredAt")
+                        .WithMany("Items")
+                        .HasForeignKey("StoredAtId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("CurrentOwner");
+
+                    b.Navigation("Faction");
+
+                    b.Navigation("StoredAt");
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Characters.Equipment.OwnershipHistory", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Characters.Equipment.Item", "Item")
+                        .WithMany("OwnershipHistory")
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Characters.Character", "NewOwner")
+                        .WithMany()
+                        .HasForeignKey("NewOwnerId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Characters.Character", "PreviousOwner")
+                        .WithMany()
+                        .HasForeignKey("PreviousOwnerId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Item");
+
+                    b.Navigation("NewOwner");
+
+                    b.Navigation("PreviousOwner");
+
+                    b.Navigation("World");
                 });
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.Race", b =>
@@ -3133,15 +3476,31 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Characters.Abilities.Ability", b =>
+                {
+                    b.Navigation("AbilityLevels");
+
+                    b.Navigation("Characters");
+                });
+
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Characters.Character", b =>
                 {
+                    b.Navigation("Abilities");
+
                     b.Navigation("Educations");
+
+                    b.Navigation("Equipments");
 
                     b.Navigation("Memberships");
 
                     b.Navigation("Relationships");
 
                     b.Navigation("Tags");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Characters.Equipment.Item", b =>
+                {
+                    b.Navigation("OwnershipHistory");
                 });
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.SapientSpecies", b =>
@@ -3151,6 +3510,8 @@ namespace ChronicleKeeper.Infrastructure.Migrations
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Location", b =>
                 {
+                    b.Navigation("Items");
+
                     b.Navigation("SubLocations");
 
                     b.Navigation("Tags");
@@ -3218,6 +3579,8 @@ namespace ChronicleKeeper.Infrastructure.Migrations
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Faction", b =>
                 {
                     b.Navigation("Members");
+
+                    b.Navigation("NotableItemsInPossesion");
 
                     b.Navigation("Tags");
                 });

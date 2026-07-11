@@ -1,0 +1,79 @@
+{
+    "listTitle": "Predmeti",
+    "search": "Pretraži predmete…",
+    "loaderror": "Učitavanje nije uspjelo",
+    "notfound": "Predmet nije pronađen",
+    "none": "Nema",
+    "yes": "Da",
+    "no": "Ne",
+    "backtolist": "Natrag na predmete",
+    "emptyTitle": "Još nema predmeta",
+    "emptyText": "Oštrice, relikvije, alati zanata — predmeti koji prolaze kroz ruke vaših likova. Stvorite prvi predmet i počnite puniti riznicu svog svijeta.",
+    "columns": {
+        "name": "Naziv",
+        "category": "Kategorija",
+        "rarity": "Rijetkost",
+        "updated": "Ažurirano"
+    },
+    "fields": {
+        "description": "Opis",
+        "material": "Materijal",
+        "specialProperties": "Posebna svojstva",
+        "isUnique": "Jedinstven",
+        "currentOwner": "Trenutni vlasnik",
+        "storedAt": "Pohranjen u",
+        "faction": "Frakcija"
+    },
+    "categories": {
+        "Weapon": "Oružje",
+        "Armor": "Oklop",
+        "Tool": "Alat",
+        "MagicalItem": "Magijski predmet"
+    },
+    "rarities": {
+        "Common": "Uobičajen",
+        "Uncommon": "Neuobičajen",
+        "Rare": "Rijedak",
+        "Legendary": "Legendaran",
+        "Mythical": "Mitski"
+    },
+    "history": {
+        "label": "Povijest vlasništva",
+        "add": "dodaj",
+        "addTitle": "Novi zapis vlasništva",
+        "editTitle": "Uredi zapis vlasništva",
+        "name": "Naziv",
+        "previousOwner": "Prethodni vlasnik",
+        "newOwner": "Novi vlasnik",
+        "dateAcquired": "Datum stjecanja",
+        "transferReason": "Razlog prijenosa",
+        "reasons": {
+            "Stolen": "Ukraden",
+            "Inherited": "Naslijeđen",
+            "Gifted": "Poklonjen",
+            "Lost": "Izgubljen",
+            "Found": "Pronađen"
+        },
+        "save": "Spremi",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati zapis „{{name}}”?",
+        "requiredMissing": "Naziv zapisa je obavezan.",
+        "saveFailed": "Spremanje zapisa nije uspjelo.",
+        "deleteFailed": "Brisanje zapisa nije uspjelo."
+    },
+    "form": {
+        "newTitle": "Novi predmet",
+        "editTitle": "Uredi predmet",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "save": "Spremi predmet",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}”? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjerite polja i pokušajte ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}
