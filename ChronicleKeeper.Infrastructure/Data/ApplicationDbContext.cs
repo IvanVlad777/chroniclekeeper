@@ -9,6 +9,10 @@ using ChronicleKeeper.Core.Entities.Content.Book;
 using ChronicleKeeper.Core.Entities.Content.Movie;
 using ChronicleKeeper.Core.Entities.Geography;
 using ChronicleKeeper.Core.Entities.Geography.Climate;
+using ChronicleKeeper.Core.Entities.Geography.Creatures;
+using ChronicleKeeper.Core.Entities.Geography.Creatures.Animals;
+using ChronicleKeeper.Core.Entities.Geography.Creatures.Fungi;
+using ChronicleKeeper.Core.Entities.Geography.Creatures.Plants;
 using ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient;
 using ChronicleKeeper.Core.Entities.HistoryTimelines;
 using ChronicleKeeper.Core.Entities.Notes;
@@ -63,6 +67,15 @@ namespace ChronicleKeeper.Infrastructure.Data
         // Species
         public DbSet<SapientSpecies> SapientSpecies { get; set; }
         public DbSet<Race> Races { get; set; }
+
+        // Creatures
+        public DbSet<Creature> Creatures { get; set; }
+        public DbSet<Animal> Animals { get; set; }
+        public DbSet<Plant> Plants { get; set; }
+        public DbSet<Tree> Trees { get; set; }
+        public DbSet<Crop> Crops { get; set; }
+        public DbSet<Fungus> Fungi { get; set; }
+        public DbSet<CreatureCity> CreatureCities { get; set; }
 
         // Factions
         public DbSet<Faction> Factions { get; set; }

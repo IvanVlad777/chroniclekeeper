@@ -75,6 +75,10 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .Where(l => l.WorldId == id)
                 .ExecuteUpdateAsync(s => s.SetProperty(l => l.ParentLocationId, (int?)null), cancellationToken);
 
+            await _context.Creatures
+                .Where(c => c.WorldId == id)
+                .ExecuteUpdateAsync(s => s.SetProperty(c => c.ParentCreatureId, (int?)null), cancellationToken);
+
             // OwnershipHistory.PreviousOwnerId/NewOwnerId su Restrict (dva FK-a na Character
             // sa iste tablice ne smiju oba biti SetNull — SQL Server "multiple cascade paths").
             // Moraju se null-ati prije brisanja likova (korak 3); redovi kasnije nestaju
@@ -252,6 +256,12 @@ namespace ChronicleKeeper.Infrastructure.Repositories
             // 7u. Godišnja doba (samostalan entitet — join redovi već nestali u 7s)
             await _context.Seasons
                 .Where(s => s.WorldId == id)
+                .ExecuteDeleteAsync(cancellationToken);
+
+            // 7v. Stvorenja (self-ref ParentCreatureId već razvezan u koraku 1; History je SetNull;
+            //     CreatureCity je Cascade s obje strane pa se čisti sam bez obzira na redoslijed)
+            await _context.Creatures
+                .Where(c => c.WorldId == id)
                 .ExecuteDeleteAsync(cancellationToken);
 
             // 8. Tagovi i bilješke

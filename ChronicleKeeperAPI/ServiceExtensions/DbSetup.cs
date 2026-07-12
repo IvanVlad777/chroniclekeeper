@@ -61,6 +61,7 @@ namespace ChronicleKeeper.API.ServiceExtensions
             services.AddScoped<IClimateDetailRepository, ClimateDetailRepository>();
             services.AddScoped<ISeasonRepository, SeasonRepository>();
             services.AddScoped<IWeatherPatternRepository, WeatherPatternRepository>();
+            services.AddScoped<ICreatureRepository, CreatureRepository>();
 
             return services;
         }

@@ -1,0 +1,157 @@
+{
+    "listTitle": "Stvorenja",
+    "search": "Pretraži stvorenja…",
+    "loaderror": "Učitavanje nije uspjelo",
+    "notfound": "Stvorenje nije pronađeno",
+    "none": "Nema",
+    "backtolist": "Natrag na stvorenja",
+    "emptyTitle": "Još nema stvorenja",
+    "emptyText": "Životinje, biljke, drveće, usjevi i gljive koje nastanjuju tvoj svijet. Stvori prvo da započneš graditi njegov prirodni svijet.",
+    "columns": {
+        "name": "Naziv",
+        "subtype": "Vrsta",
+        "type": "Klasifikacija",
+        "updated": "Ažurirano"
+    },
+    "fields": {
+        "description": "Opis",
+        "averageLifespan": "Prosječni životni vijek (godine)",
+        "height": "Visina (m)",
+        "weight": "Težina (kg)",
+        "isSentient": "Razumno biće",
+        "isArtificial": "Umjetno",
+        "artificialOrigin": "Umjetno podrijetlo",
+        "parentCreature": "Nadređena vrsta",
+        "history": "Povijest",
+        "scientificName": "Znanstveni naziv",
+        "isMedicinal": "Ljekovito",
+        "isPoisonous": "Otrovno",
+        "isBioluminescent": "Biolumniscentno",
+        "isSymbiotic": "Simbiotsko",
+        "specialProperties": "Posebna svojstva",
+        "mythologicalSignificance": "Mitološko značenje",
+        "isDomesticated": "Domesticirano",
+        "diet": "Prehrana",
+        "numberOfLegs": "Broj nogu",
+        "hasWings": "Ima krila",
+        "hasMultipleHeads": "Ima više glava",
+        "hasRegeneration": "Ima regeneraciju",
+        "isSacred": "Sveto",
+        "isMythical": "Mitsko",
+        "isEndangered": "Ugroženo",
+        "intelligence": "Inteligencija",
+        "specialAbilities": "Posebne sposobnosti",
+        "isPackAnimal": "Životinja čopora",
+        "isAggressive": "Agresivno",
+        "plantType": "Vrsta biljke",
+        "sunlight": "Sunčeva svjetlost",
+        "preferredSoil": "Preferirano tlo",
+        "temperatureRange": "Temperaturni raspon",
+        "rarity": "Rijetkost",
+        "isCarnivorous": "Mesožderno",
+        "hasRegenerativeProperties": "Ima regenerativna svojstva",
+        "canMove": "Može se kretati",
+        "isParasitic": "Parazitsko",
+        "maxHeight": "Maks. visina (m)",
+        "lifespan": "Životni vijek (godine)",
+        "leafType": "Vrsta lišća",
+        "yieldPerHectare": "Prinos po hektaru",
+        "cropType": "Vrsta usjeva",
+        "isEdible": "Jestivo",
+        "isHallucinogenic": "Halucinogeno",
+        "hasMutagenicProperties": "Ima mutagena svojstva",
+        "canCommunicate": "Može komunicirati"
+    },
+    "subtypes": {
+        "Animal": "Životinja",
+        "Plant": "Biljka",
+        "Tree": "Drvo",
+        "Crop": "Usjev",
+        "Fungus": "Gljiva"
+    },
+    "types": {
+        "Sapient": "Razumno",
+        "Animal": "Životinjsko",
+        "Plant": "Biljno",
+        "Fungus": "Gljivično",
+        "Spiritual": "Duhovno",
+        "Mythical": "Mitsko"
+    },
+    "dietTypes": {
+        "Herbivore": "Biljojed",
+        "Carnivore": "Mesožder",
+        "Omnivore": "Svežder"
+    },
+    "artificialOrigins": {
+        "Robot": "Robot",
+        "AI": "UI",
+        "Cyborg": "Kiborg",
+        "Golem": "Golem",
+        "Clone": "Klon",
+        "Bioengineered": "Bioinženjerirano"
+    },
+    "plantTypes": {
+        "Tree": "Drvo",
+        "Shrub": "Grm",
+        "Herb": "Zeljasta biljka",
+        "Grass": "Trava",
+        "Vine": "Puzavica"
+    },
+    "leafTypes": {
+        "Deciduous": "Listopadno",
+        "Evergreen": "Zimzeleno"
+    },
+    "cropTypes": {
+        "Grain": "Žitarica",
+        "Fruit": "Voće",
+        "Vegetable": "Povrće",
+        "Legume": "Mahunarka",
+        "Herb": "Začinsko bilje"
+    },
+    "sunlightRequirements": {
+        "FullSun": "Puno sunce",
+        "PartialSun": "Djelomično sunce",
+        "Shade": "Sjena"
+    },
+    "soilTypes": {
+        "Sandy": "Pjeskovito",
+        "Clay": "Glinasto",
+        "Loamy": "Ilovasto",
+        "Rocky": "Kamenito"
+    },
+    "temperatureRanges": {
+        "Cold": "Hladno",
+        "Temperate": "Umjereno",
+        "Hot": "Vruće"
+    },
+    "rarities": {
+        "Common": "Uobičajeno",
+        "Uncommon": "Neuobičajeno",
+        "Rare": "Rijetko",
+        "Endemic": "Endemsko"
+    },
+    "links": {
+        "subspecies": "Podvrste",
+        "cities": "Gradovi koje nastanjuje",
+        "add": "poveži",
+        "remove": "Odveži {{name}}",
+        "pick": "Odaberi zapis",
+        "confirm": "Poveži",
+        "addFailed": "Povezivanje nije uspjelo.",
+        "removeFailed": "Odvezivanje nije uspjelo."
+    },
+    "form": {
+        "newTitle": "Novo stvorenje",
+        "editTitle": "Uredi stvorenje",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "save": "Spremi stvorenje",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}“? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

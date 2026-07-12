@@ -1,0 +1,157 @@
+{
+    "listTitle": "Creatures",
+    "search": "Search creatures…",
+    "loaderror": "Failed to load",
+    "notfound": "Creature not found",
+    "none": "None",
+    "backtolist": "Back to creatures",
+    "emptyTitle": "No creatures yet",
+    "emptyText": "Animals, plants, trees, crops and fungi that populate your world. Create the first one to start building its natural life.",
+    "columns": {
+        "name": "Name",
+        "subtype": "Kind",
+        "type": "Classification",
+        "updated": "Updated"
+    },
+    "fields": {
+        "description": "Description",
+        "averageLifespan": "Average lifespan (years)",
+        "height": "Height (m)",
+        "weight": "Weight (kg)",
+        "isSentient": "Sentient",
+        "isArtificial": "Artificial",
+        "artificialOrigin": "Artificial origin",
+        "parentCreature": "Parent species",
+        "history": "History",
+        "scientificName": "Scientific name",
+        "isMedicinal": "Medicinal",
+        "isPoisonous": "Poisonous",
+        "isBioluminescent": "Bioluminescent",
+        "isSymbiotic": "Symbiotic",
+        "specialProperties": "Special properties",
+        "mythologicalSignificance": "Mythological significance",
+        "isDomesticated": "Domesticated",
+        "diet": "Diet",
+        "numberOfLegs": "Number of legs",
+        "hasWings": "Has wings",
+        "hasMultipleHeads": "Has multiple heads",
+        "hasRegeneration": "Has regeneration",
+        "isSacred": "Sacred",
+        "isMythical": "Mythical",
+        "isEndangered": "Endangered",
+        "intelligence": "Intelligence",
+        "specialAbilities": "Special abilities",
+        "isPackAnimal": "Pack animal",
+        "isAggressive": "Aggressive",
+        "plantType": "Plant type",
+        "sunlight": "Sunlight",
+        "preferredSoil": "Preferred soil",
+        "temperatureRange": "Temperature range",
+        "rarity": "Rarity",
+        "isCarnivorous": "Carnivorous",
+        "hasRegenerativeProperties": "Has regenerative properties",
+        "canMove": "Can move",
+        "isParasitic": "Parasitic",
+        "maxHeight": "Max height (m)",
+        "lifespan": "Lifespan (years)",
+        "leafType": "Leaf type",
+        "yieldPerHectare": "Yield per hectare",
+        "cropType": "Crop type",
+        "isEdible": "Edible",
+        "isHallucinogenic": "Hallucinogenic",
+        "hasMutagenicProperties": "Has mutagenic properties",
+        "canCommunicate": "Can communicate"
+    },
+    "subtypes": {
+        "Animal": "Animal",
+        "Plant": "Plant",
+        "Tree": "Tree",
+        "Crop": "Crop",
+        "Fungus": "Fungus"
+    },
+    "types": {
+        "Sapient": "Sapient",
+        "Animal": "Animal",
+        "Plant": "Plant",
+        "Fungus": "Fungus",
+        "Spiritual": "Spiritual",
+        "Mythical": "Mythical"
+    },
+    "dietTypes": {
+        "Herbivore": "Herbivore",
+        "Carnivore": "Carnivore",
+        "Omnivore": "Omnivore"
+    },
+    "artificialOrigins": {
+        "Robot": "Robot",
+        "AI": "AI",
+        "Cyborg": "Cyborg",
+        "Golem": "Golem",
+        "Clone": "Clone",
+        "Bioengineered": "Bioengineered"
+    },
+    "plantTypes": {
+        "Tree": "Tree",
+        "Shrub": "Shrub",
+        "Herb": "Herb",
+        "Grass": "Grass",
+        "Vine": "Vine"
+    },
+    "leafTypes": {
+        "Deciduous": "Deciduous",
+        "Evergreen": "Evergreen"
+    },
+    "cropTypes": {
+        "Grain": "Grain",
+        "Fruit": "Fruit",
+        "Vegetable": "Vegetable",
+        "Legume": "Legume",
+        "Herb": "Herb"
+    },
+    "sunlightRequirements": {
+        "FullSun": "Full sun",
+        "PartialSun": "Partial sun",
+        "Shade": "Shade"
+    },
+    "soilTypes": {
+        "Sandy": "Sandy",
+        "Clay": "Clay",
+        "Loamy": "Loamy",
+        "Rocky": "Rocky"
+    },
+    "temperatureRanges": {
+        "Cold": "Cold",
+        "Temperate": "Temperate",
+        "Hot": "Hot"
+    },
+    "rarities": {
+        "Common": "Common",
+        "Uncommon": "Uncommon",
+        "Rare": "Rare",
+        "Endemic": "Endemic"
+    },
+    "links": {
+        "subspecies": "Subspecies",
+        "cities": "Cities it inhabits",
+        "add": "link",
+        "remove": "Unlink {{name}}",
+        "pick": "Pick an entry",
+        "confirm": "Link",
+        "addFailed": "Linking failed.",
+        "removeFailed": "Unlinking failed."
+    },
+    "form": {
+        "newTitle": "New creature",
+        "editTitle": "Edit creature",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "save": "Save creature",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

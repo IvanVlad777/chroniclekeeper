@@ -89,6 +89,9 @@ import ClimateDetailForm from "../components/entityViews/climateDetail/form/Clim
 import SeasonList from "../components/entityViews/season/list/SeasonList";
 import SeasonDetails from "../components/entityViews/season/detail/SeasonDetails";
 import SeasonForm from "../components/entityViews/season/form/SeasonForm";
+import CreatureList from "../components/entityViews/creature/list/CreatureList";
+import CreatureDetails from "../components/entityViews/creature/detail/CreatureDetails";
+import CreatureForm from "../components/entityViews/creature/form/CreatureForm";
 import { WorldProvider } from "../context/world/WorldProvider";
 import { AppShell } from "../components/shell/AppShell";
 
@@ -389,6 +392,10 @@ const AppRoutes = () => {
                 <Route path="seasons/new" element={<SeasonForm />} />
                 <Route path="seasons/:id" element={<SeasonDetails />} />
                 <Route path="seasons/:id/edit" element={<SeasonForm />} />
+                <Route path="creatures" element={<CreatureList />} />
+                <Route path="creatures/new" element={<CreatureForm />} />
+                <Route path="creatures/:id" element={<CreatureDetails />} />
+                <Route path="creatures/:id/edit" element={<CreatureForm />} />
                 <Route path="*" element={<NoPage />} />
             </Route>
 

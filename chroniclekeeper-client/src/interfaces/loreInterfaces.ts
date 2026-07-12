@@ -1668,4 +1668,176 @@ export interface SeasonCreateDto {
     historyId?: number | null;
 }
 
+// ----- Creature -----
+
+export const creatureSubtypes = ["Animal", "Plant", "Tree", "Crop", "Fungus"] as const;
+export type CreatureSubtype = (typeof creatureSubtypes)[number];
+
+export const creatureTypes = ["Sapient", "Animal", "Plant", "Fungus", "Spiritual", "Mythical"] as const;
+export type CreatureType = (typeof creatureTypes)[number];
+
+export const dietTypes = ["Herbivore", "Carnivore", "Omnivore"] as const;
+export type DietType = (typeof dietTypes)[number];
+
+export const artificialOrigins = ["Robot", "AI", "Cyborg", "Golem", "Clone", "Bioengineered"] as const;
+export type ArtificialOrigin = (typeof artificialOrigins)[number];
+
+export const plantTypes = ["Tree", "Shrub", "Herb", "Grass", "Vine"] as const;
+export type PlantType = (typeof plantTypes)[number];
+
+export const leafTypes = ["Deciduous", "Evergreen"] as const;
+export type LeafType = (typeof leafTypes)[number];
+
+export const cropTypes = ["Grain", "Fruit", "Vegetable", "Legume", "Herb"] as const;
+export type CropType = (typeof cropTypes)[number];
+
+export const sunlightRequirements = ["FullSun", "PartialSun", "Shade"] as const;
+export type SunlightRequirement = (typeof sunlightRequirements)[number];
+
+export const soilTypes = ["Sandy", "Clay", "Loamy", "Rocky"] as const;
+export type SoilType = (typeof soilTypes)[number];
+
+export const temperatureRanges = ["Cold", "Temperate", "Hot"] as const;
+export type TemperatureRange = (typeof temperatureRanges)[number];
+
+export const creatureRarities = ["Common", "Uncommon", "Rare", "Endemic"] as const;
+export type CreatureRarity = (typeof creatureRarities)[number];
+
+/** Ravni DTO za Animal/Plant/Tree/Crop/Fungus TPH obitelj — samo polja relevantna za `subtype` su popunjena.
+ * `type` je CreatureType klasifikacija (labava in-world oznaka), NIJE isto što i `subtype` (TPH diskriminator). */
+export interface CreatureDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    subtype: string;
+    type: CreatureType;
+    averageLifespan: number;
+    height: number;
+    weight: number;
+    isSentient: boolean;
+    isArtificial: boolean;
+    artificialOrigin?: ArtificialOrigin | null;
+    parentCreatureId?: number | null;
+    historyId?: number | null;
+
+    scientificName?: string | null;
+    isMedicinal?: boolean | null;
+    isPoisonous?: boolean | null;
+    isBioluminescent?: boolean | null;
+    isSymbiotic?: boolean | null;
+    specialProperties?: string | null;
+    mythologicalSignificance?: string | null;
+
+    isDomesticated?: boolean | null;
+
+    diet?: DietType | null;
+    numberOfLegs?: number | null;
+    hasWings?: boolean | null;
+    hasMultipleHeads?: boolean | null;
+    hasRegeneration?: boolean | null;
+    isSacred?: boolean | null;
+    isMythical?: boolean | null;
+    isEndangered?: boolean | null;
+    intelligence?: string | null;
+    specialAbilities?: string | null;
+    isPackAnimal?: boolean | null;
+    isAggressive?: boolean | null;
+
+    plantType?: PlantType | null;
+    sunlight?: SunlightRequirement | null;
+    preferredSoil?: SoilType | null;
+    temperatureRange?: TemperatureRange | null;
+    rarity?: CreatureRarity | null;
+    isCarnivorous?: boolean | null;
+    hasRegenerativeProperties?: boolean | null;
+    canMove?: boolean | null;
+    isParasitic?: boolean | null;
+
+    maxHeight?: number | null;
+    lifespan?: number | null;
+    leafType?: LeafType | null;
+
+    yieldPerHectare?: number | null;
+    cropType?: CropType | null;
+
+    isEdible?: boolean | null;
+    isHallucinogenic?: boolean | null;
+    hasMutagenicProperties?: boolean | null;
+    canCommunicate?: boolean | null;
+
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface CreatureDetailsDto extends CreatureDto {
+    parentCreature?: ReferenceDto | null;
+    subspecies: ReferenceDto[];
+    history?: ReferenceDto | null;
+    cities: ReferenceDto[];
+}
+
+export interface CreatureCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    subtype: string;
+    type: CreatureType;
+    averageLifespan: number;
+    height: number;
+    weight: number;
+    isSentient: boolean;
+    isArtificial: boolean;
+    artificialOrigin?: ArtificialOrigin | null;
+    parentCreatureId?: number | null;
+    historyId?: number | null;
+
+    scientificName?: string | null;
+    isMedicinal?: boolean | null;
+    isPoisonous?: boolean | null;
+    isBioluminescent?: boolean | null;
+    isSymbiotic?: boolean | null;
+    specialProperties?: string | null;
+    mythologicalSignificance?: string | null;
+
+    isDomesticated?: boolean | null;
+
+    diet?: DietType | null;
+    numberOfLegs?: number | null;
+    hasWings?: boolean | null;
+    hasMultipleHeads?: boolean | null;
+    hasRegeneration?: boolean | null;
+    isSacred?: boolean | null;
+    isMythical?: boolean | null;
+    isEndangered?: boolean | null;
+    intelligence?: string | null;
+    specialAbilities?: string | null;
+    isPackAnimal?: boolean | null;
+    isAggressive?: boolean | null;
+
+    plantType?: PlantType | null;
+    sunlight?: SunlightRequirement | null;
+    preferredSoil?: SoilType | null;
+    temperatureRange?: TemperatureRange | null;
+    rarity?: CreatureRarity | null;
+    isCarnivorous?: boolean | null;
+    hasRegenerativeProperties?: boolean | null;
+    canMove?: boolean | null;
+    isParasitic?: boolean | null;
+
+    maxHeight?: number | null;
+    lifespan?: number | null;
+    leafType?: LeafType | null;
+
+    yieldPerHectare?: number | null;
+    cropType?: CropType | null;
+
+    isEdible?: boolean | null;
+    isHallucinogenic?: boolean | null;
+    hasMutagenicProperties?: boolean | null;
+    canCommunicate?: boolean | null;
+}
+
+export type CreatureUpdateDto = Omit<CreatureCreateDto, "worldId" | "subtype">;
+
 export type SeasonUpdateDto = Omit<SeasonCreateDto, "worldId">;

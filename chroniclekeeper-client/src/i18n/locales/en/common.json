@@ -37,7 +37,8 @@
         "contents": "Content",
         "climateZones": "Climate Zones",
         "climateDetails": "Climate Details",
-        "seasons": "Seasons"
+        "seasons": "Seasons",
+        "creatures": "Creatures"
     },
     "shell": {
         "newEntry": "New entry",

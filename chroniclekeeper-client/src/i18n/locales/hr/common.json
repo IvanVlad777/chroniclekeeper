@@ -37,7 +37,8 @@
         "contents": "Sadržaj",
         "climateZones": "Klimatske zone",
         "climateDetails": "Klimatski detalji",
-        "seasons": "Godišnja doba"
+        "seasons": "Godišnja doba",
+        "creatures": "Stvorenja"
     },
     "shell": {
         "newEntry": "Novi zapis",
