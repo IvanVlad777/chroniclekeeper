@@ -19,13 +19,10 @@ namespace ChronicleKeeper.Core.Entities.Social.Education
         public virtual ICollection<EducationRecord> Alumni { get; set; } = new List<EducationRecord>();
         public virtual ICollection<SchoolSubject> Subjects { get; set; } = new List<SchoolSubject>();
 
+        public int? LocationId { get; set; }
+        public virtual Geography.Location? Location { get; set; }
+
         //public virtual ICollection<Characters.Character> Students { get; set; } = new List<Characters.Character>(); // TODO: Uncomment when Character many-to-many cross-links are revived
         //public virtual ICollection<Characters.Character> Teachers { get; set; } = new List<Characters.Character>(); // TODO: Uncomment when Character many-to-many cross-links are revived
-
-        //public int? CountryId { get; set; } // TODO: Uncomment when Country entity is revived
-        //public virtual Geography.Country? Country { get; set; }
-
-        //public int? CityId { get; set; } // TODO: Uncomment when City entity is revived
-        //public virtual Geography.City? City { get; set; }
     }
 }

@@ -37,9 +37,26 @@
         "latitude": "Zemljopisna širina",
         "longitude": "Zemljopisna dužina",
         "description": "Opis",
-        "history": "Povijest"
+        "history": "Povijest",
+        "continentSpecifics": "Posebnosti kontinenta",
+        "regionSpecifics": "Posebnosti regije",
+        "districtType": "Vrsta četvrti",
+        "isCapital": "Glavni grad",
+        "governmentSystem": "Sustav vlasti",
+        "legalSystem": "Pravni sustav",
+        "educationSystem": "Sustav obrazovanja"
     },
     "subLocations": "Pod-lokacije",
+    "schoolsHere": "Škole ovdje",
+    "links": {
+        "nativeSpecies": "Autohtone vrste",
+        "add": "poveži",
+        "remove": "Odveži {{name}}",
+        "pick": "Odaberi zapis",
+        "confirm": "Poveži",
+        "addFailed": "Povezivanje nije uspjelo.",
+        "removeFailed": "Odvezivanje nije uspjelo."
+    },
     "form": {
         "newTitle": "Nova lokacija",
         "editTitle": "Uredi lokaciju",
@@ -53,6 +70,8 @@
         "delete": "Obriši",
         "deleteConfirm": "Obrisati „{{name}}“? Ovo se ne može poništiti.",
         "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
-        "deleteFailed": "Brisanje nije uspjelo."
+        "deleteFailed": "Brisanje nije uspjelo.",
+        "yes": "Da",
+        "no": "Ne"
     }
 }

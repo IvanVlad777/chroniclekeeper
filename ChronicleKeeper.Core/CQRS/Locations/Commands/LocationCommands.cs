@@ -18,4 +18,16 @@ namespace ChronicleKeeper.Core.CQRS.Locations.Commands
     {
         public int Id { get; set; }
     }
+
+    public class AddRegionNativeSpeciesCommand : IRequest<bool>
+    {
+        public int RegionId { get; set; }
+        public int SapientSpeciesId { get; set; }
+    }
+
+    public class RemoveRegionNativeSpeciesCommand : IRequest<bool>
+    {
+        public int RegionId { get; set; }
+        public int SapientSpeciesId { get; set; }
+    }
 }

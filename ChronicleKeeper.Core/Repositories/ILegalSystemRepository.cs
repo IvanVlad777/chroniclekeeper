@@ -10,5 +10,6 @@ namespace ChronicleKeeper.Core.Repositories
         Task<List<LegalSystem>> GetAllAsync(int? worldId = null, CancellationToken cancellationToken = default);
         Task<LegalSystem> UpdateAsync(LegalSystem legalSystem, CancellationToken cancellationToken = default);
         Task<bool> DeleteAsync(int id, CancellationToken cancellationToken = default);
+        Task<int> CountLocationsUsingLegalSystemAsync(int legalSystemId, CancellationToken cancellationToken = default);
     }
 }

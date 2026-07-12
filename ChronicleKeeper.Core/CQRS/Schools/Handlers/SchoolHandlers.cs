@@ -50,17 +50,20 @@ namespace ChronicleKeeper.Core.CQRS.Schools.Handlers
     {
         private readonly ISchoolRepository _repository;
         private readonly IEducationSystemRepository _educationSystemRepository;
+        private readonly ILocationRepository _locationRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<CreateSchoolCommandHandler> _logger;
 
         public CreateSchoolCommandHandler(
             ISchoolRepository repository,
             IEducationSystemRepository educationSystemRepository,
+            ILocationRepository locationRepository,
             IMapper mapper,
             ILogger<CreateSchoolCommandHandler> logger)
         {
             _repository = repository;
             _educationSystemRepository = educationSystemRepository;
+            _locationRepository = locationRepository;
             _mapper = mapper;
             _logger = logger;
         }
@@ -76,6 +79,8 @@ namespace ChronicleKeeper.Core.CQRS.Schools.Handlers
             var school = _mapper.Map<School>(dto);
             school.WorldId = educationSystem.WorldId; // svijet škole uvijek = svijet sustava obrazovanja
 
+            await SchoolValidation.ValidateLocationAsync(_locationRepository, dto.LocationId, school.WorldId, cancellationToken);
+
             var created = await _repository.CreateAsync(school, cancellationToken);
             return _mapper.Map<SchoolDto>(created);
         }
@@ -84,11 +89,13 @@ namespace ChronicleKeeper.Core.CQRS.Schools.Handlers
     public class UpdateSchoolCommandHandler : IRequestHandler<UpdateSchoolCommand, SchoolDto>
     {
         private readonly ISchoolRepository _repository;
+        private readonly ILocationRepository _locationRepository;
         private readonly IMapper _mapper;
 
-        public UpdateSchoolCommandHandler(ISchoolRepository repository, IMapper mapper)
+        public UpdateSchoolCommandHandler(ISchoolRepository repository, ILocationRepository locationRepository, IMapper mapper)
         {
             _repository = repository;
+            _locationRepository = locationRepository;
             _mapper = mapper;
         }
 
@@ -96,6 +103,8 @@ namespace ChronicleKeeper.Core.CQRS.Schools.Handlers
         {
             var school = await _repository.FindByIdAsync(request.Id, cancellationToken)
                 ?? throw new EntityNotFoundException("School", request.Id);
+
+            await SchoolValidation.ValidateLocationAsync(_locationRepository, request.SchoolUpdateDto.LocationId, school.WorldId, cancellationToken);
 
             _mapper.Map(request.SchoolUpdateDto, school);
             var updated = await _repository.UpdateAsync(school, cancellationToken);
@@ -126,6 +135,20 @@ namespace ChronicleKeeper.Core.CQRS.Schools.Handlers
             }
 
             return await _repository.DeleteAsync(request.Id, cancellationToken);
+        }
+    }
+
+    internal static class SchoolValidation
+    {
+        public static async Task ValidateLocationAsync(
+            ILocationRepository locationRepository, int? locationId, int worldId, CancellationToken cancellationToken)
+        {
+            if (locationId is not int id) return;
+
+            if (!await locationRepository.ExistsInWorldAsync(id, worldId, cancellationToken))
+            {
+                throw new DomainValidationException($"Location with ID {id} does not exist in this world.");
+            }
         }
     }
 }

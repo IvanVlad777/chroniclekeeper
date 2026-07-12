@@ -382,6 +382,14 @@ export interface LocationDto {
     historyId?: number | null;
     createdAt: string;
     updatedAt: string;
+    // Subtype fields — only populated for the matching type.
+    continentSpecifics?: string | null;
+    regionSpecifics?: string | null;
+    governmentSystemId?: number | null;
+    legalSystemId?: number | null;
+    educationSystemId?: number | null;
+    isCapital?: boolean | null;
+    districtType?: string | null;
 }
 
 export interface LocationDetailsDto extends LocationDto {
@@ -389,6 +397,11 @@ export interface LocationDetailsDto extends LocationDto {
     subLocations: ReferenceDto[];
     tags: ReferenceDto[];
     history?: ReferenceDto | null;
+    governmentSystem?: ReferenceDto | null;
+    legalSystem?: ReferenceDto | null;
+    educationSystem?: ReferenceDto | null;
+    schools: ReferenceDto[];
+    nativeSpecies: ReferenceDto[];
 }
 
 export interface LocationCreateDto {
@@ -402,6 +415,13 @@ export interface LocationCreateDto {
     longitude?: number | null;
     parentLocationId?: number | null;
     historyId?: number | null;
+    continentSpecifics?: string | null;
+    regionSpecifics?: string | null;
+    governmentSystemId?: number | null;
+    legalSystemId?: number | null;
+    educationSystemId?: number | null;
+    isCapital?: boolean | null;
+    districtType?: string | null;
 }
 
 export type LocationUpdateDto = Omit<LocationCreateDto, "worldId">;
@@ -972,6 +992,7 @@ export interface SchoolDto {
     educationSystemId: number;
     isPublic: boolean;
     isReligious: boolean;
+    locationId?: number | null;
     /** Read-only TPH diskriminator: "School" ili "TradeSchool". */
     schoolType: SchoolType;
     createdAt: string;
@@ -981,6 +1002,7 @@ export interface SchoolDto {
 export interface SchoolDetailsDto extends SchoolDto {
     subjects: SchoolSubjectDto[];
     alumni: ReferenceDto[];
+    location?: ReferenceDto | null;
 }
 
 /** Svijet škole se izvodi iz sustava obrazovanja — ne šalje se worldId. */
@@ -990,6 +1012,7 @@ export interface SchoolCreateDto {
     educationSystemId: number;
     isPublic: boolean;
     isReligious: boolean;
+    locationId?: number | null;
 }
 
 export type SchoolUpdateDto = Omit<SchoolCreateDto, "educationSystemId">;

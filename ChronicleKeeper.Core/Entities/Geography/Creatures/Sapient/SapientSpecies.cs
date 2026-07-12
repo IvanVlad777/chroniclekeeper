@@ -1,4 +1,5 @@
 using ChronicleKeeper.Core.Entities.Base;
+using ChronicleKeeper.Core.Entities.Geography;
 //using ChronicleKeeper.Core.Entities.Professions;
 //using ChronicleKeeper.Core.Entities.Social.Cultures;
 //using ChronicleKeeper.Core.Entities.Social.Religions;
@@ -17,8 +18,9 @@ namespace ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient
 
         public virtual ICollection<Race> Races { get; set; } = new List<Race>();
 
+        public virtual ICollection<RegionSapientSpecies> NativeRegions { get; set; } = new List<RegionSapientSpecies>();
+
         //public SapientType SapientType { get; set; } // TODO: Uncomment when Creature hierarchy is revived
-        //public ICollection<Region> NativeRegions { get; set; } = new List<Region>(); // TODO: Uncomment when Region entity is revived
         //public virtual ICollection<Character> Characters { get; set; } = new List<Character>(); // TODO: expose if the inverse navigation becomes useful
         //public ICollection<Profession> FrequentOccupations { get; set; } = new List<Profession>(); // TODO: Uncomment when Profession entity is revived
         //public ICollection<Folklore> Folklore { get; set; } = new List<Folklore>(); // TODO: Uncomment when Folklore entity is revived

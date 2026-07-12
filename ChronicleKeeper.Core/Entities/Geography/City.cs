@@ -1,56 +1,44 @@
-﻿using ChronicleKeeper.Core.Entities.Geography.Creatures;
-using ChronicleKeeper.Core.Entities.Social.Cultures;
-using ChronicleKeeper.Core.Entities.Social.Economy;
-using ChronicleKeeper.Core.Entities.Social.Education;
-using ChronicleKeeper.Core.Entities.Social.Military;
-using ChronicleKeeper.Core.Entities.Social.Nationality;
 using ChronicleKeeper.Core.Entities.Social.Politics;
-using ChronicleKeeper.Core.Entities.Social.Religions;
-
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ChronicleKeeper.Core.Entities.Geography
 {
+    /// <summary>
+    /// TPH subtype of Location (discriminated by the existing LocationType.City value).
+    /// Hierarchy rides on the inherited ParentLocationId/SubLocations, not a dedicated FK —
+    /// a City's parent Country/Region is optional, matching "standalone or part of a country".
+    /// </summary>
     public class City : Location
     {
-        //[ForeignKey("Country")]
-        //public int CountryId { get; set; }
-        //public Country Country { get; set; } = null!;
-        public int CountryId { get; set; }
-        public Country Country { get; set; } = null!;
-
         public bool IsCapital { get; set; }
 
-        //[ForeignKey("GovernmentSystem")]
         public int? GovernmentSystemId { get; set; }
         public GovernmentSystem? GovernmentSystem { get; set; }
 
-        //[ForeignKey("LegalSystem")]
         public int? LegalSystemId { get; set; }
         public LegalSystem? LegalSystem { get; set; }
 
-        public ICollection<PoliticalParty> PoliticalParties { get; set; } = new List<PoliticalParty>();
-
-        //[ForeignKey("Army")]
-        //public int? ArmyId { get; set; }
-        public Army? Army { get; set; }
-
-        //[ForeignKey("EconomicSystem")]
-        public int? EconomicSystemId { get; set; }
-        public EconomicSystem? EconomicSystem { get; set; }
-
-        //[ForeignKey("EducationSystem")]
         public int? EducationSystemId { get; set; }
-        public EducationSystem? EducationSystem { get; set; }
+        public Social.Education.EducationSystem? EducationSystem { get; set; }
 
-        public ICollection<Industry> MajorIndustries { get; set; } = new List<Industry>();
-        public ICollection<Corporation> Corporations { get; set; } = new List<Corporation>(); // ✅ Businesses in this country
-        public ICollection<Guild> Guilds { get; set; } = new List<Guild>(); // ✅ Trade/labor organizations
-        public ICollection<District> Districts { get; set; } = new List<District>();
-        public ICollection<CulturalInstitution> CulturalInstitutions { get; set; } = new List<CulturalInstitution>(); // ✅ Museums, Theaters, Libraries
-        //public ICollection<TradeRoute> TradeRoutes { get; set; } = new List<TradeRoute>(); // ✅ Trade connections
-        public ICollection<Culture> PredominantCultures { get; set; } = new List<Culture>(); // ✅ Cultural influence in the city
-        public ICollection<Creature> Creature { get; set; } = new List<Creature>();
-        public ICollection<Nation> Nations { get; set; } = new List<Nation>();
-        public ICollection<Religion> Religion { get; set; } = new List<Religion>();
+        //public Army? Army { get; set; } // TODO: Uncomment when Army entity is revived
+        //public EconomicSystem? EconomicSystem { get; set; } // TODO: Uncomment when EconomicSystem entity is revived
+        //public ICollection<Industry> MajorIndustries { get; set; } = new List<Industry>(); // TODO: Uncomment when Industry entity is revived
+        //public ICollection<Corporation> Corporations { get; set; } = new List<Corporation>(); // TODO: Uncomment when Corporation entity is revived
+        //public ICollection<Guild> Guilds { get; set; } = new List<Guild>(); // TODO: Uncomment when Guild entity is revived
+        //public ICollection<CulturalInstitution> CulturalInstitutions { get; set; } = new List<CulturalInstitution>(); // TODO: Uncomment when CulturalInstitution entity is revived
+        //public ICollection<TradeRoute> TradeRoutes { get; set; } = new List<TradeRoute>(); // TODO: Uncomment when TradeRoute entity is revived
+        //public ICollection<Creatures.Creature> Creature { get; set; } = new List<Creatures.Creature>(); // TODO: Uncomment when Creature entity is revived
+
+        //public ICollection<PoliticalParty> PoliticalParties { get; set; } = new List<PoliticalParty>(); // TODO: Many-to-many cross-link, needs join entity — deferred, same pattern as Culture<->Nation
+        //public ICollection<Social.Cultures.Culture> PredominantCultures { get; set; } = new List<Social.Cultures.Culture>(); // TODO: Many-to-many cross-link, needs join entity — deferred, same pattern as Culture<->Nation
+        //public ICollection<Social.Nationality.Nation> Nations { get; set; } = new List<Social.Nationality.Nation>(); // TODO: Many-to-many cross-link, needs join entity — deferred, same pattern as Culture<->Nation
+        //public ICollection<Social.Religions.Religion> Religion { get; set; } = new List<Social.Religions.Religion>(); // TODO: Many-to-many cross-link, needs join entity — deferred, same pattern as Culture<->Nation
+
+        [NotMapped]
+        public Country? Country => ParentLocation as Country;
+
+        [NotMapped]
+        public IEnumerable<District> Districts => SubLocations.OfType<District>();
     }
 }

@@ -18,6 +18,12 @@ namespace ChronicleKeeper.Infrastructure.Configurations
                 .HasForeignKey(s => s.EducationSystemId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            // Location — pointer-only, SetNull: deleting the location just detaches the school
+            builder.HasOne(s => s.Location)
+                .WithMany(l => l.Schools)
+                .HasForeignKey(s => s.LocationId)
+                .OnDelete(DeleteBehavior.SetNull);
+
             builder.HasDiscriminator<string>("SchoolType")
                 .HasValue<School>("School")
                 .HasValue<TradeSchool>("TradeSchool");

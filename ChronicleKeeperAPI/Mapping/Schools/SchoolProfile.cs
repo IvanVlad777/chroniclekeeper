@@ -19,6 +19,9 @@ public class SchoolProfile : Profile
                 src is ChronicleKeeper.Core.Entities.Professions.TradeSchool ? "TradeSchool" : "School"))
             .ForMember(dest => dest.Subjects, opt => opt.MapFrom(src => src.Subjects))
             .ForMember(dest => dest.Alumni, opt => opt.MapFrom(src => src.Alumni
-                .Select(e => new ReferenceDto { Id = e.Id, Name = e.Name })));
+                .Select(e => new ReferenceDto { Id = e.Id, Name = e.Name })))
+            .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.Location == null
+                ? null
+                : new ReferenceDto { Id = src.Location.Id, Name = src.Location.Name }));
     }
 }

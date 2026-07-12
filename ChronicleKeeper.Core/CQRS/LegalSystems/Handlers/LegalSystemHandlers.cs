@@ -115,6 +115,14 @@ namespace ChronicleKeeper.Core.CQRS.LegalSystems.Handlers
         public async Task<bool> Handle(DeleteLegalSystemCommand request, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Deleting legal system with ID {Id}", request.Id);
+
+            var locationsInUse = await _repository.CountLocationsUsingLegalSystemAsync(request.Id, cancellationToken);
+            if (locationsInUse > 0)
+            {
+                throw new DomainValidationException(
+                    $"This legal system is used by {locationsInUse} location(s). Reassign them first.");
+            }
+
             return await _repository.DeleteAsync(request.Id, cancellationToken);
         }
     }

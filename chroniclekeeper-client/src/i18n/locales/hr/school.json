@@ -18,7 +18,8 @@
         "isReligious": "Vjerska",
         "specialization": "Specijalizacija",
         "durationYears": "Trajanje (godine)",
-        "isGovernmentRecognized": "Državno priznata"
+        "isGovernmentRecognized": "Državno priznata",
+        "location": "Lokacija"
     },
     "schoolTypeLabel": {
         "School": "Škola",

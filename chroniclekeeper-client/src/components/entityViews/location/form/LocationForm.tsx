@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
     Button,
+    OrnateCheckbox,
     OrnateField,
     OrnateSelect,
     OrnateTextArea,
@@ -17,8 +18,14 @@ import {
     updateLocation,
 } from "../../../../api/locations";
 import { getHistories } from "../../../../api/histories";
+import { getGovernmentSystems } from "../../../../api/governmentSystems";
+import { getLegalSystems } from "../../../../api/legalSystems";
+import { getEducationSystems } from "../../../../api/educationSystems";
 import {
+    GovernmentSystemDto,
     HistoryDto,
+    LegalSystemDto,
+    EducationSystemDto,
     LocationDto,
     LocationType,
     LocationUpdateDto,
@@ -38,6 +45,13 @@ interface FormState {
     longitude: string;
     parentLocationId: string;
     historyId: string;
+    continentSpecifics: string;
+    regionSpecifics: string;
+    governmentSystemId: string;
+    legalSystemId: string;
+    educationSystemId: string;
+    isCapital: boolean;
+    districtType: string;
 }
 
 const emptyForm: FormState = {
@@ -50,10 +64,18 @@ const emptyForm: FormState = {
     longitude: "",
     parentLocationId: "",
     historyId: "",
+    continentSpecifics: "",
+    regionSpecifics: "",
+    governmentSystemId: "",
+    legalSystemId: "",
+    educationSystemId: "",
+    isCapital: false,
+    districtType: "",
 };
 
 const toNum = (v: string): number | null => (v.trim() ? Number(v) : null);
 const toId = (v: string): number | null => (v ? Number(v) : null);
+const toStr = (v: string): string | null => (v.trim() ? v : null);
 
 function toDto(f: FormState): LocationUpdateDto {
     return {
@@ -66,6 +88,16 @@ function toDto(f: FormState): LocationUpdateDto {
         longitude: toNum(f.longitude),
         parentLocationId: toId(f.parentLocationId),
         historyId: toId(f.historyId),
+        continentSpecifics: f.type === "Continent" ? toStr(f.continentSpecifics) : null,
+        regionSpecifics: f.type === "Region" ? toStr(f.regionSpecifics) : null,
+        governmentSystemId:
+            f.type === "Country" || f.type === "City" ? toId(f.governmentSystemId) : null,
+        legalSystemId:
+            f.type === "Country" || f.type === "City" ? toId(f.legalSystemId) : null,
+        educationSystemId:
+            f.type === "Country" || f.type === "City" ? toId(f.educationSystemId) : null,
+        isCapital: f.type === "City" ? f.isCapital : null,
+        districtType: f.type === "District" ? toStr(f.districtType) : null,
     };
 }
 
@@ -82,6 +114,9 @@ export default function LocationForm() {
     const [form, setForm] = useState<FormState>(emptyForm);
     const [worldLocations, setWorldLocations] = useState<LocationDto[]>([]);
     const [histories, setHistories] = useState<HistoryDto[]>([]);
+    const [governmentSystems, setGovernmentSystems] = useState<GovernmentSystemDto[]>([]);
+    const [legalSystems, setLegalSystems] = useState<LegalSystemDto[]>([]);
+    const [educationSystems, setEducationSystems] = useState<EducationSystemDto[]>([]);
     const [loading, setLoading] = useState(true);
     const [loadError, setLoadError] = useState<string | null>(null);
     const [saveError, setSaveError] = useState<string | null>(null);
@@ -98,11 +133,20 @@ export default function LocationForm() {
         setLoading(true);
         setLoadError(null);
 
-        Promise.all([getLocations(selectedWorld.id), getHistories(selectedWorld.id)])
-            .then(async ([locations, historiesData]) => {
+        Promise.all([
+            getLocations(selectedWorld.id),
+            getHistories(selectedWorld.id),
+            getGovernmentSystems(selectedWorld.id),
+            getLegalSystems(selectedWorld.id),
+            getEducationSystems(selectedWorld.id),
+        ])
+            .then(async ([locations, historiesData, governmentSystemsData, legalSystemsData, educationSystemsData]) => {
                 if (cancelled) return;
                 setWorldLocations(locations);
                 setHistories(historiesData);
+                setGovernmentSystems(governmentSystemsData);
+                setLegalSystems(legalSystemsData);
+                setEducationSystems(educationSystemsData);
                 if (isEdit) {
                     const l = await getLocation(editId);
                     if (cancelled) return;
@@ -121,6 +165,17 @@ export default function LocationForm() {
                             ? String(l.parentLocationId)
                             : "",
                         historyId: l.historyId ? String(l.historyId) : "",
+                        continentSpecifics: l.continentSpecifics ?? "",
+                        regionSpecifics: l.regionSpecifics ?? "",
+                        governmentSystemId: l.governmentSystemId
+                            ? String(l.governmentSystemId)
+                            : "",
+                        legalSystemId: l.legalSystemId ? String(l.legalSystemId) : "",
+                        educationSystemId: l.educationSystemId
+                            ? String(l.educationSystemId)
+                            : "",
+                        isCapital: l.isCapital ?? false,
+                        districtType: l.districtType ?? "",
                     });
                 }
             })
@@ -251,6 +306,99 @@ export default function LocationForm() {
                             ))}
                         </OrnateSelect>
                     </OrnateField>
+
+                    {form.type === "Continent" && (
+                        <OrnateField label={t("fields.continentSpecifics")}>
+                            <OrnateTextArea
+                                value={form.continentSpecifics}
+                                rows={3}
+                                onChange={(e) =>
+                                    set("continentSpecifics", e.target.value)
+                                }
+                            />
+                        </OrnateField>
+                    )}
+                    {form.type === "Region" && (
+                        <OrnateField label={t("fields.regionSpecifics")}>
+                            <OrnateTextArea
+                                value={form.regionSpecifics}
+                                rows={3}
+                                onChange={(e) =>
+                                    set("regionSpecifics", e.target.value)
+                                }
+                            />
+                        </OrnateField>
+                    )}
+                    {form.type === "District" && (
+                        <OrnateField label={t("fields.districtType")}>
+                            <OrnateTextInput
+                                value={form.districtType}
+                                onChange={(e) =>
+                                    set("districtType", e.target.value)
+                                }
+                            />
+                        </OrnateField>
+                    )}
+                    {(form.type === "Country" || form.type === "City") && (
+                        <>
+                            <OrnateField label={t("fields.governmentSystem")}>
+                                <OrnateSelect
+                                    value={form.governmentSystemId}
+                                    onChange={(e) =>
+                                        set("governmentSystemId", e.target.value)
+                                    }
+                                >
+                                    <option value="">{t("none")}</option>
+                                    {governmentSystems.map((g) => (
+                                        <option key={g.id} value={g.id}>
+                                            {g.name}
+                                        </option>
+                                    ))}
+                                </OrnateSelect>
+                            </OrnateField>
+                            <OrnateField label={t("fields.legalSystem")}>
+                                <OrnateSelect
+                                    value={form.legalSystemId}
+                                    onChange={(e) =>
+                                        set("legalSystemId", e.target.value)
+                                    }
+                                >
+                                    <option value="">{t("none")}</option>
+                                    {legalSystems.map((l) => (
+                                        <option key={l.id} value={l.id}>
+                                            {l.name}
+                                        </option>
+                                    ))}
+                                </OrnateSelect>
+                            </OrnateField>
+                            <OrnateField label={t("fields.educationSystem")}>
+                                <OrnateSelect
+                                    value={form.educationSystemId}
+                                    onChange={(e) =>
+                                        set("educationSystemId", e.target.value)
+                                    }
+                                >
+                                    <option value="">{t("none")}</option>
+                                    {educationSystems.map((e) => (
+                                        <option key={e.id} value={e.id}>
+                                            {e.name}
+                                        </option>
+                                    ))}
+                                </OrnateSelect>
+                            </OrnateField>
+                        </>
+                    )}
+                    {form.type === "City" && (
+                        <OrnateField label={t("fields.isCapital")}>
+                            <OrnateCheckbox
+                                checked={form.isCapital}
+                                onChange={(e) =>
+                                    set("isCapital", e.target.checked)
+                                }
+                            />
+                        </OrnateField>
+                    )}
+
                     <OrnateField
                         label={t("fields.parent")}
                         hint={t("form.parentHint")}

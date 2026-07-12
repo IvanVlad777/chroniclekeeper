@@ -17,7 +17,8 @@ import {
     updateSchool,
 } from "../../../../api/schools";
 import { getEducationSystems } from "../../../../api/educationSystems";
-import { EducationSystemDto } from "../../../../interfaces/loreInterfaces";
+import { getLocations } from "../../../../api/locations";
+import { EducationSystemDto, LocationDto } from "../../../../interfaces/loreInterfaces";
 import { useWorld } from "../../../../hooks/useWorld";
 import { useAuth } from "../../../../hooks/useAuth";
 import { apiErrorMessage } from "../../../../utils/apiError";
@@ -31,6 +32,7 @@ interface FormState {
     educationSystemId: string;
     isPublic: boolean;
     isReligious: boolean;
+    locationId: string;
 }
 
 const emptyForm: FormState = {
@@ -39,6 +41,7 @@ const emptyForm: FormState = {
     educationSystemId: "",
     isPublic: false,
     isReligious: false,
+    locationId: "",
 };
 
 /** Zajednička forma za /schools/new i /schools/:id/edit (samo obične škole). */
@@ -58,6 +61,7 @@ export default function SchoolForm() {
     const [educationSystems, setEducationSystems] = useState<
         EducationSystemDto[]
     >([]);
+    const [locations, setLocations] = useState<LocationDto[]>([]);
     const [loading, setLoading] = useState(true);
     const [loadError, setLoadError] = useState<string | null>(null);
     const [saveError, setSaveError] = useState<string | null>(null);
@@ -76,11 +80,13 @@ export default function SchoolForm() {
 
         Promise.all([
             getEducationSystems(selectedWorld.id),
+            getLocations(selectedWorld.id),
             isEdit ? getSchoolById(editId) : Promise.resolve(null),
         ])
-            .then(([systems, school]) => {
+            .then(([systems, locationsData, school]) => {
                 if (cancelled) return;
                 setEducationSystems(systems);
+                setLocations(locationsData);
                 if (school) {
                     setForm({
                         name: school.name ?? "",
@@ -88,6 +94,7 @@ export default function SchoolForm() {
                         educationSystemId: String(school.educationSystemId),
                         isPublic: school.isPublic,
                         isReligious: school.isReligious,
+                        locationId: school.locationId ? String(school.locationId) : "",
                     });
                 }
             })
@@ -123,6 +130,7 @@ export default function SchoolForm() {
                 description: form.description,
                 isPublic: form.isPublic,
                 isReligious: form.isReligious,
+                locationId: form.locationId ? Number(form.locationId) : null,
             };
             if (isEdit) {
                 await updateSchool(editId, payload);
@@ -241,6 +249,19 @@ export default function SchoolForm() {
                         checked={form.isReligious}
                         onChange={(e) => set("isReligious", e.target.checked)}
                     />
+                    <OrnateField label={t("fields.location")}>
+                        <OrnateSelect
+                            value={form.locationId}
+                            onChange={(e) => set("locationId", e.target.value)}
+                        >
+                            <option value="">{t("none")}</option>
+                            {locations.map((l) => (
+                                <option key={l.id} value={l.id}>
+                                    {l.name}
+                                </option>
+                            ))}
+                        </OrnateSelect>
+                    </OrnateField>
                 </div>
             </div>
 

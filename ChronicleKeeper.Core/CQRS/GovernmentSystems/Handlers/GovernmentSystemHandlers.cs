@@ -153,6 +153,13 @@ namespace ChronicleKeeper.Core.CQRS.GovernmentSystems.Handlers
                     $"This government system is used by {partiesInUse} political party(ies). Reassign them first.");
             }
 
+            var locationsInUse = await _repository.CountLocationsUsingGovernmentSystemAsync(request.Id, cancellationToken);
+            if (locationsInUse > 0)
+            {
+                throw new DomainValidationException(
+                    $"This government system is used by {locationsInUse} location(s). Reassign them first.");
+            }
+
             return await _repository.DeleteAsync(request.Id, cancellationToken);
         }
     }

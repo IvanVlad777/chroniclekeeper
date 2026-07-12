@@ -66,5 +66,12 @@ namespace ChronicleKeeper.Infrastructure.Repositories
         {
             return await _context.PoliticalParties.CountAsync(p => p.GovernmentSystemId == governmentSystemId, cancellationToken);
         }
+
+        public async Task<int> CountLocationsUsingGovernmentSystemAsync(int governmentSystemId, CancellationToken cancellationToken = default)
+        {
+            var countries = await _context.Countries.CountAsync(c => c.GovernmentSystemId == governmentSystemId, cancellationToken);
+            var cities = await _context.Cities.CountAsync(c => c.GovernmentSystemId == governmentSystemId, cancellationToken);
+            return countries + cities;
+        }
     }
 }

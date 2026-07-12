@@ -59,5 +59,12 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .ExecuteDeleteAsync(cancellationToken);
             return deleted > 0;
         }
+
+        public async Task<int> CountLocationsUsingLegalSystemAsync(int legalSystemId, CancellationToken cancellationToken = default)
+        {
+            var countries = await _context.Countries.CountAsync(c => c.LegalSystemId == legalSystemId, cancellationToken);
+            var cities = await _context.Cities.CountAsync(c => c.LegalSystemId == legalSystemId, cancellationToken);
+            return countries + cities;
+        }
     }
 }

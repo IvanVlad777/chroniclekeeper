@@ -117,8 +117,16 @@ namespace ChronicleKeeper.Core.CQRS.EducationSystems.Handlers
         {
             _logger.LogInformation("Deleting education system with ID {Id}", request.Id);
 
-            // No delete-guard needed: Schools and Universities cascade away with their EducationSystem
-            // (compositional-owner relationship, same as Timeline -> TimelineEvent).
+            // Schools and Universities cascade away with their EducationSystem (compositional-owner
+            // relationship, same as Timeline -> TimelineEvent) — no guard needed for those. Country/City
+            // hold a separate Restrict FK to EducationSystem, though, so that one does need a guard.
+            var locationsInUse = await _repository.CountLocationsUsingEducationSystemAsync(request.Id, cancellationToken);
+            if (locationsInUse > 0)
+            {
+                throw new DomainValidationException(
+                    $"This education system is used by {locationsInUse} location(s). Reassign them first.");
+            }
+
             return await _repository.DeleteAsync(request.Id, cancellationToken);
         }
     }

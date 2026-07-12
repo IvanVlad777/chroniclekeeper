@@ -4,8 +4,14 @@ import { useTranslation } from "react-i18next";
 import { Button, DisplayGrid, OrnateDisplayBox } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
 import { TagEditor } from "../../../tagging/TagEditor";
-import { LocationDetailsDto } from "../../../../interfaces/loreInterfaces";
-import { getLocation } from "../../../../api/locations";
+import { LinkEditor } from "../../../linking/LinkEditor";
+import { LocationDetailsDto, SpeciesDto } from "../../../../interfaces/loreInterfaces";
+import {
+    addRegionNativeSpecies,
+    getLocation,
+    removeRegionNativeSpecies,
+} from "../../../../api/locations";
+import { getSpecies } from "../../../../api/species";
 import { useAuth } from "../../../../hooks/useAuth";
 import { locationGlyphs } from "../locationGlyphs";
 import s from "./styles.module.css";
@@ -26,6 +32,9 @@ export default function LocationDetails() {
     const [notFound, setNotFound] = useState(false);
     const [reloadKey, setReloadKey] = useState(0);
     const refetch = useCallback(() => setReloadKey((k) => k + 1), []);
+    const [speciesCandidates, setSpeciesCandidates] = useState<SpeciesDto[] | null>(
+        null
+    );
 
     useEffect(() => {
         const locationId = Number(id);
@@ -176,6 +185,79 @@ export default function LocationDetails() {
                             )
                         }
                     />
+                    {location.type === "Continent" && (
+                        <OrnateDisplayBox
+                            label={t("fields.continentSpecifics")}
+                            value={location.continentSpecifics || dash}
+                        />
+                    )}
+                    {location.type === "Region" && (
+                        <OrnateDisplayBox
+                            label={t("fields.regionSpecifics")}
+                            value={location.regionSpecifics || dash}
+                        />
+                    )}
+                    {location.type === "District" && (
+                        <OrnateDisplayBox
+                            label={t("fields.districtType")}
+                            value={location.districtType || dash}
+                        />
+                    )}
+                    {location.type === "City" && (
+                        <OrnateDisplayBox
+                            label={t("fields.isCapital")}
+                            value={location.isCapital ? t("form.yes") : t("form.no")}
+                        />
+                    )}
+                    {(location.type === "Country" || location.type === "City") && (
+                        <>
+                            <OrnateDisplayBox
+                                label={t("fields.governmentSystem")}
+                                value={
+                                    location.governmentSystem ? (
+                                        <Link
+                                            className={s.parentLink}
+                                            to={`/storymap/government-systems/${location.governmentSystem.id}`}
+                                        >
+                                            {location.governmentSystem.name}
+                                        </Link>
+                                    ) : (
+                                        dash
+                                    )
+                                }
+                            />
+                            <OrnateDisplayBox
+                                label={t("fields.legalSystem")}
+                                value={
+                                    location.legalSystem ? (
+                                        <Link
+                                            className={s.parentLink}
+                                            to={`/storymap/legal-systems/${location.legalSystem.id}`}
+                                        >
+                                            {location.legalSystem.name}
+                                        </Link>
+                                    ) : (
+                                        dash
+                                    )
+                                }
+                            />
+                            <OrnateDisplayBox
+                                label={t("fields.educationSystem")}
+                                value={
+                                    location.educationSystem ? (
+                                        <Link
+                                            className={s.parentLink}
+                                            to={`/storymap/education-systems/${location.educationSystem.id}`}
+                                        >
+                                            {location.educationSystem.name}
+                                        </Link>
+                                    ) : (
+                                        dash
+                                    )
+                                }
+                            />
+                        </>
+                    )}
                 </DisplayGrid>
             </div>
 
@@ -217,6 +299,25 @@ export default function LocationDetails() {
                             ))
                         )}
                     </div>
+                    <div>
+                        <div className={s.listLabel}>{t("schoolsHere")}</div>
+                        {location.schools.length === 0 ? (
+                            <p className={s.none}>{t("none")}</p>
+                        ) : (
+                            location.schools.map((school) => (
+                                <Link
+                                    key={school.id}
+                                    to={`/storymap/schools/${school.id}`}
+                                    className={s.listRow}
+                                >
+                                    <span className={s.listGlyph}>✎</span>
+                                    <span className={s.listName}>
+                                        {school.name}
+                                    </span>
+                                </Link>
+                            ))
+                        )}
+                    </div>
                     <TagEditor
                         worldId={location.worldId}
                         targetType="Location"
@@ -228,6 +329,39 @@ export default function LocationDetails() {
                     />
                 </div>
             </div>
+
+            {location.type === "Region" && (
+                <>
+                    <div className={s.sectionHead}>
+                        <span className={s.sectionTitle}>{t("links.nativeSpecies")}</span>
+                        <span className={s.sectionLine} />
+                    </div>
+                    <LinkEditor
+                        items={location.nativeSpecies}
+                        candidates={speciesCandidates}
+                        onLoadCandidates={() =>
+                            getSpecies(location.worldId).then(setSpeciesCandidates)
+                        }
+                        onAdd={(speciesId) =>
+                            addRegionNativeSpecies(location.id, speciesId)
+                        }
+                        onRemove={(speciesId) =>
+                            removeRegionNativeSpecies(location.id, speciesId)
+                        }
+                        onChanged={refetch}
+                        canEdit={canEdit}
+                        linkTo={(speciesId) => `/storymap/species/${speciesId}`}
+                        addLabel={t("links.add")}
+                        noneLabel={t("none")}
+                        pickLabel={t("links.pick")}
+                        cancelLabel={t("form.cancel")}
+                        confirmLabel={t("links.confirm")}
+                        removeLabel={(name) => t("links.remove", { name })}
+                        addFailedLabel={t("links.addFailed")}
+                        removeFailedLabel={t("links.removeFailed")}
+                    />
+                </>
+            )}
         </div>
     );
 }

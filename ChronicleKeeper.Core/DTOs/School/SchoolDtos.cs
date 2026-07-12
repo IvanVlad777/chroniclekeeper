@@ -13,6 +13,7 @@ namespace ChronicleKeeper.Core.DTOs.School
         public int EducationSystemId { get; set; }
         public bool IsPublic { get; set; }
         public bool IsReligious { get; set; }
+        public int? LocationId { get; set; }
 
         /// <summary>Read-only TPH discriminator: "School" or "TradeSchool".</summary>
         public string SchoolType { get; set; } = string.Empty;
@@ -25,6 +26,7 @@ namespace ChronicleKeeper.Core.DTOs.School
     {
         public List<SchoolSubjectDto> Subjects { get; set; } = new();
         public List<ReferenceDto> Alumni { get; set; } = new();
+        public ReferenceDto? Location { get; set; }
     }
 
     public class SchoolCreateDto
@@ -42,6 +44,7 @@ namespace ChronicleKeeper.Core.DTOs.School
 
         public bool IsPublic { get; set; }
         public bool IsReligious { get; set; }
+        public int? LocationId { get; set; }
     }
 
     // Sustav obrazovanja škole se ne mijenja nakon stvaranja — zato bez EducationSystemId
@@ -56,5 +59,6 @@ namespace ChronicleKeeper.Core.DTOs.School
 
         public bool IsPublic { get; set; }
         public bool IsReligious { get; set; }
+        public int? LocationId { get; set; }
     }
 }

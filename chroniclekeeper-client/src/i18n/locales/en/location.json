@@ -37,9 +37,26 @@
         "latitude": "Latitude",
         "longitude": "Longitude",
         "description": "Description",
-        "history": "History"
+        "history": "History",
+        "continentSpecifics": "Continent specifics",
+        "regionSpecifics": "Region specifics",
+        "districtType": "District type",
+        "isCapital": "Capital",
+        "governmentSystem": "Government system",
+        "legalSystem": "Legal system",
+        "educationSystem": "Education system"
     },
     "subLocations": "Sub-locations",
+    "schoolsHere": "Schools here",
+    "links": {
+        "nativeSpecies": "Native species",
+        "add": "link",
+        "remove": "Unlink {{name}}",
+        "pick": "Pick an entry",
+        "confirm": "Link",
+        "addFailed": "Linking failed.",
+        "removeFailed": "Unlinking failed."
+    },
     "form": {
         "newTitle": "New location",
         "editTitle": "Edit location",
@@ -53,6 +70,8 @@
         "delete": "Delete",
         "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
         "saveFailed": "Saving failed. Check the fields and try again.",
-        "deleteFailed": "Deleting failed."
+        "deleteFailed": "Deleting failed.",
+        "yes": "Yes",
+        "no": "No"
     }
 }

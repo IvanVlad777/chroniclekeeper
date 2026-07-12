@@ -27,6 +27,7 @@ namespace ChronicleKeeper.Infrastructure.Repositories
             return await _context.Schools
                 .Include(s => s.Subjects)
                 .Include(s => s.Alumni)
+                .Include(s => s.Location)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(s => s.Id == id, cancellationToken);
         }

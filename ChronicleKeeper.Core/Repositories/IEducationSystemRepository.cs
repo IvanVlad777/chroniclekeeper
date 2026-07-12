@@ -11,5 +11,6 @@ namespace ChronicleKeeper.Core.Repositories
         Task<List<EducationSystem>> GetAllAsync(int? worldId = null, CancellationToken cancellationToken = default);
         Task<EducationSystem> UpdateAsync(EducationSystem educationSystem, CancellationToken cancellationToken = default);
         Task<bool> DeleteAsync(int id, CancellationToken cancellationToken = default);
+        Task<int> CountLocationsUsingEducationSystemAsync(int educationSystemId, CancellationToken cancellationToken = default);
     }
 }

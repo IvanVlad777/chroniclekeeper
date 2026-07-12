@@ -18,6 +18,15 @@ namespace ChronicleKeeper.Core.DTOs.Location
         public int? HistoryId { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+
+        // Subtype fields — only populated for the matching Type; null/empty otherwise.
+        public string? ContinentSpecifics { get; set; }
+        public string? RegionSpecifics { get; set; }
+        public int? GovernmentSystemId { get; set; }
+        public int? LegalSystemId { get; set; }
+        public int? EducationSystemId { get; set; }
+        public bool? IsCapital { get; set; }
+        public string? DistrictType { get; set; }
     }
 
     public class LocationDetailsDto : LocationDto
@@ -26,6 +35,11 @@ namespace ChronicleKeeper.Core.DTOs.Location
         public List<ReferenceDto> SubLocations { get; set; } = new();
         public List<ReferenceDto> Tags { get; set; } = new();
         public ReferenceDto? History { get; set; }
+        public ReferenceDto? GovernmentSystem { get; set; }
+        public ReferenceDto? LegalSystem { get; set; }
+        public ReferenceDto? EducationSystem { get; set; }
+        public List<ReferenceDto> Schools { get; set; } = new();
+        public List<ReferenceDto> NativeSpecies { get; set; } = new();
     }
 
     public class LocationCreateDto
@@ -47,6 +61,14 @@ namespace ChronicleKeeper.Core.DTOs.Location
         public double? Longitude { get; set; }
         public int? ParentLocationId { get; set; }
         public int? HistoryId { get; set; }
+
+        public string? ContinentSpecifics { get; set; }
+        public string? RegionSpecifics { get; set; }
+        public int? GovernmentSystemId { get; set; }
+        public int? LegalSystemId { get; set; }
+        public int? EducationSystemId { get; set; }
+        public bool? IsCapital { get; set; }
+        public string? DistrictType { get; set; }
     }
 
     public class LocationUpdateDto
@@ -65,5 +87,13 @@ namespace ChronicleKeeper.Core.DTOs.Location
         public double? Longitude { get; set; }
         public int? ParentLocationId { get; set; }
         public int? HistoryId { get; set; }
+
+        public string? ContinentSpecifics { get; set; }
+        public string? RegionSpecifics { get; set; }
+        public int? GovernmentSystemId { get; set; }
+        public int? LegalSystemId { get; set; }
+        public int? EducationSystemId { get; set; }
+        public bool? IsCapital { get; set; }
+        public string? DistrictType { get; set; }
     }
 }

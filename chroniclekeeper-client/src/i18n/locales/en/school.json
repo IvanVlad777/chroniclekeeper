@@ -18,7 +18,8 @@
         "isReligious": "Religious",
         "specialization": "Specialization",
         "durationYears": "Duration (years)",
-        "isGovernmentRecognized": "Government recognized"
+        "isGovernmentRecognized": "Government recognized",
+        "location": "Location"
     },
     "schoolTypeLabel": {
         "School": "School",

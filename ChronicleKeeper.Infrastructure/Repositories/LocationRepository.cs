@@ -23,11 +23,20 @@ namespace ChronicleKeeper.Infrastructure.Repositories
 
         public async Task<Location?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
+            // _context.Locations (base DbSet) returns any TPH subtype (Continent/Region/Country/City/District) — namjerno.
             return await _context.Locations
                 .Include(l => l.ParentLocation)
                 .Include(l => l.SubLocations)
                 .Include(l => l.Tags).ThenInclude(t => t.Tag)
                 .Include(l => l.History)
+                .Include(l => l.Schools)
+                .Include(l => ((Country)l).GovernmentSystem)
+                .Include(l => ((Country)l).LegalSystem)
+                .Include(l => ((Country)l).EducationSystem)
+                .Include(l => ((City)l).GovernmentSystem)
+                .Include(l => ((City)l).LegalSystem)
+                .Include(l => ((City)l).EducationSystem)
+                .Include(l => ((Region)l).OriginOfSapientSpecies).ThenInclude(rs => rs.SapientSpecies)
                 .AsNoTracking()
                 .AsSplitQuery()
                 .FirstOrDefaultAsync(l => l.Id == id, cancellationToken);
@@ -95,6 +104,26 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                     .FirstOrDefaultAsync(cancellationToken);
             }
             return false;
+        }
+
+        public async Task<bool> IsNativeSpeciesLinkedAsync(int regionId, int sapientSpeciesId, CancellationToken cancellationToken = default)
+        {
+            return await _context.RegionSapientSpecies
+                .AnyAsync(rs => rs.RegionId == regionId && rs.SapientSpeciesId == sapientSpeciesId, cancellationToken);
+        }
+
+        public async Task AddNativeSpeciesAsync(int regionId, int sapientSpeciesId, CancellationToken cancellationToken = default)
+        {
+            _context.RegionSapientSpecies.Add(new RegionSapientSpecies { RegionId = regionId, SapientSpeciesId = sapientSpeciesId });
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task<bool> RemoveNativeSpeciesAsync(int regionId, int sapientSpeciesId, CancellationToken cancellationToken = default)
+        {
+            var deleted = await _context.RegionSapientSpecies
+                .Where(rs => rs.RegionId == regionId && rs.SapientSpeciesId == sapientSpeciesId)
+                .ExecuteDeleteAsync(cancellationToken);
+            return deleted > 0;
         }
     }
 }

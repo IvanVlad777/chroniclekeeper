@@ -216,7 +216,7 @@ export default function SchoolDetails() {
             </div>
 
             <div className={s.facts}>
-                <DisplayGrid cols={isTrade ? 4 : 2}>
+                <DisplayGrid cols={isTrade ? 5 : 3}>
                     <OrnateDisplayBox
                         label={t("fields.isPublic")}
                         value={school.isPublic ? "✓" : dash}
@@ -224,6 +224,21 @@ export default function SchoolDetails() {
                     <OrnateDisplayBox
                         label={t("fields.isReligious")}
                         value={school.isReligious ? "✓" : dash}
+                    />
+                    <OrnateDisplayBox
+                        label={t("fields.location")}
+                        value={
+                            school.location ? (
+                                <Link
+                                    className={s.backLink}
+                                    to={`/storymap/locations/${school.location.id}`}
+                                >
+                                    {school.location.name}
+                                </Link>
+                            ) : (
+                                dash
+                            )
+                        }
                     />
                     {isTrade && tradeSchool && (
                         <>

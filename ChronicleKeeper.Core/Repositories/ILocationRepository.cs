@@ -17,5 +17,9 @@ namespace ChronicleKeeper.Core.Repositories
         Task<bool> HasChildrenAsync(int locationId, CancellationToken cancellationToken = default);
         /// <summary>Bi li postavljanje newParentId kao roditelja lokacije stvorilo ciklus u hijerarhiji.</summary>
         Task<bool> WouldCreateCycleAsync(int locationId, int newParentId, CancellationToken cancellationToken = default);
+
+        Task<bool> IsNativeSpeciesLinkedAsync(int regionId, int sapientSpeciesId, CancellationToken cancellationToken = default);
+        Task AddNativeSpeciesAsync(int regionId, int sapientSpeciesId, CancellationToken cancellationToken = default);
+        Task<bool> RemoveNativeSpeciesAsync(int regionId, int sapientSpeciesId, CancellationToken cancellationToken = default);
     }
 }

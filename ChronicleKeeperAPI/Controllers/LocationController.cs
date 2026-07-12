@@ -88,5 +88,30 @@ namespace ChronicleKeeperAPI.Controllers
             if (!result) return NotFound();
             return NoContent();
         }
+
+        // POST: /api/locations/{id}/native-species/{speciesId}
+        [HttpPost("{id}/native-species/{speciesId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Link a native species to the region")]
+        [SwaggerResponse(204, "Species linked")]
+        [SwaggerResponse(400, "Invalid target / already linked")]
+        public async Task<IActionResult> AddNativeSpecies(int id, int speciesId)
+        {
+            await _mediator.Send(new AddRegionNativeSpeciesCommand { RegionId = id, SapientSpeciesId = speciesId });
+            return NoContent();
+        }
+
+        // DELETE: /api/locations/{id}/native-species/{speciesId}
+        [HttpDelete("{id}/native-species/{speciesId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Unlink a native species from the region")]
+        [SwaggerResponse(204, "Species unlinked")]
+        [SwaggerResponse(404, "Link not found")]
+        public async Task<IActionResult> RemoveNativeSpecies(int id, int speciesId)
+        {
+            var result = await _mediator.Send(new RemoveRegionNativeSpeciesCommand { RegionId = id, SapientSpeciesId = speciesId });
+            if (!result) return NotFound();
+            return NoContent();
+        }
     }
 }

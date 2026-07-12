@@ -2,6 +2,7 @@ using ChronicleKeeper.Core.Entities.Base;
 using ChronicleKeeper.Core.Entities.Tags;
 using ChronicleKeeper.Core.Entities.Characters.Equipment;
 using ChronicleKeeper.Core.Entities.HistoryTimelines;
+using ChronicleKeeper.Core.Entities.Social.Education;
 //using ChronicleKeeper.Core.Entities.Geography.Climate;
 //using ChronicleKeeper.Core.Entities.Social.Cultures;
 //using ChronicleKeeper.Core.Entities.Social.Economy;
@@ -33,6 +34,7 @@ namespace ChronicleKeeper.Core.Entities.Geography
         //public ICollection<ClimateZone> ClimateConditions { get; set; } = new List<ClimateZone>(); // TODO: Uncomment when ClimateZone entity is revived
         //public ICollection<NaturalResource> NaturalResources { get; set; } = new List<NaturalResource>(); // TODO: Uncomment when NaturalResource entity is revived
         public virtual ICollection<Item> Items { get; set; } = new List<Item>();
+        public virtual ICollection<School> Schools { get; set; } = new List<School>();
         //public ICollection<CulturalFestival> Festivals { get; set; } = new List<CulturalFestival>(); // TODO: Uncomment when CulturalFestival entity is revived
         //public ICollection<HolySite> HolySites { get; set; } = new List<HolySite>(); // TODO: Uncomment when HolySite entity is revived
         //public ICollection<TimelineEvent> TimelineEvents { get; set; } = new List<TimelineEvent>(); // TODO: Uncomment when TimelineEvent gets its Location link

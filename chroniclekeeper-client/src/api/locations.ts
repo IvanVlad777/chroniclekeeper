@@ -41,3 +41,17 @@ export const updateLocation = async (
 export const deleteLocation = async (id: number): Promise<void> => {
     await api.delete(`/locations/${id}`);
 };
+
+export const addRegionNativeSpecies = async (
+    regionId: number,
+    speciesId: number
+): Promise<void> => {
+    await api.post(`/locations/${regionId}/native-species/${speciesId}`);
+};
+
+export const removeRegionNativeSpecies = async (
+    regionId: number,
+    speciesId: number
+): Promise<void> => {
+    await api.delete(`/locations/${regionId}/native-species/${speciesId}`);
+};

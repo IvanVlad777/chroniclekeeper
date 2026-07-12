@@ -12,5 +12,6 @@ namespace ChronicleKeeper.Core.Repositories
         Task<GovernmentSystem> UpdateAsync(GovernmentSystem governmentSystem, CancellationToken cancellationToken = default);
         Task<bool> DeleteAsync(int id, CancellationToken cancellationToken = default);
         Task<int> CountPoliticalPartiesUsingGovernmentSystemAsync(int governmentSystemId, CancellationToken cancellationToken = default);
+        Task<int> CountLocationsUsingGovernmentSystemAsync(int governmentSystemId, CancellationToken cancellationToken = default);
     }
 }
