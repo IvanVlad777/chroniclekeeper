@@ -28,7 +28,18 @@ namespace ChronicleKeeper.Core.Enums
             Building,
             Landmark,
             Wilderness,
-            Other
+            Other,
+            Lake,
+            Sea,
+            Ocean,
+            River,
+            Mountain,
+            MountainRange,
+            Swamp,
+            Desert,
+            Forest,
+            Cave,
+            Grassland
         }
     }
 }

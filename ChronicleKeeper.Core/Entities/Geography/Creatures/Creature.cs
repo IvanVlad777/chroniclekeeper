@@ -28,9 +28,8 @@ namespace ChronicleKeeper.Core.Entities.Geography.Creatures
         public ArtificialOrigin? ArtificialOrigin { get; set; } = null; // Enum: AI, Golem, Cyborg, etc.
 
         public virtual ICollection<CreatureCity> CitiesItInhabits { get; set; } = new List<CreatureCity>(); // Where it lives
+        public virtual ICollection<CreatureEcosystem> Habitants { get; set; } = new List<CreatureEcosystem>(); // Ecosystems it lives in
 
-        // TODO: Uncomment when Ecosystem hierarchy is revived
-        //public ICollection<Ecosystems.Ecosystem> Habitants { get; set; } = new List<Ecosystems.Ecosystem>();
         // TODO: Uncomment when Mutation entity is revived
         //public ICollection<Miscellaneous.Mutation> Mutations { get; set; } = new List<Miscellaneous.Mutation>();
         // TODO: Self-referencing many-to-many (join entities, e.g. CreatureSymbiosis/CreaturePredation) — deferred, new pattern for this codebase

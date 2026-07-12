@@ -1,4 +1,5 @@
 using ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient;
+using ChronicleKeeper.Core.Entities.Geography.Ecosystems;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ChronicleKeeper.Core.Entities.Geography
@@ -9,8 +10,6 @@ namespace ChronicleKeeper.Core.Entities.Geography
     /// </summary>
     public class Region : Location
     {
-        //public ICollection<Ecosystem> Ecosystems { get; set; } = new List<Ecosystem>(); // TODO: Uncomment when Ecosystem entity is revived
-
         public virtual ICollection<RegionSapientSpecies> OriginOfSapientSpecies { get; set; } = new List<RegionSapientSpecies>();
         public string? RegionSpecifics { get; set; }
 
@@ -19,5 +18,8 @@ namespace ChronicleKeeper.Core.Entities.Geography
 
         [NotMapped]
         public IEnumerable<Country> Countries => SubLocations.OfType<Country>();
+
+        [NotMapped]
+        public IEnumerable<Ecosystem> Ecosystems => SubLocations.OfType<Ecosystem>();
     }
 }

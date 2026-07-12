@@ -4,6 +4,6 @@ namespace ChronicleKeeper.Core.Entities.Geography.Ecosystems
 {
     public class GrasslandEcosystem : Ecosystem
     {
-        public new GrasslandType Type { get; set; } // Enum: Prairie, Steppe, Savannah, etc.
+        public GrasslandType GrasslandKind { get; set; } // Enum: Prairie, Steppe, Savannah, etc.
     }
 }

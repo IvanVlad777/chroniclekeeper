@@ -26,7 +26,18 @@
         "Building": "Građevina",
         "Landmark": "Znamenitost",
         "Wilderness": "Divljina",
-        "Other": "Ostalo"
+        "Other": "Ostalo",
+        "Lake": "Jezero",
+        "Sea": "More",
+        "Ocean": "Ocean",
+        "River": "Rijeka",
+        "Mountain": "Planina",
+        "MountainRange": "Planinski lanac",
+        "Swamp": "Močvara",
+        "Desert": "Pustinja",
+        "Forest": "Šuma",
+        "Cave": "Špilja",
+        "Grassland": "Travnjak"
     },
     "fields": {
         "type": "Tip",
@@ -44,7 +55,53 @@
         "isCapital": "Glavni grad",
         "governmentSystem": "Sustav vlasti",
         "legalSystem": "Pravni sustav",
-        "educationSystem": "Sustav obrazovanja"
+        "educationSystem": "Sustav obrazovanja",
+        "uniqueFeatures": "Posebne značajke",
+        "waterDepth": "Dubina (m)",
+        "volume": "Obujam (km³)",
+        "maxDepth": "Maksimalna dubina (m)",
+        "isFreshwater": "Slatkovodno",
+        "riverLength": "Duljina (km)",
+        "sourceLocation": "Izvor",
+        "mouthLocation": "Ušće",
+        "maxElevation": "Maksimalna visina (m)",
+        "prominence": "Prominencija (m)",
+        "mountainRangeLength": "Duljina (km)",
+        "isSaltwater": "Slana voda",
+        "desertKind": "Vrsta pustinje",
+        "forestKind": "Vrsta šume",
+        "caveDepth": "Dubina (m)",
+        "caveKind": "Vrsta špilje",
+        "grasslandKind": "Vrsta travnjaka"
+    },
+    "desertKinds": {
+        "Sandy": "Pješčana",
+        "Rocky": "Kamenita",
+        "Ice": "Ledena"
+    },
+    "forestKinds": {
+        "Rainforest": "Kišna šuma",
+        "Boreal": "Borealna",
+        "Temperate": "Umjerena",
+        "Mangrove": "Mangrova",
+        "Redwood": "Sekvoja"
+    },
+    "caveKinds": {
+        "Limestone": "Vapnenačka",
+        "LavaTube": "Lavna cijev",
+        "IceCave": "Ledena",
+        "SeaCave": "Morska"
+    },
+    "grasslandKinds": {
+        "Prairie": "Prerija",
+        "Steppe": "Stepa",
+        "Savannah": "Savana",
+        "Meadow": "Livada",
+        "Heathland": "Vrištine",
+        "Pampa": "Pampa",
+        "Llanos": "Llanos",
+        "Veld": "Veld",
+        "TundraGrassland": "Tundra travnjak"
     },
     "subLocations": "Pod-lokacije",
     "schoolsHere": "Škole ovdje",

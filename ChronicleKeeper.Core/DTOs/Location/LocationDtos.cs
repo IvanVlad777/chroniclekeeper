@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using static ChronicleKeeper.Core.Enums.EcosystemEnums;
 using static ChronicleKeeper.Core.Enums.LoreEnums;
 
 namespace ChronicleKeeper.Core.DTOs.Location
@@ -27,6 +28,32 @@ namespace ChronicleKeeper.Core.DTOs.Location
         public int? EducationSystemId { get; set; }
         public bool? IsCapital { get; set; }
         public string? DistrictType { get; set; }
+
+        // Ecosystem hierarchy (shared base field)
+        public string? UniqueFeatures { get; set; }
+        // WaterEcosystem (Lake/Sea/Ocean/River)
+        public double? WaterDepth { get; set; }
+        // LakeEcosystem
+        public double? Volume { get; set; }
+        public double? MaxDepth { get; set; }
+        public bool? IsFreshwater { get; set; }
+        // RiverEcosystem
+        public double? RiverLength { get; set; }
+        public int? SourceLocationId { get; set; }
+        public int? MouthLocationId { get; set; }
+        // MountainEcosystem
+        public double? MaxElevation { get; set; }
+        public double? Prominence { get; set; }
+        // MountainRange
+        public double? MountainRangeLength { get; set; }
+        // SwampEcosystem
+        public bool? IsSaltwater { get; set; }
+        // DesertEcosystem / ForestEcosystem / CaveEcosystem / GrasslandEcosystem
+        public DesertType? DesertKind { get; set; }
+        public ForestType? ForestKind { get; set; }
+        public double? CaveDepth { get; set; }
+        public CaveType? CaveKind { get; set; }
+        public GrasslandType? GrasslandKind { get; set; }
     }
 
     public class LocationDetailsDto : LocationDto
@@ -40,6 +67,8 @@ namespace ChronicleKeeper.Core.DTOs.Location
         public ReferenceDto? EducationSystem { get; set; }
         public List<ReferenceDto> Schools { get; set; } = new();
         public List<ReferenceDto> NativeSpecies { get; set; } = new();
+        public ReferenceDto? SourceLocation { get; set; }
+        public ReferenceDto? MouthLocation { get; set; }
     }
 
     public class LocationCreateDto
@@ -69,6 +98,24 @@ namespace ChronicleKeeper.Core.DTOs.Location
         public int? EducationSystemId { get; set; }
         public bool? IsCapital { get; set; }
         public string? DistrictType { get; set; }
+
+        public string? UniqueFeatures { get; set; }
+        public double? WaterDepth { get; set; }
+        public double? Volume { get; set; }
+        public double? MaxDepth { get; set; }
+        public bool? IsFreshwater { get; set; }
+        public double? RiverLength { get; set; }
+        public int? SourceLocationId { get; set; }
+        public int? MouthLocationId { get; set; }
+        public double? MaxElevation { get; set; }
+        public double? Prominence { get; set; }
+        public double? MountainRangeLength { get; set; }
+        public bool? IsSaltwater { get; set; }
+        public DesertType? DesertKind { get; set; }
+        public ForestType? ForestKind { get; set; }
+        public double? CaveDepth { get; set; }
+        public CaveType? CaveKind { get; set; }
+        public GrasslandType? GrasslandKind { get; set; }
     }
 
     public class LocationUpdateDto
@@ -95,5 +142,23 @@ namespace ChronicleKeeper.Core.DTOs.Location
         public int? EducationSystemId { get; set; }
         public bool? IsCapital { get; set; }
         public string? DistrictType { get; set; }
+
+        public string? UniqueFeatures { get; set; }
+        public double? WaterDepth { get; set; }
+        public double? Volume { get; set; }
+        public double? MaxDepth { get; set; }
+        public bool? IsFreshwater { get; set; }
+        public double? RiverLength { get; set; }
+        public int? SourceLocationId { get; set; }
+        public int? MouthLocationId { get; set; }
+        public double? MaxElevation { get; set; }
+        public double? Prominence { get; set; }
+        public double? MountainRangeLength { get; set; }
+        public bool? IsSaltwater { get; set; }
+        public DesertType? DesertKind { get; set; }
+        public ForestType? ForestKind { get; set; }
+        public double? CaveDepth { get; set; }
+        public CaveType? CaveKind { get; set; }
+        public GrasslandType? GrasslandKind { get; set; }
     }
 }

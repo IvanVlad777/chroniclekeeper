@@ -133,6 +133,7 @@
     "links": {
         "subspecies": "Podvrste",
         "cities": "Gradovi koje nastanjuje",
+        "habitats": "Ekosustavi koje nastanjuje",
         "add": "poveži",
         "remove": "Odveži {{name}}",
         "pick": "Odaberi zapis",

@@ -1,4 +1,5 @@
 using ChronicleKeeper.Core.Entities.Geography;
+using ChronicleKeeper.Core.Entities.Geography.Ecosystems;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -37,13 +38,28 @@ namespace ChronicleKeeper.Infrastructure.Configurations
             // lookup doesn't consistently apply that converter when materializing mixed-subtype query
             // results — writes succeeded but reads threw "No discriminators matched the discriminator
             // value" for every non-first plain type. The shadow column avoids that entirely.
+            // Ecosystem hierarchy (2026-07-12 round) rides on the same TPH tree/discriminator —
+            // Ecosystem/WaterEcosystem are abstract mid-level types, so only concrete leaves get
+            // a value, same as how Location itself (also abstract-ish-but-instantiable) is the
+            // only "bare" entry among the original 5 hierarchy subtypes.
             builder.HasDiscriminator<string>("LocationSubtype")
                 .HasValue<Location>("Location")
                 .HasValue<Continent>("Continent")
                 .HasValue<Region>("Region")
                 .HasValue<Country>("Country")
                 .HasValue<City>("City")
-                .HasValue<District>("District");
+                .HasValue<District>("District")
+                .HasValue<LakeEcosystem>("Lake")
+                .HasValue<SeaEcosystem>("Sea")
+                .HasValue<OceanEcosystem>("Ocean")
+                .HasValue<RiverEcosystem>("River")
+                .HasValue<MountainEcosystem>("Mountain")
+                .HasValue<MountainRange>("MountainRange")
+                .HasValue<SwampEcosystem>("Swamp")
+                .HasValue<DesertEcosystem>("Desert")
+                .HasValue<ForestEcosystem>("Forest")
+                .HasValue<CaveEcosystem>("Cave")
+                .HasValue<GrasslandEcosystem>("Grassland");
         }
     }
 }

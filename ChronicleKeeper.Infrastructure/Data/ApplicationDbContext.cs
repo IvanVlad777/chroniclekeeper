@@ -14,6 +14,7 @@ using ChronicleKeeper.Core.Entities.Geography.Creatures.Animals;
 using ChronicleKeeper.Core.Entities.Geography.Creatures.Fungi;
 using ChronicleKeeper.Core.Entities.Geography.Creatures.Plants;
 using ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient;
+using ChronicleKeeper.Core.Entities.Geography.Ecosystems;
 using ChronicleKeeper.Core.Entities.HistoryTimelines;
 using ChronicleKeeper.Core.Entities.Notes;
 using ChronicleKeeper.Core.Entities.Professions;
@@ -55,6 +56,20 @@ namespace ChronicleKeeper.Infrastructure.Data
         public DbSet<District> Districts { get; set; }
         public DbSet<RegionSapientSpecies> RegionSapientSpecies { get; set; }
 
+        // Ecosystems (TPH subtypes of Location)
+        public DbSet<Ecosystem> Ecosystems { get; set; }
+        public DbSet<LakeEcosystem> LakeEcosystems { get; set; }
+        public DbSet<SeaEcosystem> SeaEcosystems { get; set; }
+        public DbSet<OceanEcosystem> OceanEcosystems { get; set; }
+        public DbSet<RiverEcosystem> RiverEcosystems { get; set; }
+        public DbSet<MountainEcosystem> MountainEcosystems { get; set; }
+        public DbSet<MountainRange> MountainRanges { get; set; }
+        public DbSet<SwampEcosystem> SwampEcosystems { get; set; }
+        public DbSet<DesertEcosystem> DesertEcosystems { get; set; }
+        public DbSet<ForestEcosystem> ForestEcosystems { get; set; }
+        public DbSet<CaveEcosystem> CaveEcosystems { get; set; }
+        public DbSet<GrasslandEcosystem> GrasslandEcosystems { get; set; }
+
         // Climate
         public DbSet<ClimateZone> ClimateZones { get; set; }
         public DbSet<ClimateDetail> ClimateDetails { get; set; }
@@ -76,6 +91,7 @@ namespace ChronicleKeeper.Infrastructure.Data
         public DbSet<Crop> Crops { get; set; }
         public DbSet<Fungus> Fungi { get; set; }
         public DbSet<CreatureCity> CreatureCities { get; set; }
+        public DbSet<CreatureEcosystem> CreatureEcosystems { get; set; }
 
         // Factions
         public DbSet<Faction> Factions { get; set; }

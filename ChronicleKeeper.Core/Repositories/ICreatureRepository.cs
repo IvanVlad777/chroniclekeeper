@@ -27,5 +27,9 @@ namespace ChronicleKeeper.Core.Repositories
         Task<bool> IsCityLinkedAsync(int creatureId, int cityId, CancellationToken cancellationToken = default);
         Task AddCityAsync(int creatureId, int cityId, CancellationToken cancellationToken = default);
         Task<bool> RemoveCityAsync(int creatureId, int cityId, CancellationToken cancellationToken = default);
+
+        Task<bool> IsHabitatLinkedAsync(int creatureId, int ecosystemId, CancellationToken cancellationToken = default);
+        Task AddHabitatAsync(int creatureId, int ecosystemId, CancellationToken cancellationToken = default);
+        Task<bool> RemoveHabitatAsync(int creatureId, int ecosystemId, CancellationToken cancellationToken = default);
     }
 }

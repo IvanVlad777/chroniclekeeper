@@ -133,6 +133,7 @@
     "links": {
         "subspecies": "Subspecies",
         "cities": "Cities it inhabits",
+        "habitats": "Ecosystems it inhabits",
         "add": "link",
         "remove": "Unlink {{name}}",
         "pick": "Pick an entry",

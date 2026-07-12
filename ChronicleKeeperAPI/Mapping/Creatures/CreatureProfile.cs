@@ -74,7 +74,10 @@ namespace ChronicleKeeperAPI.Mapping.Creatures
                     : new ReferenceDto { Id = src.History.Id, Name = src.History.Name }))
                 .ForMember(dest => dest.Cities, opt => opt.MapFrom(src => src.CitiesItInhabits
                     .Where(cc => cc.City != null)
-                    .Select(cc => new ReferenceDto { Id = cc.City!.Id, Name = cc.City.Name })));
+                    .Select(cc => new ReferenceDto { Id = cc.City!.Id, Name = cc.City.Name })))
+                .ForMember(dest => dest.Habitats, opt => opt.MapFrom(src => src.Habitants
+                    .Where(ce => ce.Ecosystem != null)
+                    .Select(ce => new ReferenceDto { Id = ce.Ecosystem!.Id, Name = ce.Ecosystem.Name })));
         }
 
         private static string GetSubtype(Creature creature) => creature switch

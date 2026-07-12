@@ -365,8 +365,55 @@ export const locationTypes = [
     "Landmark",
     "Wilderness",
     "Other",
+    "Lake",
+    "Sea",
+    "Ocean",
+    "River",
+    "Mountain",
+    "MountainRange",
+    "Swamp",
+    "Desert",
+    "Forest",
+    "Cave",
+    "Grassland",
 ] as const;
 export type LocationType = (typeof locationTypes)[number];
+
+export const ecosystemLocationTypes = [
+    "Lake",
+    "Sea",
+    "Ocean",
+    "River",
+    "Mountain",
+    "MountainRange",
+    "Swamp",
+    "Desert",
+    "Forest",
+    "Cave",
+    "Grassland",
+] as const satisfies readonly LocationType[];
+
+export const desertTypes = ["Sandy", "Rocky", "Ice"] as const;
+export type DesertType = (typeof desertTypes)[number];
+
+export const forestTypes = ["Rainforest", "Boreal", "Temperate", "Mangrove", "Redwood"] as const;
+export type ForestType = (typeof forestTypes)[number];
+
+export const caveTypes = ["Limestone", "LavaTube", "IceCave", "SeaCave"] as const;
+export type CaveType = (typeof caveTypes)[number];
+
+export const grasslandTypes = [
+    "Prairie",
+    "Steppe",
+    "Savannah",
+    "Meadow",
+    "Heathland",
+    "Pampa",
+    "Llanos",
+    "Veld",
+    "TundraGrassland",
+] as const;
+export type GrasslandType = (typeof grasslandTypes)[number];
 
 export interface LocationDto {
     id: number;
@@ -390,6 +437,25 @@ export interface LocationDto {
     educationSystemId?: number | null;
     isCapital?: boolean | null;
     districtType?: string | null;
+
+    // Ecosystem hierarchy
+    uniqueFeatures?: string | null;
+    waterDepth?: number | null;
+    volume?: number | null;
+    maxDepth?: number | null;
+    isFreshwater?: boolean | null;
+    riverLength?: number | null;
+    sourceLocationId?: number | null;
+    mouthLocationId?: number | null;
+    maxElevation?: number | null;
+    prominence?: number | null;
+    mountainRangeLength?: number | null;
+    isSaltwater?: boolean | null;
+    desertKind?: DesertType | null;
+    forestKind?: ForestType | null;
+    caveDepth?: number | null;
+    caveKind?: CaveType | null;
+    grasslandKind?: GrasslandType | null;
 }
 
 export interface LocationDetailsDto extends LocationDto {
@@ -402,6 +468,8 @@ export interface LocationDetailsDto extends LocationDto {
     educationSystem?: ReferenceDto | null;
     schools: ReferenceDto[];
     nativeSpecies: ReferenceDto[];
+    sourceLocation?: ReferenceDto | null;
+    mouthLocation?: ReferenceDto | null;
 }
 
 export interface LocationCreateDto {
@@ -422,6 +490,24 @@ export interface LocationCreateDto {
     educationSystemId?: number | null;
     isCapital?: boolean | null;
     districtType?: string | null;
+
+    uniqueFeatures?: string | null;
+    waterDepth?: number | null;
+    volume?: number | null;
+    maxDepth?: number | null;
+    isFreshwater?: boolean | null;
+    riverLength?: number | null;
+    sourceLocationId?: number | null;
+    mouthLocationId?: number | null;
+    maxElevation?: number | null;
+    prominence?: number | null;
+    mountainRangeLength?: number | null;
+    isSaltwater?: boolean | null;
+    desertKind?: DesertType | null;
+    forestKind?: ForestType | null;
+    caveDepth?: number | null;
+    caveKind?: CaveType | null;
+    grasslandKind?: GrasslandType | null;
 }
 
 export type LocationUpdateDto = Omit<LocationCreateDto, "worldId">;
@@ -1775,6 +1861,7 @@ export interface CreatureDetailsDto extends CreatureDto {
     subspecies: ReferenceDto[];
     history?: ReferenceDto | null;
     cities: ReferenceDto[];
+    habitats: ReferenceDto[];
 }
 
 export interface CreatureCreateDto {

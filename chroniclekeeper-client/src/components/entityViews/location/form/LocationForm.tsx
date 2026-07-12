@@ -30,6 +30,15 @@ import {
     LocationType,
     LocationUpdateDto,
     locationTypes,
+    ecosystemLocationTypes,
+    desertTypes,
+    forestTypes,
+    caveTypes,
+    grasslandTypes,
+    DesertType,
+    ForestType,
+    CaveType,
+    GrasslandType,
 } from "../../../../interfaces/loreInterfaces";
 import { useWorld } from "../../../../hooks/useWorld";
 import { apiErrorMessage } from "../../../../utils/apiError";
@@ -52,6 +61,23 @@ interface FormState {
     educationSystemId: string;
     isCapital: boolean;
     districtType: string;
+    uniqueFeatures: string;
+    waterDepth: string;
+    volume: string;
+    maxDepth: string;
+    isFreshwater: boolean;
+    riverLength: string;
+    sourceLocationId: string;
+    mouthLocationId: string;
+    maxElevation: string;
+    prominence: string;
+    mountainRangeLength: string;
+    isSaltwater: boolean;
+    desertKind: DesertType;
+    forestKind: ForestType;
+    caveDepth: string;
+    caveKind: CaveType;
+    grasslandKind: GrasslandType;
 }
 
 const emptyForm: FormState = {
@@ -71,7 +97,29 @@ const emptyForm: FormState = {
     educationSystemId: "",
     isCapital: false,
     districtType: "",
+    uniqueFeatures: "",
+    waterDepth: "",
+    volume: "",
+    maxDepth: "",
+    isFreshwater: true,
+    riverLength: "",
+    sourceLocationId: "",
+    mouthLocationId: "",
+    maxElevation: "",
+    prominence: "",
+    mountainRangeLength: "",
+    isSaltwater: false,
+    desertKind: desertTypes[0],
+    forestKind: forestTypes[0],
+    caveDepth: "",
+    caveKind: caveTypes[0],
+    grasslandKind: grasslandTypes[0],
 };
+
+const isWaterType = (t: LocationType) =>
+    t === "Lake" || t === "Sea" || t === "Ocean" || t === "River";
+const isEcosystemType = (t: LocationType) =>
+    (ecosystemLocationTypes as readonly LocationType[]).includes(t);
 
 const toNum = (v: string): number | null => (v.trim() ? Number(v) : null);
 const toId = (v: string): number | null => (v ? Number(v) : null);
@@ -98,6 +146,23 @@ function toDto(f: FormState): LocationUpdateDto {
             f.type === "Country" || f.type === "City" ? toId(f.educationSystemId) : null,
         isCapital: f.type === "City" ? f.isCapital : null,
         districtType: f.type === "District" ? toStr(f.districtType) : null,
+        uniqueFeatures: isEcosystemType(f.type) ? toStr(f.uniqueFeatures) : null,
+        waterDepth: isWaterType(f.type) ? toNum(f.waterDepth) : null,
+        volume: f.type === "Lake" ? toNum(f.volume) : null,
+        maxDepth: f.type === "Lake" ? toNum(f.maxDepth) : null,
+        isFreshwater: f.type === "Lake" ? f.isFreshwater : null,
+        riverLength: f.type === "River" ? toNum(f.riverLength) : null,
+        sourceLocationId: f.type === "River" ? toId(f.sourceLocationId) : null,
+        mouthLocationId: f.type === "River" ? toId(f.mouthLocationId) : null,
+        maxElevation: f.type === "Mountain" ? toNum(f.maxElevation) : null,
+        prominence: f.type === "Mountain" ? toNum(f.prominence) : null,
+        mountainRangeLength: f.type === "MountainRange" ? toNum(f.mountainRangeLength) : null,
+        isSaltwater: f.type === "Swamp" ? f.isSaltwater : null,
+        desertKind: f.type === "Desert" ? f.desertKind : null,
+        forestKind: f.type === "Forest" ? f.forestKind : null,
+        caveDepth: f.type === "Cave" ? toNum(f.caveDepth) : null,
+        caveKind: f.type === "Cave" ? f.caveKind : null,
+        grasslandKind: f.type === "Grassland" ? f.grasslandKind : null,
     };
 }
 
@@ -176,6 +241,24 @@ export default function LocationForm() {
                             : "",
                         isCapital: l.isCapital ?? false,
                         districtType: l.districtType ?? "",
+                        uniqueFeatures: l.uniqueFeatures ?? "",
+                        waterDepth: l.waterDepth != null ? String(l.waterDepth) : "",
+                        volume: l.volume != null ? String(l.volume) : "",
+                        maxDepth: l.maxDepth != null ? String(l.maxDepth) : "",
+                        isFreshwater: l.isFreshwater ?? true,
+                        riverLength: l.riverLength != null ? String(l.riverLength) : "",
+                        sourceLocationId: l.sourceLocationId ? String(l.sourceLocationId) : "",
+                        mouthLocationId: l.mouthLocationId ? String(l.mouthLocationId) : "",
+                        maxElevation: l.maxElevation != null ? String(l.maxElevation) : "",
+                        prominence: l.prominence != null ? String(l.prominence) : "",
+                        mountainRangeLength:
+                            l.mountainRangeLength != null ? String(l.mountainRangeLength) : "",
+                        isSaltwater: l.isSaltwater ?? false,
+                        desertKind: l.desertKind ?? desertTypes[0],
+                        forestKind: l.forestKind ?? forestTypes[0],
+                        caveDepth: l.caveDepth != null ? String(l.caveDepth) : "",
+                        caveKind: l.caveKind ?? caveTypes[0],
+                        grasslandKind: l.grasslandKind ?? grasslandTypes[0],
                     });
                 }
             })
@@ -337,6 +420,229 @@ export default function LocationForm() {
                                     set("districtType", e.target.value)
                                 }
                             />
+                        </OrnateField>
+                    )}
+                    {isEcosystemType(form.type) && (
+                        <OrnateField label={t("fields.uniqueFeatures")}>
+                            <OrnateTextArea
+                                value={form.uniqueFeatures}
+                                rows={3}
+                                onChange={(e) =>
+                                    set("uniqueFeatures", e.target.value)
+                                }
+                            />
+                        </OrnateField>
+                    )}
+                    {isWaterType(form.type) && (
+                        <OrnateField label={t("fields.waterDepth")}>
+                            <OrnateTextInput
+                                type="number"
+                                step="0.01"
+                                value={form.waterDepth}
+                                onChange={(e) =>
+                                    set("waterDepth", e.target.value)
+                                }
+                            />
+                        </OrnateField>
+                    )}
+                    {form.type === "Lake" && (
+                        <>
+                            <div className={s.row2}>
+                                <OrnateField label={t("fields.volume")}>
+                                    <OrnateTextInput
+                                        type="number"
+                                        step="0.01"
+                                        value={form.volume}
+                                        onChange={(e) =>
+                                            set("volume", e.target.value)
+                                        }
+                                    />
+                                </OrnateField>
+                                <OrnateField label={t("fields.maxDepth")}>
+                                    <OrnateTextInput
+                                        type="number"
+                                        step="0.01"
+                                        value={form.maxDepth}
+                                        onChange={(e) =>
+                                            set("maxDepth", e.target.value)
+                                        }
+                                    />
+                                </OrnateField>
+                            </div>
+                            <OrnateField label={t("fields.isFreshwater")}>
+                                <OrnateCheckbox
+                                    checked={form.isFreshwater}
+                                    onChange={(e) =>
+                                        set("isFreshwater", e.target.checked)
+                                    }
+                                />
+                            </OrnateField>
+                        </>
+                    )}
+                    {form.type === "River" && (
+                        <>
+                            <OrnateField label={t("fields.riverLength")}>
+                                <OrnateTextInput
+                                    type="number"
+                                    step="0.01"
+                                    value={form.riverLength}
+                                    onChange={(e) =>
+                                        set("riverLength", e.target.value)
+                                    }
+                                />
+                            </OrnateField>
+                            <OrnateField label={t("fields.sourceLocation")}>
+                                <OrnateSelect
+                                    value={form.sourceLocationId}
+                                    onChange={(e) =>
+                                        set("sourceLocationId", e.target.value)
+                                    }
+                                >
+                                    <option value="">{t("none")}</option>
+                                    {parentOptions.map((l) => (
+                                        <option key={l.id} value={l.id}>
+                                            {l.name}
+                                        </option>
+                                    ))}
+                                </OrnateSelect>
+                            </OrnateField>
+                            <OrnateField label={t("fields.mouthLocation")}>
+                                <OrnateSelect
+                                    value={form.mouthLocationId}
+                                    onChange={(e) =>
+                                        set("mouthLocationId", e.target.value)
+                                    }
+                                >
+                                    <option value="">{t("none")}</option>
+                                    {parentOptions.map((l) => (
+                                        <option key={l.id} value={l.id}>
+                                            {l.name}
+                                        </option>
+                                    ))}
+                                </OrnateSelect>
+                            </OrnateField>
+                        </>
+                    )}
+                    {form.type === "Mountain" && (
+                        <div className={s.row2}>
+                            <OrnateField label={t("fields.maxElevation")}>
+                                <OrnateTextInput
+                                    type="number"
+                                    step="0.01"
+                                    value={form.maxElevation}
+                                    onChange={(e) =>
+                                        set("maxElevation", e.target.value)
+                                    }
+                                />
+                            </OrnateField>
+                            <OrnateField label={t("fields.prominence")}>
+                                <OrnateTextInput
+                                    type="number"
+                                    step="0.01"
+                                    value={form.prominence}
+                                    onChange={(e) =>
+                                        set("prominence", e.target.value)
+                                    }
+                                />
+                            </OrnateField>
+                        </div>
+                    )}
+                    {form.type === "MountainRange" && (
+                        <OrnateField label={t("fields.mountainRangeLength")}>
+                            <OrnateTextInput
+                                type="number"
+                                step="0.01"
+                                value={form.mountainRangeLength}
+                                onChange={(e) =>
+                                    set("mountainRangeLength", e.target.value)
+                                }
+                            />
+                        </OrnateField>
+                    )}
+                    {form.type === "Swamp" && (
+                        <OrnateField label={t("fields.isSaltwater")}>
+                            <OrnateCheckbox
+                                checked={form.isSaltwater}
+                                onChange={(e) =>
+                                    set("isSaltwater", e.target.checked)
+                                }
+                            />
+                        </OrnateField>
+                    )}
+                    {form.type === "Desert" && (
+                        <OrnateField label={t("fields.desertKind")}>
+                            <OrnateSelect
+                                value={form.desertKind}
+                                onChange={(e) =>
+                                    set("desertKind", e.target.value as DesertType)
+                                }
+                            >
+                                {desertTypes.map((k) => (
+                                    <option key={k} value={k}>
+                                        {t(`desertKinds.${k}`)}
+                                    </option>
+                                ))}
+                            </OrnateSelect>
+                        </OrnateField>
+                    )}
+                    {form.type === "Forest" && (
+                        <OrnateField label={t("fields.forestKind")}>
+                            <OrnateSelect
+                                value={form.forestKind}
+                                onChange={(e) =>
+                                    set("forestKind", e.target.value as ForestType)
+                                }
+                            >
+                                {forestTypes.map((k) => (
+                                    <option key={k} value={k}>
+                                        {t(`forestKinds.${k}`)}
+                                    </option>
+                                ))}
+                            </OrnateSelect>
+                        </OrnateField>
+                    )}
+                    {form.type === "Cave" && (
+                        <>
+                            <OrnateField label={t("fields.caveDepth")}>
+                                <OrnateTextInput
+                                    type="number"
+                                    step="0.01"
+                                    value={form.caveDepth}
+                                    onChange={(e) =>
+                                        set("caveDepth", e.target.value)
+                                    }
+                                />
+                            </OrnateField>
+                            <OrnateField label={t("fields.caveKind")}>
+                                <OrnateSelect
+                                    value={form.caveKind}
+                                    onChange={(e) =>
+                                        set("caveKind", e.target.value as CaveType)
+                                    }
+                                >
+                                    {caveTypes.map((k) => (
+                                        <option key={k} value={k}>
+                                            {t(`caveKinds.${k}`)}
+                                        </option>
+                                    ))}
+                                </OrnateSelect>
+                            </OrnateField>
+                        </>
+                    )}
+                    {form.type === "Grassland" && (
+                        <OrnateField label={t("fields.grasslandKind")}>
+                            <OrnateSelect
+                                value={form.grasslandKind}
+                                onChange={(e) =>
+                                    set("grasslandKind", e.target.value as GrasslandType)
+                                }
+                            >
+                                {grasslandTypes.map((k) => (
+                                    <option key={k} value={k}>
+                                        {t(`grasslandKinds.${k}`)}
+                                    </option>
+                                ))}
+                            </OrnateSelect>
                         </OrnateField>
                     )}
                     {(form.type === "Country" || form.type === "City") && (

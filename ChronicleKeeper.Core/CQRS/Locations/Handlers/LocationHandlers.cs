@@ -3,6 +3,7 @@ using ChronicleKeeper.Core.CQRS.Locations.Commands;
 using ChronicleKeeper.Core.CQRS.Locations.Queries;
 using ChronicleKeeper.Core.DTOs.Location;
 using ChronicleKeeper.Core.Entities.Geography;
+using ChronicleKeeper.Core.Entities.Geography.Ecosystems;
 using ChronicleKeeper.Core.Exceptions;
 using ChronicleKeeper.Core.Repositories;
 using MediatR;
@@ -106,8 +107,40 @@ namespace ChronicleKeeper.Core.CQRS.Locations.Handlers
                     EducationSystemId = dto.EducationSystemId
                 },
                 LocationType.District => new District { DistrictType = dto.DistrictType ?? string.Empty },
+                LocationType.Lake => new LakeEcosystem
+                {
+                    WaterDepth = dto.WaterDepth ?? 0,
+                    Volume = dto.Volume ?? 0,
+                    MaxDepth = dto.MaxDepth ?? 0,
+                    IsFreshwater = dto.IsFreshwater ?? true
+                },
+                LocationType.Sea => new SeaEcosystem { WaterDepth = dto.WaterDepth ?? 0 },
+                LocationType.Ocean => new OceanEcosystem { WaterDepth = dto.WaterDepth ?? 0 },
+                LocationType.River => new RiverEcosystem
+                {
+                    WaterDepth = dto.WaterDepth ?? 0,
+                    RiverLength = dto.RiverLength ?? 0,
+                    SourceLocationId = dto.SourceLocationId,
+                    MouthLocationId = dto.MouthLocationId
+                },
+                LocationType.Mountain => new MountainEcosystem
+                {
+                    MaxElevation = dto.MaxElevation ?? 0,
+                    Prominence = dto.Prominence ?? 0
+                },
+                LocationType.MountainRange => new MountainRange { MountainRangeLength = dto.MountainRangeLength ?? 0 },
+                LocationType.Swamp => new SwampEcosystem { IsSaltwater = dto.IsSaltwater ?? false },
+                LocationType.Desert => new DesertEcosystem { DesertKind = dto.DesertKind ?? default },
+                LocationType.Forest => new ForestEcosystem { ForestKind = dto.ForestKind ?? default },
+                LocationType.Cave => new CaveEcosystem { CaveDepth = dto.CaveDepth ?? 0, CaveKind = dto.CaveKind ?? default },
+                LocationType.Grassland => new GrasslandEcosystem { GrasslandKind = dto.GrasslandKind ?? default },
                 _ => new Location()
             };
+
+            if (location is Ecosystem ecosystem)
+            {
+                ecosystem.UniqueFeatures = dto.UniqueFeatures ?? string.Empty;
+            }
 
             location.Name = dto.Name;
             location.Description = dto.Description;
@@ -124,6 +157,7 @@ namespace ChronicleKeeper.Core.CQRS.Locations.Handlers
             await LocationValidation.ValidateHistoryAsync(_historyRepository, location, cancellationToken);
             await LocationValidation.ValidateSystemsAsync(
                 _governmentSystemRepository, _legalSystemRepository, _educationSystemRepository, location, cancellationToken);
+            await LocationValidation.ValidateRiverEndpointsAsync(_repository, location, cancellationToken);
 
             var created = await _repository.CreateAsync(location, cancellationToken);
             _logger.LogInformation("Created location with ID {Id}", created.Id);
@@ -207,12 +241,57 @@ namespace ChronicleKeeper.Core.CQRS.Locations.Handlers
                 case District district:
                     district.DistrictType = dto.DistrictType ?? string.Empty;
                     break;
+                case LakeEcosystem lake:
+                    lake.WaterDepth = dto.WaterDepth ?? 0;
+                    lake.Volume = dto.Volume ?? 0;
+                    lake.MaxDepth = dto.MaxDepth ?? 0;
+                    lake.IsFreshwater = dto.IsFreshwater ?? true;
+                    break;
+                case RiverEcosystem river:
+                    river.WaterDepth = dto.WaterDepth ?? 0;
+                    river.RiverLength = dto.RiverLength ?? 0;
+                    river.SourceLocationId = dto.SourceLocationId;
+                    river.MouthLocationId = dto.MouthLocationId;
+                    break;
+                case MountainEcosystem mountain:
+                    mountain.MaxElevation = dto.MaxElevation ?? 0;
+                    mountain.Prominence = dto.Prominence ?? 0;
+                    break;
+                case MountainRange mountainRange:
+                    mountainRange.MountainRangeLength = dto.MountainRangeLength ?? 0;
+                    break;
+                case SwampEcosystem swamp:
+                    swamp.IsSaltwater = dto.IsSaltwater ?? false;
+                    break;
+                case DesertEcosystem desert:
+                    desert.DesertKind = dto.DesertKind ?? default;
+                    break;
+                case ForestEcosystem forest:
+                    forest.ForestKind = dto.ForestKind ?? default;
+                    break;
+                case CaveEcosystem cave:
+                    cave.CaveDepth = dto.CaveDepth ?? 0;
+                    cave.CaveKind = dto.CaveKind ?? default;
+                    break;
+                case GrasslandEcosystem grassland:
+                    grassland.GrasslandKind = dto.GrasslandKind ?? default;
+                    break;
+                // SeaEcosystem/OceanEcosystem have no own fields beyond WaterEcosystem.WaterDepth.
+                case WaterEcosystem water:
+                    water.WaterDepth = dto.WaterDepth ?? 0;
+                    break;
+            }
+
+            if (location is Ecosystem ecosystemUpdate)
+            {
+                ecosystemUpdate.UniqueFeatures = dto.UniqueFeatures ?? string.Empty;
             }
 
             await LocationValidation.ValidateParentAsync(_repository, location, cancellationToken);
             await LocationValidation.ValidateHistoryAsync(_historyRepository, location, cancellationToken);
             await LocationValidation.ValidateSystemsAsync(
                 _governmentSystemRepository, _legalSystemRepository, _educationSystemRepository, location, cancellationToken);
+            await LocationValidation.ValidateRiverEndpointsAsync(_repository, location, cancellationToken);
 
             var updated = await _repository.UpdateAsync(location, cancellationToken);
             return _mapper.Map<LocationDto>(updated);
@@ -238,6 +317,12 @@ namespace ChronicleKeeper.Core.CQRS.Locations.Handlers
             {
                 throw new DomainValidationException(
                     "This location has sub-locations. Reparent or delete them first.");
+            }
+
+            if (await _repository.IsReferencedAsRiverEndpointAsync(request.Id, cancellationToken))
+            {
+                throw new DomainValidationException(
+                    "This location is set as a river's source or mouth. Clear that reference first.");
             }
 
             return await _repository.DeleteAsync(request.Id, cancellationToken);
@@ -307,6 +392,11 @@ namespace ChronicleKeeper.Core.CQRS.Locations.Handlers
             [LocationType.City] = new[] { LocationType.Country, LocationType.Region },
             [LocationType.Country] = new[] { LocationType.Region, LocationType.Continent },
             [LocationType.Region] = new[] { LocationType.Continent },
+            // Ecosystem sibling-pair containment (rides on ParentLocationId too) — the rest of the
+            // Ecosystem subtypes (Lake/River/Swamp/Desert/Forest/Cave/Grassland/MountainRange) accept
+            // any parent, same as Continent and the plain types.
+            [LocationType.Sea] = new[] { LocationType.Ocean },
+            [LocationType.Mountain] = new[] { LocationType.MountainRange },
         };
 
         /// <summary>Roditelj mora postojati u istom svijetu, ne smije biti sama lokacija, ne smije stvarati ciklus,
@@ -358,9 +448,38 @@ namespace ChronicleKeeper.Core.CQRS.Locations.Handlers
         public static string DiscriminatorGroup(LocationType type) => type switch
         {
             LocationType.Continent or LocationType.Region or LocationType.Country
-                or LocationType.City or LocationType.District => type.ToString(),
+                or LocationType.City or LocationType.District
+                or LocationType.Lake or LocationType.Sea or LocationType.Ocean or LocationType.River
+                or LocationType.Mountain or LocationType.MountainRange or LocationType.Swamp
+                or LocationType.Desert or LocationType.Forest or LocationType.Cave or LocationType.Grassland
+                => type.ToString(),
             _ => "Plain"
         };
+
+        /// <summary>Source/Mouth (RiverEcosystem) moraju postojati u istom svijetu ako su postavljeni.</summary>
+        public static async Task ValidateRiverEndpointsAsync(
+            ILocationRepository repository, Location location, CancellationToken cancellationToken)
+        {
+            if (location is not RiverEcosystem river) return;
+
+            if (river.SourceLocationId is int sourceId)
+            {
+                var source = await repository.FindByIdAsync(sourceId, cancellationToken);
+                if (source == null || source.WorldId != river.WorldId)
+                {
+                    throw new DomainValidationException($"Source location with ID {sourceId} does not exist in this world.");
+                }
+            }
+
+            if (river.MouthLocationId is int mouthId)
+            {
+                var mouth = await repository.FindByIdAsync(mouthId, cancellationToken);
+                if (mouth == null || mouth.WorldId != river.WorldId)
+                {
+                    throw new DomainValidationException($"Mouth location with ID {mouthId} does not exist in this world.");
+                }
+            }
+        }
 
         public static async Task ValidateSystemsAsync(
             IGovernmentSystemRepository governmentSystemRepository,

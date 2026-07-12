@@ -52,3 +52,17 @@ export const removeCreatureCity = async (
 ): Promise<void> => {
     await api.delete(`/creatures/${creatureId}/cities/${cityId}`);
 };
+
+export const addCreatureHabitat = async (
+    creatureId: number,
+    ecosystemId: number
+): Promise<void> => {
+    await api.post(`/creatures/${creatureId}/habitats/${ecosystemId}`);
+};
+
+export const removeCreatureHabitat = async (
+    creatureId: number,
+    ecosystemId: number
+): Promise<void> => {
+    await api.delete(`/creatures/${creatureId}/habitats/${ecosystemId}`);
+};

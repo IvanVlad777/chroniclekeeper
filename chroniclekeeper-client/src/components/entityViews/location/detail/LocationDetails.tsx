@@ -5,7 +5,12 @@ import { Button, DisplayGrid, OrnateDisplayBox } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
 import { TagEditor } from "../../../tagging/TagEditor";
 import { LinkEditor } from "../../../linking/LinkEditor";
-import { LocationDetailsDto, SpeciesDto } from "../../../../interfaces/loreInterfaces";
+import {
+    ecosystemLocationTypes,
+    LocationDetailsDto,
+    LocationType,
+    SpeciesDto,
+} from "../../../../interfaces/loreInterfaces";
 import {
     addRegionNativeSpecies,
     getLocation,
@@ -17,6 +22,8 @@ import { locationGlyphs } from "../locationGlyphs";
 import s from "./styles.module.css";
 
 const editorRoles = ["Editor", "Admin", "SuperAdmin"];
+const isEcosystemType = (t: LocationType) =>
+    (ecosystemLocationTypes as readonly LocationType[]).includes(t);
 
 export default function LocationDetails() {
     const { id } = useParams<{ id: string }>();
@@ -258,7 +265,133 @@ export default function LocationDetails() {
                             />
                         </>
                     )}
+                    {(location.type === "Lake" ||
+                        location.type === "Sea" ||
+                        location.type === "Ocean" ||
+                        location.type === "River") && (
+                        <OrnateDisplayBox
+                            label={t("fields.waterDepth")}
+                            value={location.waterDepth != null ? location.waterDepth.toLocaleString() : dash}
+                        />
+                    )}
+                    {location.type === "Lake" && (
+                        <>
+                            <OrnateDisplayBox
+                                label={t("fields.volume")}
+                                value={location.volume != null ? location.volume.toLocaleString() : dash}
+                            />
+                            <OrnateDisplayBox
+                                label={t("fields.maxDepth")}
+                                value={location.maxDepth != null ? location.maxDepth.toLocaleString() : dash}
+                            />
+                            <OrnateDisplayBox
+                                label={t("fields.isFreshwater")}
+                                value={location.isFreshwater ? t("form.yes") : t("form.no")}
+                            />
+                        </>
+                    )}
+                    {location.type === "River" && (
+                        <>
+                            <OrnateDisplayBox
+                                label={t("fields.riverLength")}
+                                value={location.riverLength != null ? location.riverLength.toLocaleString() : dash}
+                            />
+                            <OrnateDisplayBox
+                                label={t("fields.sourceLocation")}
+                                value={
+                                    location.sourceLocation ? (
+                                        <Link
+                                            className={s.parentLink}
+                                            to={`/storymap/locations/${location.sourceLocation.id}`}
+                                        >
+                                            {location.sourceLocation.name}
+                                        </Link>
+                                    ) : (
+                                        dash
+                                    )
+                                }
+                            />
+                            <OrnateDisplayBox
+                                label={t("fields.mouthLocation")}
+                                value={
+                                    location.mouthLocation ? (
+                                        <Link
+                                            className={s.parentLink}
+                                            to={`/storymap/locations/${location.mouthLocation.id}`}
+                                        >
+                                            {location.mouthLocation.name}
+                                        </Link>
+                                    ) : (
+                                        dash
+                                    )
+                                }
+                            />
+                        </>
+                    )}
+                    {location.type === "Mountain" && (
+                        <>
+                            <OrnateDisplayBox
+                                label={t("fields.maxElevation")}
+                                value={location.maxElevation != null ? location.maxElevation.toLocaleString() : dash}
+                            />
+                            <OrnateDisplayBox
+                                label={t("fields.prominence")}
+                                value={location.prominence != null ? location.prominence.toLocaleString() : dash}
+                            />
+                        </>
+                    )}
+                    {location.type === "MountainRange" && (
+                        <OrnateDisplayBox
+                            label={t("fields.mountainRangeLength")}
+                            value={
+                                location.mountainRangeLength != null
+                                    ? location.mountainRangeLength.toLocaleString()
+                                    : dash
+                            }
+                        />
+                    )}
+                    {location.type === "Swamp" && (
+                        <OrnateDisplayBox
+                            label={t("fields.isSaltwater")}
+                            value={location.isSaltwater ? t("form.yes") : t("form.no")}
+                        />
+                    )}
+                    {location.type === "Desert" && (
+                        <OrnateDisplayBox
+                            label={t("fields.desertKind")}
+                            value={location.desertKind ? t(`desertKinds.${location.desertKind}`) : dash}
+                        />
+                    )}
+                    {location.type === "Forest" && (
+                        <OrnateDisplayBox
+                            label={t("fields.forestKind")}
+                            value={location.forestKind ? t(`forestKinds.${location.forestKind}`) : dash}
+                        />
+                    )}
+                    {location.type === "Cave" && (
+                        <>
+                            <OrnateDisplayBox
+                                label={t("fields.caveDepth")}
+                                value={location.caveDepth != null ? location.caveDepth.toLocaleString() : dash}
+                            />
+                            <OrnateDisplayBox
+                                label={t("fields.caveKind")}
+                                value={location.caveKind ? t(`caveKinds.${location.caveKind}`) : dash}
+                            />
+                        </>
+                    )}
+                    {location.type === "Grassland" && (
+                        <OrnateDisplayBox
+                            label={t("fields.grasslandKind")}
+                            value={location.grasslandKind ? t(`grasslandKinds.${location.grasslandKind}`) : dash}
+                        />
+                    )}
                 </DisplayGrid>
+                {isEcosystemType(location.type) && location.uniqueFeatures && (
+                    <p className={`${s.prose} ${s.muted}`}>
+                        {t("fields.uniqueFeatures")}: {location.uniqueFeatures}
+                    </p>
+                )}
             </div>
 
             <div className={s.body}>

@@ -2,6 +2,7 @@ using ChronicleKeeper.Core.Entities.Geography.Creatures;
 using ChronicleKeeper.Core.Entities.Geography.Creatures.Animals;
 using ChronicleKeeper.Core.Entities.Geography.Creatures.Fungi;
 using ChronicleKeeper.Core.Entities.Geography.Creatures.Plants;
+using ChronicleKeeper.Core.Entities.Geography.Ecosystems;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -63,6 +64,26 @@ namespace ChronicleKeeper.Infrastructure.Configurations
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasIndex(cc => cc.CityId);
+        }
+    }
+
+    public class CreatureEcosystemConfiguration : IEntityTypeConfiguration<CreatureEcosystem>
+    {
+        public void Configure(EntityTypeBuilder<CreatureEcosystem> builder)
+        {
+            builder.HasKey(ce => new { ce.CreatureId, ce.EcosystemId });
+
+            builder.HasOne(ce => ce.Creature)
+                .WithMany(c => c.Habitants)
+                .HasForeignKey(ce => ce.CreatureId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne(ce => ce.Ecosystem)
+                .WithMany()
+                .HasForeignKey(ce => ce.EcosystemId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasIndex(ce => ce.EcosystemId);
         }
     }
 

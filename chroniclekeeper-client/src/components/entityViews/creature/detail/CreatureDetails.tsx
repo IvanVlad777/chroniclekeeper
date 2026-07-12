@@ -7,11 +7,14 @@ import { LinkEditor } from "../../../linking/LinkEditor";
 import {
     CreatureDetailsDto,
     LocationDto,
+    ecosystemLocationTypes,
 } from "../../../../interfaces/loreInterfaces";
 import {
     addCreatureCity,
+    addCreatureHabitat,
     getCreatureById,
     removeCreatureCity,
+    removeCreatureHabitat,
 } from "../../../../api/creatures";
 import { getLocations } from "../../../../api/locations";
 import { useAuth } from "../../../../hooks/useAuth";
@@ -36,6 +39,7 @@ export default function CreatureDetails() {
     const refetch = useCallback(() => setReloadKey((k) => k + 1), []);
 
     const [cityCandidates, setCityCandidates] = useState<LocationDto[] | null>(null);
+    const [habitatCandidates, setHabitatCandidates] = useState<LocationDto[] | null>(null);
 
     useEffect(() => {
         const creatureId = Number(id);
@@ -282,6 +286,39 @@ export default function CreatureDetails() {
                 onChanged={refetch}
                 canEdit={canEdit}
                 linkTo={(cityId) => `/storymap/locations/${cityId}`}
+                addLabel={t("links.add")}
+                noneLabel={t("none")}
+                pickLabel={t("links.pick")}
+                cancelLabel={t("form.cancel")}
+                confirmLabel={t("links.confirm")}
+                removeLabel={(name) => t("links.remove", { name })}
+                addFailedLabel={t("links.addFailed")}
+                removeFailedLabel={t("links.removeFailed")}
+            />
+
+            <div className={`${s.sectionHead} ${s.sectionSpacer}`}>
+                <span className={s.sectionTitle}>{t("links.habitats")}</span>
+                <span className={s.sectionLine} />
+            </div>
+            <LinkEditor
+                items={creature.habitats}
+                candidates={
+                    habitatCandidates
+                        ? habitatCandidates
+                              .filter((l) =>
+                                  (ecosystemLocationTypes as readonly string[]).includes(l.type)
+                              )
+                              .map((l) => ({ id: l.id, name: l.name }))
+                        : null
+                }
+                onLoadCandidates={() =>
+                    getLocations(creature.worldId).then(setHabitatCandidates)
+                }
+                onAdd={(ecosystemId) => addCreatureHabitat(creature.id, ecosystemId)}
+                onRemove={(ecosystemId) => removeCreatureHabitat(creature.id, ecosystemId)}
+                onChanged={refetch}
+                canEdit={canEdit}
+                linkTo={(ecosystemId) => `/storymap/locations/${ecosystemId}`}
                 addLabel={t("links.add")}
                 noneLabel={t("none")}
                 pickLabel={t("links.pick")}

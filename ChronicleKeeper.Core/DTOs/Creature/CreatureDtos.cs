@@ -95,6 +95,7 @@ namespace ChronicleKeeper.Core.DTOs.Creature
         public List<ReferenceDto> Subspecies { get; set; } = new();
         public ReferenceDto? History { get; set; }
         public List<ReferenceDto> Cities { get; set; } = new();
+        public List<ReferenceDto> Habitats { get; set; } = new();
     }
 
     public class CreatureCreateDto

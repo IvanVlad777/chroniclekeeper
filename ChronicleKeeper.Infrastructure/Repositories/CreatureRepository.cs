@@ -28,6 +28,7 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .Include(c => c.Subspecies)
                 .Include(c => c.History)
                 .Include(c => c.CitiesItInhabits).ThenInclude(cc => cc.City)
+                .Include(c => c.Habitants).ThenInclude(ce => ce.Ecosystem)
                 .AsNoTracking()
                 .AsSplitQuery()
                 .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
@@ -109,6 +110,26 @@ namespace ChronicleKeeper.Infrastructure.Repositories
         {
             var deleted = await _context.CreatureCities
                 .Where(cc => cc.CreatureId == creatureId && cc.CityId == cityId)
+                .ExecuteDeleteAsync(cancellationToken);
+            return deleted > 0;
+        }
+
+        public async Task<bool> IsHabitatLinkedAsync(int creatureId, int ecosystemId, CancellationToken cancellationToken = default)
+        {
+            return await _context.CreatureEcosystems
+                .AnyAsync(ce => ce.CreatureId == creatureId && ce.EcosystemId == ecosystemId, cancellationToken);
+        }
+
+        public async Task AddHabitatAsync(int creatureId, int ecosystemId, CancellationToken cancellationToken = default)
+        {
+            _context.CreatureEcosystems.Add(new CreatureEcosystem { CreatureId = creatureId, EcosystemId = ecosystemId });
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task<bool> RemoveHabitatAsync(int creatureId, int ecosystemId, CancellationToken cancellationToken = default)
+        {
+            var deleted = await _context.CreatureEcosystems
+                .Where(ce => ce.CreatureId == creatureId && ce.EcosystemId == ecosystemId)
                 .ExecuteDeleteAsync(cancellationToken);
             return deleted > 0;
         }

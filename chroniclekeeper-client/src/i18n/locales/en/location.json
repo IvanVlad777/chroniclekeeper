@@ -26,7 +26,18 @@
         "Building": "Building",
         "Landmark": "Landmark",
         "Wilderness": "Wilderness",
-        "Other": "Other"
+        "Other": "Other",
+        "Lake": "Lake",
+        "Sea": "Sea",
+        "Ocean": "Ocean",
+        "River": "River",
+        "Mountain": "Mountain",
+        "MountainRange": "Mountain range",
+        "Swamp": "Swamp",
+        "Desert": "Desert",
+        "Forest": "Forest",
+        "Cave": "Cave",
+        "Grassland": "Grassland"
     },
     "fields": {
         "type": "Type",
@@ -44,7 +55,53 @@
         "isCapital": "Capital",
         "governmentSystem": "Government system",
         "legalSystem": "Legal system",
-        "educationSystem": "Education system"
+        "educationSystem": "Education system",
+        "uniqueFeatures": "Unique features",
+        "waterDepth": "Depth (m)",
+        "volume": "Volume (km³)",
+        "maxDepth": "Maximum depth (m)",
+        "isFreshwater": "Freshwater",
+        "riverLength": "Length (km)",
+        "sourceLocation": "Source",
+        "mouthLocation": "Mouth",
+        "maxElevation": "Maximum elevation (m)",
+        "prominence": "Prominence (m)",
+        "mountainRangeLength": "Length (km)",
+        "isSaltwater": "Saltwater",
+        "desertKind": "Desert kind",
+        "forestKind": "Forest kind",
+        "caveDepth": "Depth (m)",
+        "caveKind": "Cave kind",
+        "grasslandKind": "Grassland kind"
+    },
+    "desertKinds": {
+        "Sandy": "Sandy",
+        "Rocky": "Rocky",
+        "Ice": "Ice"
+    },
+    "forestKinds": {
+        "Rainforest": "Rainforest",
+        "Boreal": "Boreal",
+        "Temperate": "Temperate",
+        "Mangrove": "Mangrove",
+        "Redwood": "Redwood"
+    },
+    "caveKinds": {
+        "Limestone": "Limestone",
+        "LavaTube": "Lava tube",
+        "IceCave": "Ice cave",
+        "SeaCave": "Sea cave"
+    },
+    "grasslandKinds": {
+        "Prairie": "Prairie",
+        "Steppe": "Steppe",
+        "Savannah": "Savannah",
+        "Meadow": "Meadow",
+        "Heathland": "Heathland",
+        "Pampa": "Pampa",
+        "Llanos": "Llanos",
+        "Veld": "Veld",
+        "TundraGrassland": "Tundra grassland"
     },
     "subLocations": "Sub-locations",
     "schoolsHere": "Schools here",

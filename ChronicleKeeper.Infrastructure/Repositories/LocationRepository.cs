@@ -1,4 +1,5 @@
 using ChronicleKeeper.Core.Entities.Geography;
+using ChronicleKeeper.Core.Entities.Geography.Ecosystems;
 using ChronicleKeeper.Core.Repositories;
 using ChronicleKeeper.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -37,6 +38,8 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .Include(l => ((City)l).LegalSystem)
                 .Include(l => ((City)l).EducationSystem)
                 .Include(l => ((Region)l).OriginOfSapientSpecies).ThenInclude(rs => rs.SapientSpecies)
+                .Include(l => ((RiverEcosystem)l).SourceLocation)
+                .Include(l => ((RiverEcosystem)l).MouthLocation)
                 .AsNoTracking()
                 .AsSplitQuery()
                 .FirstOrDefaultAsync(l => l.Id == id, cancellationToken);
@@ -86,6 +89,12 @@ namespace ChronicleKeeper.Infrastructure.Repositories
         {
             return await _context.Locations
                 .AnyAsync(l => l.ParentLocationId == locationId, cancellationToken);
+        }
+
+        public async Task<bool> IsReferencedAsRiverEndpointAsync(int locationId, CancellationToken cancellationToken = default)
+        {
+            return await _context.Set<RiverEcosystem>()
+                .AnyAsync(r => r.SourceLocationId == locationId || r.MouthLocationId == locationId, cancellationToken);
         }
 
         public async Task<bool> WouldCreateCycleAsync(int locationId, int newParentId, CancellationToken cancellationToken = default)

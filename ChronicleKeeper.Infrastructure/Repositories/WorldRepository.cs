@@ -1,3 +1,4 @@
+using ChronicleKeeper.Core.Entities.Geography.Ecosystems;
 using ChronicleKeeper.Core.Entities.Worlds;
 using ChronicleKeeper.Core.Repositories;
 using ChronicleKeeper.Infrastructure.Data;
@@ -78,6 +79,15 @@ namespace ChronicleKeeper.Infrastructure.Repositories
             await _context.Creatures
                 .Where(c => c.WorldId == id)
                 .ExecuteUpdateAsync(s => s.SetProperty(c => c.ParentCreatureId, (int?)null), cancellationToken);
+
+            // RiverEcosystem.SourceLocationId/MouthLocationId su Restrict (dva FK-a na Locations sa
+            // iste tablice ne smiju oba biti SetNull — SQL Server "multiple cascade paths"), pa se
+            // moraju null-ati prije brisanja lokacija (korak 6).
+            await _context.Set<RiverEcosystem>()
+                .Where(r => r.WorldId == id)
+                .ExecuteUpdateAsync(s => s
+                    .SetProperty(r => r.SourceLocationId, (int?)null)
+                    .SetProperty(r => r.MouthLocationId, (int?)null), cancellationToken);
 
             // OwnershipHistory.PreviousOwnerId/NewOwnerId su Restrict (dva FK-a na Character
             // sa iste tablice ne smiju oba biti SetNull — SQL Server "multiple cascade paths").

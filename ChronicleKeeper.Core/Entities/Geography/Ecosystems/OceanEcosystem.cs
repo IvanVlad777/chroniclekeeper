@@ -1,7 +1,12 @@
-﻿namespace ChronicleKeeper.Core.Entities.Geography.Ecosystems
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+
+namespace ChronicleKeeper.Core.Entities.Geography.Ecosystems
 {
     public class OceanEcosystem : WaterEcosystem
     {
-        //public ICollection<SeaEcosystem> Seas { get; set; } = new List<SeaEcosystem>();
+        [NotMapped]
+        public IEnumerable<SeaEcosystem> Seas => SubLocations.OfType<SeaEcosystem>();
     }
 }

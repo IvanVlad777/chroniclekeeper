@@ -1,12 +1,14 @@
-﻿using ChronicleKeeper.Core.Entities.Base;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace ChronicleKeeper.Core.Entities.Geography.Ecosystems
 {
     public class MountainRange : Ecosystem
     {
-        public double Length { get; set; } // in kilometers
-        //public ICollection<MountainEcosystem> Mountains { get; set; } = new List<MountainEcosystem>();
+        public double MountainRangeLength { get; set; } // in kilometers, named to avoid colliding with RiverEcosystem.RiverLength
 
+        [NotMapped]
+        public IEnumerable<MountainEcosystem> Mountains => SubLocations.OfType<MountainEcosystem>();
     }
 }

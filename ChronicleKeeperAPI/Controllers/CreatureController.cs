@@ -111,5 +111,30 @@ namespace ChronicleKeeperAPI.Controllers
             if (!result) return NotFound();
             return NoContent();
         }
+
+        // POST: /api/creatures/{id}/habitats/{ecosystemId}
+        [HttpPost("{id}/habitats/{ecosystemId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Link a creature to an ecosystem it inhabits")]
+        [SwaggerResponse(204, "Ecosystem linked")]
+        [SwaggerResponse(400, "Invalid input")]
+        public async Task<IActionResult> AddHabitat(int id, int ecosystemId)
+        {
+            await _mediator.Send(new AddCreatureHabitatCommand { CreatureId = id, EcosystemId = ecosystemId });
+            return NoContent();
+        }
+
+        // DELETE: /api/creatures/{id}/habitats/{ecosystemId}
+        [HttpDelete("{id}/habitats/{ecosystemId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Unlink a creature from an ecosystem")]
+        [SwaggerResponse(204, "Ecosystem unlinked")]
+        [SwaggerResponse(404, "Link not found")]
+        public async Task<IActionResult> RemoveHabitat(int id, int ecosystemId)
+        {
+            var result = await _mediator.Send(new RemoveCreatureHabitatCommand { CreatureId = id, EcosystemId = ecosystemId });
+            if (!result) return NotFound();
+            return NoContent();
+        }
     }
 }

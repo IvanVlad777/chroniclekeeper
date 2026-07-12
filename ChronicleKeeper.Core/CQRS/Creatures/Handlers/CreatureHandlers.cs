@@ -7,6 +7,7 @@ using ChronicleKeeper.Core.Entities.Geography.Creatures;
 using ChronicleKeeper.Core.Entities.Geography.Creatures.Animals;
 using ChronicleKeeper.Core.Entities.Geography.Creatures.Fungi;
 using ChronicleKeeper.Core.Entities.Geography.Creatures.Plants;
+using ChronicleKeeper.Core.Entities.Geography.Ecosystems;
 using ChronicleKeeper.Core.Exceptions;
 using ChronicleKeeper.Core.Repositories;
 using MediatR;
@@ -427,6 +428,53 @@ namespace ChronicleKeeper.Core.CQRS.Creatures.Handlers
         public Task<bool> Handle(RemoveCreatureCityCommand request, CancellationToken cancellationToken)
         {
             return _repository.RemoveCityAsync(request.CreatureId, request.CityId, cancellationToken);
+        }
+    }
+
+    public class AddCreatureHabitatCommandHandler : IRequestHandler<AddCreatureHabitatCommand, bool>
+    {
+        private readonly ICreatureRepository _repository;
+        private readonly ILocationRepository _locationRepository;
+
+        public AddCreatureHabitatCommandHandler(ICreatureRepository repository, ILocationRepository locationRepository)
+        {
+            _repository = repository;
+            _locationRepository = locationRepository;
+        }
+
+        public async Task<bool> Handle(AddCreatureHabitatCommand request, CancellationToken cancellationToken)
+        {
+            var creature = await _repository.FindByIdAsync(request.CreatureId, cancellationToken)
+                ?? throw new EntityNotFoundException("Creature", request.CreatureId);
+
+            var ecosystem = await _locationRepository.FindByIdAsync(request.EcosystemId, cancellationToken);
+            if (ecosystem is not Ecosystem || ecosystem.WorldId != creature.WorldId)
+            {
+                throw new DomainValidationException($"Ecosystem with ID {request.EcosystemId} does not exist in this world.");
+            }
+
+            if (await _repository.IsHabitatLinkedAsync(request.CreatureId, request.EcosystemId, cancellationToken))
+            {
+                throw new DomainValidationException("This ecosystem is already linked to the creature.");
+            }
+
+            await _repository.AddHabitatAsync(request.CreatureId, request.EcosystemId, cancellationToken);
+            return true;
+        }
+    }
+
+    public class RemoveCreatureHabitatCommandHandler : IRequestHandler<RemoveCreatureHabitatCommand, bool>
+    {
+        private readonly ICreatureRepository _repository;
+
+        public RemoveCreatureHabitatCommandHandler(ICreatureRepository repository)
+        {
+            _repository = repository;
+        }
+
+        public Task<bool> Handle(RemoveCreatureHabitatCommand request, CancellationToken cancellationToken)
+        {
+            return _repository.RemoveHabitatAsync(request.CreatureId, request.EcosystemId, cancellationToken);
         }
     }
 

@@ -1,10 +1,9 @@
-﻿using ChronicleKeeper.Core.Entities.Base;
-using static ChronicleKeeper.Core.Enums.EcosystemEnums;
+﻿using static ChronicleKeeper.Core.Enums.EcosystemEnums;
 
 namespace ChronicleKeeper.Core.Entities.Geography.Ecosystems
 {
     public class ForestEcosystem : Ecosystem
     {
-        public new ForestType Type { get; set; } // Enum: Rainforest, Boreal, etc.
+        public ForestType ForestKind { get; set; } // Enum: Rainforest, Boreal, etc.
     }
 }
