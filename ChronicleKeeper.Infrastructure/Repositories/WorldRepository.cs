@@ -80,6 +80,10 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .Where(c => c.WorldId == id)
                 .ExecuteUpdateAsync(s => s.SetProperty(c => c.ParentCreatureId, (int?)null), cancellationToken);
 
+            await _context.Corporations
+                .Where(c => c.WorldId == id)
+                .ExecuteUpdateAsync(s => s.SetProperty(c => c.ParentCorporationId, (int?)null), cancellationToken);
+
             // RiverEcosystem.SourceLocationId/MouthLocationId su Restrict (dva FK-a na Locations sa
             // iste tablice ne smiju oba biti SetNull — SQL Server "multiple cascade paths"), pa se
             // moraju null-ati prije brisanja lokacija (korak 6).
@@ -189,6 +193,21 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .Where(i => i.WorldId == id)
                 .ExecuteDeleteAsync(cancellationToken);
 
+            // 7i2. Cehovi (kaskadira GuildRanks + GuildFaction/GuildProfession/GuildSocialClass join
+            //      tablice; Apprenticeship/EducationRecord.GuildId su SetNull). Moraju nestati prije
+            //      LegalSystems (7j), EducationSystems (7m), TaxationSystems i Industries (Restrict FK-ovi).
+            await _context.Guilds
+                .Where(g => g.WorldId == id)
+                .ExecuteDeleteAsync(cancellationToken);
+
+            // 7i3. Korporacije (self-ref ParentCorporationId već razvezan u koraku 1; kaskadira
+            //      CorporateLeaderships + CorporationFaction/CorporationProfession join tablice;
+            //      Apprenticeship.CorporationId je SetNull). Moraju nestati prije Industries,
+            //      TaxationSystems i BankingSystems (Restrict FK-ovi).
+            await _context.Corporations
+                .Where(c => c.WorldId == id)
+                .ExecuteDeleteAsync(cancellationToken);
+
             // 7j. Pravni sustavi (samostalan entitet, bez ovisnosti unutar ovog bloka)
             await _context.LegalSystems
                 .Where(l => l.WorldId == id)
@@ -272,6 +291,49 @@ namespace ChronicleKeeper.Infrastructure.Repositories
             //     CreatureCity je Cascade s obje strane pa se čisti sam bez obzira na redoslijed)
             await _context.Creatures
                 .Where(c => c.WorldId == id)
+                .ExecuteDeleteAsync(cancellationToken);
+
+            // 7w. Ekonomski sustavi (Restrict FK-ovi na TaxationSystem/BankingSystem — moraju nestati
+            //     prije njih; lokacije s EconomicSystemId Restrict FK-om već obrisane u koraku 6)
+            await _context.EconomicSystems
+                .Where(e => e.WorldId == id)
+                .ExecuteDeleteAsync(cancellationToken);
+
+            // 7x. Porezni sustavi (cehovi/korporacije/ekonomski sustavi više nema pa Restrict ne blokira)
+            await _context.TaxationSystems
+                .Where(t => t.WorldId == id)
+                .ExecuteDeleteAsync(cancellationToken);
+
+            // 7y. Bankarski sustavi (Restrict FK na Currency — moraju nestati prije valuta)
+            await _context.BankingSystems
+                .Where(b => b.WorldId == id)
+                .ExecuteDeleteAsync(cancellationToken);
+
+            // 7z. Valute (bankarskih sustava više nema pa Restrict ne blokira)
+            await _context.Currencies
+                .Where(c => c.WorldId == id)
+                .ExecuteDeleteAsync(cancellationToken);
+
+            // 7aa. Prirodni resursi (kaskadira NaturalResourceLocation/TradeRouteResource join tablice;
+            //      Restrict FK na ExtractionMethod — moraju nestati prije metoda ekstrakcije)
+            await _context.NaturalResources
+                .Where(n => n.WorldId == id)
+                .ExecuteDeleteAsync(cancellationToken);
+
+            // 7ab. Trgovačke rute (kaskadira TradeRouteLocation join tablicu; TradeRouteResource
+            //      redovi već nestali u 7aa)
+            await _context.TradeRoutes
+                .Where(t => t.WorldId == id)
+                .ExecuteDeleteAsync(cancellationToken);
+
+            // 7ac. Metode ekstrakcije (resursa više nema pa Restrict ne blokira)
+            await _context.ExtractionMethods
+                .Where(e => e.WorldId == id)
+                .ExecuteDeleteAsync(cancellationToken);
+
+            // 7ad. Industrije (cehova i korporacija više nema pa Restrict ne blokira)
+            await _context.Industries
+                .Where(i => i.WorldId == id)
                 .ExecuteDeleteAsync(cancellationToken);
 
             // 8. Tagovi i bilješke

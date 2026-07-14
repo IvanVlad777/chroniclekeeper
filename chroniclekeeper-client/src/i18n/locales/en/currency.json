@@ -1,0 +1,38 @@
+{
+    "listTitle": "Currencies",
+    "search": "Search currencies…",
+    "loaderror": "Failed to load",
+    "notfound": "Currency not found",
+    "none": "None",
+    "backtolist": "Back to currencies",
+    "emptyTitle": "No currencies yet",
+    "emptyText": "Coins, notes and stranger tender — gold-backed, fiat or magic-bound. Mint the first currency your world trades in.",
+    "columns": {
+        "name": "Name",
+        "symbol": "Symbol",
+        "exchangeRate": "Exchange rate",
+        "updated": "Updated"
+    },
+    "fields": {
+        "description": "Description",
+        "symbol": "Symbol",
+        "exchangeRate": "Exchange rate",
+        "backingType": "Backing type",
+        "backingTypeHint": "e.g. Gold-backed, Fiat, Magic-backed"
+    },
+    "form": {
+        "newTitle": "New currency",
+        "editTitle": "Edit currency",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "history": "History",
+        "save": "Save currency",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

@@ -69,5 +69,11 @@ namespace ChronicleKeeper.Infrastructure.Repositories
             var cities = await _context.Cities.CountAsync(c => c.EducationSystemId == educationSystemId, cancellationToken);
             return countries + cities;
         }
+
+        public async Task<int> CountGuildsUsingEducationSystemAsync(int educationSystemId, CancellationToken cancellationToken = default)
+        {
+            return await _context.Guilds
+                .CountAsync(g => g.EducationSystemId == educationSystemId, cancellationToken);
+        }
     }
 }

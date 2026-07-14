@@ -62,4 +62,30 @@ export const navEntries: NavEntry[] = [
     { key: "climateDetails", glyph: "☂", to: "/storymap/climate-details" },
     { key: "seasons", glyph: "☀", to: "/storymap/seasons" },
     { key: "creatures", glyph: "🐾", to: "/storymap/creatures" },
+    {
+        key: "economicSystems",
+        glyph: "⚜",
+        to: "/storymap/economic-systems",
+    },
+    { key: "currencies", glyph: "◉", to: "/storymap/currencies" },
+    { key: "bankingSystems", glyph: "🏛", to: "/storymap/banking-systems" },
+    {
+        key: "taxationSystems",
+        glyph: "⚖",
+        to: "/storymap/taxation-systems",
+    },
+    { key: "industries", glyph: "⚙", to: "/storymap/industries" },
+    {
+        key: "extractionMethods",
+        glyph: "⛏",
+        to: "/storymap/extraction-methods",
+    },
+    {
+        key: "naturalResources",
+        glyph: "⛰",
+        to: "/storymap/natural-resources",
+    },
+    { key: "tradeRoutes", glyph: "⛵", to: "/storymap/trade-routes" },
+    { key: "guilds", glyph: "⚒", to: "/storymap/guilds" },
+    { key: "corporations", glyph: "🏢", to: "/storymap/corporations" },
 ];

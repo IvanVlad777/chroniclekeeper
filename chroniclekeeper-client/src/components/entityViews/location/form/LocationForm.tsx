@@ -21,11 +21,13 @@ import { getHistories } from "../../../../api/histories";
 import { getGovernmentSystems } from "../../../../api/governmentSystems";
 import { getLegalSystems } from "../../../../api/legalSystems";
 import { getEducationSystems } from "../../../../api/educationSystems";
+import { getEconomicSystems } from "../../../../api/economicSystems";
 import {
     GovernmentSystemDto,
     HistoryDto,
     LegalSystemDto,
     EducationSystemDto,
+    EconomicSystemDto,
     LocationDto,
     LocationType,
     LocationUpdateDto,
@@ -59,6 +61,7 @@ interface FormState {
     governmentSystemId: string;
     legalSystemId: string;
     educationSystemId: string;
+    economicSystemId: string;
     isCapital: boolean;
     districtType: string;
     uniqueFeatures: string;
@@ -95,6 +98,7 @@ const emptyForm: FormState = {
     governmentSystemId: "",
     legalSystemId: "",
     educationSystemId: "",
+    economicSystemId: "",
     isCapital: false,
     districtType: "",
     uniqueFeatures: "",
@@ -144,6 +148,8 @@ function toDto(f: FormState): LocationUpdateDto {
             f.type === "Country" || f.type === "City" ? toId(f.legalSystemId) : null,
         educationSystemId:
             f.type === "Country" || f.type === "City" ? toId(f.educationSystemId) : null,
+        economicSystemId:
+            f.type === "Country" || f.type === "City" ? toId(f.economicSystemId) : null,
         isCapital: f.type === "City" ? f.isCapital : null,
         districtType: f.type === "District" ? toStr(f.districtType) : null,
         uniqueFeatures: isEcosystemType(f.type) ? toStr(f.uniqueFeatures) : null,
@@ -182,6 +188,7 @@ export default function LocationForm() {
     const [governmentSystems, setGovernmentSystems] = useState<GovernmentSystemDto[]>([]);
     const [legalSystems, setLegalSystems] = useState<LegalSystemDto[]>([]);
     const [educationSystems, setEducationSystems] = useState<EducationSystemDto[]>([]);
+    const [economicSystems, setEconomicSystems] = useState<EconomicSystemDto[]>([]);
     const [loading, setLoading] = useState(true);
     const [loadError, setLoadError] = useState<string | null>(null);
     const [saveError, setSaveError] = useState<string | null>(null);
@@ -204,14 +211,16 @@ export default function LocationForm() {
             getGovernmentSystems(selectedWorld.id),
             getLegalSystems(selectedWorld.id),
             getEducationSystems(selectedWorld.id),
+            getEconomicSystems(selectedWorld.id),
         ])
-            .then(async ([locations, historiesData, governmentSystemsData, legalSystemsData, educationSystemsData]) => {
+            .then(async ([locations, historiesData, governmentSystemsData, legalSystemsData, educationSystemsData, economicSystemsData]) => {
                 if (cancelled) return;
                 setWorldLocations(locations);
                 setHistories(historiesData);
                 setGovernmentSystems(governmentSystemsData);
                 setLegalSystems(legalSystemsData);
                 setEducationSystems(educationSystemsData);
+                setEconomicSystems(economicSystemsData);
                 if (isEdit) {
                     const l = await getLocation(editId);
                     if (cancelled) return;
@@ -238,6 +247,9 @@ export default function LocationForm() {
                         legalSystemId: l.legalSystemId ? String(l.legalSystemId) : "",
                         educationSystemId: l.educationSystemId
                             ? String(l.educationSystemId)
+                            : "",
+                        economicSystemId: l.economicSystemId
+                            ? String(l.economicSystemId)
                             : "",
                         isCapital: l.isCapital ?? false,
                         districtType: l.districtType ?? "",
@@ -686,6 +698,21 @@ export default function LocationForm() {
                                 >
                                     <option value="">{t("none")}</option>
                                     {educationSystems.map((e) => (
+                                        <option key={e.id} value={e.id}>
+                                            {e.name}
+                                        </option>
+                                    ))}
+                                </OrnateSelect>
+                            </OrnateField>
+                            <OrnateField label={t("fields.economicSystem")}>
+                                <OrnateSelect
+                                    value={form.economicSystemId}
+                                    onChange={(e) =>
+                                        set("economicSystemId", e.target.value)
+                                    }
+                                >
+                                    <option value="">{t("none")}</option>
+                                    {economicSystems.map((e) => (
                                         <option key={e.id} value={e.id}>
                                             {e.name}
                                         </option>

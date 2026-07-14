@@ -20,7 +20,7 @@ namespace ChronicleKeeper.Core.Entities.Social.Structure
         //public virtual SocialHierarchy? SocialHierarchy { get; set; }
 
         //public ICollection<Profession> TypicalProfessions { get; set; } = new List<Profession>(); // TODO: Uncomment when Profession entity is revived
-        //public ICollection<Guild> Guilds { get; set; } = new List<Guild>(); // TODO: Uncomment when Guild entity is revived
+        // NOTE: relation to Guild already exists via the GuildSocialClass join entity (Guild owns the nav) — target side gets no nav per convention.
         //public ICollection<Culture> Cultures { get; set; } = new List<Culture>(); // TODO: Uncomment when Culture entity is revived
         public ICollection<Character> Members { get; set; } = new List<Character>();
         //public ICollection<PrivilegeLaw> PrivilegeLaws { get; set; } = new List<PrivilegeLaw>(); // TODO: Uncomment when PrivilegeLaw entity is revived

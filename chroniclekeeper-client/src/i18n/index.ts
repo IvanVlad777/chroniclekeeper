@@ -68,6 +68,26 @@ import enSeason from "./locales/en/season.json";
 import hrSeason from "./locales/hr/season.json";
 import enCreature from "./locales/en/creature.json";
 import hrCreature from "./locales/hr/creature.json";
+import enEconomicSystem from "./locales/en/economicSystem.json";
+import hrEconomicSystem from "./locales/hr/economicSystem.json";
+import enCurrency from "./locales/en/currency.json";
+import hrCurrency from "./locales/hr/currency.json";
+import enBankingSystem from "./locales/en/bankingSystem.json";
+import hrBankingSystem from "./locales/hr/bankingSystem.json";
+import enTaxationSystem from "./locales/en/taxationSystem.json";
+import hrTaxationSystem from "./locales/hr/taxationSystem.json";
+import enIndustry from "./locales/en/industry.json";
+import hrIndustry from "./locales/hr/industry.json";
+import enExtractionMethod from "./locales/en/extractionMethod.json";
+import hrExtractionMethod from "./locales/hr/extractionMethod.json";
+import enNaturalResource from "./locales/en/naturalResource.json";
+import hrNaturalResource from "./locales/hr/naturalResource.json";
+import enTradeRoute from "./locales/en/tradeRoute.json";
+import hrTradeRoute from "./locales/hr/tradeRoute.json";
+import enGuild from "./locales/en/guild.json";
+import hrGuild from "./locales/hr/guild.json";
+import enCorporation from "./locales/en/corporation.json";
+import hrCorporation from "./locales/hr/corporation.json";
 
 i18n.use(LanguageDetector)
     .use(initReactI18next)
@@ -107,6 +127,16 @@ i18n.use(LanguageDetector)
                 climateDetail: enClimateDetail,
                 season: enSeason,
                 creature: enCreature,
+                economicSystem: enEconomicSystem,
+                currency: enCurrency,
+                bankingSystem: enBankingSystem,
+                taxationSystem: enTaxationSystem,
+                industry: enIndustry,
+                extractionMethod: enExtractionMethod,
+                naturalResource: enNaturalResource,
+                tradeRoute: enTradeRoute,
+                guild: enGuild,
+                corporation: enCorporation,
             },
             hr: {
                 common: hrCommon,
@@ -142,6 +172,16 @@ i18n.use(LanguageDetector)
                 climateDetail: hrClimateDetail,
                 season: hrSeason,
                 creature: hrCreature,
+                economicSystem: hrEconomicSystem,
+                currency: hrCurrency,
+                bankingSystem: hrBankingSystem,
+                taxationSystem: hrTaxationSystem,
+                industry: hrIndustry,
+                extractionMethod: hrExtractionMethod,
+                naturalResource: hrNaturalResource,
+                tradeRoute: hrTradeRoute,
+                guild: hrGuild,
+                corporation: hrCorporation,
             },
         },
         fallbackLng: "en",
@@ -179,6 +219,16 @@ i18n.use(LanguageDetector)
             "climateDetail",
             "season",
             "creature",
+            "economicSystem",
+            "currency",
+            "bankingSystem",
+            "taxationSystem",
+            "industry",
+            "extractionMethod",
+            "naturalResource",
+            "tradeRoute",
+            "guild",
+            "corporation",
         ], //namespaces
         defaultNS: "common",
         interpolation: {

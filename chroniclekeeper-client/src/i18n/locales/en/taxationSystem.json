@@ -1,0 +1,44 @@
+{
+    "listTitle": "Taxation Systems",
+    "search": "Search taxation systems…",
+    "loaderror": "Failed to load",
+    "notfound": "Taxation system not found",
+    "none": "None",
+    "backtolist": "Back to taxation systems",
+    "emptyTitle": "No taxation systems yet",
+    "emptyText": "Tithes, tariffs and the king's tenth — set down who pays, how much, and how bitterly. Create the first taxation system.",
+    "columns": {
+        "name": "Name",
+        "incomeTaxRate": "Income tax",
+        "corporateTaxRate": "Corporate tax",
+        "hasFlatTax": "Model",
+        "updated": "Updated"
+    },
+    "flatTax": {
+        "flat": "Flat",
+        "progressive": "Progressive"
+    },
+    "fields": {
+        "description": "Description",
+        "incomeTaxRate": "Income tax rate",
+        "corporateTaxRate": "Corporate tax rate",
+        "tradeTariffRate": "Trade tariff rate",
+        "hasFlatTax": "Flat tax (unchecked = progressive)",
+        "hasWealthTax": "Wealth tax"
+    },
+    "form": {
+        "newTitle": "New taxation system",
+        "editTitle": "Edit taxation system",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "history": "History",
+        "save": "Save taxation system",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

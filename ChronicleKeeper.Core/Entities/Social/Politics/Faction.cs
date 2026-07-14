@@ -32,10 +32,10 @@ namespace ChronicleKeeper.Core.Entities.Social
 
         //public ICollection<Country> OperatesInCountries { get; set; } = new List<Country>(); // TODO: Uncomment when Country entity is revived
         //public ICollection<City> OperatesInCities { get; set; } = new List<City>(); // TODO: Uncomment when City entity is revived
-        //public ICollection<Guild> ConnectedGuilds { get; set; } = new List<Guild>(); // TODO: Uncomment when Guild entity is revived
+        // NOTE: relation to Guild already exists via the GuildFaction join entity (Guild owns the nav) — target side gets no nav per convention.
         //public ICollection<PoliticalParty> PoliticalConnections { get; set; } = new List<PoliticalParty>(); // TODO: Uncomment when PoliticalParty entity is revived
         //public ICollection<ReligiousOrder> ReligiousConnections { get; set; } = new List<ReligiousOrder>(); // TODO: Uncomment when ReligiousOrder entity is revived
-        //public ICollection<Corporation> FinancialBackers { get; set; } = new List<Corporation>(); // TODO: Uncomment when Corporation entity is revived
+        // NOTE: relation to Corporation already exists via the CorporationFaction join entity (Corporation owns the nav) — target side gets no nav per convention.
         public virtual ICollection<Item> NotableItemsInPossesion { get; set; } = new List<Item>();
         //public ICollection<MilitaryOrganization> MilitaryConnections { get; set; } = new List<MilitaryOrganization>(); // TODO: Uncomment when MilitaryOrganization entity is revived
         //public int? ArmyId { get; set; } // TODO: Uncomment when Army entity is revived

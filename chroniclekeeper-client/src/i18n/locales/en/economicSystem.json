@@ -1,0 +1,46 @@
+{
+    "listTitle": "Economic Systems",
+    "search": "Search economic systems…",
+    "loaderror": "Failed to load",
+    "notfound": "Economic system not found",
+    "none": "None",
+    "backtolist": "Back to economic systems",
+    "emptyTitle": "No economic systems yet",
+    "emptyText": "Feudal fiefs, free markets or command economies — define how wealth flows through your world. Create the first economic system.",
+    "columns": {
+        "name": "Name",
+        "kind": "Kind",
+        "updated": "Updated"
+    },
+    "kinds": {
+        "market": "Market-driven",
+        "command": "Command economy",
+        "feudal": "Feudal"
+    },
+    "fields": {
+        "description": "Description",
+        "flags": "Traits",
+        "isMarketDriven": "Market-driven",
+        "hasStateControl": "State-controlled resources",
+        "isFeudal": "Feudal",
+        "allowsCorporations": "Allows corporations",
+        "allowsGuilds": "Allows guilds",
+        "taxationSystem": "Taxation system",
+        "bankingSystem": "Banking system"
+    },
+    "form": {
+        "newTitle": "New economic system",
+        "editTitle": "Edit economic system",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "history": "History",
+        "save": "Save economic system",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

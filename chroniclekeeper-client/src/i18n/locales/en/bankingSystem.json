@@ -1,0 +1,42 @@
+{
+    "listTitle": "Banking Systems",
+    "search": "Search banking systems…",
+    "loaderror": "Failed to load",
+    "notfound": "Banking system not found",
+    "none": "None",
+    "backtolist": "Back to banking systems",
+    "emptyTitle": "No banking systems yet",
+    "emptyText": "Central banks, merchant houses, dwarven vaults — describe who holds the money and on what terms it is lent.",
+    "columns": {
+        "name": "Name",
+        "systemType": "System type",
+        "interestRate": "Interest rate",
+        "updated": "Updated"
+    },
+    "fields": {
+        "description": "Description",
+        "systemType": "System type",
+        "systemTypeHint": "e.g. Central Bank, Private Banking, Merchant Banking",
+        "interestRate": "Interest rate",
+        "currency": "Main currency",
+        "flags": "Traits",
+        "allowsLoans": "Allows loans",
+        "hasStateControl": "State-controlled",
+        "supportsForeignInvestment": "Foreign investment"
+    },
+    "form": {
+        "newTitle": "New banking system",
+        "editTitle": "Edit banking system",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "history": "History",
+        "save": "Save banking system",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

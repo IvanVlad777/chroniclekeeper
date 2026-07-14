@@ -19,8 +19,8 @@ namespace ChronicleKeeper.Core.Entities.Professions
         public virtual ICollection<ProfessionSapientSpecies> PracticedBySpecies { get; set; } = new List<ProfessionSapientSpecies>();
         public virtual ICollection<ProfessionSocialClass> SocialClasses { get; set; } = new List<ProfessionSocialClass>();
 
-        //public virtual ICollection<Guild> Guilds { get; set; } = new List<Guild>(); // TODO: Uncomment when Guild entity is revived
-        //public virtual ICollection<Corporation> Corporations { get; set; } = new List<Corporation>(); // TODO: Uncomment when Corporation entity is revived
-        //public virtual ICollection<CorporateLeadership> CorporateLeaderships { get; set; } = new List<CorporateLeadership>(); // TODO: Uncomment when CorporateLeadership entity is revived
+        // NOTE: relations to Guild/Corporation already exist via the GuildProfession/CorporationProfession
+        // join entities (Guild/Corporation own the navs), and to CorporateLeadership via its ProfessionId FK
+        // (configured WithMany()) — target side gets no nav per convention.
     }
 }

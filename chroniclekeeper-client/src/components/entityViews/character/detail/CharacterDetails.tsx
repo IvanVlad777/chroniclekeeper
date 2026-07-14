@@ -17,6 +17,7 @@ import {
     AbilityDto,
     CharacterDetailsDto,
     CharacterDto,
+    GuildDto,
     RelationshipType,
     relationshipTypes,
     ReligionDto,
@@ -44,6 +45,7 @@ import {
 } from "../../../../api/religiousEducations";
 import { getSchools } from "../../../../api/schools";
 import { getUniversities } from "../../../../api/universities";
+import { getGuilds } from "../../../../api/guilds";
 import { getReligions } from "../../../../api/religions";
 import { useAuth } from "../../../../hooks/useAuth";
 import { apiErrorMessage } from "../../../../utils/apiError";
@@ -112,6 +114,7 @@ export default function CharacterDetail() {
         UniversityDto[]
     >([]);
     const [worldReligions, setWorldReligions] = useState<ReligionDto[]>([]);
+    const [worldGuilds, setWorldGuilds] = useState<GuildDto[]>([]);
     const [abilityCandidates, setAbilityCandidates] = useState<
         AbilityDto[] | null
     >(null);
@@ -199,12 +202,14 @@ export default function CharacterDetail() {
             getSchools({ worldId: character.worldId }),
             getUniversities({ worldId: character.worldId }),
             getReligions(character.worldId),
+            getGuilds(character.worldId),
         ])
-            .then(([schools, universities, religions]) => {
+            .then(([schools, universities, religions, guilds]) => {
                 if (cancelled) return;
                 setWorldSchools(schools);
                 setWorldUniversities(universities);
                 setWorldReligions(religions);
+                setWorldGuilds(guilds);
             })
             .catch((err) =>
                 console.error("Failed to load education form data:", err)
@@ -274,6 +279,7 @@ export default function CharacterDetail() {
                 characterId: character.id,
                 schoolId: instType === "school" ? Number(instId) : null,
                 universityId: instType === "university" ? Number(instId) : null,
+                guildId: instType === "guild" ? Number(instId) : null,
                 startDate: eduForm.startDate,
                 endDate: eduForm.endDate || null,
                 degree: eduForm.degree.trim(),
@@ -812,6 +818,10 @@ export default function CharacterDetail() {
                                         ? worldUniversities.find(
                                               (u) => u.id === edu.universityId
                                           )?.name
+                                        : edu.guildId
+                                        ? worldGuilds.find(
+                                              (g) => g.id === edu.guildId
+                                          )?.name
                                         : dash}
                                 </span>
                                 {canEdit && (
@@ -855,6 +865,14 @@ export default function CharacterDetail() {
                                             value={`university:${u.id}`}
                                         >
                                             {u.name}
+                                        </option>
+                                    ))}
+                                    {worldGuilds.map((g) => (
+                                        <option
+                                            key={`guild:${g.id}`}
+                                            value={`guild:${g.id}`}
+                                        >
+                                            {g.name}
                                         </option>
                                     ))}
                                 </OrnateSelect>

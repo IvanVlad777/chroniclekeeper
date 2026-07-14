@@ -1,0 +1,37 @@
+{
+    "listTitle": "Industrije",
+    "search": "Pretraži industrije…",
+    "loaderror": "Učitavanje nije uspjelo",
+    "notfound": "Industrija nije pronađena",
+    "none": "Nema",
+    "backtolist": "Natrag na industrije",
+    "emptyTitle": "Još nema industrija",
+    "emptyText": "Rudarstvo, brodogradnja, alkemija — zanati od kojih žive čitavi gradovi. Stvori prvu industriju svog svijeta.",
+    "columns": {
+        "name": "Naziv",
+        "sector": "Sektor",
+        "employmentRate": "Zaposlenost",
+        "updated": "Ažurirano"
+    },
+    "fields": {
+        "description": "Opis",
+        "sector": "Sektor",
+        "sectorHint": "npr. poljoprivreda, rudarstvo, proizvodnja",
+        "employmentRate": "Stopa zaposlenosti (%)"
+    },
+    "form": {
+        "newTitle": "Nova industrija",
+        "editTitle": "Uredi industriju",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "history": "Povijest",
+        "save": "Spremi industriju",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}”? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

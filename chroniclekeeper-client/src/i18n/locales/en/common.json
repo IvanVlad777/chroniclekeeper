@@ -38,7 +38,17 @@
         "climateZones": "Climate Zones",
         "climateDetails": "Climate Details",
         "seasons": "Seasons",
-        "creatures": "Creatures"
+        "creatures": "Creatures",
+        "economicSystems": "Economic Systems",
+        "currencies": "Currencies",
+        "bankingSystems": "Banking Systems",
+        "taxationSystems": "Taxation Systems",
+        "industries": "Industries",
+        "extractionMethods": "Extraction Methods",
+        "naturalResources": "Natural Resources",
+        "tradeRoutes": "Trade Routes",
+        "guilds": "Guilds",
+        "corporations": "Corporations"
     },
     "shell": {
         "newEntry": "New entry",

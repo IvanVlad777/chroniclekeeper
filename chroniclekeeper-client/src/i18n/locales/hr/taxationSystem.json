@@ -1,0 +1,44 @@
+{
+    "listTitle": "Porezni sustavi",
+    "search": "Pretraži porezne sustave…",
+    "loaderror": "Učitavanje nije uspjelo",
+    "notfound": "Porezni sustav nije pronađen",
+    "none": "Nema",
+    "backtolist": "Natrag na porezne sustave",
+    "emptyTitle": "Još nema poreznih sustava",
+    "emptyText": "Desetine, carine i kraljev deseti dio — zapiši tko plaća, koliko i uz koliko gunđanja. Stvori prvi porezni sustav.",
+    "columns": {
+        "name": "Naziv",
+        "incomeTaxRate": "Porez na dohodak",
+        "corporateTaxRate": "Porez na dobit",
+        "hasFlatTax": "Model",
+        "updated": "Ažurirano"
+    },
+    "flatTax": {
+        "flat": "Paušalni",
+        "progressive": "Progresivni"
+    },
+    "fields": {
+        "description": "Opis",
+        "incomeTaxRate": "Stopa poreza na dohodak",
+        "corporateTaxRate": "Stopa poreza na dobit",
+        "tradeTariffRate": "Stopa trgovačkih carina",
+        "hasFlatTax": "Paušalni porez (neoznačeno = progresivni)",
+        "hasWealthTax": "Porez na bogatstvo"
+    },
+    "form": {
+        "newTitle": "Novi porezni sustav",
+        "editTitle": "Uredi porezni sustav",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "history": "Povijest",
+        "save": "Spremi porezni sustav",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}”? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

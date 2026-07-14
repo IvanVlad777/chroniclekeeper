@@ -12,6 +12,6 @@ namespace ChronicleKeeper.Core.Entities.Social.Politics
 
         //public ICollection<City> Cities { get; set; } = new List<City>(); // TODO: Uncomment when City entity is revived
         //public ICollection<Country> Countries { get; set; } = new List<Country>(); // TODO: Uncomment when Country entity is revived
-        //public ICollection<Guild> Guilds { get; set; } = new List<Guild>(); // TODO: Uncomment when Guild entity is revived
+        public ICollection<Economy.Guild> Guilds { get; set; } = new List<Economy.Guild>(); // Reverse nav of Guild.LegalSystemId
     }
 }

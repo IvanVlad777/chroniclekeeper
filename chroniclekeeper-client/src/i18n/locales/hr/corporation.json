@@ -1,0 +1,86 @@
+{
+    "listTitle": "Korporacije",
+    "search": "Pretraži korporacije…",
+    "loaderror": "Učitavanje nije uspjelo",
+    "notfound": "Korporacija nije pronađena",
+    "none": "Nema",
+    "backtolist": "Natrag na korporacije",
+    "emptyTitle": "Još nema korporacija",
+    "emptyText": "Trgovačka društva, megakorporacije i državni monopoli — organizirano bogatstvo s imenom i knjigom računa. Osnuj prvu korporaciju.",
+    "columns": {
+        "name": "Naziv",
+        "industrySector": "Sektor",
+        "numberOfEmployees": "Zaposlenici",
+        "ownership": "Vlasništvo",
+        "updated": "Ažurirano"
+    },
+    "ownership": {
+        "state": "Državna",
+        "public": "Dionička",
+        "private": "Privatna"
+    },
+    "fields": {
+        "description": "Opis",
+        "industrySector": "Industrijski sektor",
+        "industrySectorHint": "npr. bankarstvo, proizvodnja, rudarstvo, trgovina",
+        "revenue": "Godišnji prihod",
+        "numberOfEmployees": "Zaposlenici",
+        "flags": "Obilježja",
+        "isPubliclyTraded": "Dionička",
+        "isStateOwned": "U državnom vlasništvu",
+        "industry": "Industrija",
+        "taxationSystem": "Porezni sustav",
+        "bankingSystem": "Bankarski sustav",
+        "parentCorporation": "Matična korporacija"
+    },
+    "subsidiaries": {
+        "label": "Podružnice"
+    },
+    "leadership": {
+        "label": "Vodstvo",
+        "add": "dodaj",
+        "addTitle": "Novi unos vodstva",
+        "editTitle": "Uredi unos vodstva",
+        "name": "Naziv",
+        "description": "Opis",
+        "position": "Pozicija",
+        "positionHint": "npr. CEO, CFO, član uprave",
+        "salary": "Godišnja plaća",
+        "isMajorShareholder": "Veliki dioničar",
+        "majorShareholder": "Veliki dioničar",
+        "character": "Lik",
+        "profession": "Zanimanje",
+        "requiredMissing": "Naziv je obavezan.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo.",
+        "deleteConfirm": "Obrisati „{{name}}”? Ovo se ne može poništiti.",
+        "cancel": "Odustani",
+        "save": "Spremi",
+        "delete": "Obriši"
+    },
+    "links": {
+        "factions": "Financijski podupirane frakcije",
+        "professions": "Zanimanja članova",
+        "add": "poveži",
+        "remove": "Odveži {{name}}",
+        "pick": "Odaberi zapis",
+        "confirm": "Poveži",
+        "addFailed": "Povezivanje nije uspjelo.",
+        "removeFailed": "Odvezivanje nije uspjelo."
+    },
+    "form": {
+        "newTitle": "Nova korporacija",
+        "editTitle": "Uredi korporaciju",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "history": "Povijest",
+        "save": "Spremi korporaciju",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}”? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

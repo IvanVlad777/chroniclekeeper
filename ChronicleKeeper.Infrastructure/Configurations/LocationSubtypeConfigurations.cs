@@ -25,6 +25,11 @@ namespace ChronicleKeeper.Infrastructure.Configurations
                 .WithMany()
                 .HasForeignKey(c => c.EducationSystemId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(c => c.EconomicSystem)
+                .WithMany()
+                .HasForeignKey(c => c.EconomicSystemId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 
@@ -45,6 +50,11 @@ namespace ChronicleKeeper.Infrastructure.Configurations
             builder.HasOne(c => c.EducationSystem)
                 .WithMany()
                 .HasForeignKey(c => c.EducationSystemId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(c => c.EconomicSystem)
+                .WithMany()
+                .HasForeignKey(c => c.EconomicSystemId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

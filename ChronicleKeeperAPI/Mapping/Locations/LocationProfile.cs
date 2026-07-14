@@ -20,6 +20,7 @@ public class LocationProfile : Profile
             .ForMember(d => d.GovernmentSystemId, opt => opt.MapFrom(src => GetGovernmentSystemId(src)))
             .ForMember(d => d.LegalSystemId, opt => opt.MapFrom(src => GetLegalSystemId(src)))
             .ForMember(d => d.EducationSystemId, opt => opt.MapFrom(src => GetEducationSystemId(src)))
+            .ForMember(d => d.EconomicSystemId, opt => opt.MapFrom(src => GetEconomicSystemId(src)))
             .ForMember(d => d.IsCapital, opt => opt.MapFrom(src => GetIsCapital(src)))
             .ForMember(d => d.DistrictType, opt => opt.MapFrom(src => GetDistrictType(src)))
             .ForMember(d => d.UniqueFeatures, opt => opt.MapFrom(src => GetUniqueFeatures(src)))
@@ -56,6 +57,7 @@ public class LocationProfile : Profile
             .ForMember(dest => dest.GovernmentSystem, opt => opt.MapFrom(src => GetGovernmentSystem(src)))
             .ForMember(dest => dest.LegalSystem, opt => opt.MapFrom(src => GetLegalSystem(src)))
             .ForMember(dest => dest.EducationSystem, opt => opt.MapFrom(src => GetEducationSystem(src)))
+            .ForMember(dest => dest.EconomicSystem, opt => opt.MapFrom(src => GetEconomicSystem(src)))
             .ForMember(dest => dest.Schools, opt => opt.MapFrom(src => src.Schools
                 .Select(s => new ReferenceDto { Id = s.Id, Name = s.Name })))
             .ForMember(dest => dest.NativeSpecies, opt => opt.MapFrom(src => GetNativeSpecies(src)))
@@ -85,6 +87,13 @@ public class LocationProfile : Profile
     {
         Country country => country.EducationSystemId,
         City city => city.EducationSystemId,
+        _ => null
+    };
+
+    private static int? GetEconomicSystemId(Location location) => location switch
+    {
+        Country country => country.EconomicSystemId,
+        City city => city.EconomicSystemId,
         _ => null
     };
 
@@ -123,6 +132,17 @@ public class LocationProfile : Profile
             _ => null
         };
         return educationSystem == null ? null : new ReferenceDto { Id = educationSystem.Id, Name = educationSystem.Name };
+    }
+
+    private static ReferenceDto? GetEconomicSystem(Location location)
+    {
+        var economicSystem = location switch
+        {
+            Country country => country.EconomicSystem,
+            City city => city.EconomicSystem,
+            _ => null
+        };
+        return economicSystem == null ? null : new ReferenceDto { Id = economicSystem.Id, Name = economicSystem.Name };
     }
 
     private static List<ReferenceDto> GetNativeSpecies(Location location) => location is Region region

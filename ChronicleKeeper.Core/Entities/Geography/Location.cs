@@ -31,13 +31,13 @@ namespace ChronicleKeeper.Core.Entities.Geography
         // Tags
         public virtual ICollection<LocationTag> Tags { get; set; } = new List<LocationTag>();
 
-        //public ICollection<ClimateZone> ClimateConditions { get; set; } = new List<ClimateZone>(); // TODO: Uncomment when ClimateZone entity is revived
-        //public ICollection<NaturalResource> NaturalResources { get; set; } = new List<NaturalResource>(); // TODO: Uncomment when NaturalResource entity is revived
+        // NOTE: relation to ClimateZone already exists via the LocationClimateZone join entity (ClimateZone owns the nav) — target side gets no nav per convention.
+        // NOTE: relation to NaturalResource already exists via the NaturalResourceLocation join entity (NaturalResource owns the nav) — target side gets no nav per convention.
         public virtual ICollection<Item> Items { get; set; } = new List<Item>();
         public virtual ICollection<School> Schools { get; set; } = new List<School>();
         //public ICollection<CulturalFestival> Festivals { get; set; } = new List<CulturalFestival>(); // TODO: Uncomment when CulturalFestival entity is revived
         //public ICollection<HolySite> HolySites { get; set; } = new List<HolySite>(); // TODO: Uncomment when HolySite entity is revived
         //public ICollection<TimelineEvent> TimelineEvents { get; set; } = new List<TimelineEvent>(); // TODO: Uncomment when TimelineEvent gets its Location link
-        //public ICollection<TradeRoute> TradeRoutes { get; set; } = new List<TradeRoute>(); // TODO: Uncomment when TradeRoute entity is revived
+        // NOTE: relation to TradeRoute already exists via the TradeRouteLocation join entity (TradeRoute owns the nav) — target side gets no nav per convention.
     }
 }

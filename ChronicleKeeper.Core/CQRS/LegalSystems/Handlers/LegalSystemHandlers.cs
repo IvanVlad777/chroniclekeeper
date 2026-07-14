@@ -123,6 +123,13 @@ namespace ChronicleKeeper.Core.CQRS.LegalSystems.Handlers
                     $"This legal system is used by {locationsInUse} location(s). Reassign them first.");
             }
 
+            var guildsInUse = await _repository.CountGuildsUsingLegalSystemAsync(request.Id, cancellationToken);
+            if (guildsInUse > 0)
+            {
+                throw new DomainValidationException(
+                    $"This legal system is used by {guildsInUse} guild(s). Reassign them first.");
+            }
+
             return await _repository.DeleteAsync(request.Id, cancellationToken);
         }
     }

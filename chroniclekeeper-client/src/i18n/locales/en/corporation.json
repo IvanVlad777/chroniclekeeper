@@ -1,0 +1,86 @@
+{
+    "listTitle": "Corporations",
+    "search": "Search corporations…",
+    "loaderror": "Failed to load",
+    "notfound": "Corporation not found",
+    "none": "None",
+    "backtolist": "Back to corporations",
+    "emptyTitle": "No corporations yet",
+    "emptyText": "Trading companies, megacorps and state monopolies — organized wealth with a name and a ledger. Found the first corporation.",
+    "columns": {
+        "name": "Name",
+        "industrySector": "Sector",
+        "numberOfEmployees": "Employees",
+        "ownership": "Ownership",
+        "updated": "Updated"
+    },
+    "ownership": {
+        "state": "State-owned",
+        "public": "Publicly traded",
+        "private": "Private"
+    },
+    "fields": {
+        "description": "Description",
+        "industrySector": "Industry sector",
+        "industrySectorHint": "e.g. Banking, Manufacturing, Mining, Retail",
+        "revenue": "Annual revenue",
+        "numberOfEmployees": "Employees",
+        "flags": "Traits",
+        "isPubliclyTraded": "Publicly traded",
+        "isStateOwned": "State-owned",
+        "industry": "Industry",
+        "taxationSystem": "Taxation system",
+        "bankingSystem": "Banking system",
+        "parentCorporation": "Parent corporation"
+    },
+    "subsidiaries": {
+        "label": "Subsidiaries"
+    },
+    "leadership": {
+        "label": "Leadership",
+        "add": "add",
+        "addTitle": "New leadership entry",
+        "editTitle": "Edit leadership entry",
+        "name": "Name",
+        "description": "Description",
+        "position": "Position",
+        "positionHint": "e.g. CEO, CFO, Board Member",
+        "salary": "Annual salary",
+        "isMajorShareholder": "Major shareholder",
+        "majorShareholder": "Major shareholder",
+        "character": "Character",
+        "profession": "Profession",
+        "requiredMissing": "Name is required.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed.",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "cancel": "Cancel",
+        "save": "Save",
+        "delete": "Delete"
+    },
+    "links": {
+        "factions": "Financially backed factions",
+        "professions": "Member professions",
+        "add": "link",
+        "remove": "Unlink {{name}}",
+        "pick": "Pick an entry",
+        "confirm": "Link",
+        "addFailed": "Linking failed.",
+        "removeFailed": "Unlinking failed."
+    },
+    "form": {
+        "newTitle": "New corporation",
+        "editTitle": "Edit corporation",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "history": "History",
+        "save": "Save corporation",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

@@ -1,0 +1,46 @@
+{
+    "listTitle": "Ekonomski sustavi",
+    "search": "Pretraži ekonomske sustave…",
+    "loaderror": "Učitavanje nije uspjelo",
+    "notfound": "Ekonomski sustav nije pronađen",
+    "none": "Nema",
+    "backtolist": "Natrag na ekonomske sustave",
+    "emptyTitle": "Još nema ekonomskih sustava",
+    "emptyText": "Feudalni posjedi, slobodna tržišta ili planske ekonomije — odredi kako bogatstvo kola tvojim svijetom. Stvori prvi ekonomski sustav.",
+    "columns": {
+        "name": "Naziv",
+        "kind": "Vrsta",
+        "updated": "Ažurirano"
+    },
+    "kinds": {
+        "market": "Tržišna",
+        "command": "Planska",
+        "feudal": "Feudalna"
+    },
+    "fields": {
+        "description": "Opis",
+        "flags": "Obilježja",
+        "isMarketDriven": "Tržišno vođena",
+        "hasStateControl": "Resursi pod državnom kontrolom",
+        "isFeudal": "Feudalna",
+        "allowsCorporations": "Dopušta korporacije",
+        "allowsGuilds": "Dopušta cehove",
+        "taxationSystem": "Porezni sustav",
+        "bankingSystem": "Bankarski sustav"
+    },
+    "form": {
+        "newTitle": "Novi ekonomski sustav",
+        "editTitle": "Uredi ekonomski sustav",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "history": "Povijest",
+        "save": "Spremi ekonomski sustav",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}”? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

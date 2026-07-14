@@ -11,6 +11,7 @@ namespace ChronicleKeeper.Core.DTOs.EducationRecord
         public int? CharacterId { get; set; }
         public int? SchoolId { get; set; }
         public int? UniversityId { get; set; }
+        public int? GuildId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public string Degree { get; set; } = string.Empty;
@@ -33,6 +34,7 @@ namespace ChronicleKeeper.Core.DTOs.EducationRecord
         public int? CharacterId { get; set; }
         public int? SchoolId { get; set; }
         public int? UniversityId { get; set; }
+        public int? GuildId { get; set; }
 
         [Required]
         public DateTime StartDate { get; set; }
@@ -55,6 +57,7 @@ namespace ChronicleKeeper.Core.DTOs.EducationRecord
         public int? CharacterId { get; set; }
         public int? SchoolId { get; set; }
         public int? UniversityId { get; set; }
+        public int? GuildId { get; set; }
 
         [Required]
         public DateTime StartDate { get; set; }

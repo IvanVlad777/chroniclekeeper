@@ -62,6 +62,18 @@ namespace ChronicleKeeper.API.ServiceExtensions
             services.AddScoped<ISeasonRepository, SeasonRepository>();
             services.AddScoped<IWeatherPatternRepository, WeatherPatternRepository>();
             services.AddScoped<ICreatureRepository, CreatureRepository>();
+            services.AddScoped<IEconomicSystemRepository, EconomicSystemRepository>();
+            services.AddScoped<ICurrencyRepository, CurrencyRepository>();
+            services.AddScoped<IBankingSystemRepository, BankingSystemRepository>();
+            services.AddScoped<ITaxationSystemRepository, TaxationSystemRepository>();
+            services.AddScoped<ITradeRouteRepository, TradeRouteRepository>();
+            services.AddScoped<INaturalResourceRepository, NaturalResourceRepository>();
+            services.AddScoped<IExtractionMethodRepository, ExtractionMethodRepository>();
+            services.AddScoped<IIndustryRepository, IndustryRepository>();
+            services.AddScoped<IGuildRepository, GuildRepository>();
+            services.AddScoped<IGuildRankRepository, GuildRankRepository>();
+            services.AddScoped<ICorporationRepository, CorporationRepository>();
+            services.AddScoped<ICorporateLeadershipRepository, CorporateLeadershipRepository>();
 
             return services;
         }

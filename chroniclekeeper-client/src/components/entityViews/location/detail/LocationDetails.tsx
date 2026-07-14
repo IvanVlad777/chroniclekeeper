@@ -263,6 +263,21 @@ export default function LocationDetails() {
                                     )
                                 }
                             />
+                            <OrnateDisplayBox
+                                label={t("fields.economicSystem")}
+                                value={
+                                    location.economicSystem ? (
+                                        <Link
+                                            className={s.parentLink}
+                                            to={`/storymap/economic-systems/${location.economicSystem.id}`}
+                                        >
+                                            {location.economicSystem.name}
+                                        </Link>
+                                    ) : (
+                                        dash
+                                    )
+                                }
+                            />
                         </>
                     )}
                     {(location.type === "Lake" ||

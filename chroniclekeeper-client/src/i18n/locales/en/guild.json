@@ -1,0 +1,83 @@
+{
+    "listTitle": "Guilds",
+    "search": "Search guilds…",
+    "loaderror": "Failed to load",
+    "notfound": "Guild not found",
+    "none": "None",
+    "backtolist": "Back to guilds",
+    "emptyTitle": "No guilds yet",
+    "emptyText": "Blacksmiths, mages and thieves alike close ranks in guilds. Found the first guild of your world.",
+    "columns": {
+        "name": "Name",
+        "guildType": "Guild type",
+        "primaryActivity": "Primary activity",
+        "isGovernmentSanctioned": "Sanctioned",
+        "updated": "Updated"
+    },
+    "sanctioned": {
+        "yes": "Sanctioned",
+        "no": "Unsanctioned"
+    },
+    "fields": {
+        "description": "Description",
+        "guildType": "Guild type",
+        "guildTypeHint": "e.g. Merchant, Artisan, Military, Thieves",
+        "primaryActivity": "Primary activity",
+        "primaryActivityHint": "e.g. Blacksmithing, Magic, Trade, Smuggling",
+        "isGovernmentSanctioned": "Government-sanctioned",
+        "taxationSystem": "Taxation system",
+        "industry": "Industry",
+        "legalSystem": "Legal system",
+        "educationSystem": "Education system"
+    },
+    "rankLevels": {
+        "Master": "Master",
+        "Journeyman": "Journeyman",
+        "Apprentice": "Apprentice"
+    },
+    "ranks": {
+        "label": "Guild ranks",
+        "add": "add",
+        "addTitle": "New guild rank",
+        "editTitle": "Edit guild rank",
+        "name": "Name",
+        "description": "Description",
+        "rankTitle": "Rank title",
+        "rankLevel": "Rank level",
+        "hasLeadershipAuthority": "Leadership authority",
+        "leadership": "Leadership",
+        "requiredMissing": "Name is required.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed.",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "cancel": "Cancel",
+        "save": "Save",
+        "delete": "Delete"
+    },
+    "links": {
+        "factions": "Connected factions",
+        "professions": "Member professions",
+        "socialClasses": "Social classes",
+        "add": "link",
+        "remove": "Unlink {{name}}",
+        "pick": "Pick an entry",
+        "confirm": "Link",
+        "addFailed": "Linking failed.",
+        "removeFailed": "Unlinking failed."
+    },
+    "form": {
+        "newTitle": "New guild",
+        "editTitle": "Edit guild",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "history": "History",
+        "save": "Save guild",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

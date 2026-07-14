@@ -1,44 +1,20 @@
-﻿using ChronicleKeeper.Core.Entities.Base;
-using ChronicleKeeper.Core.Entities.Geography;
+using ChronicleKeeper.Core.Entities.Base;
 using ChronicleKeeper.Core.Entities.HistoryTimelines;
-using ChronicleKeeper.Core.Interfaces;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ChronicleKeeper.Core.Entities.Social.Economy
 {
-    public class TradeRoute : ILoreEntity
+    public class TradeRoute : LoreEntity
     {
-        [Key]
-        public int Id { get; set; }
-        [Required]
-        public string Name { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
-        [Required]
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        [Required]
-        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+        public string RouteType { get; set; } = string.Empty; // Land, Sea, Air, Magic Portal
+        public string MainGoods { get; set; } = string.Empty; // Goods exchanged
+
+        public int? HistoryId { get; set; }
         public virtual History? History { get; set; }
 
-        public ICollection<NaturalResource> ResourcesTraded { get; set; } = new List<NaturalResource>();
-        public ICollection<Location> Locations { get; set; } = new List<Location>();
+        public virtual ICollection<TradeRouteResource> ResourcesTraded { get; set; } = new List<TradeRouteResource>();
+        public virtual ICollection<TradeRouteLocation> Locations { get; set; } = new List<TradeRouteLocation>();
 
-
-        //public string RouteType { get; set; } = string.Empty; // Land, Sea, Air, Magic Portal
-        //public string MainGoods { get; set; } = string.Empty; // Goods exchanged
-
-        //[ForeignKey("OriginCountry")]
-        //public int? OriginCountryId { get; set; }
-
-        //[ForeignKey("DestinationCountry")]
-        //public int? DestinationCountryId { get; set; }
-
-        //[ForeignKey("OriginCity")]
-        //public int? OriginCityId { get; set; }
-
-        //[ForeignKey("DestinationCity")]
-        //public int? DestinationCityId { get; set; }
-
-        //public ICollection<City> ConnectedCities { get; set; } = new List<City>();
+        // Origin/Destination Country/City FKs and ConnectedCities from the dormant scaffold are
+        // redundant with the Locations M:N above (a route's endpoints are part of its waypoints) — dropped.
     }
 }

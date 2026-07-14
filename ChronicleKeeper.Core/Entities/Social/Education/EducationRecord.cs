@@ -18,7 +18,7 @@ namespace ChronicleKeeper.Core.Entities.Social.Education
         public int? UniversityId { get; set; } // If it was a university
         public virtual University? University { get; set; }
 
-        //public int? GuildId { get; set; } // TODO: Uncomment when Guild entity is revived
-        //public virtual Guild? Guild { get; set; }
+        public int? GuildId { get; set; }
+        public virtual Economy.Guild? Guild { get; set; }
     }
 }

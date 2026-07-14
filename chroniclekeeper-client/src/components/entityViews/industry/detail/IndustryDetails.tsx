@@ -1,0 +1,149 @@
+import { useCallback, useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { Button, DisplayGrid, OrnateDisplayBox } from "../../../ornate";
+import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
+import { IndustryDetailsDto } from "../../../../interfaces/loreInterfaces";
+import { getIndustryById } from "../../../../api/industries";
+import { useAuth } from "../../../../hooks/useAuth";
+import s from "./styles.module.css";
+
+const editorRoles = ["Editor", "Admin", "SuperAdmin"];
+const glyph = "⚙";
+
+export default function IndustryDetails() {
+    const { id } = useParams<{ id: string }>();
+    const navigate = useNavigate();
+    const { t } = useTranslation("industry");
+    const { userInfo } = useAuth();
+    const canEdit =
+        userInfo?.roles.some((r) => editorRoles.includes(r)) ?? false;
+
+    const [industry, setIndustry] = useState<IndustryDetailsDto | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+    const [notFound, setNotFound] = useState(false);
+    const [reloadKey, setReloadKey] = useState(0);
+    const refetch = useCallback(() => setReloadKey((k) => k + 1), []);
+
+    useEffect(() => {
+        const industryId = Number(id);
+        if (!industryId) {
+            setNotFound(true);
+            setLoading(false);
+            return;
+        }
+
+        let cancelled = false;
+        setLoading(true);
+        setError(null);
+        setNotFound(false);
+
+        getIndustryById(industryId)
+            .then((data) => {
+                if (!cancelled) setIndustry(data);
+            })
+            .catch((err) => {
+                console.error("Failed to load industry:", err);
+                if (cancelled) return;
+                if (err?.response?.status === 404) {
+                    setNotFound(true);
+                } else {
+                    setError(t("loaderror"));
+                }
+            })
+            .finally(() => {
+                if (!cancelled) setLoading(false);
+            });
+
+        return () => {
+            cancelled = true;
+        };
+    }, [id, t, reloadKey]);
+
+    if (loading) return <LoadingSkeleton variant="block" rows={6} />;
+    if (notFound) {
+        return (
+            <EmptyState
+                glyph={glyph}
+                title={t("notfound")}
+                action={
+                    <Link to="/storymap/industries" className={s.backLink}>
+                        ← {t("backtolist")}
+                    </Link>
+                }
+            />
+        );
+    }
+    if (error || !industry) {
+        return <ErrorState onRetry={refetch} detail={error} />;
+    }
+
+    const dash = "—";
+
+    return (
+        <div className={s.page}>
+            <div className={s.breadcrumb}>
+                <Link to="/storymap/industries">{t("listTitle")}</Link>
+                <span className={s.breadcrumbSep}>/</span>
+                <span className={s.breadcrumbCurrent}>{industry.name}</span>
+            </div>
+            <div className={s.headerRow}>
+                <div className={s.headerMain}>
+                    <div className={s.kicker}>
+                        {industry.sector || t("listTitle")}
+                    </div>
+                    <h1 className={s.name}>{industry.name}</h1>
+                </div>
+                {canEdit && (
+                    <Button
+                        variant="ghost"
+                        onClick={() =>
+                            navigate(`/storymap/industries/${industry.id}/edit`)
+                        }
+                    >
+                        {t("form.edit")}
+                    </Button>
+                )}
+            </div>
+
+            <div className={s.facts}>
+                <DisplayGrid cols={3}>
+                    <OrnateDisplayBox
+                        label={t("fields.sector")}
+                        value={industry.sector || dash}
+                    />
+                    <OrnateDisplayBox
+                        label={t("fields.employmentRate")}
+                        value={`${industry.employmentRate}%`}
+                    />
+                    <OrnateDisplayBox
+                        label={t("form.history")}
+                        value={
+                            industry.history ? (
+                                <Link
+                                    className={s.refLink}
+                                    to={`/storymap/histories/${industry.history.id}`}
+                                >
+                                    {industry.history.name}
+                                </Link>
+                            ) : (
+                                dash
+                            )
+                        }
+                    />
+                </DisplayGrid>
+            </div>
+
+            <div className={s.sectionHead}>
+                <span className={s.sectionTitle}>{t("fields.description")}</span>
+                <span className={s.sectionLine} />
+            </div>
+            {industry.description ? (
+                <p className={`${s.prose} ${s.dropCap}`}>{industry.description}</p>
+            ) : (
+                <p className={`${s.prose} ${s.muted}`}>{t("none")}</p>
+            )}
+        </div>
+    );
+}

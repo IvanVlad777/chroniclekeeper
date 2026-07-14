@@ -1370,6 +1370,9 @@ namespace ChronicleKeeper.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("CorporationId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -1379,6 +1382,9 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .HasColumnType("nvarchar(4000)");
 
                     b.Property<int>("DurationYears")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("GuildId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsPaid")
@@ -1407,6 +1413,10 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CorporationId");
+
+                    b.HasIndex("GuildId");
 
                     b.HasIndex("ProfessionId");
 
@@ -1781,6 +1791,834 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.ToTable("LanguageNations");
                 });
 
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.BankingSystem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("AllowsLoans")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("CurrencyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<bool>("HasStateControl")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("HistoryId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("InterestRate")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("SupportsForeignInvestment")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SystemType")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CurrencyId");
+
+                    b.HasIndex("HistoryId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("BankingSystems");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.CorporateLeadership", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CharacterId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CorporationId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<int?>("HistoryId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsMajorShareholder")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Position")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int?>("ProfessionId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Salary")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CharacterId");
+
+                    b.HasIndex("CorporationId");
+
+                    b.HasIndex("HistoryId");
+
+                    b.HasIndex("ProfessionId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("CorporateLeaderships");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.Corporation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("BankingSystemId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<int?>("HistoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IndustryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("IndustrySector")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("IsPubliclyTraded")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsStateOwned")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("NumberOfEmployees")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ParentCorporationId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Revenue")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("TaxationSystemId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BankingSystemId");
+
+                    b.HasIndex("HistoryId");
+
+                    b.HasIndex("IndustryId");
+
+                    b.HasIndex("ParentCorporationId");
+
+                    b.HasIndex("TaxationSystemId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("Corporations", t =>
+                        {
+                            t.HasCheckConstraint("CK_Corporations_Parent_NotSelf", "[ParentCorporationId] <> [Id]");
+                        });
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.CorporationFaction", b =>
+                {
+                    b.Property<int>("CorporationId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FactionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CorporationId", "FactionId");
+
+                    b.HasIndex("FactionId");
+
+                    b.ToTable("CorporationFactions");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.CorporationProfession", b =>
+                {
+                    b.Property<int>("CorporationId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProfessionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CorporationId", "ProfessionId");
+
+                    b.HasIndex("ProfessionId");
+
+                    b.ToTable("CorporationProfessions");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.Currency", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("BackingType")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<double>("ExchangeRate")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("HistoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Symbol")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HistoryId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("Currencies");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.EconomicSystem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("AllowsCorporations")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("AllowsGuilds")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("BankingSystemId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<bool>("HasStateControl")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("HistoryId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsFeudal")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsMarketDriven")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int?>("TaxationSystemId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BankingSystemId");
+
+                    b.HasIndex("HistoryId");
+
+                    b.HasIndex("TaxationSystemId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("EconomicSystems");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.ExtractionMethod", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<int?>("HistoryId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsSustainable")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MethodType")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HistoryId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("ExtractionMethods");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.Guild", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<int?>("EducationSystemId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("GuildType")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int?>("HistoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IndustryId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsGovernmentSanctioned")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("LegalSystemId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("PrimaryActivity")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<int?>("TaxationSystemId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EducationSystemId");
+
+                    b.HasIndex("HistoryId");
+
+                    b.HasIndex("IndustryId");
+
+                    b.HasIndex("LegalSystemId");
+
+                    b.HasIndex("TaxationSystemId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("Guilds");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.GuildFaction", b =>
+                {
+                    b.Property<int>("GuildId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FactionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GuildId", "FactionId");
+
+                    b.HasIndex("FactionId");
+
+                    b.ToTable("GuildFactions");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.GuildProfession", b =>
+                {
+                    b.Property<int>("GuildId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProfessionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GuildId", "ProfessionId");
+
+                    b.HasIndex("ProfessionId");
+
+                    b.ToTable("GuildProfessions");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.GuildRank", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<int>("GuildId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("HasLeadershipAuthority")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("HistoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("RankLevel")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("RankTitle")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GuildId");
+
+                    b.HasIndex("HistoryId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("GuildRanks");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.GuildSocialClass", b =>
+                {
+                    b.Property<int>("GuildId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SocialClassId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GuildId", "SocialClassId");
+
+                    b.HasIndex("SocialClassId");
+
+                    b.ToTable("GuildSocialClasses");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.Industry", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<double>("EmploymentRate")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("HistoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Sector")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HistoryId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("Industries");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.NaturalResource", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<int?>("ExtractionMethodId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("HistoryId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsRenewable")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsStrategicResource")
+                        .HasColumnType("bit");
+
+                    b.Property<double>("MarketValue")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<double>("Quantity")
+                        .HasColumnType("float");
+
+                    b.Property<string>("ResourceType")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExtractionMethodId");
+
+                    b.HasIndex("HistoryId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("NaturalResources");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.NaturalResourceLocation", b =>
+                {
+                    b.Property<int>("NaturalResourceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LocationId")
+                        .HasColumnType("int");
+
+                    b.HasKey("NaturalResourceId", "LocationId");
+
+                    b.HasIndex("LocationId");
+
+                    b.ToTable("NaturalResourceLocations");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.TaxationSystem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<double>("CorporateTaxRate")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<bool>("HasFlatTax")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("HasWealthTax")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("HistoryId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("IncomeTaxRate")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<double>("TradeTariffRate")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HistoryId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("TaxationSystems");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.TradeRoute", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<int?>("HistoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MainGoods")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("RouteType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HistoryId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("TradeRoutes");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.TradeRouteLocation", b =>
+                {
+                    b.Property<int>("TradeRouteId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LocationId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TradeRouteId", "LocationId");
+
+                    b.HasIndex("LocationId");
+
+                    b.ToTable("TradeRouteLocations");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.TradeRouteResource", b =>
+                {
+                    b.Property<int>("TradeRouteId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NaturalResourceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TradeRouteId", "NaturalResourceId");
+
+                    b.HasIndex("NaturalResourceId");
+
+                    b.ToTable("TradeRouteResources");
+                });
+
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Education.EducationRecord", b =>
                 {
                     b.Property<int>("Id")
@@ -1808,6 +2646,9 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("GuildId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -1831,6 +2672,8 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CharacterId");
+
+                    b.HasIndex("GuildId");
 
                     b.HasIndex("SchoolId");
 
@@ -3392,6 +4235,9 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                 {
                     b.HasBaseType("ChronicleKeeper.Core.Entities.Geography.Location");
 
+                    b.Property<int?>("EconomicSystemId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("EducationSystemId")
                         .HasColumnType("int");
 
@@ -3404,6 +4250,8 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Property<int?>("LegalSystemId")
                         .HasColumnType("int");
 
+                    b.HasIndex("EconomicSystemId");
+
                     b.HasIndex("EducationSystemId");
 
                     b.HasIndex("GovernmentSystemId");
@@ -3413,6 +4261,9 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.ToTable("Locations", t =>
                         {
                             t.HasCheckConstraint("CK_Locations_Parent_NotSelf", "[ParentLocationId] <> [Id]");
+
+                            t.Property("EconomicSystemId")
+                                .HasColumnName("City_EconomicSystemId");
 
                             t.Property("EducationSystemId")
                                 .HasColumnName("City_EducationSystemId");
@@ -3446,6 +4297,9 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                 {
                     b.HasBaseType("ChronicleKeeper.Core.Entities.Geography.Location");
 
+                    b.Property<int?>("EconomicSystemId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("EducationSystemId")
                         .HasColumnType("int");
 
@@ -3457,6 +4311,8 @@ namespace ChronicleKeeper.Infrastructure.Migrations
 
                     b.Property<int?>("PrimaryNationId")
                         .HasColumnType("int");
+
+                    b.HasIndex("EconomicSystemId");
 
                     b.HasIndex("EducationSystemId");
 
@@ -4477,6 +5333,16 @@ namespace ChronicleKeeper.Infrastructure.Migrations
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Professions.Apprenticeship", b =>
                 {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Economy.Corporation", "Corporation")
+                        .WithMany("Apprenticeships")
+                        .HasForeignKey("CorporationId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Economy.Guild", "Guild")
+                        .WithMany("Apprenticeships")
+                        .HasForeignKey("GuildId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("ChronicleKeeper.Core.Entities.Professions.Profession", "Profession")
                         .WithMany("Apprenticeships")
                         .HasForeignKey("ProfessionId")
@@ -4493,6 +5359,10 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .HasForeignKey("WorldId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Corporation");
+
+                    b.Navigation("Guild");
 
                     b.Navigation("Profession");
 
@@ -4719,12 +5589,499 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Navigation("Nation");
                 });
 
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.BankingSystem", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Economy.Currency", "Currency")
+                        .WithMany()
+                        .HasForeignKey("CurrencyId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.HistoryTimelines.History", "History")
+                        .WithMany()
+                        .HasForeignKey("HistoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Currency");
+
+                    b.Navigation("History");
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.CorporateLeadership", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Characters.Character", "Character")
+                        .WithMany()
+                        .HasForeignKey("CharacterId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Economy.Corporation", "Corporation")
+                        .WithMany("Leadership")
+                        .HasForeignKey("CorporationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.HistoryTimelines.History", "History")
+                        .WithMany()
+                        .HasForeignKey("HistoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Professions.Profession", "Profession")
+                        .WithMany()
+                        .HasForeignKey("ProfessionId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Character");
+
+                    b.Navigation("Corporation");
+
+                    b.Navigation("History");
+
+                    b.Navigation("Profession");
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.Corporation", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Economy.BankingSystem", "BankingSystem")
+                        .WithMany("FinancialInstitutions")
+                        .HasForeignKey("BankingSystemId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.HistoryTimelines.History", "History")
+                        .WithMany()
+                        .HasForeignKey("HistoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Economy.Industry", "Industry")
+                        .WithMany()
+                        .HasForeignKey("IndustryId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Economy.Corporation", "ParentCorporation")
+                        .WithMany("Subsidiaries")
+                        .HasForeignKey("ParentCorporationId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Economy.TaxationSystem", "TaxationSystem")
+                        .WithMany("TaxedCorporations")
+                        .HasForeignKey("TaxationSystemId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("BankingSystem");
+
+                    b.Navigation("History");
+
+                    b.Navigation("Industry");
+
+                    b.Navigation("ParentCorporation");
+
+                    b.Navigation("TaxationSystem");
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.CorporationFaction", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Economy.Corporation", "Corporation")
+                        .WithMany("Factions")
+                        .HasForeignKey("CorporationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Faction", "Faction")
+                        .WithMany()
+                        .HasForeignKey("FactionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Corporation");
+
+                    b.Navigation("Faction");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.CorporationProfession", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Economy.Corporation", "Corporation")
+                        .WithMany("MemberProfessions")
+                        .HasForeignKey("CorporationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Professions.Profession", "Profession")
+                        .WithMany()
+                        .HasForeignKey("ProfessionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Corporation");
+
+                    b.Navigation("Profession");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.Currency", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.HistoryTimelines.History", "History")
+                        .WithMany()
+                        .HasForeignKey("HistoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("History");
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.EconomicSystem", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Economy.BankingSystem", "BankingSystem")
+                        .WithMany("UsedInEconomicSystems")
+                        .HasForeignKey("BankingSystemId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.HistoryTimelines.History", "History")
+                        .WithMany()
+                        .HasForeignKey("HistoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Economy.TaxationSystem", "TaxationSystem")
+                        .WithMany("UsedInEconomicSystems")
+                        .HasForeignKey("TaxationSystemId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("BankingSystem");
+
+                    b.Navigation("History");
+
+                    b.Navigation("TaxationSystem");
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.ExtractionMethod", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.HistoryTimelines.History", "History")
+                        .WithMany()
+                        .HasForeignKey("HistoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("History");
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.Guild", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Education.EducationSystem", "EducationSystem")
+                        .WithMany("GuildsProvidingEducation")
+                        .HasForeignKey("EducationSystemId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.HistoryTimelines.History", "History")
+                        .WithMany()
+                        .HasForeignKey("HistoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Economy.Industry", "Industry")
+                        .WithMany()
+                        .HasForeignKey("IndustryId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Politics.LegalSystem", "LegalSystem")
+                        .WithMany("Guilds")
+                        .HasForeignKey("LegalSystemId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Economy.TaxationSystem", "TaxationSystem")
+                        .WithMany("TaxedGuilds")
+                        .HasForeignKey("TaxationSystemId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("EducationSystem");
+
+                    b.Navigation("History");
+
+                    b.Navigation("Industry");
+
+                    b.Navigation("LegalSystem");
+
+                    b.Navigation("TaxationSystem");
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.GuildFaction", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Faction", "Faction")
+                        .WithMany()
+                        .HasForeignKey("FactionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Economy.Guild", "Guild")
+                        .WithMany("Factions")
+                        .HasForeignKey("GuildId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Faction");
+
+                    b.Navigation("Guild");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.GuildProfession", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Economy.Guild", "Guild")
+                        .WithMany("MemberProfessions")
+                        .HasForeignKey("GuildId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Professions.Profession", "Profession")
+                        .WithMany()
+                        .HasForeignKey("ProfessionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Guild");
+
+                    b.Navigation("Profession");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.GuildRank", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Economy.Guild", "Guild")
+                        .WithMany("GuildRanks")
+                        .HasForeignKey("GuildId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.HistoryTimelines.History", "History")
+                        .WithMany()
+                        .HasForeignKey("HistoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Guild");
+
+                    b.Navigation("History");
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.GuildSocialClass", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Economy.Guild", "Guild")
+                        .WithMany("SocialClasses")
+                        .HasForeignKey("GuildId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Structure.SocialClass", "SocialClass")
+                        .WithMany()
+                        .HasForeignKey("SocialClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Guild");
+
+                    b.Navigation("SocialClass");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.Industry", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.HistoryTimelines.History", "History")
+                        .WithMany()
+                        .HasForeignKey("HistoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("History");
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.NaturalResource", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Economy.ExtractionMethod", "ExtractionMethod")
+                        .WithMany("ResourcesExtracted")
+                        .HasForeignKey("ExtractionMethodId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.HistoryTimelines.History", "History")
+                        .WithMany()
+                        .HasForeignKey("HistoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ExtractionMethod");
+
+                    b.Navigation("History");
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.NaturalResourceLocation", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Economy.NaturalResource", "NaturalResource")
+                        .WithMany("Locations")
+                        .HasForeignKey("NaturalResourceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Location");
+
+                    b.Navigation("NaturalResource");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.TaxationSystem", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.HistoryTimelines.History", "History")
+                        .WithMany()
+                        .HasForeignKey("HistoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("History");
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.TradeRoute", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.HistoryTimelines.History", "History")
+                        .WithMany()
+                        .HasForeignKey("HistoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("History");
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.TradeRouteLocation", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Economy.TradeRoute", "TradeRoute")
+                        .WithMany("Locations")
+                        .HasForeignKey("TradeRouteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Location");
+
+                    b.Navigation("TradeRoute");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.TradeRouteResource", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Economy.NaturalResource", "NaturalResource")
+                        .WithMany("ExportRoutes")
+                        .HasForeignKey("NaturalResourceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Economy.TradeRoute", "TradeRoute")
+                        .WithMany("ResourcesTraded")
+                        .HasForeignKey("TradeRouteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("NaturalResource");
+
+                    b.Navigation("TradeRoute");
+                });
+
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Education.EducationRecord", b =>
                 {
                     b.HasOne("ChronicleKeeper.Core.Entities.Characters.Character", "Character")
                         .WithMany("Educations")
                         .HasForeignKey("CharacterId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Economy.Guild", "Guild")
+                        .WithMany("Alumni")
+                        .HasForeignKey("GuildId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("ChronicleKeeper.Core.Entities.Social.Education.School", "School")
                         .WithMany("Alumni")
@@ -4743,6 +6100,8 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Character");
+
+                    b.Navigation("Guild");
 
                     b.Navigation("School");
 
@@ -5258,6 +6617,11 @@ namespace ChronicleKeeper.Infrastructure.Migrations
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.City", b =>
                 {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Economy.EconomicSystem", "EconomicSystem")
+                        .WithMany()
+                        .HasForeignKey("EconomicSystemId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("ChronicleKeeper.Core.Entities.Social.Education.EducationSystem", "EducationSystem")
                         .WithMany()
                         .HasForeignKey("EducationSystemId")
@@ -5272,6 +6636,8 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("LegalSystemId")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("EconomicSystem");
 
                     b.Navigation("EducationSystem");
 
@@ -5282,6 +6648,11 @@ namespace ChronicleKeeper.Infrastructure.Migrations
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Country", b =>
                 {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Economy.EconomicSystem", "EconomicSystem")
+                        .WithMany()
+                        .HasForeignKey("EconomicSystemId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("ChronicleKeeper.Core.Entities.Social.Education.EducationSystem", "EducationSystem")
                         .WithMany()
                         .HasForeignKey("EducationSystemId")
@@ -5296,6 +6667,8 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("LegalSystemId")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("EconomicSystem");
 
                     b.Navigation("EducationSystem");
 
@@ -5454,8 +6827,73 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Navigation("Nations");
                 });
 
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.BankingSystem", b =>
+                {
+                    b.Navigation("FinancialInstitutions");
+
+                    b.Navigation("UsedInEconomicSystems");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.Corporation", b =>
+                {
+                    b.Navigation("Apprenticeships");
+
+                    b.Navigation("Factions");
+
+                    b.Navigation("Leadership");
+
+                    b.Navigation("MemberProfessions");
+
+                    b.Navigation("Subsidiaries");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.ExtractionMethod", b =>
+                {
+                    b.Navigation("ResourcesExtracted");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.Guild", b =>
+                {
+                    b.Navigation("Alumni");
+
+                    b.Navigation("Apprenticeships");
+
+                    b.Navigation("Factions");
+
+                    b.Navigation("GuildRanks");
+
+                    b.Navigation("MemberProfessions");
+
+                    b.Navigation("SocialClasses");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.NaturalResource", b =>
+                {
+                    b.Navigation("ExportRoutes");
+
+                    b.Navigation("Locations");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.TaxationSystem", b =>
+                {
+                    b.Navigation("TaxedCorporations");
+
+                    b.Navigation("TaxedGuilds");
+
+                    b.Navigation("UsedInEconomicSystems");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Economy.TradeRoute", b =>
+                {
+                    b.Navigation("Locations");
+
+                    b.Navigation("ResourcesTraded");
+                });
+
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Education.EducationSystem", b =>
                 {
+                    b.Navigation("GuildsProvidingEducation");
+
                     b.Navigation("Schools");
 
                     b.Navigation("Universities");
@@ -5492,6 +6930,11 @@ namespace ChronicleKeeper.Infrastructure.Migrations
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Politics.GovernmentSystem", b =>
                 {
                     b.Navigation("PoliticalParties");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Politics.LegalSystem", b =>
+                {
+                    b.Navigation("Guilds");
                 });
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Politics.PoliticalIdeology", b =>

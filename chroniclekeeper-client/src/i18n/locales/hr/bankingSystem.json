@@ -1,0 +1,42 @@
+{
+    "listTitle": "Bankarski sustavi",
+    "search": "Pretraži bankarske sustave…",
+    "loaderror": "Učitavanje nije uspjelo",
+    "notfound": "Bankarski sustav nije pronađen",
+    "none": "Nema",
+    "backtolist": "Natrag na bankarske sustave",
+    "emptyTitle": "Još nema bankarskih sustava",
+    "emptyText": "Središnje banke, trgovačke kuće, patuljački trezori — opiši tko drži novac i pod kojim ga uvjetima posuđuje.",
+    "columns": {
+        "name": "Naziv",
+        "systemType": "Vrsta sustava",
+        "interestRate": "Kamatna stopa",
+        "updated": "Ažurirano"
+    },
+    "fields": {
+        "description": "Opis",
+        "systemType": "Vrsta sustava",
+        "systemTypeHint": "npr. središnja banka, privatno bankarstvo, trgovačko bankarstvo",
+        "interestRate": "Kamatna stopa",
+        "currency": "Glavna valuta",
+        "flags": "Obilježja",
+        "allowsLoans": "Dopušta zajmove",
+        "hasStateControl": "Pod državnom kontrolom",
+        "supportsForeignInvestment": "Strana ulaganja"
+    },
+    "form": {
+        "newTitle": "Novi bankarski sustav",
+        "editTitle": "Uredi bankarski sustav",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "history": "Povijest",
+        "save": "Spremi bankarski sustav",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}”? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

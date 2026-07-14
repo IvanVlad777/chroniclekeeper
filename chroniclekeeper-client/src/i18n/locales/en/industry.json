@@ -1,0 +1,37 @@
+{
+    "listTitle": "Industries",
+    "search": "Search industries…",
+    "loaderror": "Failed to load",
+    "notfound": "Industry not found",
+    "none": "None",
+    "backtolist": "Back to industries",
+    "emptyTitle": "No industries yet",
+    "emptyText": "Mining, shipwrighting, alchemy — the trades whole cities live on. Create the first industry of your world.",
+    "columns": {
+        "name": "Name",
+        "sector": "Sector",
+        "employmentRate": "Employment",
+        "updated": "Updated"
+    },
+    "fields": {
+        "description": "Description",
+        "sector": "Sector",
+        "sectorHint": "e.g. Agriculture, Mining, Manufacturing",
+        "employmentRate": "Employment rate (%)"
+    },
+    "form": {
+        "newTitle": "New industry",
+        "editTitle": "Edit industry",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "history": "History",
+        "save": "Save industry",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

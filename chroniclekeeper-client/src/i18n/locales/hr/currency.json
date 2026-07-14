@@ -1,0 +1,38 @@
+{
+    "listTitle": "Valute",
+    "search": "Pretraži valute…",
+    "loaderror": "Učitavanje nije uspjelo",
+    "notfound": "Valuta nije pronađena",
+    "none": "Nema",
+    "backtolist": "Natrag na valute",
+    "emptyTitle": "Još nema valuta",
+    "emptyText": "Kovanice, novčanice i čudnovatija sredstva plaćanja — pokrivena zlatom, fiducijarna ili vezana uz magiju. Iskuj prvu valutu kojom tvoj svijet trguje.",
+    "columns": {
+        "name": "Naziv",
+        "symbol": "Simbol",
+        "exchangeRate": "Tečaj",
+        "updated": "Ažurirano"
+    },
+    "fields": {
+        "description": "Opis",
+        "symbol": "Simbol",
+        "exchangeRate": "Tečaj",
+        "backingType": "Vrsta pokrića",
+        "backingTypeHint": "npr. pokrivena zlatom, fiducijarna, magijska"
+    },
+    "form": {
+        "newTitle": "Nova valuta",
+        "editTitle": "Uredi valutu",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "history": "Povijest",
+        "save": "Spremi valutu",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}”? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

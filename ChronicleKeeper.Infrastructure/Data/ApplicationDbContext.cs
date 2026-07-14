@@ -20,6 +20,7 @@ using ChronicleKeeper.Core.Entities.Notes;
 using ChronicleKeeper.Core.Entities.Professions;
 using ChronicleKeeper.Core.Entities.Social;
 using ChronicleKeeper.Core.Entities.Social.Cultures;
+using ChronicleKeeper.Core.Entities.Social.Economy;
 using ChronicleKeeper.Core.Entities.Social.Education;
 using ChronicleKeeper.Core.Entities.Social.Nationality;
 using ChronicleKeeper.Core.Entities.Social.Politics;
@@ -170,6 +171,28 @@ namespace ChronicleKeeper.Infrastructure.Data
         // Equipment
         public DbSet<Item> Items { get; set; }
         public DbSet<OwnershipHistory> OwnershipHistories { get; set; }
+
+        // Economy
+        public DbSet<EconomicSystem> EconomicSystems { get; set; }
+        public DbSet<Currency> Currencies { get; set; }
+        public DbSet<BankingSystem> BankingSystems { get; set; }
+        public DbSet<TaxationSystem> TaxationSystems { get; set; }
+        public DbSet<TradeRoute> TradeRoutes { get; set; }
+        public DbSet<NaturalResource> NaturalResources { get; set; }
+        public DbSet<ExtractionMethod> ExtractionMethods { get; set; }
+        public DbSet<Industry> Industries { get; set; }
+        public DbSet<Guild> Guilds { get; set; }
+        public DbSet<GuildRank> GuildRanks { get; set; }
+        public DbSet<Corporation> Corporations { get; set; }
+        public DbSet<CorporateLeadership> CorporateLeaderships { get; set; }
+        public DbSet<GuildFaction> GuildFactions { get; set; }
+        public DbSet<GuildProfession> GuildProfessions { get; set; }
+        public DbSet<GuildSocialClass> GuildSocialClasses { get; set; }
+        public DbSet<CorporationFaction> CorporationFactions { get; set; }
+        public DbSet<CorporationProfession> CorporationProfessions { get; set; }
+        public DbSet<TradeRouteLocation> TradeRouteLocations { get; set; }
+        public DbSet<TradeRouteResource> TradeRouteResources { get; set; }
+        public DbSet<NaturalResourceLocation> NaturalResourceLocations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

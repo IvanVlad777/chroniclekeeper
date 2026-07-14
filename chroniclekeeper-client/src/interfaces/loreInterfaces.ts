@@ -435,6 +435,7 @@ export interface LocationDto {
     governmentSystemId?: number | null;
     legalSystemId?: number | null;
     educationSystemId?: number | null;
+    economicSystemId?: number | null;
     isCapital?: boolean | null;
     districtType?: string | null;
 
@@ -466,6 +467,7 @@ export interface LocationDetailsDto extends LocationDto {
     governmentSystem?: ReferenceDto | null;
     legalSystem?: ReferenceDto | null;
     educationSystem?: ReferenceDto | null;
+    economicSystem?: ReferenceDto | null;
     schools: ReferenceDto[];
     nativeSpecies: ReferenceDto[];
     sourceLocation?: ReferenceDto | null;
@@ -488,6 +490,7 @@ export interface LocationCreateDto {
     governmentSystemId?: number | null;
     legalSystemId?: number | null;
     educationSystemId?: number | null;
+    economicSystemId?: number | null;
     isCapital?: boolean | null;
     districtType?: string | null;
 
@@ -1244,6 +1247,7 @@ export interface EducationRecordDto {
     characterId?: number | null;
     schoolId?: number | null;
     universityId?: number | null;
+    guildId?: number | null;
     startDate: string;
     endDate?: string | null;
     degree: string;
@@ -1258,6 +1262,7 @@ export interface EducationRecordCreateDto {
     characterId?: number | null;
     schoolId?: number | null;
     universityId?: number | null;
+    guildId?: number | null;
     startDate: string;
     endDate?: string | null;
     degree: string;
@@ -1928,3 +1933,417 @@ export interface CreatureCreateDto {
 export type CreatureUpdateDto = Omit<CreatureCreateDto, "worldId" | "subtype">;
 
 export type SeasonUpdateDto = Omit<SeasonCreateDto, "worldId">;
+
+// ----- Economy -----
+
+export interface CurrencyDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    symbol: string;
+    exchangeRate: number;
+    backingType: string;
+    historyId?: number | null;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface CurrencyDetailsDto extends CurrencyDto {
+    history?: ReferenceDto | null;
+}
+
+export interface CurrencyCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    symbol: string;
+    exchangeRate: number;
+    backingType: string;
+    historyId?: number | null;
+}
+
+export type CurrencyUpdateDto = Omit<CurrencyCreateDto, "worldId">;
+
+export interface BankingSystemDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    systemType: string;
+    interestRate: number;
+    allowsLoans: boolean;
+    hasStateControl: boolean;
+    supportsForeignInvestment: boolean;
+    currencyId?: number | null;
+    historyId?: number | null;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface BankingSystemDetailsDto extends BankingSystemDto {
+    currency?: ReferenceDto | null;
+    history?: ReferenceDto | null;
+}
+
+export interface BankingSystemCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    systemType: string;
+    interestRate: number;
+    allowsLoans: boolean;
+    hasStateControl: boolean;
+    supportsForeignInvestment: boolean;
+    currencyId?: number | null;
+    historyId?: number | null;
+}
+
+export type BankingSystemUpdateDto = Omit<BankingSystemCreateDto, "worldId">;
+
+export interface TaxationSystemDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    incomeTaxRate: number;
+    corporateTaxRate: number;
+    tradeTariffRate: number;
+    hasFlatTax: boolean;
+    hasWealthTax: boolean;
+    historyId?: number | null;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface TaxationSystemDetailsDto extends TaxationSystemDto {
+    history?: ReferenceDto | null;
+}
+
+export interface TaxationSystemCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    incomeTaxRate: number;
+    corporateTaxRate: number;
+    tradeTariffRate: number;
+    hasFlatTax: boolean;
+    hasWealthTax: boolean;
+    historyId?: number | null;
+}
+
+export type TaxationSystemUpdateDto = Omit<TaxationSystemCreateDto, "worldId">;
+
+export interface EconomicSystemDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    isMarketDriven: boolean;
+    hasStateControl: boolean;
+    isFeudal: boolean;
+    allowsCorporations: boolean;
+    allowsGuilds: boolean;
+    taxationSystemId?: number | null;
+    bankingSystemId?: number | null;
+    historyId?: number | null;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface EconomicSystemDetailsDto extends EconomicSystemDto {
+    taxationSystem?: ReferenceDto | null;
+    bankingSystem?: ReferenceDto | null;
+    history?: ReferenceDto | null;
+}
+
+export interface EconomicSystemCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    isMarketDriven: boolean;
+    hasStateControl: boolean;
+    isFeudal: boolean;
+    allowsCorporations: boolean;
+    allowsGuilds: boolean;
+    taxationSystemId?: number | null;
+    bankingSystemId?: number | null;
+    historyId?: number | null;
+}
+
+export type EconomicSystemUpdateDto = Omit<EconomicSystemCreateDto, "worldId">;
+
+export interface IndustryDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    sector: string;
+    employmentRate: number;
+    historyId?: number | null;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface IndustryDetailsDto extends IndustryDto {
+    history?: ReferenceDto | null;
+}
+
+export interface IndustryCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    sector: string;
+    employmentRate: number;
+    historyId?: number | null;
+}
+
+export type IndustryUpdateDto = Omit<IndustryCreateDto, "worldId">;
+
+export interface ExtractionMethodDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    methodType: string;
+    isSustainable: boolean;
+    historyId?: number | null;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface ExtractionMethodDetailsDto extends ExtractionMethodDto {
+    history?: ReferenceDto | null;
+    resourcesExtracted: ReferenceDto[];
+}
+
+export interface ExtractionMethodCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    methodType: string;
+    isSustainable: boolean;
+    historyId?: number | null;
+}
+
+export type ExtractionMethodUpdateDto = Omit<ExtractionMethodCreateDto, "worldId">;
+
+export interface NaturalResourceDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    resourceType: string;
+    quantity: number;
+    marketValue: number;
+    isRenewable: boolean;
+    isStrategicResource: boolean;
+    extractionMethodId?: number | null;
+    historyId?: number | null;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface NaturalResourceDetailsDto extends NaturalResourceDto {
+    extractionMethod?: ReferenceDto | null;
+    history?: ReferenceDto | null;
+    locations: ReferenceDto[];
+    exportRoutes: ReferenceDto[];
+}
+
+export interface NaturalResourceCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    resourceType: string;
+    quantity: number;
+    marketValue: number;
+    isRenewable: boolean;
+    isStrategicResource: boolean;
+    extractionMethodId?: number | null;
+    historyId?: number | null;
+}
+
+export type NaturalResourceUpdateDto = Omit<NaturalResourceCreateDto, "worldId">;
+
+export interface TradeRouteDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    routeType: string;
+    mainGoods: string;
+    historyId?: number | null;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface TradeRouteDetailsDto extends TradeRouteDto {
+    history?: ReferenceDto | null;
+    locations: ReferenceDto[];
+    resourcesTraded: ReferenceDto[];
+}
+
+export interface TradeRouteCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    routeType: string;
+    mainGoods: string;
+    historyId?: number | null;
+}
+
+export type TradeRouteUpdateDto = Omit<TradeRouteCreateDto, "worldId">;
+
+export const guildRankLevels = ["Master", "Journeyman", "Apprentice"] as const;
+export type GuildRankLevel = (typeof guildRankLevels)[number];
+
+export interface GuildRankDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    guildId: number;
+    rankTitle: string;
+    rankLevel: GuildRankLevel;
+    hasLeadershipAuthority: boolean;
+    createdAt: string;
+    updatedAt: string;
+}
+
+/** Svijet ranga se izvodi iz ceha — ne šalje se worldId. */
+export interface GuildRankCreateDto {
+    name: string;
+    description: string;
+    guildId: number;
+    rankTitle: string;
+    rankLevel: GuildRankLevel;
+    hasLeadershipAuthority: boolean;
+}
+
+export type GuildRankUpdateDto = Omit<GuildRankCreateDto, "guildId">;
+
+export interface GuildDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    guildType: string;
+    primaryActivity: string;
+    isGovernmentSanctioned: boolean;
+    taxationSystemId?: number | null;
+    industryId?: number | null;
+    legalSystemId?: number | null;
+    educationSystemId?: number | null;
+    historyId?: number | null;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface GuildDetailsDto extends GuildDto {
+    taxationSystem?: ReferenceDto | null;
+    industry?: ReferenceDto | null;
+    legalSystem?: ReferenceDto | null;
+    educationSystem?: ReferenceDto | null;
+    history?: ReferenceDto | null;
+    guildRanks: GuildRankDto[];
+    factions: ReferenceDto[];
+    memberProfessions: ReferenceDto[];
+    socialClasses: ReferenceDto[];
+}
+
+export interface GuildCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    guildType: string;
+    primaryActivity: string;
+    isGovernmentSanctioned: boolean;
+    taxationSystemId?: number | null;
+    industryId?: number | null;
+    legalSystemId?: number | null;
+    educationSystemId?: number | null;
+    historyId?: number | null;
+}
+
+export type GuildUpdateDto = Omit<GuildCreateDto, "worldId">;
+
+export interface CorporateLeadershipDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    corporationId: number;
+    position: string;
+    salary: number;
+    isMajorShareholder: boolean;
+    professionId?: number | null;
+    professionName?: string | null;
+    characterId?: number | null;
+    characterName?: string | null;
+    createdAt: string;
+    updatedAt: string;
+}
+
+/** Svijet pozicije se izvodi iz korporacije — ne šalje se worldId. */
+export interface CorporateLeadershipCreateDto {
+    name: string;
+    description: string;
+    corporationId: number;
+    position: string;
+    salary: number;
+    isMajorShareholder: boolean;
+    professionId?: number | null;
+    characterId?: number | null;
+}
+
+export type CorporateLeadershipUpdateDto = Omit<CorporateLeadershipCreateDto, "corporationId">;
+
+export interface CorporationDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    industrySector: string;
+    revenue: number;
+    numberOfEmployees: number;
+    isPubliclyTraded: boolean;
+    isStateOwned: boolean;
+    industryId?: number | null;
+    taxationSystemId?: number | null;
+    bankingSystemId?: number | null;
+    parentCorporationId?: number | null;
+    historyId?: number | null;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface CorporationDetailsDto extends CorporationDto {
+    industry?: ReferenceDto | null;
+    taxationSystem?: ReferenceDto | null;
+    bankingSystem?: ReferenceDto | null;
+    parentCorporation?: ReferenceDto | null;
+    history?: ReferenceDto | null;
+    subsidiaries: ReferenceDto[];
+    leadership: CorporateLeadershipDto[];
+    factions: ReferenceDto[];
+    memberProfessions: ReferenceDto[];
+}
+
+export interface CorporationCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    industrySector: string;
+    revenue: number;
+    numberOfEmployees: number;
+    isPubliclyTraded: boolean;
+    isStateOwned: boolean;
+    industryId?: number | null;
+    taxationSystemId?: number | null;
+    bankingSystemId?: number | null;
+    parentCorporationId?: number | null;
+    historyId?: number | null;
+}
+
+export type CorporationUpdateDto = Omit<CorporationCreateDto, "worldId">;

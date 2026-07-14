@@ -1,0 +1,48 @@
+{
+    "listTitle": "Trgovačke rute",
+    "search": "Pretraži trgovačke rute…",
+    "loaderror": "Učitavanje nije uspjelo",
+    "notfound": "Trgovačka ruta nije pronađena",
+    "none": "Nema",
+    "backtolist": "Natrag na trgovačke rute",
+    "emptyTitle": "Još nema trgovačkih ruta",
+    "emptyText": "Karavane, morski putovi i mreže portala — žile kucavice trgovine. Ucrtaj prvu trgovačku rutu svog svijeta.",
+    "columns": {
+        "name": "Naziv",
+        "routeType": "Vrsta rute",
+        "mainGoods": "Glavna roba",
+        "updated": "Ažurirano"
+    },
+    "fields": {
+        "description": "Opis",
+        "routeType": "Vrsta rute",
+        "routeTypeHint": "npr. kopnena, morska, zračna, magijski portal",
+        "mainGoods": "Glavna roba",
+        "mainGoodsHint": "npr. svila, začini, začarana rudača"
+    },
+    "links": {
+        "locations": "Postaje",
+        "resources": "Roba u prometu",
+        "add": "poveži",
+        "remove": "Odveži {{name}}",
+        "pick": "Odaberi zapis",
+        "confirm": "Poveži",
+        "addFailed": "Povezivanje nije uspjelo.",
+        "removeFailed": "Odvezivanje nije uspjelo."
+    },
+    "form": {
+        "newTitle": "Nova trgovačka ruta",
+        "editTitle": "Uredi trgovačku rutu",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "history": "Povijest",
+        "save": "Spremi trgovačku rutu",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}”? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

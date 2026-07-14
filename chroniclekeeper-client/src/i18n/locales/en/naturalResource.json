@@ -1,0 +1,59 @@
+{
+    "listTitle": "Natural Resources",
+    "search": "Search natural resources…",
+    "loaderror": "Failed to load",
+    "notfound": "Natural resource not found",
+    "none": "None",
+    "backtolist": "Back to natural resources",
+    "emptyTitle": "No natural resources yet",
+    "emptyText": "Iron, timber, mana crystals — the raw wealth kingdoms fight over. Create the first natural resource of your world.",
+    "columns": {
+        "name": "Name",
+        "resourceType": "Resource type",
+        "marketValue": "Market value",
+        "isStrategicResource": "Strategic",
+        "updated": "Updated"
+    },
+    "strategic": {
+        "yes": "Strategic",
+        "no": "—"
+    },
+    "fields": {
+        "description": "Description",
+        "resourceType": "Resource type",
+        "resourceTypeHint": "e.g. Wood, Gold, Iron, Oil, Mana Crystals",
+        "quantity": "Quantity",
+        "marketValue": "Market value",
+        "flags": "Traits",
+        "isRenewable": "Renewable",
+        "isStrategicResource": "Strategic resource",
+        "extractionMethod": "Extraction method"
+    },
+    "links": {
+        "locations": "Found at locations",
+        "add": "link",
+        "remove": "Unlink {{name}}",
+        "pick": "Pick an entry",
+        "confirm": "Link",
+        "addFailed": "Linking failed.",
+        "removeFailed": "Unlinking failed."
+    },
+    "exportRoutes": {
+        "label": "Export routes"
+    },
+    "form": {
+        "newTitle": "New natural resource",
+        "editTitle": "Edit natural resource",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "history": "History",
+        "save": "Save natural resource",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

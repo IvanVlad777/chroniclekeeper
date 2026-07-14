@@ -60,6 +60,36 @@ const newEntryTargets: { key: string; glyph: string; to: string }[] = [
     { key: "climateDetails", glyph: "☂", to: "/storymap/climate-details/new" },
     { key: "seasons", glyph: "☀", to: "/storymap/seasons/new" },
     { key: "creatures", glyph: "🐾", to: "/storymap/creatures/new" },
+    {
+        key: "economicSystems",
+        glyph: "⚜",
+        to: "/storymap/economic-systems/new",
+    },
+    { key: "currencies", glyph: "◉", to: "/storymap/currencies/new" },
+    {
+        key: "bankingSystems",
+        glyph: "🏛",
+        to: "/storymap/banking-systems/new",
+    },
+    {
+        key: "taxationSystems",
+        glyph: "⚖",
+        to: "/storymap/taxation-systems/new",
+    },
+    { key: "industries", glyph: "⚙", to: "/storymap/industries/new" },
+    {
+        key: "extractionMethods",
+        glyph: "⛏",
+        to: "/storymap/extraction-methods/new",
+    },
+    {
+        key: "naturalResources",
+        glyph: "⛰",
+        to: "/storymap/natural-resources/new",
+    },
+    { key: "tradeRoutes", glyph: "⛵", to: "/storymap/trade-routes/new" },
+    { key: "guilds", glyph: "⚒", to: "/storymap/guilds/new" },
+    { key: "corporations", glyph: "🏢", to: "/storymap/corporations/new" },
 ];
 
 export function Sidebar() {

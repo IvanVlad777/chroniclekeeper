@@ -22,13 +22,14 @@ namespace ChronicleKeeper.Core.Entities.Geography
         public Social.Education.EducationSystem? EducationSystem { get; set; }
 
         //public Army? Army { get; set; } // TODO: Uncomment when Army entity is revived
-        //public EconomicSystem? EconomicSystem { get; set; } // TODO: Uncomment when EconomicSystem entity is revived
-        //public ICollection<Industry> MajorIndustries { get; set; } = new List<Industry>(); // TODO: Uncomment when Industry entity is revived
-        //public ICollection<Corporation> Corporations { get; set; } = new List<Corporation>(); // TODO: Uncomment when Corporation entity is revived
-        //public ICollection<Guild> Guilds { get; set; } = new List<Guild>(); // TODO: Uncomment when Guild entity is revived
+        public int? EconomicSystemId { get; set; }
+        public Social.Economy.EconomicSystem? EconomicSystem { get; set; }
+        //public ICollection<Industry> MajorIndustries { get; set; } = new List<Industry>(); // TODO: Many-to-many cross-link, needs join entity — deferred, same pattern as Culture<->Nation
+        //public ICollection<Corporation> Corporations { get; set; } = new List<Corporation>(); // TODO: Many-to-many cross-link, needs join entity — deferred, same pattern as Culture<->Nation
+        //public ICollection<Guild> Guilds { get; set; } = new List<Guild>(); // TODO: Many-to-many cross-link, needs join entity — deferred, same pattern as Culture<->Nation
         //public ICollection<CulturalInstitution> CulturalInstitutions { get; set; } = new List<CulturalInstitution>(); // TODO: Uncomment when CulturalInstitution entity is revived
-        //public ICollection<TradeRoute> TradeRoutes { get; set; } = new List<TradeRoute>(); // TODO: Uncomment when TradeRoute entity is revived
-        //public ICollection<Creatures.Creature> Creature { get; set; } = new List<Creatures.Creature>(); // TODO: Uncomment when Creature entity is revived
+        //public ICollection<TradeRoute> TradeRoutes { get; set; } = new List<TradeRoute>(); // TODO: Many-to-many cross-link, needs join entity — deferred; waypoints already possible via TradeRouteLocation (target side gets no nav)
+        // NOTE: relation to Creature already exists via the CreatureCity join entity (Creature owns the nav) — target side gets no nav per convention.
 
         //public ICollection<PoliticalParty> PoliticalParties { get; set; } = new List<PoliticalParty>(); // TODO: Many-to-many cross-link, needs join entity — deferred, same pattern as Culture<->Nation
         //public ICollection<Social.Cultures.Culture> PredominantCultures { get; set; } = new List<Social.Cultures.Culture>(); // TODO: Many-to-many cross-link, needs join entity — deferred, same pattern as Culture<->Nation

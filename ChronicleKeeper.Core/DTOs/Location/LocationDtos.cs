@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using static ChronicleKeeper.Core.Enums.EcosystemEnums;
 using static ChronicleKeeper.Core.Enums.LoreEnums;
 
@@ -26,6 +26,7 @@ namespace ChronicleKeeper.Core.DTOs.Location
         public int? GovernmentSystemId { get; set; }
         public int? LegalSystemId { get; set; }
         public int? EducationSystemId { get; set; }
+        public int? EconomicSystemId { get; set; }
         public bool? IsCapital { get; set; }
         public string? DistrictType { get; set; }
 
@@ -65,6 +66,7 @@ namespace ChronicleKeeper.Core.DTOs.Location
         public ReferenceDto? GovernmentSystem { get; set; }
         public ReferenceDto? LegalSystem { get; set; }
         public ReferenceDto? EducationSystem { get; set; }
+        public ReferenceDto? EconomicSystem { get; set; }
         public List<ReferenceDto> Schools { get; set; } = new();
         public List<ReferenceDto> NativeSpecies { get; set; } = new();
         public ReferenceDto? SourceLocation { get; set; }
@@ -96,6 +98,7 @@ namespace ChronicleKeeper.Core.DTOs.Location
         public int? GovernmentSystemId { get; set; }
         public int? LegalSystemId { get; set; }
         public int? EducationSystemId { get; set; }
+        public int? EconomicSystemId { get; set; }
         public bool? IsCapital { get; set; }
         public string? DistrictType { get; set; }
 
@@ -140,6 +143,7 @@ namespace ChronicleKeeper.Core.DTOs.Location
         public int? GovernmentSystemId { get; set; }
         public int? LegalSystemId { get; set; }
         public int? EducationSystemId { get; set; }
+        public int? EconomicSystemId { get; set; }
         public bool? IsCapital { get; set; }
         public string? DistrictType { get; set; }
 

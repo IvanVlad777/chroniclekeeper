@@ -1,0 +1,48 @@
+{
+    "listTitle": "Trade Routes",
+    "search": "Search trade routes…",
+    "loaderror": "Failed to load",
+    "notfound": "Trade route not found",
+    "none": "None",
+    "backtolist": "Back to trade routes",
+    "emptyTitle": "No trade routes yet",
+    "emptyText": "Caravans, sea lanes and portal networks — the arteries of commerce. Chart the first trade route of your world.",
+    "columns": {
+        "name": "Name",
+        "routeType": "Route type",
+        "mainGoods": "Main goods",
+        "updated": "Updated"
+    },
+    "fields": {
+        "description": "Description",
+        "routeType": "Route type",
+        "routeTypeHint": "e.g. Land, Sea, Air, Magic Portal",
+        "mainGoods": "Main goods",
+        "mainGoodsHint": "e.g. Silk, spices, enchanted ore"
+    },
+    "links": {
+        "locations": "Waypoints",
+        "resources": "Resources traded",
+        "add": "link",
+        "remove": "Unlink {{name}}",
+        "pick": "Pick an entry",
+        "confirm": "Link",
+        "addFailed": "Linking failed.",
+        "removeFailed": "Unlinking failed."
+    },
+    "form": {
+        "newTitle": "New trade route",
+        "editTitle": "Edit trade route",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "history": "History",
+        "save": "Save trade route",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

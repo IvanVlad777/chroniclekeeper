@@ -20,12 +20,14 @@ namespace ChronicleKeeper.Core.Entities.Geography
         public int? EducationSystemId { get; set; }
         public Social.Education.EducationSystem? EducationSystem { get; set; }
 
-        //public EconomicSystem? EconomicSystem { get; set; } // TODO: Uncomment when EconomicSystem entity is revived
+        public int? EconomicSystemId { get; set; }
+        public Social.Economy.EconomicSystem? EconomicSystem { get; set; }
+
         //public ICollection<MilitaryOrganization> MilitaryOrganizations { get; set; } = new List<MilitaryOrganization>(); // TODO: Uncomment when MilitaryOrganization entity is revived
-        //public ICollection<Industry> MajorIndustries { get; set; } = new List<Industry>(); // TODO: Uncomment when Industry entity is revived
-        //public ICollection<Corporation> Corporations { get; set; } = new List<Corporation>(); // TODO: Uncomment when Corporation entity is revived
-        //public ICollection<Guild> Guilds { get; set; } = new List<Guild>(); // TODO: Uncomment when Guild entity is revived
-        //public ICollection<TradeRoute> TradeRoutes { get; set; } = new List<TradeRoute>(); // TODO: Uncomment when TradeRoute entity is revived
+        //public ICollection<Industry> MajorIndustries { get; set; } = new List<Industry>(); // TODO: Many-to-many cross-link, needs join entity — deferred, same pattern as Culture<->Nation
+        //public ICollection<Corporation> Corporations { get; set; } = new List<Corporation>(); // TODO: Many-to-many cross-link, needs join entity — deferred, same pattern as Culture<->Nation
+        //public ICollection<Guild> Guilds { get; set; } = new List<Guild>(); // TODO: Many-to-many cross-link, needs join entity — deferred, same pattern as Culture<->Nation
+        //public ICollection<TradeRoute> TradeRoutes { get; set; } = new List<TradeRoute>(); // TODO: Many-to-many cross-link, needs join entity — deferred; waypoints already possible via TradeRouteLocation (target side gets no nav)
 
         //public ICollection<PoliticalParty> PoliticalParties { get; set; } = new List<PoliticalParty>(); // TODO: Many-to-many cross-link, needs join entity — deferred, same pattern as Culture<->Nation
         //public ICollection<Nation> Nations { get; set; } = new List<Nation>(); // TODO: Many-to-many cross-link, needs join entity — deferred, same pattern as Culture<->Nation

@@ -53,6 +53,7 @@ namespace ChronicleKeeper.Core.CQRS.EducationRecords.Handlers
         private readonly ICharacterRepository _characterRepository;
         private readonly ISchoolRepository _schoolRepository;
         private readonly IUniversityRepository _universityRepository;
+        private readonly IGuildRepository _guildRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<CreateEducationRecordCommandHandler> _logger;
 
@@ -62,6 +63,7 @@ namespace ChronicleKeeper.Core.CQRS.EducationRecords.Handlers
             ICharacterRepository characterRepository,
             ISchoolRepository schoolRepository,
             IUniversityRepository universityRepository,
+            IGuildRepository guildRepository,
             IMapper mapper,
             ILogger<CreateEducationRecordCommandHandler> logger)
         {
@@ -70,6 +72,7 @@ namespace ChronicleKeeper.Core.CQRS.EducationRecords.Handlers
             _characterRepository = characterRepository;
             _schoolRepository = schoolRepository;
             _universityRepository = universityRepository;
+            _guildRepository = guildRepository;
             _mapper = mapper;
             _logger = logger;
         }
@@ -106,6 +109,16 @@ namespace ChronicleKeeper.Core.CQRS.EducationRecords.Handlers
                 throw new DomainValidationException($"University with ID {universityId} does not exist in this world.");
             }
 
+            if (dto.GuildId is int guildId)
+            {
+                var guild = await _guildRepository.FindByIdAsync(guildId, cancellationToken)
+                    ?? throw new DomainValidationException($"Guild with ID {guildId} does not exist.");
+                if (guild.WorldId != dto.WorldId)
+                {
+                    throw new DomainValidationException($"Guild with ID {guildId} does not exist in this world.");
+                }
+            }
+
             var record = _mapper.Map<EducationRecord>(dto);
             var created = await _repository.CreateAsync(record, cancellationToken);
             return _mapper.Map<EducationRecordDto>(created);
@@ -118,6 +131,7 @@ namespace ChronicleKeeper.Core.CQRS.EducationRecords.Handlers
         private readonly ICharacterRepository _characterRepository;
         private readonly ISchoolRepository _schoolRepository;
         private readonly IUniversityRepository _universityRepository;
+        private readonly IGuildRepository _guildRepository;
         private readonly IMapper _mapper;
 
         public UpdateEducationRecordCommandHandler(
@@ -125,12 +139,14 @@ namespace ChronicleKeeper.Core.CQRS.EducationRecords.Handlers
             ICharacterRepository characterRepository,
             ISchoolRepository schoolRepository,
             IUniversityRepository universityRepository,
+            IGuildRepository guildRepository,
             IMapper mapper)
         {
             _repository = repository;
             _characterRepository = characterRepository;
             _schoolRepository = schoolRepository;
             _universityRepository = universityRepository;
+            _guildRepository = guildRepository;
             _mapper = mapper;
         }
 
@@ -161,6 +177,16 @@ namespace ChronicleKeeper.Core.CQRS.EducationRecords.Handlers
                 && !await _universityRepository.ExistsInWorldAsync(universityId, record.WorldId, cancellationToken))
             {
                 throw new DomainValidationException($"University with ID {universityId} does not exist in this world.");
+            }
+
+            if (dto.GuildId is int guildId)
+            {
+                var guild = await _guildRepository.FindByIdAsync(guildId, cancellationToken)
+                    ?? throw new DomainValidationException($"Guild with ID {guildId} does not exist.");
+                if (guild.WorldId != record.WorldId)
+                {
+                    throw new DomainValidationException($"Guild with ID {guildId} does not exist in this world.");
+                }
             }
 
             _mapper.Map(dto, record);

@@ -38,7 +38,17 @@
         "climateZones": "Klimatske zone",
         "climateDetails": "Klimatski detalji",
         "seasons": "Godišnja doba",
-        "creatures": "Stvorenja"
+        "creatures": "Stvorenja",
+        "economicSystems": "Ekonomski sustavi",
+        "currencies": "Valute",
+        "bankingSystems": "Bankarski sustavi",
+        "taxationSystems": "Porezni sustavi",
+        "industries": "Industrije",
+        "extractionMethods": "Metode ekstrakcije",
+        "naturalResources": "Prirodni resursi",
+        "tradeRoutes": "Trgovačke rute",
+        "guilds": "Cehovi",
+        "corporations": "Korporacije"
     },
     "shell": {
         "newEntry": "Novi zapis",

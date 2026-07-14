@@ -127,6 +127,13 @@ namespace ChronicleKeeper.Core.CQRS.EducationSystems.Handlers
                     $"This education system is used by {locationsInUse} location(s). Reassign them first.");
             }
 
+            var guildsInUse = await _repository.CountGuildsUsingEducationSystemAsync(request.Id, cancellationToken);
+            if (guildsInUse > 0)
+            {
+                throw new DomainValidationException(
+                    $"This education system is used by {guildsInUse} guild(s). Reassign them first.");
+            }
+
             return await _repository.DeleteAsync(request.Id, cancellationToken);
         }
     }

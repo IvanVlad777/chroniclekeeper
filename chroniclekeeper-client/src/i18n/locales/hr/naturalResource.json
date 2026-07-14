@@ -1,0 +1,59 @@
+{
+    "listTitle": "Prirodni resursi",
+    "search": "Pretraži prirodne resurse…",
+    "loaderror": "Učitavanje nije uspjelo",
+    "notfound": "Prirodni resurs nije pronađen",
+    "none": "Nema",
+    "backtolist": "Natrag na prirodne resurse",
+    "emptyTitle": "Još nema prirodnih resursa",
+    "emptyText": "Željezo, drvo, kristali mane — sirovo bogatstvo oko kojeg se kraljevstva otimaju. Stvori prvi prirodni resurs svog svijeta.",
+    "columns": {
+        "name": "Naziv",
+        "resourceType": "Vrsta resursa",
+        "marketValue": "Tržišna vrijednost",
+        "isStrategicResource": "Strateški",
+        "updated": "Ažurirano"
+    },
+    "strategic": {
+        "yes": "Strateški",
+        "no": "—"
+    },
+    "fields": {
+        "description": "Opis",
+        "resourceType": "Vrsta resursa",
+        "resourceTypeHint": "npr. drvo, zlato, željezo, nafta, kristali mane",
+        "quantity": "Količina",
+        "marketValue": "Tržišna vrijednost",
+        "flags": "Obilježja",
+        "isRenewable": "Obnovljiv",
+        "isStrategicResource": "Strateški resurs",
+        "extractionMethod": "Metoda ekstrakcije"
+    },
+    "links": {
+        "locations": "Nalazišta",
+        "add": "poveži",
+        "remove": "Odveži {{name}}",
+        "pick": "Odaberi zapis",
+        "confirm": "Poveži",
+        "addFailed": "Povezivanje nije uspjelo.",
+        "removeFailed": "Odvezivanje nije uspjelo."
+    },
+    "exportRoutes": {
+        "label": "Izvozne rute"
+    },
+    "form": {
+        "newTitle": "Novi prirodni resurs",
+        "editTitle": "Uredi prirodni resurs",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "history": "Povijest",
+        "save": "Spremi prirodni resurs",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}”? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

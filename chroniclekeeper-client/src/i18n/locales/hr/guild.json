@@ -1,0 +1,83 @@
+{
+    "listTitle": "Cehovi",
+    "search": "Pretraži cehove…",
+    "loaderror": "Učitavanje nije uspjelo",
+    "notfound": "Ceh nije pronađen",
+    "none": "Nema",
+    "backtolist": "Natrag na cehove",
+    "emptyTitle": "Još nema cehova",
+    "emptyText": "Kovači, magovi i lopovi jednako se zbijaju u cehove. Osnuj prvi ceh svog svijeta.",
+    "columns": {
+        "name": "Naziv",
+        "guildType": "Vrsta ceha",
+        "primaryActivity": "Glavna djelatnost",
+        "isGovernmentSanctioned": "Priznat",
+        "updated": "Ažurirano"
+    },
+    "sanctioned": {
+        "yes": "Priznat",
+        "no": "Nepriznat"
+    },
+    "fields": {
+        "description": "Opis",
+        "guildType": "Vrsta ceha",
+        "guildTypeHint": "npr. trgovački, obrtnički, vojni, lopovski",
+        "primaryActivity": "Glavna djelatnost",
+        "primaryActivityHint": "npr. kovaštvo, magija, trgovina, krijumčarenje",
+        "isGovernmentSanctioned": "Priznat od vlasti",
+        "taxationSystem": "Porezni sustav",
+        "industry": "Industrija",
+        "legalSystem": "Pravni sustav",
+        "educationSystem": "Sustav obrazovanja"
+    },
+    "rankLevels": {
+        "Master": "Majstor",
+        "Journeyman": "Kalfa",
+        "Apprentice": "Šegrt"
+    },
+    "ranks": {
+        "label": "Cehovski rangovi",
+        "add": "dodaj",
+        "addTitle": "Novi cehovski rang",
+        "editTitle": "Uredi cehovski rang",
+        "name": "Naziv",
+        "description": "Opis",
+        "rankTitle": "Titula ranga",
+        "rankLevel": "Razina ranga",
+        "hasLeadershipAuthority": "Vodstvene ovlasti",
+        "leadership": "Vodstvo",
+        "requiredMissing": "Naziv je obavezan.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo.",
+        "deleteConfirm": "Obrisati „{{name}}”? Ovo se ne može poništiti.",
+        "cancel": "Odustani",
+        "save": "Spremi",
+        "delete": "Obriši"
+    },
+    "links": {
+        "factions": "Povezane frakcije",
+        "professions": "Zanimanja članova",
+        "socialClasses": "Društveni slojevi",
+        "add": "poveži",
+        "remove": "Odveži {{name}}",
+        "pick": "Odaberi zapis",
+        "confirm": "Poveži",
+        "addFailed": "Povezivanje nije uspjelo.",
+        "removeFailed": "Odvezivanje nije uspjelo."
+    },
+    "form": {
+        "newTitle": "Novi ceh",
+        "editTitle": "Uredi ceh",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "history": "Povijest",
+        "save": "Spremi ceh",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}”? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

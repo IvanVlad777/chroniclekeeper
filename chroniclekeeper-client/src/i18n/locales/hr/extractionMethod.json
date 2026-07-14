@@ -1,0 +1,44 @@
+{
+    "listTitle": "Metode ekstrakcije",
+    "search": "Pretraži metode ekstrakcije…",
+    "loaderror": "Učitavanje nije uspjelo",
+    "notfound": "Metoda ekstrakcije nije pronađena",
+    "none": "Nema",
+    "backtolist": "Natrag na metode ekstrakcije",
+    "emptyTitle": "Još nema metoda ekstrakcije",
+    "emptyText": "Rudarenje, uzgoj, bušenje ili alkemija — kako tvoj svijet izvlači bogatstvo iz zemlje. Stvori prvu metodu ekstrakcije.",
+    "columns": {
+        "name": "Naziv",
+        "methodType": "Vrsta metode",
+        "isSustainable": "Održivo",
+        "updated": "Ažurirano"
+    },
+    "sustainable": {
+        "yes": "Održiva",
+        "no": "Iscrpljujuća"
+    },
+    "fields": {
+        "description": "Opis",
+        "methodType": "Vrsta metode",
+        "methodTypeHint": "npr. rudarenje, uzgoj, bušenje, alkemija",
+        "isSustainable": "Održiva (ekološki prihvatljiva)"
+    },
+    "resourcesExtracted": {
+        "label": "Resursi koji koriste ovu metodu"
+    },
+    "form": {
+        "newTitle": "Nova metoda ekstrakcije",
+        "editTitle": "Uredi metodu ekstrakcije",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "history": "Povijest",
+        "save": "Spremi metodu ekstrakcije",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}”? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

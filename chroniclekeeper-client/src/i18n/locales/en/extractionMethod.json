@@ -1,0 +1,44 @@
+{
+    "listTitle": "Extraction Methods",
+    "search": "Search extraction methods…",
+    "loaderror": "Failed to load",
+    "notfound": "Extraction method not found",
+    "none": "None",
+    "backtolist": "Back to extraction methods",
+    "emptyTitle": "No extraction methods yet",
+    "emptyText": "Mining, farming, drilling or alchemy — how your world pulls wealth from the earth. Create the first extraction method.",
+    "columns": {
+        "name": "Name",
+        "methodType": "Method type",
+        "isSustainable": "Sustainable",
+        "updated": "Updated"
+    },
+    "sustainable": {
+        "yes": "Sustainable",
+        "no": "Depleting"
+    },
+    "fields": {
+        "description": "Description",
+        "methodType": "Method type",
+        "methodTypeHint": "e.g. Mining, Farming, Drilling, Alchemy",
+        "isSustainable": "Sustainable (eco-friendly)"
+    },
+    "resourcesExtracted": {
+        "label": "Resources using this method"
+    },
+    "form": {
+        "newTitle": "New extraction method",
+        "editTitle": "Edit extraction method",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "history": "History",
+        "save": "Save extraction method",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

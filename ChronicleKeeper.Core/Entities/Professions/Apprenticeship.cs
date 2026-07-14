@@ -13,11 +13,11 @@ namespace ChronicleKeeper.Core.Entities.Professions
         public int ProfessionId { get; set; }
         public virtual Profession Profession { get; set; } = null!;
 
-        //public int? GuildId { get; set; } // TODO: Uncomment when Guild entity is revived
-        //public virtual Guild? Guild { get; set; }
+        public int? GuildId { get; set; }
+        public virtual Social.Economy.Guild? Guild { get; set; }
 
-        //public int? CorporationId { get; set; } // TODO: Uncomment when Corporation entity is revived
-        //public virtual Corporation? Corporation { get; set; }
+        public int? CorporationId { get; set; }
+        public virtual Social.Economy.Corporation? Corporation { get; set; }
 
         public int? TradeSchoolId { get; set; }
         public virtual TradeSchool? TradeSchool { get; set; }

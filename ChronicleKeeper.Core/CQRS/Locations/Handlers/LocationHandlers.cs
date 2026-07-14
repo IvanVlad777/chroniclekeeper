@@ -56,6 +56,7 @@ namespace ChronicleKeeper.Core.CQRS.Locations.Handlers
         private readonly IGovernmentSystemRepository _governmentSystemRepository;
         private readonly ILegalSystemRepository _legalSystemRepository;
         private readonly IEducationSystemRepository _educationSystemRepository;
+        private readonly IEconomicSystemRepository _economicSystemRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<CreateLocationCommandHandler> _logger;
 
@@ -66,6 +67,7 @@ namespace ChronicleKeeper.Core.CQRS.Locations.Handlers
             IGovernmentSystemRepository governmentSystemRepository,
             ILegalSystemRepository legalSystemRepository,
             IEducationSystemRepository educationSystemRepository,
+            IEconomicSystemRepository economicSystemRepository,
             IMapper mapper,
             ILogger<CreateLocationCommandHandler> logger)
         {
@@ -75,6 +77,7 @@ namespace ChronicleKeeper.Core.CQRS.Locations.Handlers
             _governmentSystemRepository = governmentSystemRepository;
             _legalSystemRepository = legalSystemRepository;
             _educationSystemRepository = educationSystemRepository;
+            _economicSystemRepository = economicSystemRepository;
             _mapper = mapper;
             _logger = logger;
         }
@@ -97,14 +100,16 @@ namespace ChronicleKeeper.Core.CQRS.Locations.Handlers
                 {
                     GovernmentSystemId = dto.GovernmentSystemId,
                     LegalSystemId = dto.LegalSystemId,
-                    EducationSystemId = dto.EducationSystemId
+                    EducationSystemId = dto.EducationSystemId,
+                    EconomicSystemId = dto.EconomicSystemId
                 },
                 LocationType.City => new City
                 {
                     IsCapital = dto.IsCapital ?? false,
                     GovernmentSystemId = dto.GovernmentSystemId,
                     LegalSystemId = dto.LegalSystemId,
-                    EducationSystemId = dto.EducationSystemId
+                    EducationSystemId = dto.EducationSystemId,
+                    EconomicSystemId = dto.EconomicSystemId
                 },
                 LocationType.District => new District { DistrictType = dto.DistrictType ?? string.Empty },
                 LocationType.Lake => new LakeEcosystem
@@ -156,7 +161,7 @@ namespace ChronicleKeeper.Core.CQRS.Locations.Handlers
             await LocationValidation.ValidateParentAsync(_repository, location, cancellationToken);
             await LocationValidation.ValidateHistoryAsync(_historyRepository, location, cancellationToken);
             await LocationValidation.ValidateSystemsAsync(
-                _governmentSystemRepository, _legalSystemRepository, _educationSystemRepository, location, cancellationToken);
+                _governmentSystemRepository, _legalSystemRepository, _educationSystemRepository, _economicSystemRepository, location, cancellationToken);
             await LocationValidation.ValidateRiverEndpointsAsync(_repository, location, cancellationToken);
 
             var created = await _repository.CreateAsync(location, cancellationToken);
@@ -173,6 +178,7 @@ namespace ChronicleKeeper.Core.CQRS.Locations.Handlers
         private readonly IGovernmentSystemRepository _governmentSystemRepository;
         private readonly ILegalSystemRepository _legalSystemRepository;
         private readonly IEducationSystemRepository _educationSystemRepository;
+        private readonly IEconomicSystemRepository _economicSystemRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<UpdateLocationCommandHandler> _logger;
 
@@ -182,6 +188,7 @@ namespace ChronicleKeeper.Core.CQRS.Locations.Handlers
             IGovernmentSystemRepository governmentSystemRepository,
             ILegalSystemRepository legalSystemRepository,
             IEducationSystemRepository educationSystemRepository,
+            IEconomicSystemRepository economicSystemRepository,
             IMapper mapper,
             ILogger<UpdateLocationCommandHandler> logger)
         {
@@ -190,6 +197,7 @@ namespace ChronicleKeeper.Core.CQRS.Locations.Handlers
             _governmentSystemRepository = governmentSystemRepository;
             _legalSystemRepository = legalSystemRepository;
             _educationSystemRepository = educationSystemRepository;
+            _economicSystemRepository = economicSystemRepository;
             _mapper = mapper;
             _logger = logger;
         }
@@ -231,12 +239,14 @@ namespace ChronicleKeeper.Core.CQRS.Locations.Handlers
                     country.GovernmentSystemId = dto.GovernmentSystemId;
                     country.LegalSystemId = dto.LegalSystemId;
                     country.EducationSystemId = dto.EducationSystemId;
+                    country.EconomicSystemId = dto.EconomicSystemId;
                     break;
                 case City city:
                     city.IsCapital = dto.IsCapital ?? false;
                     city.GovernmentSystemId = dto.GovernmentSystemId;
                     city.LegalSystemId = dto.LegalSystemId;
                     city.EducationSystemId = dto.EducationSystemId;
+                    city.EconomicSystemId = dto.EconomicSystemId;
                     break;
                 case District district:
                     district.DistrictType = dto.DistrictType ?? string.Empty;
@@ -290,7 +300,7 @@ namespace ChronicleKeeper.Core.CQRS.Locations.Handlers
             await LocationValidation.ValidateParentAsync(_repository, location, cancellationToken);
             await LocationValidation.ValidateHistoryAsync(_historyRepository, location, cancellationToken);
             await LocationValidation.ValidateSystemsAsync(
-                _governmentSystemRepository, _legalSystemRepository, _educationSystemRepository, location, cancellationToken);
+                _governmentSystemRepository, _legalSystemRepository, _educationSystemRepository, _economicSystemRepository, location, cancellationToken);
             await LocationValidation.ValidateRiverEndpointsAsync(_repository, location, cancellationToken);
 
             var updated = await _repository.UpdateAsync(location, cancellationToken);
@@ -485,14 +495,15 @@ namespace ChronicleKeeper.Core.CQRS.Locations.Handlers
             IGovernmentSystemRepository governmentSystemRepository,
             ILegalSystemRepository legalSystemRepository,
             IEducationSystemRepository educationSystemRepository,
+            IEconomicSystemRepository economicSystemRepository,
             Location location,
             CancellationToken cancellationToken)
         {
-            var (governmentSystemId, legalSystemId, educationSystemId) = location switch
+            var (governmentSystemId, legalSystemId, educationSystemId, economicSystemId) = location switch
             {
-                Country country => (country.GovernmentSystemId, country.LegalSystemId, country.EducationSystemId),
-                City city => (city.GovernmentSystemId, city.LegalSystemId, city.EducationSystemId),
-                _ => (null, null, null)
+                Country country => (country.GovernmentSystemId, country.LegalSystemId, country.EducationSystemId, country.EconomicSystemId),
+                City city => (city.GovernmentSystemId, city.LegalSystemId, city.EducationSystemId, city.EconomicSystemId),
+                _ => (null, null, null, null)
             };
 
             if (governmentSystemId is int gsId)
@@ -522,6 +533,16 @@ namespace ChronicleKeeper.Core.CQRS.Locations.Handlers
                 if (educationSystem.WorldId != location.WorldId)
                 {
                     throw new DomainValidationException($"Education system with ID {esId} does not belong to this world.");
+                }
+            }
+
+            if (economicSystemId is int ecId)
+            {
+                var economicSystem = await economicSystemRepository.FindByIdAsync(ecId, cancellationToken)
+                    ?? throw new DomainValidationException($"Economic system with ID {ecId} does not exist.");
+                if (economicSystem.WorldId != location.WorldId)
+                {
+                    throw new DomainValidationException($"Economic system with ID {ecId} does not belong to this world.");
                 }
             }
         }

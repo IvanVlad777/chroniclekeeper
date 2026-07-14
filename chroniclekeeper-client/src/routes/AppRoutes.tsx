@@ -92,6 +92,36 @@ import SeasonForm from "../components/entityViews/season/form/SeasonForm";
 import CreatureList from "../components/entityViews/creature/list/CreatureList";
 import CreatureDetails from "../components/entityViews/creature/detail/CreatureDetails";
 import CreatureForm from "../components/entityViews/creature/form/CreatureForm";
+import EconomicSystemList from "../components/entityViews/economicSystem/list/EconomicSystemList";
+import EconomicSystemDetails from "../components/entityViews/economicSystem/detail/EconomicSystemDetails";
+import EconomicSystemForm from "../components/entityViews/economicSystem/form/EconomicSystemForm";
+import CurrencyList from "../components/entityViews/currency/list/CurrencyList";
+import CurrencyDetails from "../components/entityViews/currency/detail/CurrencyDetails";
+import CurrencyForm from "../components/entityViews/currency/form/CurrencyForm";
+import BankingSystemList from "../components/entityViews/bankingSystem/list/BankingSystemList";
+import BankingSystemDetails from "../components/entityViews/bankingSystem/detail/BankingSystemDetails";
+import BankingSystemForm from "../components/entityViews/bankingSystem/form/BankingSystemForm";
+import TaxationSystemList from "../components/entityViews/taxationSystem/list/TaxationSystemList";
+import TaxationSystemDetails from "../components/entityViews/taxationSystem/detail/TaxationSystemDetails";
+import TaxationSystemForm from "../components/entityViews/taxationSystem/form/TaxationSystemForm";
+import IndustryList from "../components/entityViews/industry/list/IndustryList";
+import IndustryDetails from "../components/entityViews/industry/detail/IndustryDetails";
+import IndustryForm from "../components/entityViews/industry/form/IndustryForm";
+import ExtractionMethodList from "../components/entityViews/extractionMethod/list/ExtractionMethodList";
+import ExtractionMethodDetails from "../components/entityViews/extractionMethod/detail/ExtractionMethodDetails";
+import ExtractionMethodForm from "../components/entityViews/extractionMethod/form/ExtractionMethodForm";
+import NaturalResourceList from "../components/entityViews/naturalResource/list/NaturalResourceList";
+import NaturalResourceDetails from "../components/entityViews/naturalResource/detail/NaturalResourceDetails";
+import NaturalResourceForm from "../components/entityViews/naturalResource/form/NaturalResourceForm";
+import TradeRouteList from "../components/entityViews/tradeRoute/list/TradeRouteList";
+import TradeRouteDetails from "../components/entityViews/tradeRoute/detail/TradeRouteDetails";
+import TradeRouteForm from "../components/entityViews/tradeRoute/form/TradeRouteForm";
+import GuildList from "../components/entityViews/guild/list/GuildList";
+import GuildDetails from "../components/entityViews/guild/detail/GuildDetails";
+import GuildForm from "../components/entityViews/guild/form/GuildForm";
+import CorporationList from "../components/entityViews/corporation/list/CorporationList";
+import CorporationDetails from "../components/entityViews/corporation/detail/CorporationDetails";
+import CorporationForm from "../components/entityViews/corporation/form/CorporationForm";
 import { WorldProvider } from "../context/world/WorldProvider";
 import { AppShell } from "../components/shell/AppShell";
 
@@ -396,6 +426,130 @@ const AppRoutes = () => {
                 <Route path="creatures/new" element={<CreatureForm />} />
                 <Route path="creatures/:id" element={<CreatureDetails />} />
                 <Route path="creatures/:id/edit" element={<CreatureForm />} />
+                <Route
+                    path="economic-systems"
+                    element={<EconomicSystemList />}
+                />
+                <Route
+                    path="economic-systems/new"
+                    element={<EconomicSystemForm />}
+                />
+                <Route
+                    path="economic-systems/:id"
+                    element={<EconomicSystemDetails />}
+                />
+                <Route
+                    path="economic-systems/:id/edit"
+                    element={<EconomicSystemForm />}
+                />
+                <Route path="currencies" element={<CurrencyList />} />
+                <Route path="currencies/new" element={<CurrencyForm />} />
+                <Route path="currencies/:id" element={<CurrencyDetails />} />
+                <Route
+                    path="currencies/:id/edit"
+                    element={<CurrencyForm />}
+                />
+                <Route
+                    path="banking-systems"
+                    element={<BankingSystemList />}
+                />
+                <Route
+                    path="banking-systems/new"
+                    element={<BankingSystemForm />}
+                />
+                <Route
+                    path="banking-systems/:id"
+                    element={<BankingSystemDetails />}
+                />
+                <Route
+                    path="banking-systems/:id/edit"
+                    element={<BankingSystemForm />}
+                />
+                <Route
+                    path="taxation-systems"
+                    element={<TaxationSystemList />}
+                />
+                <Route
+                    path="taxation-systems/new"
+                    element={<TaxationSystemForm />}
+                />
+                <Route
+                    path="taxation-systems/:id"
+                    element={<TaxationSystemDetails />}
+                />
+                <Route
+                    path="taxation-systems/:id/edit"
+                    element={<TaxationSystemForm />}
+                />
+                <Route path="industries" element={<IndustryList />} />
+                <Route path="industries/new" element={<IndustryForm />} />
+                <Route path="industries/:id" element={<IndustryDetails />} />
+                <Route
+                    path="industries/:id/edit"
+                    element={<IndustryForm />}
+                />
+                <Route
+                    path="extraction-methods"
+                    element={<ExtractionMethodList />}
+                />
+                <Route
+                    path="extraction-methods/new"
+                    element={<ExtractionMethodForm />}
+                />
+                <Route
+                    path="extraction-methods/:id"
+                    element={<ExtractionMethodDetails />}
+                />
+                <Route
+                    path="extraction-methods/:id/edit"
+                    element={<ExtractionMethodForm />}
+                />
+                <Route
+                    path="natural-resources"
+                    element={<NaturalResourceList />}
+                />
+                <Route
+                    path="natural-resources/new"
+                    element={<NaturalResourceForm />}
+                />
+                <Route
+                    path="natural-resources/:id"
+                    element={<NaturalResourceDetails />}
+                />
+                <Route
+                    path="natural-resources/:id/edit"
+                    element={<NaturalResourceForm />}
+                />
+                <Route path="trade-routes" element={<TradeRouteList />} />
+                <Route
+                    path="trade-routes/new"
+                    element={<TradeRouteForm />}
+                />
+                <Route
+                    path="trade-routes/:id"
+                    element={<TradeRouteDetails />}
+                />
+                <Route
+                    path="trade-routes/:id/edit"
+                    element={<TradeRouteForm />}
+                />
+                <Route path="guilds" element={<GuildList />} />
+                <Route path="guilds/new" element={<GuildForm />} />
+                <Route path="guilds/:id" element={<GuildDetails />} />
+                <Route path="guilds/:id/edit" element={<GuildForm />} />
+                <Route path="corporations" element={<CorporationList />} />
+                <Route
+                    path="corporations/new"
+                    element={<CorporationForm />}
+                />
+                <Route
+                    path="corporations/:id"
+                    element={<CorporationDetails />}
+                />
+                <Route
+                    path="corporations/:id/edit"
+                    element={<CorporationForm />}
+                />
                 <Route path="*" element={<NoPage />} />
             </Route>
 
