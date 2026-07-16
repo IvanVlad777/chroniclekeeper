@@ -16,7 +16,33 @@ namespace ChronicleKeeper.Core.DTOs.History
 
     public class HistoryDetailsDto : HistoryDto
     {
-        public List<ReferenceDto> Timelines { get; set; } = new();
+        /// <summary>Timelines belonging to this history, with summary counts for the hub cards.</summary>
+        public List<HistoryTimelineDto> Timelines { get; set; } = new();
+
+        /// <summary>Entities (Character/Location/Faction/Nation) that point at this history.</summary>
+        public List<HistoryLinkDto> LinkedEntities { get; set; } = new();
+    }
+
+    /// <summary>A timeline card on the history hub: name + event/major counts + span (first–last event date).</summary>
+    public class HistoryTimelineDto
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public int EventCount { get; set; }
+        public int MajorEventCount { get; set; }
+        /// <summary>Date of the first event (by SortOrder); empty when the timeline has no events.</summary>
+        public string FirstDate { get; set; } = string.Empty;
+        /// <summary>Date of the last event (by SortOrder); empty when the timeline has no events.</summary>
+        public string LastDate { get; set; } = string.Empty;
+    }
+
+    /// <summary>An entity that links to a history — its type discriminator, id and name.</summary>
+    public class HistoryLinkDto
+    {
+        /// <summary>"Character" | "Location" | "Faction" | "Nation".</summary>
+        public string Type { get; set; } = string.Empty;
+        public int Id { get; set; }
+        public string Name { get; set; } = string.Empty;
     }
 
     public class HistoryCreateDto

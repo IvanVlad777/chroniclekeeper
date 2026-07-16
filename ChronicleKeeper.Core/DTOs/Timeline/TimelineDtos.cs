@@ -57,6 +57,7 @@ namespace ChronicleKeeper.Core.DTOs.Timeline
         public int TimelineId { get; set; }
         public string Date { get; set; } = string.Empty;
         public int SortOrder { get; set; }
+        public string Era { get; set; } = string.Empty;
         public string Consequences { get; set; } = string.Empty;
         public bool IsMajorEvent { get; set; }
         public DateTime CreatedAt { get; set; }
@@ -78,6 +79,10 @@ namespace ChronicleKeeper.Core.DTOs.Timeline
         public string Date { get; set; } = string.Empty;
 
         public int SortOrder { get; set; }
+
+        /// <summary>Optional era/period label used to group events (e.g. "Third Age").</summary>
+        [StringLength(100)]
+        public string Era { get; set; } = string.Empty;
 
         [StringLength(2000)]
         public string Consequences { get; set; } = string.Empty;

@@ -41,7 +41,11 @@ namespace ChronicleKeeper.Core.CQRS.Histories.Handlers
         public async Task<HistoryDetailsDto?> Handle(GetHistoryByIdQuery request, CancellationToken cancellationToken)
         {
             var history = await _repository.GetByIdAsync(request.Id, cancellationToken);
-            return history == null ? null : _mapper.Map<HistoryDetailsDto>(history);
+            if (history == null) return null;
+
+            var dto = _mapper.Map<HistoryDetailsDto>(history);
+            dto.LinkedEntities = await _repository.GetLinkedEntitiesAsync(request.Id, cancellationToken);
+            return dto;
         }
     }
 

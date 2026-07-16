@@ -105,23 +105,114 @@
     color: var(--color-muted);
 }
 
-.chipRow {
+/* Linked entities (reverse links) */
+.linkRow {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
 }
 
-.chipLink {
+.linkChip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     text-decoration: none;
-    color: var(--color-accent);
-    font-size: 13.5px;
-    padding: 5px 10px;
+    padding: 6px 11px;
     border: 1px solid var(--color-border);
     border-radius: var(--o-radius-lg);
+    background: var(--color-panel);
+    transition: border-color var(--o-transition);
 }
 
-.chipLink:hover {
-    text-decoration: underline;
+.linkChip:hover {
+    border-color: var(--color-accent);
+}
+
+.linkType {
+    font-size: 9.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-accent);
+    background: var(--color-accent-soft);
+    border-radius: 999px;
+    padding: 2px 8px;
+}
+
+.linkName {
+    font-size: 13.5px;
+    color: var(--color-text);
+}
+
+/* Timeline hub cards */
+.timelineGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+}
+
+.timelineCard {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-decoration: none;
+    padding: 16px 18px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--o-radius-lg);
+    background: var(--color-panel);
+    transition: border-color var(--o-transition), background var(--o-transition);
+}
+
+.timelineCard:hover {
+    border-color: var(--color-accent);
+    background: var(--color-accent-soft);
+}
+
+.timelineCardName {
+    font-family: var(--font-display);
+    font-size: 17px;
+    color: var(--color-text);
+}
+
+.timelineCardSpan {
+    font-size: 12.5px;
+    font-style: italic;
+    color: var(--color-muted);
+}
+
+.timelineCardMeta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 4px;
+    font-size: 12px;
+    color: var(--color-muted);
+}
+
+.timelineCardMajor {
+    color: var(--color-accent);
+}
+
+/* Inline "Add timeline" */
+.addTimeline {
+    border: 1px solid var(--color-border);
+    border-radius: var(--o-radius-lg);
+    background: var(--color-panel);
+    padding: 16px 18px;
+    margin-bottom: 16px;
+    max-width: 460px;
+}
+
+.miniError {
+    font-size: 13px;
+    color: var(--color-danger);
+    margin: 10px 0 0;
+}
+
+.miniActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 14px;
 }
 
 .backLink {

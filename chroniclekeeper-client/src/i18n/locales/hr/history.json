@@ -19,8 +19,31 @@
         "summary": "Sažetak",
         "isOfficial": "Službena povijest"
     },
+    "linked": {
+        "label": "Pripada",
+        "none": "Još nije povezano ni s jednim entitetom.",
+        "types": {
+            "Character": "Lik",
+            "Location": "Lokacija",
+            "Faction": "Frakcija",
+            "Nation": "Nacija"
+        }
+    },
     "timelines": {
-        "label": "Vremenske linije"
+        "label": "Vremenske linije",
+        "add": "Dodaj liniju",
+        "newName": "Naziv vremenske linije",
+        "nameRequired": "Naziv vremenske linije je obavezan.",
+        "create": "Stvori liniju",
+        "cancel": "Odustani",
+        "addFailed": "Stvaranje vremenske linije nije uspjelo.",
+        "empty": "Još nema vremenskih linija. Dodaj jednu da počneš bilježiti ovu povijest.",
+        "eventCount_one": "{{count}} događaj",
+        "eventCount_few": "{{count}} događaja",
+        "eventCount_other": "{{count}} događaja",
+        "majorCount_one": "{{count}} ključni",
+        "majorCount_few": "{{count}} ključna",
+        "majorCount_other": "{{count}} ključnih"
     },
     "form": {
         "newTitle": "Nova povijest",

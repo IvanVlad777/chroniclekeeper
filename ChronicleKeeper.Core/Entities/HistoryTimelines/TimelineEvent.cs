@@ -18,6 +18,9 @@ namespace ChronicleKeeper.Core.Entities.HistoryTimelines
         /// <summary>Deterministic ordering of events inside a timeline.</summary>
         public int SortOrder { get; set; }
 
+        /// <summary>Optional freeform era/period label used to group events on the timeline (e.g. "Third Age").</summary>
+        public string Era { get; set; } = string.Empty;
+
         public string Consequences { get; set; } = string.Empty; // Impact on history
         public bool IsMajorEvent { get; set; } // Determines historical importance
 

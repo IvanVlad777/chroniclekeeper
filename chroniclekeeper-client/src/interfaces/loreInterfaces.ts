@@ -270,6 +270,8 @@ export interface TimelineEventDto {
     /** Slobodan in-world datum, npr. "Godina 512, Treće doba". */
     date: string;
     sortOrder: number;
+    /** Opcionalna oznaka ere/razdoblja za grupiranje evenata, npr. "Treće doba". */
+    era: string;
     consequences: string;
     isMajorEvent: boolean;
     createdAt: string;
@@ -297,6 +299,7 @@ export interface TimelineEventCreateDto {
     description: string;
     date: string;
     sortOrder: number;
+    era: string;
     consequences: string;
     isMajorEvent: boolean;
 }
@@ -1436,8 +1439,25 @@ export interface HistoryDto {
     updatedAt: string;
 }
 
+export interface HistoryTimelineDto {
+    id: number;
+    name: string;
+    eventCount: number;
+    majorEventCount: number;
+    firstDate: string;
+    lastDate: string;
+}
+
+export interface HistoryLinkDto {
+    /** "Character" | "Location" | "Faction" | "Nation" */
+    type: string;
+    id: number;
+    name: string;
+}
+
 export interface HistoryDetailsDto extends HistoryDto {
-    timelines: ReferenceDto[];
+    timelines: HistoryTimelineDto[];
+    linkedEntities: HistoryLinkDto[];
 }
 
 export interface HistoryCreateDto {

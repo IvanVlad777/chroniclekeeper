@@ -19,8 +19,29 @@
         "summary": "Summary",
         "isOfficial": "Official history"
     },
+    "linked": {
+        "label": "Belongs to",
+        "none": "Not linked to any entity yet.",
+        "types": {
+            "Character": "Character",
+            "Location": "Location",
+            "Faction": "Faction",
+            "Nation": "Nation"
+        }
+    },
     "timelines": {
-        "label": "Timelines"
+        "label": "Timelines",
+        "add": "Add timeline",
+        "newName": "Timeline name",
+        "nameRequired": "A timeline name is required.",
+        "create": "Create timeline",
+        "cancel": "Cancel",
+        "addFailed": "Creating the timeline failed.",
+        "empty": "No timelines yet. Add one to start charting this history.",
+        "eventCount_one": "{{count}} event",
+        "eventCount_other": "{{count}} events",
+        "majorCount_one": "{{count}} major",
+        "majorCount_other": "{{count}} major"
     },
     "form": {
         "newTitle": "New history",

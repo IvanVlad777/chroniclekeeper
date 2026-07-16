@@ -25,6 +25,9 @@ namespace ChronicleKeeper.Infrastructure.Configurations
             builder.Property(e => e.Date)
                 .HasMaxLength(100);
 
+            builder.Property(e => e.Era)
+                .HasMaxLength(100);
+
             builder.Property(e => e.Consequences)
                 .HasMaxLength(2000);
 

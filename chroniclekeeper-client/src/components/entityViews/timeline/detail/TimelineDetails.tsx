@@ -29,6 +29,7 @@ interface EventFormState {
     name: string;
     date: string;
     sortOrder: string;
+    era: string;
     description: string;
     consequences: string;
     isMajorEvent: boolean;
@@ -38,6 +39,7 @@ const emptyEventForm: EventFormState = {
     name: "",
     date: "",
     sortOrder: "",
+    era: "",
     description: "",
     consequences: "",
     isMajorEvent: false,
@@ -119,6 +121,7 @@ export default function TimelineDetails() {
             name: ev.name ?? "",
             date: ev.date ?? "",
             sortOrder: String(ev.sortOrder ?? 0),
+            era: ev.era ?? "",
             description: ev.description ?? "",
             consequences: ev.consequences ?? "",
             isMajorEvent: ev.isMajorEvent,
@@ -143,6 +146,7 @@ export default function TimelineDetails() {
                 sortOrder: eventForm.sortOrder.trim()
                     ? Number(eventForm.sortOrder)
                     : 0,
+                era: eventForm.era.trim(),
                 description: eventForm.description,
                 consequences: eventForm.consequences,
                 isMajorEvent: eventForm.isMajorEvent,
@@ -201,6 +205,15 @@ export default function TimelineDetails() {
         (a, b) => a.sortOrder - b.sortOrder
     );
 
+    // Group consecutive events sharing an era label (empty era = no header).
+    const eraGroups: { era: string; events: TimelineEventDto[] }[] = [];
+    events.forEach((ev) => {
+        const era = ev.era?.trim() ?? "";
+        const last = eraGroups[eraGroups.length - 1];
+        if (last && last.era === era) last.events.push(ev);
+        else eraGroups.push({ era, events: [ev] });
+    });
+
     const eventFormNode = (
         <form className={s.eventForm} onSubmit={onSaveEvent}>
             <h3 className={s.eventFormTitle}>
@@ -239,6 +252,13 @@ export default function TimelineDetails() {
                     />
                 </OrnateField>
             </div>
+            <OrnateField label={t("events.era")} hint={t("events.eraHint")}>
+                <OrnateTextInput
+                    value={eventForm.era}
+                    maxLength={100}
+                    onChange={(e) => setE("era", e.target.value)}
+                />
+            </OrnateField>
             <OrnateField label={t("events.description")}>
                 <OrnateTextArea
                     value={eventForm.description}
@@ -328,71 +348,116 @@ export default function TimelineDetails() {
             {events.length === 0 && eventFormFor === null ? (
                 <p className={s.none}>{t("events.empty")}</p>
             ) : (
-                <div className={s.chronology}>
-                    <div className={s.line} />
-                    {events.map((ev) => (
-                        <div key={ev.id} className={s.event}>
-                            <span
-                                className={`${s.dot} ${
-                                    ev.isMajorEvent ? s.dotMajor : ""
-                                }`}
-                            />
-                            {eventFormFor === ev.id ? (
-                                eventFormNode
-                            ) : (
-                                <div
-                                    className={`${s.card} ${
-                                        ev.isMajorEvent ? s.cardMajor : ""
-                                    }`}
-                                >
-                                    <div className={s.cardHead}>
-                                        {ev.date && (
-                                            <span className={s.date}>
-                                                {ev.date}
-                                            </span>
-                                        )}
-                                        <span className={s.eventTitle}>
-                                            {ev.name}
-                                        </span>
-                                        {canEdit && (
-                                            <span className={s.eventActions}>
-                                                <button
-                                                    type="button"
-                                                    className={
-                                                        s.eventActionBtn
-                                                    }
-                                                    disabled={busy}
-                                                    onClick={() =>
-                                                        openEditEvent(ev)
-                                                    }
-                                                >
-                                                    {t("form.edit")}
-                                                </button>
-                                                <button
-                                                    type="button"
-                                                    className={`${s.eventActionBtn} ${s.eventActionDanger}`}
-                                                    disabled={busy}
-                                                    onClick={() =>
-                                                        onDeleteEvent(ev)
-                                                    }
-                                                >
-                                                    {t("events.delete")}
-                                                </button>
-                                            </span>
-                                        )}
-                                    </div>
-                                    {ev.description && (
-                                        <p className={s.eventDesc}>
-                                            {ev.description}
-                                        </p>
-                                    )}
-                                    {ev.consequences && (
-                                        <p className={s.consequences}>
-                                            {ev.consequences}
-                                        </p>
-                                    )}
+                <div className={s.timeline}>
+                    {eraGroups.map((group, gi) => (
+                        <div key={gi} className={s.eraGroup}>
+                            {group.era && (
+                                <div className={s.eraHeader}>
+                                    <span className={s.eraName}>
+                                        {group.era}
+                                    </span>
+                                    <span className={s.eraLine} />
+                                    <span className={s.eraCount}>
+                                        {t("events.eraEventCount", {
+                                            count: group.events.length,
+                                        })}
+                                    </span>
                                 </div>
                             )}
+                            {group.events.map((ev) => (
+                                <div
+                                    key={ev.id}
+                                    className={`${s.trow} ${
+                                        ev.isMajorEvent ? s.trowMajor : ""
+                                    }`}
+                                >
+                                    <div className={s.tdate}>{ev.date}</div>
+                                    <div className={s.tnode}>
+                                        <span
+                                            className={`${s.node} ${
+                                                ev.isMajorEvent
+                                                    ? s.nodeMajor
+                                                    : ""
+                                            }`}
+                                        >
+                                            {ev.isMajorEvent ? "✦" : ""}
+                                        </span>
+                                    </div>
+                                    <div className={s.tcell}>
+                                        {eventFormFor === ev.id ? (
+                                            eventFormNode
+                                        ) : (
+                                            <div
+                                                className={`${s.card} ${
+                                                    ev.isMajorEvent
+                                                        ? s.cardMajor
+                                                        : ""
+                                                }`}
+                                            >
+                                                <div className={s.cardHead}>
+                                                    <span
+                                                        className={
+                                                            s.eventTitle
+                                                        }
+                                                    >
+                                                        {ev.name}
+                                                    </span>
+                                                    {canEdit && (
+                                                        <span
+                                                            className={
+                                                                s.eventActions
+                                                            }
+                                                        >
+                                                            <button
+                                                                type="button"
+                                                                className={
+                                                                    s.eventActionBtn
+                                                                }
+                                                                disabled={busy}
+                                                                onClick={() =>
+                                                                    openEditEvent(
+                                                                        ev
+                                                                    )
+                                                                }
+                                                            >
+                                                                {t("form.edit")}
+                                                            </button>
+                                                            <button
+                                                                type="button"
+                                                                className={`${s.eventActionBtn} ${s.eventActionDanger}`}
+                                                                disabled={busy}
+                                                                onClick={() =>
+                                                                    onDeleteEvent(
+                                                                        ev
+                                                                    )
+                                                                }
+                                                            >
+                                                                {t(
+                                                                    "events.delete"
+                                                                )}
+                                                            </button>
+                                                        </span>
+                                                    )}
+                                                </div>
+                                                {ev.description && (
+                                                    <p className={s.eventDesc}>
+                                                        {ev.description}
+                                                    </p>
+                                                )}
+                                                {ev.consequences && (
+                                                    <p
+                                                        className={
+                                                            s.consequences
+                                                        }
+                                                    >
+                                                        {ev.consequences}
+                                                    </p>
+                                                )}
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            ))}
                         </div>
                     ))}
                 </div>
