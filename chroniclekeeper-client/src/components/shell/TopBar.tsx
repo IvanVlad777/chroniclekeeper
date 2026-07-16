@@ -5,7 +5,16 @@ import { ThemeDots } from "./ThemeDots";
 import { LangToggle } from "./LangToggle";
 import s from "./shell.module.css";
 
-export function TopBar() {
+interface TopBarProps {
+    onOpenPalette: () => void;
+}
+
+/** True on Mac-like platforms, where the palette shortcut is ⌘K not Ctrl+K. */
+const isMac =
+    typeof navigator !== "undefined" &&
+    /Mac|iPhone|iPad|iPod/.test(navigator.platform || navigator.userAgent);
+
+export function TopBar({ onOpenPalette }: TopBarProps) {
     const { t } = useTranslation();
     const { userInfo, logout } = useAuth();
     const navigate = useNavigate();
@@ -23,6 +32,20 @@ export function TopBar() {
                     Chronicle<span className={s.logoAccent}>Keeper</span>
                 </span>
             </div>
+            <button
+                type="button"
+                className={s.searchBox}
+                onClick={onOpenPalette}
+                title={t("shell.searchPlaceholder")}
+            >
+                <span className={s.searchGlyph} aria-hidden="true">
+                    ⌕
+                </span>
+                <span className={s.searchText}>
+                    {t("shell.searchPlaceholder")}
+                </span>
+                <span className={s.searchKbd}>{isMac ? "⌘K" : "Ctrl K"}</span>
+            </button>
             <div className={s.spacer} />
             <ThemeDots />
             <span className={s.divider} />

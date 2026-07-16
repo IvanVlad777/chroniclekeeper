@@ -50,12 +50,36 @@
         "guilds": "Cehovi",
         "corporations": "Korporacije"
     },
+    "navGroups": {
+        "overview": "Pregled",
+        "people": "Ljudi",
+        "places": "Mjesta",
+        "nature": "Priroda",
+        "society": "Društvo",
+        "politics": "Politika i pravo",
+        "economy": "Gospodarstvo",
+        "knowledge": "Znanje",
+        "chronicle": "Kronika",
+        "artifacts": "Artefakti",
+        "media": "Mediji",
+        "workbench": "Radionica"
+    },
     "shell": {
         "newEntry": "Novi zapis",
         "newEntryTitle": "Stvori novi zapis",
         "noPermission": "Nemaš ovlasti za stvaranje zapisa",
-        "comingSoon": "Uskoro",
-        "soon": "uskoro"
+        "searchPlaceholder": "Pretraži arhiv…"
+    },
+    "quickJump": {
+        "placeholder": "Skoči na odjeljak…",
+        "section": "Odjeljak",
+        "noResults": "Nema rezultata",
+        "navigate": "kretanje",
+        "open": "otvori",
+        "close": "esc"
+    },
+    "newEntryMenu": {
+        "frequent": "Često"
     },
     "worldDialog": {
         "title": "Stvori svijet",

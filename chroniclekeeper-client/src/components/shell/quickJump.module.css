@@ -1,0 +1,173 @@
+/* ==========================================================================
+   Quick-jump command palette (⌘K / Ctrl+K) — mockup 1C.
+   Colors from theme tokens; geometry/fonts from ornate.vars.css.
+   ========================================================================== */
+
+.scrim {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(10, 8, 5, 0.55);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 96px 24px 24px;
+}
+
+.card {
+    width: 100%;
+    max-width: 640px;
+    max-height: min(560px, calc(100vh - 140px));
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--color-border);
+    border-radius: var(--o-radius-lg);
+    background: var(--color-panel);
+    box-shadow: 0 40px 90px -30px rgba(0, 0, 0, 0.85);
+    overflow: hidden;
+}
+
+.inputRow {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.searchGlyph {
+    font-size: 16px;
+    color: var(--color-muted);
+    line-height: 1;
+}
+
+.input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-family: var(--font-ui);
+    font-size: 16px;
+    color: var(--color-text);
+}
+
+.input:focus {
+    outline: none;
+}
+
+.input::placeholder {
+    color: var(--color-muted);
+}
+
+.escChip {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--color-muted);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 2px 7px;
+    background: var(--color-surface);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.results {
+    flex: 1;
+    overflow: auto;
+    padding: 8px;
+    min-height: 0;
+}
+
+.group + .group {
+    margin-top: 4px;
+}
+
+.groupLabel {
+    composes: ornateLabel from global;
+    letter-spacing: 0.16em;
+    color: var(--color-accent);
+    padding: 8px 10px 4px;
+}
+
+.row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 9px 10px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    font-family: var(--font-ui);
+    text-align: left;
+    cursor: pointer;
+}
+
+.rowActive {
+    background: var(--color-accent-soft);
+}
+
+.rowPill {
+    font-size: 10px;
+    color: var(--color-accent);
+    background: var(--color-accent-soft);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    padding: 2px 9px;
+    flex: none;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.rowActive .rowPill {
+    background: var(--color-panel);
+}
+
+.rowLabel {
+    flex: 1;
+    font-size: 14px;
+    color: var(--color-text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.rowHint {
+    font-size: 12px;
+    color: var(--color-muted);
+    flex: none;
+}
+
+.noResults {
+    padding: 28px 10px;
+    text-align: center;
+    font-size: 13.5px;
+    color: var(--color-muted);
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 10px 16px;
+    border-top: 1px solid var(--color-border);
+    background: var(--color-sunken);
+}
+
+.footerHint {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11.5px;
+    color: var(--color-muted);
+}
+
+.kbd {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--color-muted);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 1px 6px;
+    background: var(--color-panel);
+    line-height: 1.4;
+}

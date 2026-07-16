@@ -13,7 +13,7 @@
 
 .body {
     display: grid;
-    grid-template-columns: 250px 1fr;
+    grid-template-columns: 64px 236px 1fr;
     min-height: 0;
 }
 
@@ -37,6 +37,57 @@
     display: flex;
     align-items: center;
     gap: 10px;
+}
+
+/* topbar search / quick-jump trigger */
+.searchBox {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-left: 14px;
+    padding: 7px 12px;
+    width: 300px;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    background: var(--color-surface);
+    font-family: var(--font-ui);
+    cursor: pointer;
+    transition: border-color var(--o-transition);
+}
+
+.searchBox:hover {
+    border-color: var(--o-border-strong);
+}
+
+.searchBox:focus-visible {
+    outline: none;
+    box-shadow: var(--o-ring);
+}
+
+.searchGlyph {
+    color: var(--color-muted);
+    font-size: 13px;
+    line-height: 1;
+}
+
+.searchText {
+    flex: 1;
+    text-align: left;
+    font-size: 13px;
+    color: var(--color-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.searchKbd {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--color-muted);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    padding: 2px 6px;
+    background: var(--color-panel);
 }
 
 .logoGlyph {
@@ -180,9 +231,57 @@
     color: var(--color-danger);
 }
 
-/* --- Sidebar ---------------------------------------------------------------- */
+/* --- Icon rail -------------------------------------------------------------- */
 
-.sidebar {
+.rail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 12px 0;
+    background: var(--color-sunken);
+    border-right: 1px solid var(--color-border);
+    overflow: auto;
+}
+
+.railBtn {
+    width: 42px;
+    height: 42px;
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    border-radius: 9px;
+    background: transparent;
+    color: var(--color-muted);
+    font-size: 15px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background var(--o-transition), color var(--o-transition),
+        border-color var(--o-transition);
+}
+
+.railBtn:hover {
+    background: var(--o-row-hover);
+    color: var(--color-text);
+}
+
+.railBtnActive,
+.railBtnActive:hover {
+    color: var(--color-accent);
+    background: var(--color-accent-soft);
+    border-color: var(--color-accent);
+}
+
+.railBtn:focus-visible {
+    outline: none;
+    box-shadow: var(--o-ring);
+}
+
+/* --- Domain panel ----------------------------------------------------------- */
+
+.panel {
     display: flex;
     flex-direction: column;
     background: var(--color-panel);
@@ -191,13 +290,14 @@
 }
 
 .worldSection {
-    padding: 16px 16px 14px;
+    padding: 14px 14px 10px;
 }
 
-.sectionLabel {
+.domainTitle {
     composes: ornateLabel from global;
     letter-spacing: 0.16em;
-    margin-bottom: 8px;
+    color: var(--color-accent);
+    padding: 2px 16px 8px;
 }
 
 .ornament {
@@ -231,11 +331,11 @@
     position: relative;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     padding: 9px 12px;
     border-radius: 8px;
     color: var(--color-muted);
-    font-size: 14px;
+    font-size: 13.5px;
     transition: background var(--o-transition), color var(--o-transition);
 }
 
@@ -261,80 +361,30 @@
     background: var(--color-accent);
 }
 
-.navItemDisabled {
-    opacity: 0.45;
-    cursor: default;
+.navItemLabel {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-.navItemDisabled:hover {
-    background: transparent;
+.navCount {
+    font-size: 11px;
     color: var(--color-muted);
+    font-variant-numeric: tabular-nums;
+    flex: none;
 }
 
-.navGlyph {
-    width: 16px;
-    text-align: center;
-    font-size: 12px;
-    color: var(--color-muted);
-}
+/* --- "+ New entry" (grouped menu) ------------------------------------------- */
 
-.navItemActive .navGlyph {
-    color: var(--color-accent);
-}
-
-.navSoon {
-    margin-left: auto;
-    font-size: 9.5px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--color-muted);
-}
-
-.sidebarFooter {
-    position: relative;
-    padding: 14px 16px;
+.panelFooter {
+    padding: 12px 14px;
     border-top: 1px solid var(--color-border);
 }
 
-.newEntryMenu {
-    position: absolute;
-    bottom: calc(100% + 6px);
-    left: 12px;
-    right: 12px;
-    z-index: 40;
-    border: 1px solid var(--color-border);
-    border-radius: 10px;
-    background: var(--color-panel);
-    overflow: hidden;
-    box-shadow: 0 -14px 34px -18px rgba(0, 0, 0, 0.7);
-    padding: 4px;
-}
-
-.newEntryItem {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 9px 12px;
-    border: none;
-    border-radius: 7px;
-    background: transparent;
-    font-family: var(--font-ui);
-    font-size: 13.5px;
-    color: var(--color-text);
-    text-align: left;
-    cursor: pointer;
-}
-
-.newEntryItem:hover {
-    background: var(--o-row-hover);
-}
-
-.newEntryItemGlyph {
-    width: 16px;
-    text-align: center;
-    font-size: 12px;
-    color: var(--color-accent);
+.newEntry {
+    position: relative;
 }
 
 .newEntryBtn {
@@ -349,20 +399,128 @@
     background: var(--color-accent);
     color: var(--color-panel);
     font-family: var(--font-ui);
-    font-size: 13.5px;
+    font-size: 13px;
     font-weight: 600;
     letter-spacing: 0.02em;
     cursor: pointer;
 }
 
-.newEntryBtn:disabled {
-    opacity: 0.5;
-    cursor: default;
-}
-
 .newEntryPlus {
     font-size: 15px;
     line-height: 1;
+}
+
+.newEntryCaret {
+    font-size: 9px;
+    margin-left: 2px;
+}
+
+.newEntryMenu {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 0;
+    z-index: 40;
+    width: 560px;
+    max-width: calc(100vw - 96px);
+    max-height: calc(100vh - 96px);
+    overflow-y: auto;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    background: var(--color-panel);
+    box-shadow: 0 26px 60px -24px rgba(0, 0, 0, 0.8);
+    padding: 14px;
+}
+
+.nemFrequent {
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.nemSectionLabel {
+    composes: ornateLabel from global;
+    letter-spacing: 0.14em;
+    color: var(--color-accent);
+    margin-bottom: 9px;
+}
+
+.nemChips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.nemChip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 11px;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background: var(--color-surface);
+    font-family: var(--font-ui);
+    font-size: 12.5px;
+    color: var(--color-text);
+    cursor: pointer;
+    transition: border-color var(--o-transition), background var(--o-transition);
+}
+
+.nemChip:hover {
+    border-color: var(--color-accent);
+    background: var(--color-accent-soft);
+}
+
+.nemChipPlus {
+    color: var(--color-accent);
+    font-size: 13px;
+    line-height: 1;
+}
+
+.nemGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 20px;
+}
+
+.nemDomainHead {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-display);
+    font-size: 13px;
+    color: var(--color-text);
+    margin-bottom: 5px;
+}
+
+.nemDomainGlyph {
+    color: var(--color-accent);
+    font-size: 13px;
+    line-height: 1;
+}
+
+.nemDomainLinks {
+    display: flex;
+    flex-direction: column;
+}
+
+.nemLink {
+    display: block;
+    width: 100%;
+    padding: 4px 6px;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    font-family: var(--font-ui);
+    font-size: 12.5px;
+    color: var(--color-muted);
+    text-align: left;
+    cursor: pointer;
+    transition: background var(--o-transition), color var(--o-transition);
+}
+
+.nemLink:hover {
+    background: var(--o-row-hover);
+    color: var(--color-text);
 }
 
 /* --- World switcher ---------------------------------------------------------- */

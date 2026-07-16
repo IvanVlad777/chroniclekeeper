@@ -50,12 +50,36 @@
         "guilds": "Guilds",
         "corporations": "Corporations"
     },
+    "navGroups": {
+        "overview": "Overview",
+        "people": "People",
+        "places": "Places",
+        "nature": "Nature",
+        "society": "Society",
+        "politics": "Politics & Law",
+        "economy": "Economy",
+        "knowledge": "Knowledge",
+        "chronicle": "Chronicle",
+        "artifacts": "Artifacts",
+        "media": "Media",
+        "workbench": "Workbench"
+    },
     "shell": {
         "newEntry": "New entry",
         "newEntryTitle": "Create a new entry",
         "noPermission": "You don't have permission to create entries",
-        "comingSoon": "Coming soon",
-        "soon": "soon"
+        "searchPlaceholder": "Search the archive…"
+    },
+    "quickJump": {
+        "placeholder": "Jump to a section…",
+        "section": "Section",
+        "noResults": "No matches",
+        "navigate": "navigate",
+        "open": "open",
+        "close": "esc"
+    },
+    "newEntryMenu": {
+        "frequent": "Frequent"
     },
     "worldDialog": {
         "title": "Create a world",
