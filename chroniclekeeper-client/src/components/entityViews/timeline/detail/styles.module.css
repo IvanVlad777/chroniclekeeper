@@ -49,9 +49,134 @@
     max-width: 660px;
 }
 
-/* kronologija — vertikalni spine (mockup 1G) */
+/* kronologija — vertikalni spine (mockup 1G) + era-rail (Turn 3) */
+.timelineWrap {
+    display: flex;
+    align-items: flex-start;
+    gap: 32px;
+}
+
 .timeline {
+    flex: 1;
     max-width: 860px;
+    min-width: 0;
+}
+
+/* Era-rail navigator (right side) */
+.eraRail {
+    position: sticky;
+    top: 8px;
+    flex: none;
+    width: 190px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 12px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--o-radius-lg);
+    background: var(--color-panel);
+}
+
+.eraRailLabel {
+    composes: ornateLabel from global;
+    letter-spacing: 0.14em;
+    color: var(--color-accent);
+    padding: 2px 6px 8px;
+}
+
+.eraRailItem {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 8px;
+    border: none;
+    border-radius: 7px;
+    background: transparent;
+    font-family: var(--font-ui);
+    text-align: left;
+    cursor: pointer;
+    transition: background var(--o-transition);
+}
+
+.eraRailItem:hover {
+    background: var(--o-row-hover);
+}
+
+.eraRailName {
+    flex: 1;
+    min-width: 0;
+    font-size: 12.5px;
+    color: var(--color-text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.eraRailCount {
+    font-size: 11px;
+    color: var(--color-muted);
+    font-variant-numeric: tabular-nums;
+    flex: none;
+}
+
+/* Collapsed cluster of consecutive minor events */
+.clusterNode {
+    position: relative;
+    z-index: 1;
+    margin-top: 15px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-surface);
+    border: 2px dashed var(--color-muted);
+    box-sizing: border-box;
+}
+
+.clusterRow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding: 7px 14px;
+    border: 1px dashed var(--color-border);
+    border-radius: 999px;
+    background: transparent;
+    font-family: var(--font-ui);
+    font-size: 12.5px;
+    color: var(--color-muted);
+    cursor: pointer;
+    transition: border-color var(--o-transition), color var(--o-transition);
+}
+
+.clusterRow:hover {
+    border-color: var(--color-accent);
+    color: var(--color-text);
+}
+
+.clusterChevron {
+    font-size: 9px;
+}
+
+.clusterOpen {
+    display: flex;
+    flex-direction: column;
+}
+
+.clusterCollapse {
+    align-self: flex-start;
+    margin-left: 194px;
+    margin-bottom: 10px;
+    border: none;
+    background: transparent;
+    padding: 0;
+    font-family: var(--font-ui);
+    font-size: 12px;
+    color: var(--color-muted);
+    cursor: pointer;
+}
+
+.clusterCollapse:hover {
+    color: var(--color-accent);
 }
 
 .eraGroup {
@@ -235,6 +360,42 @@
     content: "✦ ";
     color: var(--color-accent);
     font-style: normal;
+}
+
+/* Related-entity chips on an event card (location + involved characters) */
+.eventChips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+.eventChip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    padding: 3px 10px;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background: var(--color-surface);
+    font-size: 11.5px;
+    color: var(--color-text);
+    transition: border-color var(--o-transition);
+}
+
+.eventChip:hover {
+    border-color: var(--color-accent);
+}
+
+.eventChipGlyph {
+    font-size: 10px;
+    color: var(--color-accent);
+    line-height: 1;
+}
+
+.eventChipPlace .eventChipGlyph {
+    color: var(--color-muted);
 }
 
 .none {

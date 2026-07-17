@@ -51,7 +51,23 @@ namespace ChronicleKeeper.Core.DTOs.History
         Character,
         Location,
         Faction,
-        Nation
+        Nation,
+        // Geography
+        ClimateZone,
+        ClimateDetail,
+        Season,
+        Creature,
+        // Economy
+        EconomicSystem,
+        Currency,
+        BankingSystem,
+        TaxationSystem,
+        TradeRoute,
+        NaturalResource,
+        ExtractionMethod,
+        Industry,
+        Guild,
+        Corporation
     }
 
     public class HistoryCreateDto

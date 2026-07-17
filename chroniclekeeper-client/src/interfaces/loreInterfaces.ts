@@ -274,6 +274,10 @@ export interface TimelineEventDto {
     era: string;
     consequences: string;
     isMajorEvent: boolean;
+    /** Gdje se event dogodio (opcionalno). */
+    location?: ReferenceDto | null;
+    /** Likovi uključeni u event. */
+    involvedCharacters: ReferenceDto[];
     createdAt: string;
     updatedAt: string;
 }
@@ -302,6 +306,8 @@ export interface TimelineEventCreateDto {
     era: string;
     consequences: string;
     isMajorEvent: boolean;
+    locationId?: number | null;
+    involvedCharacterIds: number[];
 }
 
 export type TimelineEventUpdateDto = TimelineEventCreateDto;

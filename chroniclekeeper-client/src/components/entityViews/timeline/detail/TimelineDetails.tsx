@@ -5,11 +5,15 @@ import {
     Button,
     OrnateCheckbox,
     OrnateField,
+    OrnateMultiSelect,
+    OrnateSelect,
     OrnateTextArea,
     OrnateTextInput,
 } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
 import {
+    CharacterDto,
+    LocationDto,
     TimelineDetailsDto,
     TimelineEventDto,
 } from "../../../../interfaces/loreInterfaces";
@@ -19,6 +23,8 @@ import {
     getTimeline,
     updateTimelineEvent,
 } from "../../../../api/timelines";
+import { getCharacters } from "../../../../api/characters";
+import { getLocations } from "../../../../api/locations";
 import { useAuth } from "../../../../hooks/useAuth";
 import { apiErrorMessage } from "../../../../utils/apiError";
 import s from "./styles.module.css";
@@ -33,6 +39,8 @@ interface EventFormState {
     description: string;
     consequences: string;
     isMajorEvent: boolean;
+    locationId: string;
+    involvedCharacterIds: string[];
 }
 
 const emptyEventForm: EventFormState = {
@@ -43,7 +51,44 @@ const emptyEventForm: EventFormState = {
     description: "",
     consequences: "",
     isMajorEvent: false,
+    locationId: "",
+    involvedCharacterIds: [],
 };
+
+/** Runs of this many+ consecutive minor events collapse into one cluster row. */
+const CLUSTER_THRESHOLD = 3;
+
+type TimelineRow =
+    | { kind: "event"; ev: TimelineEventDto }
+    | { kind: "cluster"; key: string; events: TimelineEventDto[] };
+
+/** Split an era's events into event rows + collapsed clusters of minor runs. */
+function buildRows(events: TimelineEventDto[], eraKey: string): TimelineRow[] {
+    const rows: TimelineRow[] = [];
+    let run: TimelineEventDto[] = [];
+    const flush = () => {
+        if (run.length >= CLUSTER_THRESHOLD) {
+            rows.push({
+                kind: "cluster",
+                key: `${eraKey}-${run[0].id}`,
+                events: run,
+            });
+        } else {
+            run.forEach((ev) => rows.push({ kind: "event", ev }));
+        }
+        run = [];
+    };
+    events.forEach((ev) => {
+        if (ev.isMajorEvent) {
+            flush();
+            rows.push({ kind: "event", ev });
+        } else {
+            run.push(ev);
+        }
+    });
+    flush();
+    return rows;
+}
 
 export default function TimelineDetails() {
     const { id } = useParams<{ id: string }>();
@@ -65,6 +110,21 @@ export default function TimelineDetails() {
     const [eventForm, setEventForm] = useState<EventFormState>(emptyEventForm);
     const [eventError, setEventError] = useState<string | null>(null);
     const [busy, setBusy] = useState(false);
+    // Which minor-event clusters are expanded (key = era index + run start).
+    const [expandedClusters, setExpandedClusters] = useState<Set<string>>(
+        new Set()
+    );
+    const toggleCluster = (key: string) =>
+        setExpandedClusters((prev) => {
+            const next = new Set(prev);
+            if (next.has(key)) next.delete(key);
+            else next.add(key);
+            return next;
+        });
+
+    // World lookups for the event form's location + involved-character pickers.
+    const [locations, setLocations] = useState<LocationDto[]>([]);
+    const [characters, setCharacters] = useState<CharacterDto[]>([]);
 
     const setE = <K extends keyof EventFormState>(
         key: K,
@@ -106,6 +166,25 @@ export default function TimelineDetails() {
         };
     }, [id, t, reloadKey]);
 
+    // Load world locations + characters for the event pickers (editors only).
+    const worldId = timeline?.worldId;
+    useEffect(() => {
+        if (!canEdit || !worldId) return;
+        let cancelled = false;
+        Promise.all([getLocations(worldId), getCharacters(worldId)])
+            .then(([locs, chars]) => {
+                if (cancelled) return;
+                setLocations(locs);
+                setCharacters(chars);
+            })
+            .catch((err) =>
+                console.error("Failed to load event pickers:", err)
+            );
+        return () => {
+            cancelled = true;
+        };
+    }, [canEdit, worldId]);
+
     const openNewEvent = () => {
         // Predloži sljedeći sortOrder na kraju kronologije
         const maxOrder = timeline?.events.length
@@ -125,6 +204,8 @@ export default function TimelineDetails() {
             description: ev.description ?? "",
             consequences: ev.consequences ?? "",
             isMajorEvent: ev.isMajorEvent,
+            locationId: ev.location ? String(ev.location.id) : "",
+            involvedCharacterIds: ev.involvedCharacters.map((c) => String(c.id)),
         });
         setEventError(null);
         setEventFormFor(ev.id);
@@ -150,6 +231,10 @@ export default function TimelineDetails() {
                 description: eventForm.description,
                 consequences: eventForm.consequences,
                 isMajorEvent: eventForm.isMajorEvent,
+                locationId: eventForm.locationId
+                    ? Number(eventForm.locationId)
+                    : null,
+                involvedCharacterIds: eventForm.involvedCharacterIds.map(Number),
             };
             if (eventFormFor === 0) {
                 await addTimelineEvent(timeline.id, payload);
@@ -275,6 +360,30 @@ export default function TimelineDetails() {
                     onChange={(e) => setE("consequences", e.target.value)}
                 />
             </OrnateField>
+            <OrnateField label={t("events.location")}>
+                <OrnateSelect
+                    value={eventForm.locationId}
+                    onChange={(e) => setE("locationId", e.target.value)}
+                >
+                    <option value="">{t("events.noLocation")}</option>
+                    {locations.map((l) => (
+                        <option key={l.id} value={l.id}>
+                            {l.name}
+                        </option>
+                    ))}
+                </OrnateSelect>
+            </OrnateField>
+            <OrnateField label={t("events.involved")}>
+                <OrnateMultiSelect
+                    value={eventForm.involvedCharacterIds}
+                    onChange={(next) => setE("involvedCharacterIds", next)}
+                    placeholder={t("events.involvedPlaceholder")}
+                    options={characters.map((c) => ({
+                        value: String(c.id),
+                        label: c.name,
+                    }))}
+                />
+            </OrnateField>
             <OrnateCheckbox
                 label={t("events.major")}
                 checked={eventForm.isMajorEvent}
@@ -300,6 +409,96 @@ export default function TimelineDetails() {
             </div>
         </form>
     );
+
+    const renderEvent = (ev: TimelineEventDto) => (
+        <div
+            key={ev.id}
+            className={`${s.trow} ${ev.isMajorEvent ? s.trowMajor : ""}`}
+        >
+            <div className={s.tdate}>{ev.date}</div>
+            <div className={s.tnode}>
+                <span
+                    className={`${s.node} ${ev.isMajorEvent ? s.nodeMajor : ""}`}
+                >
+                    {ev.isMajorEvent ? "✦" : ""}
+                </span>
+            </div>
+            <div className={s.tcell}>
+                {eventFormFor === ev.id ? (
+                    eventFormNode
+                ) : (
+                    <div
+                        className={`${s.card} ${
+                            ev.isMajorEvent ? s.cardMajor : ""
+                        }`}
+                    >
+                        <div className={s.cardHead}>
+                            <span className={s.eventTitle}>{ev.name}</span>
+                            {canEdit && (
+                                <span className={s.eventActions}>
+                                    <button
+                                        type="button"
+                                        className={s.eventActionBtn}
+                                        disabled={busy}
+                                        onClick={() => openEditEvent(ev)}
+                                    >
+                                        {t("form.edit")}
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className={`${s.eventActionBtn} ${s.eventActionDanger}`}
+                                        disabled={busy}
+                                        onClick={() => onDeleteEvent(ev)}
+                                    >
+                                        {t("events.delete")}
+                                    </button>
+                                </span>
+                            )}
+                        </div>
+                        {ev.description && (
+                            <p className={s.eventDesc}>{ev.description}</p>
+                        )}
+                        {ev.consequences && (
+                            <p className={s.consequences}>{ev.consequences}</p>
+                        )}
+                        {(ev.location ||
+                            ev.involvedCharacters.length > 0) && (
+                            <div className={s.eventChips}>
+                                {ev.location && (
+                                    <Link
+                                        to={`/storymap/locations/${ev.location.id}`}
+                                        className={`${s.eventChip} ${s.eventChipPlace}`}
+                                    >
+                                        <span className={s.eventChipGlyph}>
+                                            ⚑
+                                        </span>
+                                        {ev.location.name}
+                                    </Link>
+                                )}
+                                {ev.involvedCharacters.map((c) => (
+                                    <Link
+                                        key={c.id}
+                                        to={`/storymap/characters/${c.id}`}
+                                        className={s.eventChip}
+                                    >
+                                        <span className={s.eventChipGlyph}>
+                                            ♟
+                                        </span>
+                                        {c.name}
+                                    </Link>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+
+    // Era headers with a stable anchor index, for the era-rail navigator.
+    const eraAnchors = eraGroups
+        .map((g, gi) => ({ ...g, gi }))
+        .filter((g) => g.era);
 
     return (
         <div className={s.page}>
@@ -348,118 +547,114 @@ export default function TimelineDetails() {
             {events.length === 0 && eventFormFor === null ? (
                 <p className={s.none}>{t("events.empty")}</p>
             ) : (
-                <div className={s.timeline}>
-                    {eraGroups.map((group, gi) => (
-                        <div key={gi} className={s.eraGroup}>
-                            {group.era && (
-                                <div className={s.eraHeader}>
-                                    <span className={s.eraName}>
-                                        {group.era}
-                                    </span>
-                                    <span className={s.eraLine} />
-                                    <span className={s.eraCount}>
-                                        {t("events.eraEventCount", {
-                                            count: group.events.length,
-                                        })}
-                                    </span>
-                                </div>
-                            )}
-                            {group.events.map((ev) => (
-                                <div
-                                    key={ev.id}
-                                    className={`${s.trow} ${
-                                        ev.isMajorEvent ? s.trowMajor : ""
-                                    }`}
-                                >
-                                    <div className={s.tdate}>{ev.date}</div>
-                                    <div className={s.tnode}>
-                                        <span
-                                            className={`${s.node} ${
-                                                ev.isMajorEvent
-                                                    ? s.nodeMajor
-                                                    : ""
-                                            }`}
-                                        >
-                                            {ev.isMajorEvent ? "✦" : ""}
+                <div className={s.timelineWrap}>
+                    <div className={s.timeline}>
+                        {eraGroups.map((group, gi) => (
+                            <div key={gi} className={s.eraGroup}>
+                                {group.era && (
+                                    <div
+                                        id={`era-${gi}`}
+                                        className={s.eraHeader}
+                                    >
+                                        <span className={s.eraName}>
+                                            {group.era}
+                                        </span>
+                                        <span className={s.eraLine} />
+                                        <span className={s.eraCount}>
+                                            {t("events.eraEventCount", {
+                                                count: group.events.length,
+                                            })}
                                         </span>
                                     </div>
-                                    <div className={s.tcell}>
-                                        {eventFormFor === ev.id ? (
-                                            eventFormNode
-                                        ) : (
-                                            <div
-                                                className={`${s.card} ${
-                                                    ev.isMajorEvent
-                                                        ? s.cardMajor
-                                                        : ""
-                                                }`}
+                                )}
+                                {buildRows(group.events, String(gi)).map((row) =>
+                                    row.kind === "event" ? (
+                                        renderEvent(row.ev)
+                                    ) : expandedClusters.has(row.key) ? (
+                                        <div
+                                            key={row.key}
+                                            className={s.clusterOpen}
+                                        >
+                                            <button
+                                                type="button"
+                                                className={s.clusterCollapse}
+                                                onClick={() =>
+                                                    toggleCluster(row.key)
+                                                }
                                             >
-                                                <div className={s.cardHead}>
+                                                {t("events.collapse")}
+                                            </button>
+                                            {row.events.map((ev) =>
+                                                renderEvent(ev)
+                                            )}
+                                        </div>
+                                    ) : (
+                                        <div
+                                            key={row.key}
+                                            className={s.trow}
+                                        >
+                                            <div className={s.tdate} />
+                                            <div className={s.tnode}>
+                                                <span
+                                                    className={s.clusterNode}
+                                                />
+                                            </div>
+                                            <div className={s.tcell}>
+                                                <button
+                                                    type="button"
+                                                    className={s.clusterRow}
+                                                    onClick={() =>
+                                                        toggleCluster(row.key)
+                                                    }
+                                                >
+                                                    {t("events.cluster", {
+                                                        count: row.events.length,
+                                                    })}
                                                     <span
                                                         className={
-                                                            s.eventTitle
+                                                            s.clusterChevron
                                                         }
                                                     >
-                                                        {ev.name}
+                                                        ▾
                                                     </span>
-                                                    {canEdit && (
-                                                        <span
-                                                            className={
-                                                                s.eventActions
-                                                            }
-                                                        >
-                                                            <button
-                                                                type="button"
-                                                                className={
-                                                                    s.eventActionBtn
-                                                                }
-                                                                disabled={busy}
-                                                                onClick={() =>
-                                                                    openEditEvent(
-                                                                        ev
-                                                                    )
-                                                                }
-                                                            >
-                                                                {t("form.edit")}
-                                                            </button>
-                                                            <button
-                                                                type="button"
-                                                                className={`${s.eventActionBtn} ${s.eventActionDanger}`}
-                                                                disabled={busy}
-                                                                onClick={() =>
-                                                                    onDeleteEvent(
-                                                                        ev
-                                                                    )
-                                                                }
-                                                            >
-                                                                {t(
-                                                                    "events.delete"
-                                                                )}
-                                                            </button>
-                                                        </span>
-                                                    )}
-                                                </div>
-                                                {ev.description && (
-                                                    <p className={s.eventDesc}>
-                                                        {ev.description}
-                                                    </p>
-                                                )}
-                                                {ev.consequences && (
-                                                    <p
-                                                        className={
-                                                            s.consequences
-                                                        }
-                                                    >
-                                                        {ev.consequences}
-                                                    </p>
-                                                )}
+                                                </button>
                                             </div>
-                                        )}
-                                    </div>
-                                </div>
+                                        </div>
+                                    )
+                                )}
+                            </div>
+                        ))}
+                    </div>
+
+                    {eraAnchors.length > 1 && (
+                        <nav className={s.eraRail} aria-label={t("events.eras")}>
+                            <div className={s.eraRailLabel}>
+                                {t("events.eras")}
+                            </div>
+                            {eraAnchors.map((g) => (
+                                <button
+                                    key={g.gi}
+                                    type="button"
+                                    className={s.eraRailItem}
+                                    onClick={() =>
+                                        document
+                                            .getElementById(`era-${g.gi}`)
+                                            ?.scrollIntoView({
+                                                behavior: "smooth",
+                                                block: "start",
+                                            })
+                                    }
+                                >
+                                    <span className={s.eraRailName}>
+                                        {g.era}
+                                    </span>
+                                    <span className={s.eraRailCount}>
+                                        {g.events.length}
+                                    </span>
+                                </button>
                             ))}
-                        </div>
-                    ))}
+                        </nav>
+                    )}
                 </div>
             )}
             {eventError && eventFormFor === null && (

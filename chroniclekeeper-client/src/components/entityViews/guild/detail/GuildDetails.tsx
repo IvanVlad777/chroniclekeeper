@@ -13,6 +13,7 @@ import {
 } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
 import { LinkEditor } from "../../../linking/LinkEditor";
+import { HistoryBlock } from "../../../history/HistoryBlock";
 import {
     FactionDto,
     GuildDetailsDto,
@@ -274,10 +275,6 @@ export default function GuildDetails() {
                             "education-systems"
                         )}
                     />
-                    <OrnateDisplayBox
-                        label={t("form.history")}
-                        value={systemLink(guild.history, "histories")}
-                    />
                 </DisplayGrid>
             </div>
 
@@ -536,6 +533,15 @@ export default function GuildDetails() {
                 removeLabel={(name) => t("links.remove", { name })}
                 addFailedLabel={t("links.addFailed")}
                 removeFailedLabel={t("links.removeFailed")}
+            />
+
+            <HistoryBlock
+                targetType="Guild"
+                targetId={guild.id}
+                worldId={guild.worldId}
+                history={guild.history}
+                canEdit={canEdit}
+                onChanged={refetch}
             />
         </div>
     );

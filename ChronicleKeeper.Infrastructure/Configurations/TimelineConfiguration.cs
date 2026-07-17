@@ -36,7 +36,34 @@ namespace ChronicleKeeper.Infrastructure.Configurations
                 .HasForeignKey(e => e.TimelineId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            // Pointer-only "where" reference — SetNull, doesn't block deleting the location.
+            builder.HasOne(e => e.Location)
+                .WithMany()
+                .HasForeignKey(e => e.LocationId)
+                .OnDelete(DeleteBehavior.SetNull);
+
             builder.HasIndex(e => new { e.TimelineId, e.SortOrder });
+            builder.HasIndex(e => e.LocationId);
+        }
+    }
+
+    public class TimelineEventCharacterConfiguration : IEntityTypeConfiguration<TimelineEventCharacter>
+    {
+        public void Configure(EntityTypeBuilder<TimelineEventCharacter> builder)
+        {
+            builder.HasKey(x => new { x.TimelineEventId, x.CharacterId });
+
+            builder.HasOne(x => x.TimelineEvent)
+                .WithMany(e => e.InvolvedCharacters)
+                .HasForeignKey(x => x.TimelineEventId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // The parents (TimelineEvent, Character) share no cascading ancestor
+            // (WorldId is always Restrict), so both sides may cascade.
+            builder.HasOne(x => x.Character)
+                .WithMany()
+                .HasForeignKey(x => x.CharacterId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

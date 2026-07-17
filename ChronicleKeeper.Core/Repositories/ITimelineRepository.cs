@@ -15,9 +15,9 @@ namespace ChronicleKeeper.Core.Repositories
         Task<bool> DeleteAsync(int id, CancellationToken cancellationToken = default);
 
         // Events
-        Task<TimelineEvent> CreateEventAsync(TimelineEvent timelineEvent, CancellationToken cancellationToken = default);
+        Task<TimelineEvent> CreateEventAsync(TimelineEvent timelineEvent, IEnumerable<int> involvedCharacterIds, CancellationToken cancellationToken = default);
         Task<TimelineEvent?> FindEventByIdAsync(int id, CancellationToken cancellationToken = default);
-        Task<TimelineEvent> UpdateEventAsync(TimelineEvent timelineEvent, CancellationToken cancellationToken = default);
+        Task<TimelineEvent> UpdateEventAsync(TimelineEvent timelineEvent, IEnumerable<int> involvedCharacterIds, CancellationToken cancellationToken = default);
         Task<bool> DeleteEventAsync(int id, CancellationToken cancellationToken = default);
     }
 }

@@ -101,6 +101,7 @@ namespace ChronicleKeeper.Infrastructure.Data
         // Timelines
         public DbSet<Timeline> Timelines { get; set; }
         public DbSet<TimelineEvent> TimelineEvents { get; set; }
+        public DbSet<TimelineEventCharacter> TimelineEventCharacters { get; set; }
 
         // History
         public DbSet<History> Histories { get; set; }

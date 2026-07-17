@@ -26,7 +26,21 @@
             "Character": "Character",
             "Location": "Location",
             "Faction": "Faction",
-            "Nation": "Nation"
+            "Nation": "Nation",
+            "ClimateZone": "Climate Zone",
+            "ClimateDetail": "Climate Detail",
+            "Season": "Season",
+            "Creature": "Creature",
+            "EconomicSystem": "Economic System",
+            "Currency": "Currency",
+            "BankingSystem": "Banking System",
+            "TaxationSystem": "Taxation System",
+            "TradeRoute": "Trade Route",
+            "NaturalResource": "Natural Resource",
+            "ExtractionMethod": "Extraction Method",
+            "Industry": "Industry",
+            "Guild": "Guild",
+            "Corporation": "Corporation"
         }
     },
     "timelines": {

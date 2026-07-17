@@ -43,7 +43,21 @@ export type HistoryLinkTargetType =
     | "Character"
     | "Location"
     | "Faction"
-    | "Nation";
+    | "Nation"
+    | "ClimateZone"
+    | "ClimateDetail"
+    | "Season"
+    | "Creature"
+    | "EconomicSystem"
+    | "Currency"
+    | "BankingSystem"
+    | "TaxationSystem"
+    | "TradeRoute"
+    | "NaturalResource"
+    | "ExtractionMethod"
+    | "Industry"
+    | "Guild"
+    | "Corporation";
 
 /** Attach a history to an entity (sets the entity's historyId). */
 export const linkHistory = async (

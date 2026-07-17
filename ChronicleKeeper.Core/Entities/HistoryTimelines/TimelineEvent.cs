@@ -1,7 +1,6 @@
 using ChronicleKeeper.Core.Entities.Base;
+using ChronicleKeeper.Core.Entities.Geography;
 using System.ComponentModel.DataAnnotations;
-//using ChronicleKeeper.Core.Entities.Characters;
-//using ChronicleKeeper.Core.Entities.Geography;
 //using ChronicleKeeper.Core.Entities.Social.Cultures;
 //using ChronicleKeeper.Core.Entities.Social.Military;
 
@@ -24,9 +23,13 @@ namespace ChronicleKeeper.Core.Entities.HistoryTimelines
         public string Consequences { get; set; } = string.Empty; // Impact on history
         public bool IsMajorEvent { get; set; } // Determines historical importance
 
-        //public int? LocationId { get; set; } // TODO: Uncomment when the Location link is wired (delete behavior: SetNull)
-        //public Location? Location { get; set; }
-        //public ICollection<Character> InvolvedCharacters { get; set; } = new List<Character>(); // TODO: Uncomment when the join entity is added
+        /// <summary>Where the event took place (optional pointer, SetNull).</summary>
+        public int? LocationId { get; set; }
+        public virtual Location? Location { get; set; }
+
+        /// <summary>Characters involved in the event (many-to-many via join entity).</summary>
+        public virtual ICollection<TimelineEventCharacter> InvolvedCharacters { get; set; } = new List<TimelineEventCharacter>();
+
         //public int? BattleId { get; set; } // TODO: Uncomment when Battle entity is revived
         //public Battle? Battle { get; set; }
         //public int? FolkloreId { get; set; } // TODO: Uncomment when Folklore entity is revived

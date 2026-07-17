@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Button, DisplayGrid, OrnateDisplayBox } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
 import { LinkEditor } from "../../../linking/LinkEditor";
+import { HistoryBlock } from "../../../history/HistoryBlock";
 import {
     LocationDto,
     NaturalResourceDto,
@@ -139,21 +140,6 @@ export default function TradeRouteDetails() {
                         label={t("fields.mainGoods")}
                         value={tradeRoute.mainGoods || dash}
                     />
-                    <OrnateDisplayBox
-                        label={t("form.history")}
-                        value={
-                            tradeRoute.history ? (
-                                <Link
-                                    className={s.refLink}
-                                    to={`/storymap/histories/${tradeRoute.history.id}`}
-                                >
-                                    {tradeRoute.history.name}
-                                </Link>
-                            ) : (
-                                dash
-                            )
-                        }
-                    />
                 </DisplayGrid>
             </div>
 
@@ -231,6 +217,15 @@ export default function TradeRouteDetails() {
                 removeLabel={(name) => t("links.remove", { name })}
                 addFailedLabel={t("links.addFailed")}
                 removeFailedLabel={t("links.removeFailed")}
+            />
+
+            <HistoryBlock
+                targetType="TradeRoute"
+                targetId={tradeRoute.id}
+                worldId={tradeRoute.worldId}
+                history={tradeRoute.history}
+                canEdit={canEdit}
+                onChanged={refetch}
             />
         </div>
     );

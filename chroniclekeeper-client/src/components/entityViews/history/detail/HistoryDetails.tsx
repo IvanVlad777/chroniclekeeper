@@ -28,6 +28,20 @@ const linkRoutes: Record<string, string> = {
     Location: "/storymap/locations",
     Faction: "/storymap/factions",
     Nation: "/storymap/nations",
+    ClimateZone: "/storymap/climate-zones",
+    ClimateDetail: "/storymap/climate-details",
+    Season: "/storymap/seasons",
+    Creature: "/storymap/creatures",
+    EconomicSystem: "/storymap/economic-systems",
+    Currency: "/storymap/currencies",
+    BankingSystem: "/storymap/banking-systems",
+    TaxationSystem: "/storymap/taxation-systems",
+    TradeRoute: "/storymap/trade-routes",
+    NaturalResource: "/storymap/natural-resources",
+    ExtractionMethod: "/storymap/extraction-methods",
+    Industry: "/storymap/industries",
+    Guild: "/storymap/guilds",
+    Corporation: "/storymap/corporations",
 };
 
 function linkTarget(link: HistoryLinkDto): string | null {

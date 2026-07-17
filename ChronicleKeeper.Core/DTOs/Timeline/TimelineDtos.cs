@@ -60,6 +60,10 @@ namespace ChronicleKeeper.Core.DTOs.Timeline
         public string Era { get; set; } = string.Empty;
         public string Consequences { get; set; } = string.Empty;
         public bool IsMajorEvent { get; set; }
+        /// <summary>Where the event took place (optional).</summary>
+        public ReferenceDto? Location { get; set; }
+        /// <summary>Characters involved in the event.</summary>
+        public List<ReferenceDto> InvolvedCharacters { get; set; } = new();
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }
@@ -88,6 +92,12 @@ namespace ChronicleKeeper.Core.DTOs.Timeline
         public string Consequences { get; set; } = string.Empty;
 
         public bool IsMajorEvent { get; set; }
+
+        /// <summary>Where the event took place (optional; must be in the timeline's world).</summary>
+        public int? LocationId { get; set; }
+
+        /// <summary>Characters involved (must be in the timeline's world).</summary>
+        public List<int> InvolvedCharacterIds { get; set; } = new();
     }
 
     public class TimelineEventUpdateDto : TimelineEventCreateDto { }

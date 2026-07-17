@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Button, DisplayGrid, OrnateDisplayBox } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
 import { LinkEditor } from "../../../linking/LinkEditor";
+import { HistoryBlock } from "../../../history/HistoryBlock";
 import {
     CreatureDetailsDto,
     LocationDto,
@@ -173,22 +174,6 @@ export default function CreatureDetails() {
                             )
                         }
                     />
-                    <OrnateDisplayBox
-                        label={t("fields.history")}
-                        value={
-                            creature.history ? (
-                                <Link
-                                    className={s.refLink}
-                                    to={`/storymap/histories/${creature.history.id}`}
-                                >
-                                    {creature.history.name}
-                                </Link>
-                            ) : (
-                                dash
-                            )
-                        }
-                    />
-
                     {creature.subtype === "Animal" && (
                         <>
                             <OrnateDisplayBox label={t("fields.diet")} value={creature.diet ? t(`dietTypes.${creature.diet}`) : dash} />
@@ -327,6 +312,15 @@ export default function CreatureDetails() {
                 removeLabel={(name) => t("links.remove", { name })}
                 addFailedLabel={t("links.addFailed")}
                 removeFailedLabel={t("links.removeFailed")}
+            />
+
+            <HistoryBlock
+                targetType="Creature"
+                targetId={creature.id}
+                worldId={creature.worldId}
+                history={creature.history}
+                canEdit={canEdit}
+                onChanged={refetch}
             />
         </div>
     );

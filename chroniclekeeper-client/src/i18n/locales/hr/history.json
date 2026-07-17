@@ -26,7 +26,21 @@
             "Character": "Lik",
             "Location": "Lokacija",
             "Faction": "Frakcija",
-            "Nation": "Nacija"
+            "Nation": "Nacija",
+            "ClimateZone": "Klimatska zona",
+            "ClimateDetail": "Klimatski detalj",
+            "Season": "Godišnje doba",
+            "Creature": "Stvorenje",
+            "EconomicSystem": "Ekonomski sustav",
+            "Currency": "Valuta",
+            "BankingSystem": "Bankarski sustav",
+            "TaxationSystem": "Porezni sustav",
+            "TradeRoute": "Trgovačka ruta",
+            "NaturalResource": "Prirodni resurs",
+            "ExtractionMethod": "Metoda ekstrakcije",
+            "Industry": "Industrija",
+            "Guild": "Ceh",
+            "Corporation": "Korporacija"
         }
     },
     "timelines": {

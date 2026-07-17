@@ -13,6 +13,7 @@ import {
 } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
 import { LinkEditor } from "../../../linking/LinkEditor";
+import { HistoryBlock } from "../../../history/HistoryBlock";
 import {
     CharacterDto,
     CorporationDetailsDto,
@@ -333,10 +334,6 @@ export default function CorporationDetails() {
                             "banking-systems"
                         )}
                     />
-                    <OrnateDisplayBox
-                        label={t("form.history")}
-                        value={refLink(corporation.history, "histories")}
-                    />
                 </DisplayGrid>
             </div>
 
@@ -644,6 +641,15 @@ export default function CorporationDetails() {
                 removeLabel={(name) => t("links.remove", { name })}
                 addFailedLabel={t("links.addFailed")}
                 removeFailedLabel={t("links.removeFailed")}
+            />
+
+            <HistoryBlock
+                targetType="Corporation"
+                targetId={corporation.id}
+                worldId={corporation.worldId}
+                history={corporation.history}
+                canEdit={canEdit}
+                onChanged={refetch}
             />
         </div>
     );

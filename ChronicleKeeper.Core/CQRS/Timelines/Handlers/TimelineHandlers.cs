@@ -170,7 +170,8 @@ namespace ChronicleKeeper.Core.CQRS.Timelines.Handlers
             timelineEvent.TimelineId = timeline.Id;
             timelineEvent.WorldId = timeline.WorldId; // svijet eventa uvijek = svijet timelinea
 
-            var created = await _repository.CreateEventAsync(timelineEvent, cancellationToken);
+            var created = await _repository.CreateEventAsync(
+                timelineEvent, request.EventCreateDto.InvolvedCharacterIds, cancellationToken);
             _logger.LogInformation("Created event {EventId} on timeline {TimelineId}", created.Id, timeline.Id);
 
             return _mapper.Map<TimelineEventDto>(created);
@@ -194,7 +195,8 @@ namespace ChronicleKeeper.Core.CQRS.Timelines.Handlers
                 ?? throw new EntityNotFoundException("Timeline event", request.EventId);
 
             _mapper.Map(request.EventUpdateDto, timelineEvent);
-            var updated = await _repository.UpdateEventAsync(timelineEvent, cancellationToken);
+            var updated = await _repository.UpdateEventAsync(
+                timelineEvent, request.EventUpdateDto.InvolvedCharacterIds, cancellationToken);
             return _mapper.Map<TimelineEventDto>(updated);
         }
     }

@@ -37,31 +37,46 @@ namespace ChronicleKeeper.Infrastructure.Repositories
             // History has no navigation back to its owners — gather them per type.
             // Covers the four "major vertical" types shown on the hub; more can be
             // added here as other entities start surfacing their History link in the UI.
-            var characters = await _context.Characters
-                .Where(c => c.HistoryId == historyId)
-                .Select(c => new HistoryLinkDto { Type = "Character", Id = c.Id, Name = c.Name })
-                .ToListAsync(cancellationToken);
+            var links = new List<HistoryLinkDto>();
 
-            var locations = await _context.Locations
-                .Where(l => l.HistoryId == historyId)
-                .Select(l => new HistoryLinkDto { Type = "Location", Id = l.Id, Name = l.Name })
-                .ToListAsync(cancellationToken);
+            links.AddRange(await _context.Characters.Where(x => x.HistoryId == historyId)
+                .Select(x => new HistoryLinkDto { Type = "Character", Id = x.Id, Name = x.Name }).ToListAsync(cancellationToken));
+            links.AddRange(await _context.Locations.Where(x => x.HistoryId == historyId)
+                .Select(x => new HistoryLinkDto { Type = "Location", Id = x.Id, Name = x.Name }).ToListAsync(cancellationToken));
+            links.AddRange(await _context.Factions.Where(x => x.HistoryId == historyId)
+                .Select(x => new HistoryLinkDto { Type = "Faction", Id = x.Id, Name = x.Name }).ToListAsync(cancellationToken));
+            links.AddRange(await _context.Nations.Where(x => x.HistoryId == historyId)
+                .Select(x => new HistoryLinkDto { Type = "Nation", Id = x.Id, Name = x.Name }).ToListAsync(cancellationToken));
+            links.AddRange(await _context.ClimateZones.Where(x => x.HistoryId == historyId)
+                .Select(x => new HistoryLinkDto { Type = "ClimateZone", Id = x.Id, Name = x.Name }).ToListAsync(cancellationToken));
+            links.AddRange(await _context.ClimateDetails.Where(x => x.HistoryId == historyId)
+                .Select(x => new HistoryLinkDto { Type = "ClimateDetail", Id = x.Id, Name = x.Name }).ToListAsync(cancellationToken));
+            links.AddRange(await _context.Seasons.Where(x => x.HistoryId == historyId)
+                .Select(x => new HistoryLinkDto { Type = "Season", Id = x.Id, Name = x.Name }).ToListAsync(cancellationToken));
+            links.AddRange(await _context.Creatures.Where(x => x.HistoryId == historyId)
+                .Select(x => new HistoryLinkDto { Type = "Creature", Id = x.Id, Name = x.Name }).ToListAsync(cancellationToken));
+            links.AddRange(await _context.EconomicSystems.Where(x => x.HistoryId == historyId)
+                .Select(x => new HistoryLinkDto { Type = "EconomicSystem", Id = x.Id, Name = x.Name }).ToListAsync(cancellationToken));
+            links.AddRange(await _context.Currencies.Where(x => x.HistoryId == historyId)
+                .Select(x => new HistoryLinkDto { Type = "Currency", Id = x.Id, Name = x.Name }).ToListAsync(cancellationToken));
+            links.AddRange(await _context.BankingSystems.Where(x => x.HistoryId == historyId)
+                .Select(x => new HistoryLinkDto { Type = "BankingSystem", Id = x.Id, Name = x.Name }).ToListAsync(cancellationToken));
+            links.AddRange(await _context.TaxationSystems.Where(x => x.HistoryId == historyId)
+                .Select(x => new HistoryLinkDto { Type = "TaxationSystem", Id = x.Id, Name = x.Name }).ToListAsync(cancellationToken));
+            links.AddRange(await _context.TradeRoutes.Where(x => x.HistoryId == historyId)
+                .Select(x => new HistoryLinkDto { Type = "TradeRoute", Id = x.Id, Name = x.Name }).ToListAsync(cancellationToken));
+            links.AddRange(await _context.NaturalResources.Where(x => x.HistoryId == historyId)
+                .Select(x => new HistoryLinkDto { Type = "NaturalResource", Id = x.Id, Name = x.Name }).ToListAsync(cancellationToken));
+            links.AddRange(await _context.ExtractionMethods.Where(x => x.HistoryId == historyId)
+                .Select(x => new HistoryLinkDto { Type = "ExtractionMethod", Id = x.Id, Name = x.Name }).ToListAsync(cancellationToken));
+            links.AddRange(await _context.Industries.Where(x => x.HistoryId == historyId)
+                .Select(x => new HistoryLinkDto { Type = "Industry", Id = x.Id, Name = x.Name }).ToListAsync(cancellationToken));
+            links.AddRange(await _context.Guilds.Where(x => x.HistoryId == historyId)
+                .Select(x => new HistoryLinkDto { Type = "Guild", Id = x.Id, Name = x.Name }).ToListAsync(cancellationToken));
+            links.AddRange(await _context.Corporations.Where(x => x.HistoryId == historyId)
+                .Select(x => new HistoryLinkDto { Type = "Corporation", Id = x.Id, Name = x.Name }).ToListAsync(cancellationToken));
 
-            var factions = await _context.Factions
-                .Where(f => f.HistoryId == historyId)
-                .Select(f => new HistoryLinkDto { Type = "Faction", Id = f.Id, Name = f.Name })
-                .ToListAsync(cancellationToken);
-
-            var nations = await _context.Nations
-                .Where(n => n.HistoryId == historyId)
-                .Select(n => new HistoryLinkDto { Type = "Nation", Id = n.Id, Name = n.Name })
-                .ToListAsync(cancellationToken);
-
-            return characters
-                .Concat(locations)
-                .Concat(factions)
-                .Concat(nations)
-                .ToList();
+            return links;
         }
 
         public async Task<bool> TargetExistsInWorldAsync(HistoryLinkTargetType targetType, int targetId, int worldId, CancellationToken cancellationToken = default)
@@ -72,6 +87,20 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 HistoryLinkTargetType.Location => await _context.Locations.AnyAsync(l => l.Id == targetId && l.WorldId == worldId, cancellationToken),
                 HistoryLinkTargetType.Faction => await _context.Factions.AnyAsync(f => f.Id == targetId && f.WorldId == worldId, cancellationToken),
                 HistoryLinkTargetType.Nation => await _context.Nations.AnyAsync(n => n.Id == targetId && n.WorldId == worldId, cancellationToken),
+                HistoryLinkTargetType.ClimateZone => await _context.ClimateZones.AnyAsync(x => x.Id == targetId && x.WorldId == worldId, cancellationToken),
+                HistoryLinkTargetType.ClimateDetail => await _context.ClimateDetails.AnyAsync(x => x.Id == targetId && x.WorldId == worldId, cancellationToken),
+                HistoryLinkTargetType.Season => await _context.Seasons.AnyAsync(x => x.Id == targetId && x.WorldId == worldId, cancellationToken),
+                HistoryLinkTargetType.Creature => await _context.Creatures.AnyAsync(x => x.Id == targetId && x.WorldId == worldId, cancellationToken),
+                HistoryLinkTargetType.EconomicSystem => await _context.EconomicSystems.AnyAsync(x => x.Id == targetId && x.WorldId == worldId, cancellationToken),
+                HistoryLinkTargetType.Currency => await _context.Currencies.AnyAsync(x => x.Id == targetId && x.WorldId == worldId, cancellationToken),
+                HistoryLinkTargetType.BankingSystem => await _context.BankingSystems.AnyAsync(x => x.Id == targetId && x.WorldId == worldId, cancellationToken),
+                HistoryLinkTargetType.TaxationSystem => await _context.TaxationSystems.AnyAsync(x => x.Id == targetId && x.WorldId == worldId, cancellationToken),
+                HistoryLinkTargetType.TradeRoute => await _context.TradeRoutes.AnyAsync(x => x.Id == targetId && x.WorldId == worldId, cancellationToken),
+                HistoryLinkTargetType.NaturalResource => await _context.NaturalResources.AnyAsync(x => x.Id == targetId && x.WorldId == worldId, cancellationToken),
+                HistoryLinkTargetType.ExtractionMethod => await _context.ExtractionMethods.AnyAsync(x => x.Id == targetId && x.WorldId == worldId, cancellationToken),
+                HistoryLinkTargetType.Industry => await _context.Industries.AnyAsync(x => x.Id == targetId && x.WorldId == worldId, cancellationToken),
+                HistoryLinkTargetType.Guild => await _context.Guilds.AnyAsync(x => x.Id == targetId && x.WorldId == worldId, cancellationToken),
+                HistoryLinkTargetType.Corporation => await _context.Corporations.AnyAsync(x => x.Id == targetId && x.WorldId == worldId, cancellationToken),
                 _ => false,
             };
         }
@@ -94,6 +123,48 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 HistoryLinkTargetType.Nation => await _context.Nations
                     .Where(n => n.Id == targetId && (onlyIfCurrentHistoryId == null || n.HistoryId == onlyIfCurrentHistoryId))
                     .ExecuteUpdateAsync(s => s.SetProperty(n => n.HistoryId, historyId), cancellationToken),
+                HistoryLinkTargetType.ClimateZone => await _context.ClimateZones
+                    .Where(x => x.Id == targetId && (onlyIfCurrentHistoryId == null || x.HistoryId == onlyIfCurrentHistoryId))
+                    .ExecuteUpdateAsync(s => s.SetProperty(x => x.HistoryId, historyId), cancellationToken),
+                HistoryLinkTargetType.ClimateDetail => await _context.ClimateDetails
+                    .Where(x => x.Id == targetId && (onlyIfCurrentHistoryId == null || x.HistoryId == onlyIfCurrentHistoryId))
+                    .ExecuteUpdateAsync(s => s.SetProperty(x => x.HistoryId, historyId), cancellationToken),
+                HistoryLinkTargetType.Season => await _context.Seasons
+                    .Where(x => x.Id == targetId && (onlyIfCurrentHistoryId == null || x.HistoryId == onlyIfCurrentHistoryId))
+                    .ExecuteUpdateAsync(s => s.SetProperty(x => x.HistoryId, historyId), cancellationToken),
+                HistoryLinkTargetType.Creature => await _context.Creatures
+                    .Where(x => x.Id == targetId && (onlyIfCurrentHistoryId == null || x.HistoryId == onlyIfCurrentHistoryId))
+                    .ExecuteUpdateAsync(s => s.SetProperty(x => x.HistoryId, historyId), cancellationToken),
+                HistoryLinkTargetType.EconomicSystem => await _context.EconomicSystems
+                    .Where(x => x.Id == targetId && (onlyIfCurrentHistoryId == null || x.HistoryId == onlyIfCurrentHistoryId))
+                    .ExecuteUpdateAsync(s => s.SetProperty(x => x.HistoryId, historyId), cancellationToken),
+                HistoryLinkTargetType.Currency => await _context.Currencies
+                    .Where(x => x.Id == targetId && (onlyIfCurrentHistoryId == null || x.HistoryId == onlyIfCurrentHistoryId))
+                    .ExecuteUpdateAsync(s => s.SetProperty(x => x.HistoryId, historyId), cancellationToken),
+                HistoryLinkTargetType.BankingSystem => await _context.BankingSystems
+                    .Where(x => x.Id == targetId && (onlyIfCurrentHistoryId == null || x.HistoryId == onlyIfCurrentHistoryId))
+                    .ExecuteUpdateAsync(s => s.SetProperty(x => x.HistoryId, historyId), cancellationToken),
+                HistoryLinkTargetType.TaxationSystem => await _context.TaxationSystems
+                    .Where(x => x.Id == targetId && (onlyIfCurrentHistoryId == null || x.HistoryId == onlyIfCurrentHistoryId))
+                    .ExecuteUpdateAsync(s => s.SetProperty(x => x.HistoryId, historyId), cancellationToken),
+                HistoryLinkTargetType.TradeRoute => await _context.TradeRoutes
+                    .Where(x => x.Id == targetId && (onlyIfCurrentHistoryId == null || x.HistoryId == onlyIfCurrentHistoryId))
+                    .ExecuteUpdateAsync(s => s.SetProperty(x => x.HistoryId, historyId), cancellationToken),
+                HistoryLinkTargetType.NaturalResource => await _context.NaturalResources
+                    .Where(x => x.Id == targetId && (onlyIfCurrentHistoryId == null || x.HistoryId == onlyIfCurrentHistoryId))
+                    .ExecuteUpdateAsync(s => s.SetProperty(x => x.HistoryId, historyId), cancellationToken),
+                HistoryLinkTargetType.ExtractionMethod => await _context.ExtractionMethods
+                    .Where(x => x.Id == targetId && (onlyIfCurrentHistoryId == null || x.HistoryId == onlyIfCurrentHistoryId))
+                    .ExecuteUpdateAsync(s => s.SetProperty(x => x.HistoryId, historyId), cancellationToken),
+                HistoryLinkTargetType.Industry => await _context.Industries
+                    .Where(x => x.Id == targetId && (onlyIfCurrentHistoryId == null || x.HistoryId == onlyIfCurrentHistoryId))
+                    .ExecuteUpdateAsync(s => s.SetProperty(x => x.HistoryId, historyId), cancellationToken),
+                HistoryLinkTargetType.Guild => await _context.Guilds
+                    .Where(x => x.Id == targetId && (onlyIfCurrentHistoryId == null || x.HistoryId == onlyIfCurrentHistoryId))
+                    .ExecuteUpdateAsync(s => s.SetProperty(x => x.HistoryId, historyId), cancellationToken),
+                HistoryLinkTargetType.Corporation => await _context.Corporations
+                    .Where(x => x.Id == targetId && (onlyIfCurrentHistoryId == null || x.HistoryId == onlyIfCurrentHistoryId))
+                    .ExecuteUpdateAsync(s => s.SetProperty(x => x.HistoryId, historyId), cancellationToken),
                 _ => 0,
             };
         }
