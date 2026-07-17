@@ -596,25 +596,9 @@ export interface FactionMemberAddDto {
 }
 
 /** POST /characters — create prima samo osnovna polja; ostatak ide kroz PUT. */
-export interface CharacterCreateDto {
-    name: string;
-    firstName: string;
-    lastName: string;
-    nickname: string;
-    title: string;
-    birthDate?: string | null;
-    isArtificial: boolean;
-    worldId: number;
-    sapientSpeciesId?: number | null;
-    raceId?: number | null;
-    fatherId?: number | null;
-    motherId?: number | null;
-    socialClassId?: number | null;
-    nationId?: number | null;
-    religionId?: number | null;
-    professionId?: number | null;
-    historyId?: number | null;
-}
+/** POST /characters — full field set (mirrors CharacterUpdateDto + worldId): create accepts
+ *  everything update does, so no follow-up PUT is needed. */
+export type CharacterCreateDto = CharacterUpdateDto & { worldId: number };
 
 /** PUT /characters/{id} — full replace: izostavljena polja se resetiraju. */
 export interface CharacterUpdateDto {

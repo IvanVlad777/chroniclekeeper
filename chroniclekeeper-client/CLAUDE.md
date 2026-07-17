@@ -64,7 +64,7 @@ Role gating mirrors the API (see root CLAUDE.md matrix): `editorRoles = ["Editor
 ## Known gaps / deferred (don't "fix" casually)
 
 - Tags page has no "entries with this tag" panel — needs a backend `GET /tags/{id}/attachments` endpoint first.
-- `CharacterForm` does POST-then-PUT on create because `CharacterCreateDto` is a subset — goes away when the backend normalizes the Create DTO (see root CLAUDE.md).
+- Character birth/death dates are free-form strings (fictional in-world dates, stopgap until custom calendars) — `CharacterForm` uses plain text inputs, not date pickers.
 - Notes/Tags selection is local state (no deep links) — intentional simplification.
 - Guest/public world viewing is deferred until the core is complete (worlds are private per owner today).
 - Family tree view and mobile drawer exist as mockups in `../design/` but aren't built.

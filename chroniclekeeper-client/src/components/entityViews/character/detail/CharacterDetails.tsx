@@ -399,8 +399,8 @@ export default function CharacterDetail() {
     }
 
     const dash = "—";
-    const fmtDate = (d?: string | null) =>
-        d ? new Date(d).toLocaleDateString() : null;
+    // Fictional in-world dates are free text now — display as-is.
+    const fmtDate = (d?: string | null) => (d && d.trim() ? d.trim() : null);
     const lifespan =
         [fmtDate(character.birthDate), fmtDate(character.deathDate)]
             .filter(Boolean)

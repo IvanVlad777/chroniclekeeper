@@ -48,6 +48,8 @@
         "raceHint": "Pick a species first.",
         "birthdate": "Born",
         "deathdate": "Died",
+        "dateHint": "Free-form in-world date (custom calendars come later)",
+        "datePlaceholder": "e.g. Year 1024, Third Age",
         "isArtificial": "Artificial being (construct, undead, machine…)",
         "save": "Save character",
         "saving": "Saving…",

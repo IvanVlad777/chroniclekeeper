@@ -14,8 +14,8 @@ namespace ChronicleKeeper.Core.DTOs.Character
         public string LastName { get; set; } = string.Empty;
         public string Nickname { get; set; } = string.Empty;
         public string Title { get; set; } = string.Empty;
-        public DateTime? BirthDate { get; set; }
-        public DateTime? DeathDate { get; set; }
+        public string? BirthDate { get; set; }
+        public string? DeathDate { get; set; }
         public string Description { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }

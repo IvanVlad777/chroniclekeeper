@@ -22,9 +22,12 @@ namespace ChronicleKeeper.Core.DTOs.Character
         [StringLength(100, ErrorMessage = "Title cannot exceed 100 characters")]
         public string Title { get; set; } = string.Empty;
         
-        public DateTime? BirthDate { get; set; }
-        public DateTime? DeathDate { get; set; }
-        
+        [StringLength(100, ErrorMessage = "Birth date cannot exceed 100 characters")]
+        public string? BirthDate { get; set; }
+
+        [StringLength(100, ErrorMessage = "Death date cannot exceed 100 characters")]
+        public string? DeathDate { get; set; }
+
         [StringLength(1000, ErrorMessage = "Description cannot exceed 1000 characters")]
         public string Description { get; set; } = string.Empty;
         

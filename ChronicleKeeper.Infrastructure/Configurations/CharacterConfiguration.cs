@@ -23,6 +23,13 @@ namespace ChronicleKeeper.Infrastructure.Configurations
             builder.Property(c => c.Title)
                 .HasMaxLength(100);
 
+            // Fictional in-world dates stored as free strings (stopgap until custom calendars)
+            builder.Property(c => c.BirthDate)
+                .HasMaxLength(100);
+
+            builder.Property(c => c.DeathDate)
+                .HasMaxLength(100);
+
             builder.Property(c => c.HairColor)
                 .HasMaxLength(50);
 

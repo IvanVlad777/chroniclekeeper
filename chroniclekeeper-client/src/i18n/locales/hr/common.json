@@ -137,6 +137,29 @@
         "removeFailed": "Uklanjanje oznake nije uspjelo.",
         "cancel": "Odustani"
     },
+    "quickCreate": {
+        "addNew": "+ Dodaj novi…",
+        "newTitle": "Novo: {{kind}}",
+        "nameLabel": "Naziv",
+        "descLabel": "Opis",
+        "nameRequired": "Naziv je obavezan.",
+        "save": "Stvori",
+        "saving": "Stvaranje…",
+        "cancel": "Odustani",
+        "close": "Zatvori",
+        "saveFailed": "Stvaranje nije uspjelo.",
+        "kinds": {
+            "location": "lokacija",
+            "character": "lik",
+            "faction": "frakcija",
+            "species": "vrsta",
+            "race": "rasa",
+            "governmentSystem": "sustav vlasti",
+            "legalSystem": "pravni sustav",
+            "educationSystem": "obrazovni sustav",
+            "economicSystem": "ekonomski sustav"
+        }
+    },
     "states": {
         "loading": "Učitavanje…",
         "errorTitle": "Arhiva nije dostupna",

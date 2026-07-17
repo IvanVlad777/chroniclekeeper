@@ -26,6 +26,9 @@ export type { OrnateCheckboxProps } from './OrnateCheckbox';
 export { OrnateMultiSelect } from './OrnateMultiSelect';
 export type { OrnateMultiSelectProps } from './OrnateMultiSelect';
 
+export { Modal } from './Modal';
+export type { ModalProps } from './Modal';
+
 export { OrnateDisplayBox, DisplayGrid } from './OrnateDisplayBox';
 
 export { DataTable } from './DataTable';

@@ -137,6 +137,29 @@
         "removeFailed": "Removing the tag failed.",
         "cancel": "Cancel"
     },
+    "quickCreate": {
+        "addNew": "+ Add new…",
+        "newTitle": "New {{kind}}",
+        "nameLabel": "Name",
+        "descLabel": "Description",
+        "nameRequired": "Name is required.",
+        "save": "Create",
+        "saving": "Creating…",
+        "cancel": "Cancel",
+        "close": "Close",
+        "saveFailed": "Creating failed.",
+        "kinds": {
+            "location": "location",
+            "character": "character",
+            "faction": "faction",
+            "species": "species",
+            "race": "race",
+            "governmentSystem": "government system",
+            "legalSystem": "legal system",
+            "educationSystem": "education system",
+            "economicSystem": "economic system"
+        }
+    },
     "states": {
         "loading": "Loading…",
         "errorTitle": "Couldn't reach the archive",

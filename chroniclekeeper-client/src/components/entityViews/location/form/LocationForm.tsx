@@ -22,11 +22,6 @@ import { getLegalSystems } from "../../../../api/legalSystems";
 import { getEducationSystems } from "../../../../api/educationSystems";
 import { getEconomicSystems } from "../../../../api/economicSystems";
 import {
-    GovernmentSystemDto,
-    LegalSystemDto,
-    EducationSystemDto,
-    EconomicSystemDto,
-    LocationDto,
     LocationType,
     LocationUpdateDto,
     locationTypes,
@@ -41,6 +36,9 @@ import {
     GrasslandType,
 } from "../../../../interfaces/loreInterfaces";
 import { useWorld } from "../../../../hooks/useWorld";
+import { useAuth } from "../../../../hooks/useAuth";
+import { editorRoles } from "../../../shell/roles";
+import { EntityPicker, type EntityOption } from "../../../quickCreate/EntityPicker";
 import { apiErrorMessage } from "../../../../utils/apiError";
 import s from "./styles.module.css";
 
@@ -179,13 +177,16 @@ export default function LocationForm() {
     const navigate = useNavigate();
     const { t } = useTranslation("location");
     const { selectedWorld, loading: worldLoading } = useWorld();
+    const { userInfo } = useAuth();
+    const canCreate =
+        userInfo?.roles.some((r) => editorRoles.includes(r)) ?? false;
 
     const [form, setForm] = useState<FormState>(emptyForm);
-    const [worldLocations, setWorldLocations] = useState<LocationDto[]>([]);
-    const [governmentSystems, setGovernmentSystems] = useState<GovernmentSystemDto[]>([]);
-    const [legalSystems, setLegalSystems] = useState<LegalSystemDto[]>([]);
-    const [educationSystems, setEducationSystems] = useState<EducationSystemDto[]>([]);
-    const [economicSystems, setEconomicSystems] = useState<EconomicSystemDto[]>([]);
+    const [locationOptions, setLocationOptions] = useState<EntityOption[]>([]);
+    const [governmentOptions, setGovernmentOptions] = useState<EntityOption[]>([]);
+    const [legalOptions, setLegalOptions] = useState<EntityOption[]>([]);
+    const [educationOptions, setEducationOptions] = useState<EntityOption[]>([]);
+    const [economicOptions, setEconomicOptions] = useState<EntityOption[]>([]);
     const [loading, setLoading] = useState(true);
     const [loadError, setLoadError] = useState<string | null>(null);
     const [saveError, setSaveError] = useState<string | null>(null);
@@ -211,11 +212,11 @@ export default function LocationForm() {
         ])
             .then(async ([locations, governmentSystemsData, legalSystemsData, educationSystemsData, economicSystemsData]) => {
                 if (cancelled) return;
-                setWorldLocations(locations);
-                setGovernmentSystems(governmentSystemsData);
-                setLegalSystems(legalSystemsData);
-                setEducationSystems(educationSystemsData);
-                setEconomicSystems(economicSystemsData);
+                setLocationOptions(locations.map((l) => ({ value: l.id, label: l.name })));
+                setGovernmentOptions(governmentSystemsData.map((g) => ({ value: g.id, label: g.name })));
+                setLegalOptions(legalSystemsData.map((l) => ({ value: l.id, label: l.name })));
+                setEducationOptions(educationSystemsData.map((e) => ({ value: e.id, label: e.name })));
+                setEconomicOptions(economicSystemsData.map((e) => ({ value: e.id, label: e.name })));
                 if (isEdit) {
                     const l = await getLocation(editId);
                     if (cancelled) return;
@@ -282,7 +283,8 @@ export default function LocationForm() {
         };
     }, [selectedWorld, worldLoading, isEdit, editId, t, reloadKey]);
 
-    const parentOptions = worldLocations.filter((l) => l.id !== editId);
+    const addLocationOption = (l: { id: number; name: string }) =>
+        setLocationOptions((prev) => [...prev, { value: l.id, label: l.name }]);
 
     async function onSubmit(e: FormEvent) {
         e.preventDefault();
@@ -499,34 +501,30 @@ export default function LocationForm() {
                                 />
                             </OrnateField>
                             <OrnateField label={t("fields.sourceLocation")}>
-                                <OrnateSelect
+                                <EntityPicker
+                                    kind="location"
+                                    worldId={selectedWorld.id}
+                                    canCreate={canCreate}
+                                    noneLabel={t("none")}
+                                    excludeValue={editId ?? undefined}
                                     value={form.sourceLocationId}
-                                    onChange={(e) =>
-                                        set("sourceLocationId", e.target.value)
-                                    }
-                                >
-                                    <option value="">{t("none")}</option>
-                                    {parentOptions.map((l) => (
-                                        <option key={l.id} value={l.id}>
-                                            {l.name}
-                                        </option>
-                                    ))}
-                                </OrnateSelect>
+                                    options={locationOptions}
+                                    onChange={(v) => set("sourceLocationId", v)}
+                                    onCreated={addLocationOption}
+                                />
                             </OrnateField>
                             <OrnateField label={t("fields.mouthLocation")}>
-                                <OrnateSelect
+                                <EntityPicker
+                                    kind="location"
+                                    worldId={selectedWorld.id}
+                                    canCreate={canCreate}
+                                    noneLabel={t("none")}
+                                    excludeValue={editId ?? undefined}
                                     value={form.mouthLocationId}
-                                    onChange={(e) =>
-                                        set("mouthLocationId", e.target.value)
-                                    }
-                                >
-                                    <option value="">{t("none")}</option>
-                                    {parentOptions.map((l) => (
-                                        <option key={l.id} value={l.id}>
-                                            {l.name}
-                                        </option>
-                                    ))}
-                                </OrnateSelect>
+                                    options={locationOptions}
+                                    onChange={(v) => set("mouthLocationId", v)}
+                                    onCreated={addLocationOption}
+                                />
                             </OrnateField>
                         </>
                     )}
@@ -655,64 +653,72 @@ export default function LocationForm() {
                     {(form.type === "Country" || form.type === "City") && (
                         <>
                             <OrnateField label={t("fields.governmentSystem")}>
-                                <OrnateSelect
+                                <EntityPicker
+                                    kind="governmentSystem"
+                                    worldId={selectedWorld.id}
+                                    canCreate={canCreate}
+                                    noneLabel={t("none")}
                                     value={form.governmentSystemId}
-                                    onChange={(e) =>
-                                        set("governmentSystemId", e.target.value)
+                                    options={governmentOptions}
+                                    onChange={(v) => set("governmentSystemId", v)}
+                                    onCreated={(g) =>
+                                        setGovernmentOptions((prev) => [
+                                            ...prev,
+                                            { value: g.id, label: g.name },
+                                        ])
                                     }
-                                >
-                                    <option value="">{t("none")}</option>
-                                    {governmentSystems.map((g) => (
-                                        <option key={g.id} value={g.id}>
-                                            {g.name}
-                                        </option>
-                                    ))}
-                                </OrnateSelect>
+                                />
                             </OrnateField>
                             <OrnateField label={t("fields.legalSystem")}>
-                                <OrnateSelect
+                                <EntityPicker
+                                    kind="legalSystem"
+                                    worldId={selectedWorld.id}
+                                    canCreate={canCreate}
+                                    noneLabel={t("none")}
                                     value={form.legalSystemId}
-                                    onChange={(e) =>
-                                        set("legalSystemId", e.target.value)
+                                    options={legalOptions}
+                                    onChange={(v) => set("legalSystemId", v)}
+                                    onCreated={(l) =>
+                                        setLegalOptions((prev) => [
+                                            ...prev,
+                                            { value: l.id, label: l.name },
+                                        ])
                                     }
-                                >
-                                    <option value="">{t("none")}</option>
-                                    {legalSystems.map((l) => (
-                                        <option key={l.id} value={l.id}>
-                                            {l.name}
-                                        </option>
-                                    ))}
-                                </OrnateSelect>
+                                />
                             </OrnateField>
                             <OrnateField label={t("fields.educationSystem")}>
-                                <OrnateSelect
+                                <EntityPicker
+                                    kind="educationSystem"
+                                    worldId={selectedWorld.id}
+                                    canCreate={canCreate}
+                                    noneLabel={t("none")}
                                     value={form.educationSystemId}
-                                    onChange={(e) =>
-                                        set("educationSystemId", e.target.value)
+                                    options={educationOptions}
+                                    onChange={(v) => set("educationSystemId", v)}
+                                    onCreated={(e) =>
+                                        setEducationOptions((prev) => [
+                                            ...prev,
+                                            { value: e.id, label: e.name },
+                                        ])
                                     }
-                                >
-                                    <option value="">{t("none")}</option>
-                                    {educationSystems.map((e) => (
-                                        <option key={e.id} value={e.id}>
-                                            {e.name}
-                                        </option>
-                                    ))}
-                                </OrnateSelect>
+                                />
                             </OrnateField>
                             <OrnateField label={t("fields.economicSystem")}>
-                                <OrnateSelect
+                                <EntityPicker
+                                    kind="economicSystem"
+                                    worldId={selectedWorld.id}
+                                    canCreate={canCreate}
+                                    noneLabel={t("none")}
                                     value={form.economicSystemId}
-                                    onChange={(e) =>
-                                        set("economicSystemId", e.target.value)
+                                    options={economicOptions}
+                                    onChange={(v) => set("economicSystemId", v)}
+                                    onCreated={(e) =>
+                                        setEconomicOptions((prev) => [
+                                            ...prev,
+                                            { value: e.id, label: e.name },
+                                        ])
                                     }
-                                >
-                                    <option value="">{t("none")}</option>
-                                    {economicSystems.map((e) => (
-                                        <option key={e.id} value={e.id}>
-                                            {e.name}
-                                        </option>
-                                    ))}
-                                </OrnateSelect>
+                                />
                             </OrnateField>
                         </>
                     )}
@@ -731,19 +737,17 @@ export default function LocationForm() {
                         label={t("fields.parent")}
                         hint={t("form.parentHint")}
                     >
-                        <OrnateSelect
+                        <EntityPicker
+                            kind="location"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("none")}
+                            excludeValue={editId ?? undefined}
                             value={form.parentLocationId}
-                            onChange={(e) =>
-                                set("parentLocationId", e.target.value)
-                            }
-                        >
-                            <option value="">{t("none")}</option>
-                            {parentOptions.map((l) => (
-                                <option key={l.id} value={l.id}>
-                                    {l.name}
-                                </option>
-                            ))}
-                        </OrnateSelect>
+                            options={locationOptions}
+                            onChange={(v) => set("parentLocationId", v)}
+                            onCreated={addLocationOption}
+                        />
                     </OrnateField>
                     <div className={s.row2}>
                         <OrnateField label={t("fields.area")}>

@@ -80,7 +80,7 @@ Seed users: `superadmin@chroniclekeeper.com` / `SuperAdmin@123` (owns the seed "
 
 - REST routes: `api/<plural>` (`api/characters`, `api/species` + `api/races` share one controller file). Sub-resources: `POST/DELETE api/characters/{id}/relationships`, `api/factions/{id}/members`, `api/tags/{id}/attachments/{targetType}/{targetId}`, `api/timelines/{id}/events` (+ `PUT/DELETE api/timelines/events/{eventId}`).
 - DTO pattern per entity: `XDto` (list), `XDetailsDto` (detail with related `ReferenceDto`s), `XCreateDto`, `XUpdateDto` (usually `Create` minus `WorldId`, via inheritance or `Omit`).
-- **Create DTOs take the full field set** — everything `Update` accepts (minus id/world derivation). Known violation: `CharacterCreateDto` only takes basic fields, which forces the client into a POST-then-PUT dance; **normalize it the next time character DTOs are touched**, then remove the follow-up PUT in `CharacterForm.tsx`.
+- **Create DTOs take the full field set** — everything `Update` accepts (minus id/world derivation). `CharacterCreateDto` was normalized to the full set (2026-07-17), so the old POST-then-PUT dance in `CharacterForm.tsx` is gone — a single POST creates a complete character.
 - PUT is **full replace** — omitted fields reset. Accepted behavior; clients must send complete payloads.
 - Validation errors come back as `BadRequest(ModelState)`; Identity errors as a plain array `[{code, description}]`; domain rules as `DomainValidationException`. The client parses all of these in `src/utils/apiError.ts` — reuse those shapes, don't invent new error formats.
 - Authorization matrix (mirror it in client role gating):

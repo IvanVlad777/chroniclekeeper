@@ -23,17 +23,17 @@ import { getNations } from "../../../../api/nations";
 import { getReligions } from "../../../../api/religions";
 import { getProfessions } from "../../../../api/professions";
 import {
-    CharacterDto,
     CharacterUpdateDto,
     NationDto,
     ProfessionDto,
     RaceDto,
     ReligionDto,
     SocialClassDto,
-    SpeciesDto,
 } from "../../../../interfaces/loreInterfaces";
 import { useWorld } from "../../../../hooks/useWorld";
 import { useAuth } from "../../../../hooks/useAuth";
+import { editorRoles } from "../../../shell/roles";
+import { EntityPicker, type EntityOption } from "../../../quickCreate/EntityPicker";
 import { apiErrorMessage } from "../../../../utils/apiError";
 import s from "./styles.module.css";
 
@@ -45,7 +45,7 @@ interface FormState {
     lastName: string;
     nickname: string;
     title: string;
-    birthDate: string; // yyyy-MM-dd ili ""
+    birthDate: string; // slobodan fiktivni datum (npr. "Godina 1024") ili ""
     deathDate: string;
     description: string;
     height: string;
@@ -135,15 +135,17 @@ export default function CharacterForm() {
     const { userInfo } = useAuth();
     const canDelete =
         userInfo?.roles.some((r) => adminRoles.includes(r)) ?? false;
+    const canCreate =
+        userInfo?.roles.some((r) => editorRoles.includes(r)) ?? false;
 
     const [form, setForm] = useState<FormState>(emptyForm);
-    const [species, setSpecies] = useState<SpeciesDto[]>([]);
+    const [speciesOptions, setSpeciesOptions] = useState<EntityOption[]>([]);
     const [races, setRaces] = useState<RaceDto[]>([]);
     const [socialClasses, setSocialClasses] = useState<SocialClassDto[]>([]);
     const [nations, setNations] = useState<NationDto[]>([]);
     const [religions, setReligions] = useState<ReligionDto[]>([]);
     const [professions, setProfessions] = useState<ProfessionDto[]>([]);
-    const [characters, setCharacters] = useState<CharacterDto[]>([]);
+    const [characterOptions, setCharacterOptions] = useState<EntityOption[]>([]);
     const [loading, setLoading] = useState(true);
     const [loadError, setLoadError] = useState<string | null>(null);
     const [saveError, setSaveError] = useState<string | null>(null);
@@ -161,15 +163,7 @@ export default function CharacterForm() {
         setLoading(true);
         setLoadError(null);
 
-        const loads: [
-            Promise<SpeciesDto[]>,
-            Promise<RaceDto[]>,
-            Promise<CharacterDto[]>,
-            Promise<SocialClassDto[]>,
-            Promise<NationDto[]>,
-            Promise<ReligionDto[]>,
-            Promise<ProfessionDto[]>
-        ] = [
+        Promise.all([
             getSpecies(selectedWorld.id),
             getRaces({ worldId: selectedWorld.id }),
             getCharacters(selectedWorld.id),
@@ -177,14 +171,12 @@ export default function CharacterForm() {
             getNations(selectedWorld.id),
             getReligions(selectedWorld.id),
             getProfessions(selectedWorld.id),
-        ];
-
-        Promise.all(loads)
+        ])
             .then(async ([speciesData, racesData, charactersData, socialClassData, nationsData, religionsData, professionsData]) => {
                 if (cancelled) return;
-                setSpecies(speciesData);
+                setSpeciesOptions(speciesData.map((sp) => ({ value: sp.id, label: sp.name })));
                 setRaces(racesData);
-                setCharacters(charactersData);
+                setCharacterOptions(charactersData.map((c) => ({ value: c.id, label: c.name })));
                 setSocialClasses(socialClassData);
                 setNations(nationsData);
                 setReligions(religionsData);
@@ -199,8 +191,8 @@ export default function CharacterForm() {
                         lastName: c.lastName ?? "",
                         nickname: c.nickname ?? "",
                         title: c.title ?? "",
-                        birthDate: c.birthDate?.slice(0, 10) ?? "",
-                        deathDate: c.deathDate?.slice(0, 10) ?? "",
+                        birthDate: c.birthDate ?? "",
+                        deathDate: c.deathDate ?? "",
                         description: c.description ?? "",
                         height: c.height != null ? String(c.height) : "",
                         weight: c.weight != null ? String(c.weight) : "",
@@ -248,14 +240,8 @@ export default function CharacterForm() {
         );
     }, [races, form.sapientSpeciesId]);
 
-    // Kandidati za roditelje: likovi ovog svijeta, bez samog lika
-    const parentOptions = useMemo(
-        () =>
-            characters
-                .filter((c) => c.id !== editId)
-                .map((c) => ({ value: String(c.id), label: c.name })),
-        [characters, editId]
-    );
+    const addCharacterOption = (c: { id: number; name: string }) =>
+        setCharacterOptions((prev) => [...prev, { value: c.id, label: c.name }]);
 
     const onSpeciesChange = (value: string) => {
         setForm((f) => ({
@@ -289,38 +275,12 @@ export default function CharacterForm() {
                 await updateCharacter(editId, toUpdateDto(form));
                 targetId = editId;
             } else {
+                // Create takes the full field set (mirrors update + worldId) — no follow-up PUT.
                 const created = await createCharacter({
-                    name: form.name.trim(),
-                    firstName: form.firstName.trim(),
-                    lastName: form.lastName.trim(),
-                    nickname: form.nickname.trim(),
-                    title: form.title.trim(),
-                    birthDate: toDate(form.birthDate),
-                    isArtificial: form.isArtificial,
+                    ...toUpdateDto(form),
                     worldId: selectedWorld.id,
-                    sapientSpeciesId: toId(form.sapientSpeciesId),
-                    raceId: toId(form.raceId),
-                    socialClassId: toId(form.socialClassId),
-                    nationId: toId(form.nationId),
-                    religionId: toId(form.religionId),
-                    professionId: toId(form.professionId),
-                    historyId: toId(form.historyId),
-                    fatherId: toId(form.fatherId),
-                    motherId: toId(form.motherId),
                 });
                 targetId = created.id;
-                // Create prima samo osnovna polja — ostatak dopuni PUT-om
-                const hasExtras =
-                    form.description.trim() ||
-                    form.specialPhysicalFeatures.trim() ||
-                    form.deathDate ||
-                    form.height.trim() ||
-                    form.weight.trim() ||
-                    form.hairColor.trim() ||
-                    form.eyeColor.trim();
-                if (hasExtras) {
-                    await updateCharacter(created.id, toUpdateDto(form));
-                }
             }
             navigate(`/storymap/characters/${targetId}`);
         } catch (err) {
@@ -451,17 +411,21 @@ export default function CharacterForm() {
 
                 <div className={s.col}>
                     <OrnateField label={t("species")}>
-                        <OrnateSelect
+                        <EntityPicker
+                            kind="species"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("none")}
                             value={form.sapientSpeciesId}
-                            onChange={(e) => onSpeciesChange(e.target.value)}
-                        >
-                            <option value="">{t("none")}</option>
-                            {species.map((sp) => (
-                                <option key={sp.id} value={sp.id}>
-                                    {sp.name}
-                                </option>
-                            ))}
-                        </OrnateSelect>
+                            options={speciesOptions}
+                            onChange={onSpeciesChange}
+                            onCreated={(sp) =>
+                                setSpeciesOptions((prev) => [
+                                    ...prev,
+                                    { value: sp.id, label: sp.name },
+                                ])
+                            }
+                        />
                     </OrnateField>
                     <OrnateField
                         label={t("race")}
@@ -545,36 +509,40 @@ export default function CharacterForm() {
                         </OrnateSelect>
                     </OrnateField>
                     <OrnateField label={t("father")}>
-                        <OrnateSelect
+                        <EntityPicker
+                            kind="character"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("none")}
+                            excludeValue={editId ?? undefined}
                             value={form.fatherId}
-                            onChange={(e) => set("fatherId", e.target.value)}
-                        >
-                            <option value="">{t("none")}</option>
-                            {parentOptions.map((o) => (
-                                <option key={o.value} value={o.value}>
-                                    {o.label}
-                                </option>
-                            ))}
-                        </OrnateSelect>
+                            options={characterOptions}
+                            onChange={(v) => set("fatherId", v)}
+                            onCreated={addCharacterOption}
+                        />
                     </OrnateField>
                     <OrnateField label={t("mother")}>
-                        <OrnateSelect
+                        <EntityPicker
+                            kind="character"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("none")}
+                            excludeValue={editId ?? undefined}
                             value={form.motherId}
-                            onChange={(e) => set("motherId", e.target.value)}
-                        >
-                            <option value="">{t("none")}</option>
-                            {parentOptions.map((o) => (
-                                <option key={o.value} value={o.value}>
-                                    {o.label}
-                                </option>
-                            ))}
-                        </OrnateSelect>
+                            options={characterOptions}
+                            onChange={(v) => set("motherId", v)}
+                            onCreated={addCharacterOption}
+                        />
                     </OrnateField>
                     <div className={s.row2}>
-                        <OrnateField label={t("form.birthdate")}>
+                        <OrnateField
+                            label={t("form.birthdate")}
+                            hint={t("form.dateHint")}
+                        >
                             <OrnateTextInput
-                                type="date"
                                 value={form.birthDate}
+                                maxLength={100}
+                                placeholder={t("form.datePlaceholder")}
                                 onChange={(e) =>
                                     set("birthDate", e.target.value)
                                 }
@@ -582,8 +550,9 @@ export default function CharacterForm() {
                         </OrnateField>
                         <OrnateField label={t("form.deathdate")}>
                             <OrnateTextInput
-                                type="date"
                                 value={form.deathDate}
+                                maxLength={100}
+                                placeholder={t("form.datePlaceholder")}
                                 onChange={(e) =>
                                     set("deathDate", e.target.value)
                                 }

@@ -48,6 +48,8 @@
         "raceHint": "Prvo odaberi vrstu.",
         "birthdate": "Rođen",
         "deathdate": "Umro",
+        "dateHint": "Slobodan fiktivni datum (custom kalendari dolaze kasnije)",
+        "datePlaceholder": "npr. Godina 1024, Treće doba",
         "isArtificial": "Umjetno biće (konstrukt, nemrtvi, stroj…)",
         "save": "Spremi lika",
         "saving": "Spremanje…",

@@ -25,9 +25,10 @@ namespace ChronicleKeeper.Core.Entities.Characters
         public string Nickname { get; set; } = string.Empty;
         public string Title { get; set; } = string.Empty;
 
-        // Date of Life
-        public DateTime? BirthDate { get; set; }
-        public DateTime? DeathDate { get; set; }
+        // Date of Life — fictional in-world dates: plain string stopgap (like TimelineEvent.Date /
+        // DiplomaticAgreement dates) until the per-world custom calendar system exists.
+        public string? BirthDate { get; set; }
+        public string? DeathDate { get; set; }
 
         // Physical Appearance
         public double? Height { get; set; } // cm

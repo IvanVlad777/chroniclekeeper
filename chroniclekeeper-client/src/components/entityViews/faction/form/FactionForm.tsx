@@ -19,13 +19,14 @@ import {
 import { getCharacters } from "../../../../api/characters";
 import { getLocations } from "../../../../api/locations";
 import {
-    CharacterDto,
     FactionType,
     FactionUpdateDto,
     factionTypes,
-    LocationDto,
 } from "../../../../interfaces/loreInterfaces";
 import { useWorld } from "../../../../hooks/useWorld";
+import { useAuth } from "../../../../hooks/useAuth";
+import { editorRoles } from "../../../shell/roles";
+import { EntityPicker, type EntityOption } from "../../../quickCreate/EntityPicker";
 import { apiErrorMessage } from "../../../../utils/apiError";
 import s from "./styles.module.css";
 
@@ -75,10 +76,13 @@ export default function FactionForm() {
     const navigate = useNavigate();
     const { t } = useTranslation("faction");
     const { selectedWorld, loading: worldLoading } = useWorld();
+    const { userInfo } = useAuth();
+    const canCreate =
+        userInfo?.roles.some((r) => editorRoles.includes(r)) ?? false;
 
     const [form, setForm] = useState<FormState>(emptyForm);
-    const [characters, setCharacters] = useState<CharacterDto[]>([]);
-    const [locations, setLocations] = useState<LocationDto[]>([]);
+    const [characterOptions, setCharacterOptions] = useState<EntityOption[]>([]);
+    const [locationOptions, setLocationOptions] = useState<EntityOption[]>([]);
     const [loading, setLoading] = useState(true);
     const [loadError, setLoadError] = useState<string | null>(null);
     const [saveError, setSaveError] = useState<string | null>(null);
@@ -101,8 +105,8 @@ export default function FactionForm() {
         ])
             .then(async ([chars, locs]) => {
                 if (cancelled) return;
-                setCharacters(chars);
-                setLocations(locs);
+                setCharacterOptions(chars.map((c) => ({ value: c.id, label: c.name })));
+                setLocationOptions(locs.map((l) => ({ value: l.id, label: l.name })));
                 if (isEdit) {
                     const f = await getFaction(editId);
                     if (cancelled) return;
@@ -253,32 +257,38 @@ export default function FactionForm() {
                         </OrnateSelect>
                     </OrnateField>
                     <OrnateField label={t("fields.leader")}>
-                        <OrnateSelect
+                        <EntityPicker
+                            kind="character"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("none")}
                             value={form.leaderId}
-                            onChange={(e) => set("leaderId", e.target.value)}
-                        >
-                            <option value="">{t("none")}</option>
-                            {characters.map((c) => (
-                                <option key={c.id} value={c.id}>
-                                    {c.name}
-                                </option>
-                            ))}
-                        </OrnateSelect>
+                            options={characterOptions}
+                            onChange={(v) => set("leaderId", v)}
+                            onCreated={(c) =>
+                                setCharacterOptions((prev) => [
+                                    ...prev,
+                                    { value: c.id, label: c.name },
+                                ])
+                            }
+                        />
                     </OrnateField>
                     <OrnateField label={t("fields.headquarters")}>
-                        <OrnateSelect
+                        <EntityPicker
+                            kind="location"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("none")}
                             value={form.headquartersId}
-                            onChange={(e) =>
-                                set("headquartersId", e.target.value)
+                            options={locationOptions}
+                            onChange={(v) => set("headquartersId", v)}
+                            onCreated={(l) =>
+                                setLocationOptions((prev) => [
+                                    ...prev,
+                                    { value: l.id, label: l.name },
+                                ])
                             }
-                        >
-                            <option value="">{t("none")}</option>
-                            {locations.map((l) => (
-                                <option key={l.id} value={l.id}>
-                                    {l.name}
-                                </option>
-                            ))}
-                        </OrnateSelect>
+                        />
                     </OrnateField>
                     <OrnateCheckbox
                         label={t("fields.isSecretive")}
