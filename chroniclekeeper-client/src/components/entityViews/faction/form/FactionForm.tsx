@@ -18,13 +18,11 @@ import {
 } from "../../../../api/factions";
 import { getCharacters } from "../../../../api/characters";
 import { getLocations } from "../../../../api/locations";
-import { getHistories } from "../../../../api/histories";
 import {
     CharacterDto,
     FactionType,
     FactionUpdateDto,
     factionTypes,
-    HistoryDto,
     LocationDto,
 } from "../../../../interfaces/loreInterfaces";
 import { useWorld } from "../../../../hooks/useWorld";
@@ -81,7 +79,6 @@ export default function FactionForm() {
     const [form, setForm] = useState<FormState>(emptyForm);
     const [characters, setCharacters] = useState<CharacterDto[]>([]);
     const [locations, setLocations] = useState<LocationDto[]>([]);
-    const [histories, setHistories] = useState<HistoryDto[]>([]);
     const [loading, setLoading] = useState(true);
     const [loadError, setLoadError] = useState<string | null>(null);
     const [saveError, setSaveError] = useState<string | null>(null);
@@ -101,13 +98,11 @@ export default function FactionForm() {
         Promise.all([
             getCharacters(selectedWorld.id),
             getLocations(selectedWorld.id),
-            getHistories(selectedWorld.id),
         ])
-            .then(async ([chars, locs, historiesData]) => {
+            .then(async ([chars, locs]) => {
                 if (cancelled) return;
                 setCharacters(chars);
                 setLocations(locs);
-                setHistories(historiesData);
                 if (isEdit) {
                     const f = await getFaction(editId);
                     if (cancelled) return;
@@ -281,19 +276,6 @@ export default function FactionForm() {
                             {locations.map((l) => (
                                 <option key={l.id} value={l.id}>
                                     {l.name}
-                                </option>
-                            ))}
-                        </OrnateSelect>
-                    </OrnateField>
-                    <OrnateField label={t("fields.history")}>
-                        <OrnateSelect
-                            value={form.historyId}
-                            onChange={(e) => set("historyId", e.target.value)}
-                        >
-                            <option value="">{t("none")}</option>
-                            {histories.map((h) => (
-                                <option key={h.id} value={h.id}>
-                                    {h.name}
                                 </option>
                             ))}
                         </OrnateSelect>

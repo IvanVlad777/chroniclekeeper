@@ -64,6 +64,40 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .ToList();
         }
 
+        public async Task<bool> TargetExistsInWorldAsync(HistoryLinkTargetType targetType, int targetId, int worldId, CancellationToken cancellationToken = default)
+        {
+            return targetType switch
+            {
+                HistoryLinkTargetType.Character => await _context.Characters.AnyAsync(c => c.Id == targetId && c.WorldId == worldId, cancellationToken),
+                HistoryLinkTargetType.Location => await _context.Locations.AnyAsync(l => l.Id == targetId && l.WorldId == worldId, cancellationToken),
+                HistoryLinkTargetType.Faction => await _context.Factions.AnyAsync(f => f.Id == targetId && f.WorldId == worldId, cancellationToken),
+                HistoryLinkTargetType.Nation => await _context.Nations.AnyAsync(n => n.Id == targetId && n.WorldId == worldId, cancellationToken),
+                _ => false,
+            };
+        }
+
+        public async Task<int> SetTargetHistoryAsync(HistoryLinkTargetType targetType, int targetId, int? historyId, int? onlyIfCurrentHistoryId = null, CancellationToken cancellationToken = default)
+        {
+            // ExecuteUpdate keeps this a single UPDATE; the optional guard makes unlink
+            // no-op unless the target currently points at the expected history.
+            return targetType switch
+            {
+                HistoryLinkTargetType.Character => await _context.Characters
+                    .Where(c => c.Id == targetId && (onlyIfCurrentHistoryId == null || c.HistoryId == onlyIfCurrentHistoryId))
+                    .ExecuteUpdateAsync(s => s.SetProperty(c => c.HistoryId, historyId), cancellationToken),
+                HistoryLinkTargetType.Location => await _context.Locations
+                    .Where(l => l.Id == targetId && (onlyIfCurrentHistoryId == null || l.HistoryId == onlyIfCurrentHistoryId))
+                    .ExecuteUpdateAsync(s => s.SetProperty(l => l.HistoryId, historyId), cancellationToken),
+                HistoryLinkTargetType.Faction => await _context.Factions
+                    .Where(f => f.Id == targetId && (onlyIfCurrentHistoryId == null || f.HistoryId == onlyIfCurrentHistoryId))
+                    .ExecuteUpdateAsync(s => s.SetProperty(f => f.HistoryId, historyId), cancellationToken),
+                HistoryLinkTargetType.Nation => await _context.Nations
+                    .Where(n => n.Id == targetId && (onlyIfCurrentHistoryId == null || n.HistoryId == onlyIfCurrentHistoryId))
+                    .ExecuteUpdateAsync(s => s.SetProperty(n => n.HistoryId, historyId), cancellationToken),
+                _ => 0,
+            };
+        }
+
         public async Task<History?> FindByIdAsync(int id, CancellationToken cancellationToken = default)
         {
             return await _context.Histories

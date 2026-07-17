@@ -5,6 +5,7 @@ import { Button, DisplayGrid, OrnateDisplayBox } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
 import { TagEditor } from "../../../tagging/TagEditor";
 import { LinkEditor } from "../../../linking/LinkEditor";
+import { HistoryBlock } from "../../../history/HistoryBlock";
 import {
     ecosystemLocationTypes,
     LocationDetailsDto,
@@ -171,21 +172,6 @@ export default function LocationDetails() {
                                     to={`/storymap/locations/${location.parentLocation.id}`}
                                 >
                                     {location.parentLocation.name}
-                                </Link>
-                            ) : (
-                                dash
-                            )
-                        }
-                    />
-                    <OrnateDisplayBox
-                        label={t("fields.history")}
-                        value={
-                            location.history ? (
-                                <Link
-                                    className={s.parentLink}
-                                    to={`/storymap/histories/${location.history.id}`}
-                                >
-                                    {location.history.name}
                                 </Link>
                             ) : (
                                 dash
@@ -474,6 +460,14 @@ export default function LocationDetails() {
                         canEdit={canEdit}
                         onChanged={refetch}
                         showLabel
+                    />
+                    <HistoryBlock
+                        targetType="Location"
+                        targetId={location.id}
+                        worldId={location.worldId}
+                        history={location.history}
+                        canEdit={canEdit}
+                        onChanged={refetch}
                     />
                 </div>
             </div>

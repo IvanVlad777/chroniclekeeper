@@ -106,6 +106,26 @@
     "lang": {
         "label": "Language"
     },
+    "historyBlock": {
+        "label": "History",
+        "none": "No history linked.",
+        "noneEditor": "No history yet — create one for this entry or link an existing history.",
+        "create": "Create history",
+        "createName": "History name",
+        "createAction": "Create & attach",
+        "linkExisting": "Link existing",
+        "linkPick": "Existing history",
+        "linkPickPlaceholder": "Choose a history…",
+        "attach": "Attach",
+        "unlink": "Unlink",
+        "cancel": "Cancel",
+        "nameRequired": "A history name is required.",
+        "pickRequired": "Choose a history to link.",
+        "confirmUnlink": "Detach this history from the entry? The history itself is kept.",
+        "createFailed": "Creating the history failed.",
+        "linkFailed": "Linking the history failed.",
+        "unlinkFailed": "Unlinking the history failed."
+    },
     "tagEditor": {
         "label": "Tags",
         "add": "tag",

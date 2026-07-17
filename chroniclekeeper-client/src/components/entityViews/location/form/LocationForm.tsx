@@ -17,14 +17,12 @@ import {
     getLocations,
     updateLocation,
 } from "../../../../api/locations";
-import { getHistories } from "../../../../api/histories";
 import { getGovernmentSystems } from "../../../../api/governmentSystems";
 import { getLegalSystems } from "../../../../api/legalSystems";
 import { getEducationSystems } from "../../../../api/educationSystems";
 import { getEconomicSystems } from "../../../../api/economicSystems";
 import {
     GovernmentSystemDto,
-    HistoryDto,
     LegalSystemDto,
     EducationSystemDto,
     EconomicSystemDto,
@@ -184,7 +182,6 @@ export default function LocationForm() {
 
     const [form, setForm] = useState<FormState>(emptyForm);
     const [worldLocations, setWorldLocations] = useState<LocationDto[]>([]);
-    const [histories, setHistories] = useState<HistoryDto[]>([]);
     const [governmentSystems, setGovernmentSystems] = useState<GovernmentSystemDto[]>([]);
     const [legalSystems, setLegalSystems] = useState<LegalSystemDto[]>([]);
     const [educationSystems, setEducationSystems] = useState<EducationSystemDto[]>([]);
@@ -207,16 +204,14 @@ export default function LocationForm() {
 
         Promise.all([
             getLocations(selectedWorld.id),
-            getHistories(selectedWorld.id),
             getGovernmentSystems(selectedWorld.id),
             getLegalSystems(selectedWorld.id),
             getEducationSystems(selectedWorld.id),
             getEconomicSystems(selectedWorld.id),
         ])
-            .then(async ([locations, historiesData, governmentSystemsData, legalSystemsData, educationSystemsData, economicSystemsData]) => {
+            .then(async ([locations, governmentSystemsData, legalSystemsData, educationSystemsData, economicSystemsData]) => {
                 if (cancelled) return;
                 setWorldLocations(locations);
-                setHistories(historiesData);
                 setGovernmentSystems(governmentSystemsData);
                 setLegalSystems(legalSystemsData);
                 setEducationSystems(educationSystemsData);
@@ -746,19 +741,6 @@ export default function LocationForm() {
                             {parentOptions.map((l) => (
                                 <option key={l.id} value={l.id}>
                                     {l.name}
-                                </option>
-                            ))}
-                        </OrnateSelect>
-                    </OrnateField>
-                    <OrnateField label={t("fields.history")}>
-                        <OrnateSelect
-                            value={form.historyId}
-                            onChange={(e) => set("historyId", e.target.value)}
-                        >
-                            <option value="">{t("none")}</option>
-                            {histories.map((h) => (
-                                <option key={h.id} value={h.id}>
-                                    {h.name}
                                 </option>
                             ))}
                         </OrnateSelect>

@@ -86,5 +86,31 @@ namespace ChronicleKeeperAPI.Controllers
             if (!result) return NotFound();
             return NoContent();
         }
+
+        // POST: /api/histories/{id}/links/{targetType}/{targetId}
+        [HttpPost("{id}/links/{targetType}/{targetId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Attach this history to an entity", Description = "TargetType: Character | Location | Faction | Nation; target must be in the history's world")]
+        [SwaggerResponse(204, "History linked")]
+        [SwaggerResponse(400, "Invalid target")]
+        [SwaggerResponse(404, "History not found")]
+        public async Task<IActionResult> Link(int id, HistoryLinkTargetType targetType, int targetId)
+        {
+            await _mediator.Send(new LinkHistoryCommand { HistoryId = id, TargetType = targetType, TargetId = targetId });
+            return NoContent();
+        }
+
+        // DELETE: /api/histories/{id}/links/{targetType}/{targetId}
+        [HttpDelete("{id}/links/{targetType}/{targetId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Detach this history from an entity")]
+        [SwaggerResponse(204, "History unlinked")]
+        [SwaggerResponse(404, "Link not found")]
+        public async Task<IActionResult> Unlink(int id, HistoryLinkTargetType targetType, int targetId)
+        {
+            var result = await _mediator.Send(new UnlinkHistoryCommand { HistoryId = id, TargetType = targetType, TargetId = targetId });
+            if (!result) return NotFound();
+            return NoContent();
+        }
     }
 }

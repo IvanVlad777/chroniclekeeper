@@ -123,4 +123,47 @@ namespace ChronicleKeeper.Core.CQRS.Histories.Handlers
             return await _repository.DeleteAsync(request.Id, cancellationToken);
         }
     }
+
+    public class LinkHistoryCommandHandler : IRequestHandler<LinkHistoryCommand, Unit>
+    {
+        private readonly IHistoryRepository _repository;
+
+        public LinkHistoryCommandHandler(IHistoryRepository repository)
+        {
+            _repository = repository;
+        }
+
+        public async Task<Unit> Handle(LinkHistoryCommand request, CancellationToken cancellationToken)
+        {
+            var history = await _repository.FindByIdAsync(request.HistoryId, cancellationToken)
+                ?? throw new EntityNotFoundException("History", request.HistoryId);
+
+            if (!await _repository.TargetExistsInWorldAsync(request.TargetType, request.TargetId, history.WorldId, cancellationToken))
+            {
+                throw new DomainValidationException(
+                    $"{request.TargetType} with ID {request.TargetId} does not exist in this world.");
+            }
+
+            await _repository.SetTargetHistoryAsync(request.TargetType, request.TargetId, history.Id, cancellationToken: cancellationToken);
+            return Unit.Value;
+        }
+    }
+
+    public class UnlinkHistoryCommandHandler : IRequestHandler<UnlinkHistoryCommand, bool>
+    {
+        private readonly IHistoryRepository _repository;
+
+        public UnlinkHistoryCommandHandler(IHistoryRepository repository)
+        {
+            _repository = repository;
+        }
+
+        public async Task<bool> Handle(UnlinkHistoryCommand request, CancellationToken cancellationToken)
+        {
+            // Only clears the link if the target currently points at this history.
+            var changed = await _repository.SetTargetHistoryAsync(
+                request.TargetType, request.TargetId, null, request.HistoryId, cancellationToken);
+            return changed > 0;
+        }
+    }
 }

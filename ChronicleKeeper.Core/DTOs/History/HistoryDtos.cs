@@ -45,6 +45,15 @@ namespace ChronicleKeeper.Core.DTOs.History
         public string Name { get; set; } = string.Empty;
     }
 
+    /// <summary>Entity types that can carry a History link (set from the entity's detail block).</summary>
+    public enum HistoryLinkTargetType
+    {
+        Character,
+        Location,
+        Faction,
+        Nation
+    }
+
     public class HistoryCreateDto
     {
         [Required]

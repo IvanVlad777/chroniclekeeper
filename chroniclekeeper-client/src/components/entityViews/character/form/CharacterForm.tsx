@@ -22,11 +22,9 @@ import { getSocialClasses } from "../../../../api/socialClasses";
 import { getNations } from "../../../../api/nations";
 import { getReligions } from "../../../../api/religions";
 import { getProfessions } from "../../../../api/professions";
-import { getHistories } from "../../../../api/histories";
 import {
     CharacterDto,
     CharacterUpdateDto,
-    HistoryDto,
     NationDto,
     ProfessionDto,
     RaceDto,
@@ -145,7 +143,6 @@ export default function CharacterForm() {
     const [nations, setNations] = useState<NationDto[]>([]);
     const [religions, setReligions] = useState<ReligionDto[]>([]);
     const [professions, setProfessions] = useState<ProfessionDto[]>([]);
-    const [histories, setHistories] = useState<HistoryDto[]>([]);
     const [characters, setCharacters] = useState<CharacterDto[]>([]);
     const [loading, setLoading] = useState(true);
     const [loadError, setLoadError] = useState<string | null>(null);
@@ -171,8 +168,7 @@ export default function CharacterForm() {
             Promise<SocialClassDto[]>,
             Promise<NationDto[]>,
             Promise<ReligionDto[]>,
-            Promise<ProfessionDto[]>,
-            Promise<HistoryDto[]>
+            Promise<ProfessionDto[]>
         ] = [
             getSpecies(selectedWorld.id),
             getRaces({ worldId: selectedWorld.id }),
@@ -181,11 +177,10 @@ export default function CharacterForm() {
             getNations(selectedWorld.id),
             getReligions(selectedWorld.id),
             getProfessions(selectedWorld.id),
-            getHistories(selectedWorld.id),
         ];
 
         Promise.all(loads)
-            .then(async ([speciesData, racesData, charactersData, socialClassData, nationsData, religionsData, professionsData, historiesData]) => {
+            .then(async ([speciesData, racesData, charactersData, socialClassData, nationsData, religionsData, professionsData]) => {
                 if (cancelled) return;
                 setSpecies(speciesData);
                 setRaces(racesData);
@@ -194,7 +189,6 @@ export default function CharacterForm() {
                 setNations(nationsData);
                 setReligions(religionsData);
                 setProfessions(professionsData);
-                setHistories(historiesData);
 
                 if (isEdit) {
                     const c = await getCharacter(editId);
@@ -546,19 +540,6 @@ export default function CharacterForm() {
                             {professions.map((p) => (
                                 <option key={p.id} value={p.id}>
                                     {p.name}
-                                </option>
-                            ))}
-                        </OrnateSelect>
-                    </OrnateField>
-                    <OrnateField label={t("historyProfile.label")}>
-                        <OrnateSelect
-                            value={form.historyId}
-                            onChange={(e) => set("historyId", e.target.value)}
-                        >
-                            <option value="">{t("none")}</option>
-                            {histories.map((h) => (
-                                <option key={h.id} value={h.id}>
-                                    {h.name}
                                 </option>
                             ))}
                         </OrnateSelect>

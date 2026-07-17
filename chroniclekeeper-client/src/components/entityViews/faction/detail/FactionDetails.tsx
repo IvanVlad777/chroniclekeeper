@@ -12,6 +12,7 @@ import {
 } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
 import { TagEditor } from "../../../tagging/TagEditor";
+import { HistoryBlock } from "../../../history/HistoryBlock";
 import {
     CharacterDto,
     FactionDetailsDto,
@@ -242,21 +243,6 @@ export default function FactionDetails() {
                         }
                     />
                     <OrnateDisplayBox
-                        label={t("fields.history")}
-                        value={
-                            faction.history ? (
-                                <Link
-                                    className={s.refLink}
-                                    to={`/storymap/histories/${faction.history.id}`}
-                                >
-                                    {faction.history.name}
-                                </Link>
-                            ) : (
-                                dash
-                            )
-                        }
-                    />
-                    <OrnateDisplayBox
                         label={t("fields.isSecretive")}
                         value={
                             faction.isSecretive
@@ -423,6 +409,14 @@ export default function FactionDetails() {
                         canEdit={canEdit}
                         onChanged={refetch}
                         showLabel
+                    />
+                    <HistoryBlock
+                        targetType="Faction"
+                        targetId={faction.id}
+                        worldId={faction.worldId}
+                        history={faction.history}
+                        canEdit={canEdit}
+                        onChanged={refetch}
                     />
                 </div>
             </div>

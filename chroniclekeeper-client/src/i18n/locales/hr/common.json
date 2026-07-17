@@ -106,6 +106,26 @@
     "lang": {
         "label": "Jezik"
     },
+    "historyBlock": {
+        "label": "Povijest",
+        "none": "Nema povezane povijesti.",
+        "noneEditor": "Još nema povijesti — stvori jednu za ovaj zapis ili poveži postojeću.",
+        "create": "Stvori povijest",
+        "createName": "Naziv povijesti",
+        "createAction": "Stvori i poveži",
+        "linkExisting": "Poveži postojeću",
+        "linkPick": "Postojeća povijest",
+        "linkPickPlaceholder": "Odaberi povijest…",
+        "attach": "Poveži",
+        "unlink": "Odspoji",
+        "cancel": "Odustani",
+        "nameRequired": "Naziv povijesti je obavezan.",
+        "pickRequired": "Odaberi povijest za povezivanje.",
+        "confirmUnlink": "Odspojiti ovu povijest od zapisa? Sama povijest se zadržava.",
+        "createFailed": "Stvaranje povijesti nije uspjelo.",
+        "linkFailed": "Povezivanje povijesti nije uspjelo.",
+        "unlinkFailed": "Odspajanje povijesti nije uspjelo."
+    },
     "tagEditor": {
         "label": "Oznake",
         "add": "oznaka",

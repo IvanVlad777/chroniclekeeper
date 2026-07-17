@@ -37,3 +37,28 @@ export const updateHistory = async (
 export const deleteHistory = async (id: number): Promise<void> => {
     await api.delete(`/histories/${id}`);
 };
+
+/** Entity types that can carry a History link (mirrors the API enum). */
+export type HistoryLinkTargetType =
+    | "Character"
+    | "Location"
+    | "Faction"
+    | "Nation";
+
+/** Attach a history to an entity (sets the entity's historyId). */
+export const linkHistory = async (
+    historyId: number,
+    targetType: HistoryLinkTargetType,
+    targetId: number
+): Promise<void> => {
+    await api.post(`/histories/${historyId}/links/${targetType}/${targetId}`);
+};
+
+/** Detach a history from an entity (clears the entity's historyId). */
+export const unlinkHistory = async (
+    historyId: number,
+    targetType: HistoryLinkTargetType,
+    targetId: number
+): Promise<void> => {
+    await api.delete(`/histories/${historyId}/links/${targetType}/${targetId}`);
+};

@@ -13,6 +13,7 @@ import {
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
 import { TagEditor } from "../../../tagging/TagEditor";
 import { LinkEditor } from "../../../linking/LinkEditor";
+import { HistoryBlock } from "../../../history/HistoryBlock";
 import {
     AbilityDto,
     CharacterDetailsDto,
@@ -566,21 +567,6 @@ export default function CharacterDetail() {
                                 )
                             }
                         />
-                        <OrnateDisplayBox
-                            label={t("historyProfile.label")}
-                            value={
-                                character.history ? (
-                                    <Link
-                                        to={`/storymap/histories/${character.history.id}`}
-                                        className={s.relLink}
-                                    >
-                                        {character.history.name}
-                                    </Link>
-                                ) : (
-                                    dash
-                                )
-                            }
-                        />
                     </div>
 
                     <TagEditor
@@ -588,6 +574,15 @@ export default function CharacterDetail() {
                         targetType="Character"
                         targetId={character.id}
                         tags={character.tags}
+                        canEdit={canEdit}
+                        onChanged={refetch}
+                    />
+
+                    <HistoryBlock
+                        targetType="Character"
+                        targetId={character.id}
+                        worldId={character.worldId}
+                        history={character.history}
                         canEdit={canEdit}
                         onChanged={refetch}
                     />

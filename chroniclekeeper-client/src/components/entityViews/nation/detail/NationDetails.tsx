@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Button, DisplayGrid, OrnateDisplayBox, Tag } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
+import { HistoryBlock } from "../../../history/HistoryBlock";
 import { NationDetailsDto } from "../../../../interfaces/loreInterfaces";
 import { getNationById } from "../../../../api/nations";
 import { useAuth } from "../../../../hooks/useAuth";
@@ -109,18 +110,6 @@ export default function NationDetails() {
                         label={t("fields.population")}
                         value={nation.population.toLocaleString()}
                     />
-                    <OrnateDisplayBox
-                        label={t("fields.history")}
-                        value={
-                            nation.history ? (
-                                <Link to={`/storymap/histories/${nation.history.id}`}>
-                                    {nation.history.name}
-                                </Link>
-                            ) : (
-                                t("none")
-                            )
-                        }
-                    />
                 </DisplayGrid>
             </div>
 
@@ -156,6 +145,15 @@ export default function NationDetails() {
                     ))}
                 </div>
             )}
+
+            <HistoryBlock
+                targetType="Nation"
+                targetId={nation.id}
+                worldId={nation.worldId}
+                history={nation.history}
+                canEdit={canEdit}
+                onChanged={refetch}
+            />
         </div>
     );
 }

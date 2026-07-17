@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import {
     Button,
     OrnateField,
-    OrnateSelect,
     OrnateTextArea,
     OrnateTextInput,
 } from "../../../ornate";
@@ -15,8 +14,7 @@ import {
     getNationById,
     updateNation,
 } from "../../../../api/nations";
-import { getHistories } from "../../../../api/histories";
-import { HistoryDto, NationUpdateDto } from "../../../../interfaces/loreInterfaces";
+import { NationUpdateDto } from "../../../../interfaces/loreInterfaces";
 import { useWorld } from "../../../../hooks/useWorld";
 import { useAuth } from "../../../../hooks/useAuth";
 import { apiErrorMessage } from "../../../../utils/apiError";
@@ -63,7 +61,6 @@ export default function NationForm() {
         userInfo?.roles.some((r) => editorRoles.includes(r)) ?? false;
 
     const [form, setForm] = useState<FormState>(emptyForm);
-    const [histories, setHistories] = useState<HistoryDto[]>([]);
     const [loading, setLoading] = useState(true);
     const [loadError, setLoadError] = useState<string | null>(null);
     const [saveError, setSaveError] = useState<string | null>(null);
@@ -80,12 +77,11 @@ export default function NationForm() {
         setLoading(true);
         setLoadError(null);
 
-        getHistories(selectedWorld.id)
-            .then(async (historiesData) => {
-                if (cancelled) return;
-                setHistories(historiesData);
-                if (isEdit) {
-                    const n = await getNationById(editId);
+        if (!isEdit) {
+            setLoading(false);
+        } else {
+            getNationById(editId)
+                .then((n) => {
                     if (cancelled) return;
                     setForm({
                         name: n.name ?? "",
@@ -94,15 +90,15 @@ export default function NationForm() {
                             n.population != null ? String(n.population) : "",
                         historyId: n.historyId ? String(n.historyId) : "",
                     });
-                }
-            })
-            .catch((err) => {
-                console.error("Failed to load nation form data:", err);
-                if (!cancelled) setLoadError(t("loaderror"));
-            })
-            .finally(() => {
-                if (!cancelled) setLoading(false);
-            });
+                })
+                .catch((err) => {
+                    console.error("Failed to load nation form data:", err);
+                    if (!cancelled) setLoadError(t("loaderror"));
+                })
+                .finally(() => {
+                    if (!cancelled) setLoading(false);
+                });
+        }
 
         return () => {
             cancelled = true;
@@ -216,19 +212,6 @@ export default function NationForm() {
                                 set("population", e.target.value)
                             }
                         />
-                    </OrnateField>
-                    <OrnateField label={t("fields.history")}>
-                        <OrnateSelect
-                            value={form.historyId}
-                            onChange={(e) => set("historyId", e.target.value)}
-                        >
-                            <option value="">{t("none")}</option>
-                            {histories.map((h) => (
-                                <option key={h.id} value={h.id}>
-                                    {h.name}
-                                </option>
-                            ))}
-                        </OrnateSelect>
                     </OrnateField>
                 </div>
             </div>
