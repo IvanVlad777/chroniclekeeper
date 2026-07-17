@@ -75,6 +75,15 @@ namespace ChronicleKeeper.API.ServiceExtensions
             services.AddScoped<ICorporationRepository, CorporationRepository>();
             services.AddScoped<ICorporateLeadershipRepository, CorporateLeadershipRepository>();
 
+            // Military
+            services.AddScoped<IMilitaryDoctrineRepository, MilitaryDoctrineRepository>();
+            services.AddScoped<IMilitaryOrganizationRepository, MilitaryOrganizationRepository>();
+            services.AddScoped<IArmyRepository, ArmyRepository>();
+            services.AddScoped<IMilitaryUnitRepository, MilitaryUnitRepository>();
+            services.AddScoped<IMilitaryRankRepository, MilitaryRankRepository>();
+            services.AddScoped<IBattleRepository, BattleRepository>();
+            services.AddScoped<IMilitaryEquipmentRepository, MilitaryEquipmentRepository>();
+
             return services;
         }
     }

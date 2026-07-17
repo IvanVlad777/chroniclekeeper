@@ -22,6 +22,7 @@ using ChronicleKeeper.Core.Entities.Social;
 using ChronicleKeeper.Core.Entities.Social.Cultures;
 using ChronicleKeeper.Core.Entities.Social.Economy;
 using ChronicleKeeper.Core.Entities.Social.Education;
+using ChronicleKeeper.Core.Entities.Social.Military;
 using ChronicleKeeper.Core.Entities.Social.Nationality;
 using ChronicleKeeper.Core.Entities.Social.Politics;
 using ChronicleKeeper.Core.Entities.Social.Religions;
@@ -194,6 +195,19 @@ namespace ChronicleKeeper.Infrastructure.Data
         public DbSet<TradeRouteLocation> TradeRouteLocations { get; set; }
         public DbSet<TradeRouteResource> TradeRouteResources { get; set; }
         public DbSet<NaturalResourceLocation> NaturalResourceLocations { get; set; }
+
+        // Military
+        public DbSet<MilitaryDoctrine> MilitaryDoctrines { get; set; }
+        public DbSet<MilitaryOrganization> MilitaryOrganizations { get; set; }
+        public DbSet<Army> Armies { get; set; }
+        public DbSet<MilitaryUnit> MilitaryUnits { get; set; }
+        public DbSet<MilitaryRank> MilitaryRanks { get; set; }
+        public DbSet<Battle> Battles { get; set; }
+        public DbSet<MilitaryEquipment> MilitaryEquipments { get; set; }
+        public DbSet<ArmyBattle> ArmyBattles { get; set; }
+        public DbSet<MilitaryUnitEquipment> MilitaryUnitEquipments { get; set; }
+        public DbSet<MilitaryOrganizationCountry> MilitaryOrganizationCountries { get; set; }
+        public DbSet<MilitaryOrganizationFaction> MilitaryOrganizationFactions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

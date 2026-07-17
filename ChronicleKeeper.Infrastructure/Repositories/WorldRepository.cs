@@ -336,6 +336,17 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .Where(i => i.WorldId == id)
                 .ExecuteDeleteAsync(cancellationToken);
 
+            // 7ae. Vojska — leaf-first (nema Restrict FK-ova u klasteru; join tablice
+            // ArmyBattle/MilitaryUnitEquipment/MilitaryOrganizationCountry/-Faction kaskadiraju).
+            // Ranks -> Units -> Armies -> Battles -> Equipment -> Organizations -> Doctrines.
+            await _context.MilitaryRanks.Where(r => r.WorldId == id).ExecuteDeleteAsync(cancellationToken);
+            await _context.MilitaryUnits.Where(u => u.WorldId == id).ExecuteDeleteAsync(cancellationToken);
+            await _context.Armies.Where(a => a.WorldId == id).ExecuteDeleteAsync(cancellationToken);
+            await _context.Battles.Where(b => b.WorldId == id).ExecuteDeleteAsync(cancellationToken);
+            await _context.MilitaryEquipments.Where(e => e.WorldId == id).ExecuteDeleteAsync(cancellationToken);
+            await _context.MilitaryOrganizations.Where(o => o.WorldId == id).ExecuteDeleteAsync(cancellationToken);
+            await _context.MilitaryDoctrines.Where(d => d.WorldId == id).ExecuteDeleteAsync(cancellationToken);
+
             // 8. Tagovi i bilješke
             await _context.Tags
                 .Where(t => t.WorldId == id)
