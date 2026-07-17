@@ -1,0 +1,51 @@
+{
+    "listTitle": "Military Doctrines",
+    "search": "Search doctrines…",
+    "loaderror": "Failed to load",
+    "notfound": "Doctrine not found",
+    "none": "None",
+    "backtolist": "Back to doctrines",
+    "emptyTitle": "No doctrines yet",
+    "emptyText": "The strategic philosophy that shapes how a military is raised, armed and fought. Set down the first doctrine.",
+    "columns": {
+        "name": "Name",
+        "strategy": "Strategy",
+        "updated": "Updated"
+    },
+    "fields": {
+        "description": "Description",
+        "strategy": "Strategy",
+        "strategyHint": "e.g. Rapid maneuver, Attrition, Siege warfare",
+        "philosophy": "Philosophy",
+        "philosophyHint": "e.g. Honor before victory",
+        "priorities": "Force priorities",
+        "traits": "Traits",
+        "organizations": "Organizations using this"
+    },
+    "priorities": {
+        "infantry": "Infantry",
+        "cavalry": "Cavalry",
+        "artillery": "Artillery",
+        "navalForces": "Naval forces",
+        "airForces": "Air forces"
+    },
+    "traits": {
+        "requiresHeavyIndustry": "Requires heavy industry",
+        "usesMercenaries": "Uses mercenaries"
+    },
+    "form": {
+        "newTitle": "New doctrine",
+        "editTitle": "Edit doctrine",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "history": "History",
+        "save": "Save doctrine",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

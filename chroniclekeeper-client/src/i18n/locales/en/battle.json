@@ -1,0 +1,41 @@
+{
+    "listTitle": "Battles",
+    "search": "Search battles…",
+    "loaderror": "Failed to load",
+    "notfound": "Battle not found",
+    "none": "None",
+    "backtolist": "Back to battles",
+    "emptyTitle": "No battles yet",
+    "emptyText": "The clashes that turn history — sieges, skirmishes and decisive engagements. Record the first battle.",
+    "columns": {
+        "name": "Name",
+        "battleDate": "Date",
+        "outcome": "Outcome",
+        "updated": "Updated"
+    },
+    "fields": {
+        "description": "Description",
+        "battleDate": "Date",
+        "battleDateHint": "Free-form in-world date, e.g. “Year 1042, Third Age”",
+        "location": "Location",
+        "locationHint": "e.g. The Blackford Pass",
+        "outcome": "Outcome",
+        "outcomeHint": "e.g. Decisive victory for the Coalition",
+        "armies": "Participating armies"
+    },
+    "form": {
+        "newTitle": "New battle",
+        "editTitle": "Edit battle",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "history": "History",
+        "save": "Save battle",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

@@ -67,7 +67,14 @@ namespace ChronicleKeeper.Core.DTOs.History
         ExtractionMethod,
         Industry,
         Guild,
-        Corporation
+        Corporation,
+        // Military
+        MilitaryDoctrine,
+        MilitaryOrganization,
+        Army,
+        MilitaryUnit,
+        Battle,
+        MilitaryEquipment
     }
 
     public class HistoryCreateDto

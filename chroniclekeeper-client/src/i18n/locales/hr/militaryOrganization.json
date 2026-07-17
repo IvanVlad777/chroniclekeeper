@@ -1,0 +1,52 @@
+{
+    "listTitle": "Vojne organizacije",
+    "search": "Pretraži organizacije…",
+    "loaderror": "Učitavanje nije uspjelo",
+    "notfound": "Organizacija nije pronađena",
+    "none": "Nema",
+    "backtolist": "Natrag na organizacije",
+    "emptyTitle": "Još nema organizacija",
+    "emptyText": "Ministarstva rata, glavni stožeri i stalna vojna tijela koja podižu i vode vojske. Osnuj prvu.",
+    "columns": {
+        "name": "Naziv",
+        "type": "Vrsta",
+        "role": "Uloga",
+        "updated": "Ažurirano"
+    },
+    "fields": {
+        "description": "Opis",
+        "type": "Vrsta",
+        "typeHint": "npr. Glavni stožer, Ministarstvo rata, Red",
+        "role": "Uloga",
+        "roleHint": "npr. Obrana, Širenje, Očuvanje mira",
+        "militaryDoctrine": "Doktrina",
+        "armies": "Vojske"
+    },
+    "links": {
+        "factions": "Frakcije potpore",
+        "add": "poveži",
+        "remove": "Ukloni poveznicu {{name}}",
+        "pick": "Odaberi zapis",
+        "confirm": "Poveži",
+        "addFailed": "Povezivanje nije uspjelo.",
+        "removeFailed": "Uklanjanje poveznice nije uspjelo."
+    },
+    "armies": {
+        "label": "Vojske"
+    },
+    "form": {
+        "newTitle": "Nova organizacija",
+        "editTitle": "Uredi organizaciju",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "history": "Povijest",
+        "save": "Spremi organizaciju",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}”? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

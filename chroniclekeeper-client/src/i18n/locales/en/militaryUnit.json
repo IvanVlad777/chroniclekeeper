@@ -1,0 +1,60 @@
+{
+    "title": "Unit",
+    "loaderror": "Failed to load",
+    "notfound": "Unit not found",
+    "none": "None",
+    "backToArmy": "Back to army",
+    "backToArmies": "Back to armies",
+    "fields": {
+        "description": "Description",
+        "unitType": "Unit type",
+        "unitTypeHint": "e.g. Heavy Infantry, Archers, Cavalry",
+        "size": "Size (troops)",
+        "isElite": "Elite unit",
+        "elite": "Elite",
+        "army": "Army"
+    },
+    "ranks": {
+        "label": "Ranks",
+        "add": "add",
+        "addTitle": "New rank",
+        "editTitle": "Edit rank",
+        "name": "Name",
+        "description": "Description",
+        "rankTitle": "Rank title",
+        "rankTitleHint": "e.g. Sergeant, Captain, General",
+        "rankLevel": "Rank level",
+        "requiredMissing": "Name is required.",
+        "saveFailed": "Saving failed.",
+        "deleteFailed": "Deleting failed.",
+        "deleteConfirm": "Delete rank “{{name}}”? This cannot be undone.",
+        "cancel": "Cancel",
+        "save": "Save",
+        "delete": "Delete"
+    },
+    "equipment": {
+        "label": "Equipment",
+        "add": "link",
+        "remove": "Unlink {{name}}",
+        "pick": "Pick equipment",
+        "confirm": "Link",
+        "addFailed": "Linking failed.",
+        "removeFailed": "Unlinking failed."
+    },
+    "form": {
+        "newTitle": "New unit",
+        "editTitle": "Edit unit",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "missingArmy": "A unit must belong to an army.",
+        "history": "History",
+        "save": "Save unit",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

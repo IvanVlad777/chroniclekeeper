@@ -1,0 +1,51 @@
+{
+    "listTitle": "Vojne doktrine",
+    "search": "Pretraži doktrine…",
+    "loaderror": "Učitavanje nije uspjelo",
+    "notfound": "Doktrina nije pronađena",
+    "none": "Nema",
+    "backtolist": "Natrag na doktrine",
+    "emptyTitle": "Još nema doktrina",
+    "emptyText": "Strateška filozofija koja oblikuje kako se vojska podiže, naoružava i vodi. Zapiši prvu doktrinu.",
+    "columns": {
+        "name": "Naziv",
+        "strategy": "Strategija",
+        "updated": "Ažurirano"
+    },
+    "fields": {
+        "description": "Opis",
+        "strategy": "Strategija",
+        "strategyHint": "npr. Brzi manevar, Iscrpljivanje, Opsadno ratovanje",
+        "philosophy": "Filozofija",
+        "philosophyHint": "npr. Čast prije pobjede",
+        "priorities": "Prioriteti snaga",
+        "traits": "Značajke",
+        "organizations": "Organizacije koje je koriste"
+    },
+    "priorities": {
+        "infantry": "Pješaštvo",
+        "cavalry": "Konjica",
+        "artillery": "Topništvo",
+        "navalForces": "Pomorske snage",
+        "airForces": "Zračne snage"
+    },
+    "traits": {
+        "requiresHeavyIndustry": "Zahtijeva tešku industriju",
+        "usesMercenaries": "Koristi plaćenike"
+    },
+    "form": {
+        "newTitle": "Nova doktrina",
+        "editTitle": "Uredi doktrinu",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "history": "Povijest",
+        "save": "Spremi doktrinu",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}”? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

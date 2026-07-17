@@ -1,0 +1,36 @@
+{
+    "listTitle": "Military Equipment",
+    "search": "Search equipment…",
+    "loaderror": "Failed to load",
+    "notfound": "Equipment not found",
+    "none": "None",
+    "backtolist": "Back to equipment",
+    "emptyTitle": "No equipment yet",
+    "emptyText": "Weapons, armor, siege engines and war machines that arm your forces. Add the first piece of equipment.",
+    "columns": {
+        "name": "Name",
+        "equipmentType": "Type",
+        "updated": "Updated"
+    },
+    "fields": {
+        "description": "Description",
+        "equipmentType": "Equipment type",
+        "equipmentTypeHint": "e.g. Weapon, Armor, Siege engine",
+        "units": "Units using this"
+    },
+    "form": {
+        "newTitle": "New equipment",
+        "editTitle": "Edit equipment",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "history": "History",
+        "save": "Save equipment",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

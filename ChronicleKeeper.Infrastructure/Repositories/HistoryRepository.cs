@@ -75,6 +75,18 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .Select(x => new HistoryLinkDto { Type = "Guild", Id = x.Id, Name = x.Name }).ToListAsync(cancellationToken));
             links.AddRange(await _context.Corporations.Where(x => x.HistoryId == historyId)
                 .Select(x => new HistoryLinkDto { Type = "Corporation", Id = x.Id, Name = x.Name }).ToListAsync(cancellationToken));
+            links.AddRange(await _context.MilitaryDoctrines.Where(x => x.HistoryId == historyId)
+                .Select(x => new HistoryLinkDto { Type = "MilitaryDoctrine", Id = x.Id, Name = x.Name }).ToListAsync(cancellationToken));
+            links.AddRange(await _context.MilitaryOrganizations.Where(x => x.HistoryId == historyId)
+                .Select(x => new HistoryLinkDto { Type = "MilitaryOrganization", Id = x.Id, Name = x.Name }).ToListAsync(cancellationToken));
+            links.AddRange(await _context.Armies.Where(x => x.HistoryId == historyId)
+                .Select(x => new HistoryLinkDto { Type = "Army", Id = x.Id, Name = x.Name }).ToListAsync(cancellationToken));
+            links.AddRange(await _context.MilitaryUnits.Where(x => x.HistoryId == historyId)
+                .Select(x => new HistoryLinkDto { Type = "MilitaryUnit", Id = x.Id, Name = x.Name }).ToListAsync(cancellationToken));
+            links.AddRange(await _context.Battles.Where(x => x.HistoryId == historyId)
+                .Select(x => new HistoryLinkDto { Type = "Battle", Id = x.Id, Name = x.Name }).ToListAsync(cancellationToken));
+            links.AddRange(await _context.MilitaryEquipments.Where(x => x.HistoryId == historyId)
+                .Select(x => new HistoryLinkDto { Type = "MilitaryEquipment", Id = x.Id, Name = x.Name }).ToListAsync(cancellationToken));
 
             return links;
         }
@@ -101,6 +113,12 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 HistoryLinkTargetType.Industry => await _context.Industries.AnyAsync(x => x.Id == targetId && x.WorldId == worldId, cancellationToken),
                 HistoryLinkTargetType.Guild => await _context.Guilds.AnyAsync(x => x.Id == targetId && x.WorldId == worldId, cancellationToken),
                 HistoryLinkTargetType.Corporation => await _context.Corporations.AnyAsync(x => x.Id == targetId && x.WorldId == worldId, cancellationToken),
+                HistoryLinkTargetType.MilitaryDoctrine => await _context.MilitaryDoctrines.AnyAsync(x => x.Id == targetId && x.WorldId == worldId, cancellationToken),
+                HistoryLinkTargetType.MilitaryOrganization => await _context.MilitaryOrganizations.AnyAsync(x => x.Id == targetId && x.WorldId == worldId, cancellationToken),
+                HistoryLinkTargetType.Army => await _context.Armies.AnyAsync(x => x.Id == targetId && x.WorldId == worldId, cancellationToken),
+                HistoryLinkTargetType.MilitaryUnit => await _context.MilitaryUnits.AnyAsync(x => x.Id == targetId && x.WorldId == worldId, cancellationToken),
+                HistoryLinkTargetType.Battle => await _context.Battles.AnyAsync(x => x.Id == targetId && x.WorldId == worldId, cancellationToken),
+                HistoryLinkTargetType.MilitaryEquipment => await _context.MilitaryEquipments.AnyAsync(x => x.Id == targetId && x.WorldId == worldId, cancellationToken),
                 _ => false,
             };
         }
@@ -163,6 +181,24 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                     .Where(x => x.Id == targetId && (onlyIfCurrentHistoryId == null || x.HistoryId == onlyIfCurrentHistoryId))
                     .ExecuteUpdateAsync(s => s.SetProperty(x => x.HistoryId, historyId), cancellationToken),
                 HistoryLinkTargetType.Corporation => await _context.Corporations
+                    .Where(x => x.Id == targetId && (onlyIfCurrentHistoryId == null || x.HistoryId == onlyIfCurrentHistoryId))
+                    .ExecuteUpdateAsync(s => s.SetProperty(x => x.HistoryId, historyId), cancellationToken),
+                HistoryLinkTargetType.MilitaryDoctrine => await _context.MilitaryDoctrines
+                    .Where(x => x.Id == targetId && (onlyIfCurrentHistoryId == null || x.HistoryId == onlyIfCurrentHistoryId))
+                    .ExecuteUpdateAsync(s => s.SetProperty(x => x.HistoryId, historyId), cancellationToken),
+                HistoryLinkTargetType.MilitaryOrganization => await _context.MilitaryOrganizations
+                    .Where(x => x.Id == targetId && (onlyIfCurrentHistoryId == null || x.HistoryId == onlyIfCurrentHistoryId))
+                    .ExecuteUpdateAsync(s => s.SetProperty(x => x.HistoryId, historyId), cancellationToken),
+                HistoryLinkTargetType.Army => await _context.Armies
+                    .Where(x => x.Id == targetId && (onlyIfCurrentHistoryId == null || x.HistoryId == onlyIfCurrentHistoryId))
+                    .ExecuteUpdateAsync(s => s.SetProperty(x => x.HistoryId, historyId), cancellationToken),
+                HistoryLinkTargetType.MilitaryUnit => await _context.MilitaryUnits
+                    .Where(x => x.Id == targetId && (onlyIfCurrentHistoryId == null || x.HistoryId == onlyIfCurrentHistoryId))
+                    .ExecuteUpdateAsync(s => s.SetProperty(x => x.HistoryId, historyId), cancellationToken),
+                HistoryLinkTargetType.Battle => await _context.Battles
+                    .Where(x => x.Id == targetId && (onlyIfCurrentHistoryId == null || x.HistoryId == onlyIfCurrentHistoryId))
+                    .ExecuteUpdateAsync(s => s.SetProperty(x => x.HistoryId, historyId), cancellationToken),
+                HistoryLinkTargetType.MilitaryEquipment => await _context.MilitaryEquipments
                     .Where(x => x.Id == targetId && (onlyIfCurrentHistoryId == null || x.HistoryId == onlyIfCurrentHistoryId))
                     .ExecuteUpdateAsync(s => s.SetProperty(x => x.HistoryId, historyId), cancellationToken),
                 _ => 0,

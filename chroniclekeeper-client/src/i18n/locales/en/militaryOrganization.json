@@ -1,0 +1,52 @@
+{
+    "listTitle": "Military Organizations",
+    "search": "Search organizations…",
+    "loaderror": "Failed to load",
+    "notfound": "Organization not found",
+    "none": "None",
+    "backtolist": "Back to organizations",
+    "emptyTitle": "No organizations yet",
+    "emptyText": "Ministries of war, high commands and standing military bodies that raise and direct armies. Found the first one.",
+    "columns": {
+        "name": "Name",
+        "type": "Type",
+        "role": "Role",
+        "updated": "Updated"
+    },
+    "fields": {
+        "description": "Description",
+        "type": "Type",
+        "typeHint": "e.g. High Command, War Ministry, Order",
+        "role": "Role",
+        "roleHint": "e.g. Defense, Expansion, Peacekeeping",
+        "militaryDoctrine": "Doctrine",
+        "armies": "Armies"
+    },
+    "links": {
+        "factions": "Backing factions",
+        "add": "link",
+        "remove": "Unlink {{name}}",
+        "pick": "Pick an entry",
+        "confirm": "Link",
+        "addFailed": "Linking failed.",
+        "removeFailed": "Unlinking failed."
+    },
+    "armies": {
+        "label": "Armies"
+    },
+    "form": {
+        "newTitle": "New organization",
+        "editTitle": "Edit organization",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "history": "History",
+        "save": "Save organization",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

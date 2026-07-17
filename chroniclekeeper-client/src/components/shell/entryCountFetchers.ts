@@ -44,6 +44,11 @@ import { getNaturalResources } from "../../api/naturalResources";
 import { getTradeRoutes } from "../../api/tradeRoutes";
 import { getGuilds } from "../../api/guilds";
 import { getCorporations } from "../../api/corporations";
+import { getArmies } from "../../api/armies";
+import { getMilitaryOrganizations } from "../../api/militaryOrganizations";
+import { getMilitaryDoctrines } from "../../api/militaryDoctrines";
+import { getBattles } from "../../api/battles";
+import { getMilitaryEquipment } from "../../api/militaryEquipment";
 
 export type CountFetcher = (worldId: number) => Promise<unknown[]>;
 
@@ -88,5 +93,10 @@ export const entryCountFetchers: Record<string, CountFetcher> = {
     tradeRoutes: (w) => getTradeRoutes(w),
     guilds: (w) => getGuilds(w),
     corporations: (w) => getCorporations(w),
+    armies: (w) => getArmies(w),
+    militaryOrganizations: (w) => getMilitaryOrganizations(w),
+    militaryDoctrines: (w) => getMilitaryDoctrines(w),
+    battles: (w) => getBattles(w),
+    militaryEquipment: (w) => getMilitaryEquipment(w),
     // overview has no list — intentionally absent (no count shown).
 };

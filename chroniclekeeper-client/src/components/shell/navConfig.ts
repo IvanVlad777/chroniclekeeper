@@ -115,6 +115,19 @@ export const navDomains: NavDomain[] = [
         ],
     },
     {
+        key: "military",
+        glyph: "⚔",
+        entries: [
+            entry("armies", "/storymap/armies", {
+                matchExtra: ["/storymap/military-units"],
+            }),
+            entry("militaryOrganizations", "/storymap/military-organizations"),
+            entry("militaryDoctrines", "/storymap/military-doctrines"),
+            entry("battles", "/storymap/battles"),
+            entry("militaryEquipment", "/storymap/military-equipment"),
+        ],
+    },
+    {
         key: "knowledge",
         glyph: "❖",
         entries: [

@@ -1,0 +1,36 @@
+{
+    "listTitle": "Vojna oprema",
+    "search": "Pretraži opremu…",
+    "loaderror": "Učitavanje nije uspjelo",
+    "notfound": "Oprema nije pronađena",
+    "none": "Nema",
+    "backtolist": "Natrag na opremu",
+    "emptyTitle": "Još nema opreme",
+    "emptyText": "Oružje, oklopi, opsadne sprave i ratni strojevi koji naoružavaju tvoje snage. Dodaj prvi komad opreme.",
+    "columns": {
+        "name": "Naziv",
+        "equipmentType": "Vrsta",
+        "updated": "Ažurirano"
+    },
+    "fields": {
+        "description": "Opis",
+        "equipmentType": "Vrsta opreme",
+        "equipmentTypeHint": "npr. Oružje, Oklop, Opsadna sprava",
+        "units": "Postrojbe koje je koriste"
+    },
+    "form": {
+        "newTitle": "Nova oprema",
+        "editTitle": "Uredi opremu",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "history": "Povijest",
+        "save": "Spremi opremu",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}”? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

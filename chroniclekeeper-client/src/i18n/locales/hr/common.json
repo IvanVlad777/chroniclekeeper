@@ -48,7 +48,12 @@
         "naturalResources": "Prirodni resursi",
         "tradeRoutes": "Trgovačke rute",
         "guilds": "Cehovi",
-        "corporations": "Korporacije"
+        "corporations": "Korporacije",
+        "militaryDoctrines": "Vojne doktrine",
+        "militaryOrganizations": "Vojne organizacije",
+        "armies": "Vojske",
+        "battles": "Bitke",
+        "militaryEquipment": "Vojna oprema"
     },
     "navGroups": {
         "overview": "Pregled",
@@ -58,6 +63,7 @@
         "society": "Društvo",
         "politics": "Politika i pravo",
         "economy": "Gospodarstvo",
+        "military": "Vojska",
         "knowledge": "Znanje",
         "chronicle": "Kronika",
         "artifacts": "Artefakti",
@@ -157,7 +163,9 @@
             "governmentSystem": "sustav vlasti",
             "legalSystem": "pravni sustav",
             "educationSystem": "obrazovni sustav",
-            "economicSystem": "ekonomski sustav"
+            "economicSystem": "ekonomski sustav",
+            "militaryDoctrine": "doktrina",
+            "militaryOrganization": "organizacija"
         }
     },
     "states": {

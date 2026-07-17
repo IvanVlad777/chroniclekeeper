@@ -88,6 +88,18 @@ import enGuild from "./locales/en/guild.json";
 import hrGuild from "./locales/hr/guild.json";
 import enCorporation from "./locales/en/corporation.json";
 import hrCorporation from "./locales/hr/corporation.json";
+import enMilitaryDoctrine from "./locales/en/militaryDoctrine.json";
+import hrMilitaryDoctrine from "./locales/hr/militaryDoctrine.json";
+import enMilitaryOrganization from "./locales/en/militaryOrganization.json";
+import hrMilitaryOrganization from "./locales/hr/militaryOrganization.json";
+import enArmy from "./locales/en/army.json";
+import hrArmy from "./locales/hr/army.json";
+import enMilitaryUnit from "./locales/en/militaryUnit.json";
+import hrMilitaryUnit from "./locales/hr/militaryUnit.json";
+import enBattle from "./locales/en/battle.json";
+import hrBattle from "./locales/hr/battle.json";
+import enMilitaryEquipment from "./locales/en/militaryEquipment.json";
+import hrMilitaryEquipment from "./locales/hr/militaryEquipment.json";
 
 i18n.use(LanguageDetector)
     .use(initReactI18next)
@@ -137,6 +149,12 @@ i18n.use(LanguageDetector)
                 tradeRoute: enTradeRoute,
                 guild: enGuild,
                 corporation: enCorporation,
+                militaryDoctrine: enMilitaryDoctrine,
+                militaryOrganization: enMilitaryOrganization,
+                army: enArmy,
+                militaryUnit: enMilitaryUnit,
+                battle: enBattle,
+                militaryEquipment: enMilitaryEquipment,
             },
             hr: {
                 common: hrCommon,
@@ -182,6 +200,12 @@ i18n.use(LanguageDetector)
                 tradeRoute: hrTradeRoute,
                 guild: hrGuild,
                 corporation: hrCorporation,
+                militaryDoctrine: hrMilitaryDoctrine,
+                militaryOrganization: hrMilitaryOrganization,
+                army: hrArmy,
+                militaryUnit: hrMilitaryUnit,
+                battle: hrBattle,
+                militaryEquipment: hrMilitaryEquipment,
             },
         },
         fallbackLng: "en",
@@ -229,6 +253,12 @@ i18n.use(LanguageDetector)
             "tradeRoute",
             "guild",
             "corporation",
+            "militaryDoctrine",
+            "militaryOrganization",
+            "army",
+            "militaryUnit",
+            "battle",
+            "militaryEquipment",
         ], //namespaces
         defaultNS: "common",
         interpolation: {

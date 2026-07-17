@@ -57,7 +57,13 @@ export type HistoryLinkTargetType =
     | "ExtractionMethod"
     | "Industry"
     | "Guild"
-    | "Corporation";
+    | "Corporation"
+    | "MilitaryDoctrine"
+    | "MilitaryOrganization"
+    | "Army"
+    | "MilitaryUnit"
+    | "Battle"
+    | "MilitaryEquipment";
 
 /** Attach a history to an entity (sets the entity's historyId). */
 export const linkHistory = async (

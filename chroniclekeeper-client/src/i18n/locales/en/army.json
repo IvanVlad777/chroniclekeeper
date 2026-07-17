@@ -1,0 +1,70 @@
+{
+    "listTitle": "Armies",
+    "search": "Search armies…",
+    "loaderror": "Failed to load",
+    "notfound": "Army not found",
+    "none": "None",
+    "backtolist": "Back to armies",
+    "emptyTitle": "No armies yet",
+    "emptyText": "The fighting forces of your world — legions, hosts and standing regiments. Muster the first army.",
+    "columns": {
+        "name": "Name",
+        "size": "Size",
+        "standing": "Type",
+        "updated": "Updated"
+    },
+    "standing": {
+        "yes": "Standing",
+        "no": "Levied"
+    },
+    "fields": {
+        "description": "Description",
+        "size": "Size (troops)",
+        "isStandingArmy": "Standing army",
+        "militaryOrganization": "Organization",
+        "faction": "Faction"
+    },
+    "units": {
+        "label": "Units",
+        "add": "add unit",
+        "addTitle": "New unit",
+        "name": "Name",
+        "unitType": "Unit type",
+        "unitTypeHint": "e.g. Heavy Infantry, Archers, Cavalry",
+        "size": "Size",
+        "isElite": "Elite",
+        "elite": "Elite",
+        "open": "Open",
+        "requiredMissing": "Name is required.",
+        "saveFailed": "Saving failed.",
+        "deleteFailed": "Deleting failed.",
+        "deleteConfirm": "Delete unit “{{name}}”? This cannot be undone.",
+        "cancel": "Cancel",
+        "save": "Save",
+        "delete": "Delete"
+    },
+    "battles": {
+        "label": "Battles",
+        "add": "link",
+        "remove": "Unlink {{name}}",
+        "pick": "Pick a battle",
+        "confirm": "Link",
+        "addFailed": "Linking failed.",
+        "removeFailed": "Unlinking failed."
+    },
+    "form": {
+        "newTitle": "New army",
+        "editTitle": "Edit army",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "history": "History",
+        "save": "Save army",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

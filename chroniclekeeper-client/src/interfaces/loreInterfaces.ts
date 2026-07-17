@@ -2357,3 +2357,238 @@ export interface CorporationCreateDto {
 }
 
 export type CorporationUpdateDto = Omit<CorporationCreateDto, "worldId">;
+
+// ==================== Military ====================
+
+// ---- MilitaryDoctrine ----
+export interface MilitaryDoctrineDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    strategy: string;
+    philosophy: string;
+    prioritizesInfantry: boolean;
+    prioritizesCavalry: boolean;
+    prioritizesArtillery: boolean;
+    prioritizesNavalForces: boolean;
+    prioritizesAirForces: boolean;
+    requiresHeavyIndustry: boolean;
+    usesMercenaries: boolean;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface MilitaryDoctrineDetailsDto extends MilitaryDoctrineDto {
+    history?: ReferenceDto | null;
+    organizations: ReferenceDto[];
+}
+
+export interface MilitaryDoctrineCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    strategy: string;
+    philosophy: string;
+    prioritizesInfantry: boolean;
+    prioritizesCavalry: boolean;
+    prioritizesArtillery: boolean;
+    prioritizesNavalForces: boolean;
+    prioritizesAirForces: boolean;
+    requiresHeavyIndustry: boolean;
+    usesMercenaries: boolean;
+}
+
+export type MilitaryDoctrineUpdateDto = Omit<MilitaryDoctrineCreateDto, "worldId">;
+
+// ---- MilitaryOrganization ----
+export interface MilitaryOrganizationDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    type: string;
+    role: string;
+    militaryDoctrineId?: number | null;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface MilitaryOrganizationDetailsDto extends MilitaryOrganizationDto {
+    history?: ReferenceDto | null;
+    militaryDoctrine?: ReferenceDto | null;
+    armies: ReferenceDto[];
+    countries: ReferenceDto[];
+    factions: ReferenceDto[];
+}
+
+export interface MilitaryOrganizationCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    type: string;
+    role: string;
+    militaryDoctrineId?: number | null;
+}
+
+export type MilitaryOrganizationUpdateDto = Omit<MilitaryOrganizationCreateDto, "worldId">;
+
+// ---- Army ----
+export interface ArmyDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    isStandingArmy: boolean;
+    size: number;
+    cityId?: number | null;
+    militaryOrganizationId?: number | null;
+    factionId?: number | null;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface ArmyDetailsDto extends ArmyDto {
+    history?: ReferenceDto | null;
+    city?: ReferenceDto | null;
+    militaryOrganization?: ReferenceDto | null;
+    faction?: ReferenceDto | null;
+    units: ReferenceDto[];
+    battles: ReferenceDto[];
+}
+
+export interface ArmyCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    isStandingArmy: boolean;
+    size: number;
+    cityId?: number | null;
+    militaryOrganizationId?: number | null;
+    factionId?: number | null;
+}
+
+export type ArmyUpdateDto = Omit<ArmyCreateDto, "worldId">;
+
+// ---- MilitaryUnit (child of Army) ----
+export interface MilitaryUnitDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    unitType: string;
+    size: number;
+    isElite: boolean;
+    belongsToArmyId: number;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface MilitaryUnitDetailsDto extends MilitaryUnitDto {
+    history?: ReferenceDto | null;
+    belongsToArmy?: ReferenceDto | null;
+    ranks: ReferenceDto[];
+    equipment: ReferenceDto[];
+}
+
+export interface MilitaryUnitCreateDto {
+    name: string;
+    description: string;
+    historyId?: number | null;
+    unitType: string;
+    size: number;
+    isElite: boolean;
+    belongsToArmyId: number;
+}
+
+export type MilitaryUnitUpdateDto = Omit<MilitaryUnitCreateDto, "belongsToArmyId">;
+
+// ---- MilitaryRank (child of MilitaryUnit) ----
+export interface MilitaryRankDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    rankTitle: string;
+    rankLevel: number;
+    militaryUnitId: number;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface MilitaryRankCreateDto {
+    name: string;
+    description: string;
+    historyId?: number | null;
+    rankTitle: string;
+    rankLevel: number;
+    militaryUnitId: number;
+}
+
+export type MilitaryRankUpdateDto = Omit<MilitaryRankCreateDto, "militaryUnitId">;
+
+// ---- Battle ----
+export interface BattleDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    battleDate?: string | null;
+    location: string;
+    outcome: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface BattleDetailsDto extends BattleDto {
+    history?: ReferenceDto | null;
+    participatingArmies: ReferenceDto[];
+}
+
+export interface BattleCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    battleDate?: string | null;
+    location: string;
+    outcome: string;
+}
+
+export type BattleUpdateDto = Omit<BattleCreateDto, "worldId">;
+
+// ---- MilitaryEquipment ----
+export interface MilitaryEquipmentDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    equipmentType: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface MilitaryEquipmentDetailsDto extends MilitaryEquipmentDto {
+    history?: ReferenceDto | null;
+    units: ReferenceDto[];
+}
+
+export interface MilitaryEquipmentCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    equipmentType: string;
+}
+
+export type MilitaryEquipmentUpdateDto = Omit<MilitaryEquipmentCreateDto, "worldId">;

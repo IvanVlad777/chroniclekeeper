@@ -1,0 +1,60 @@
+{
+    "title": "Postrojba",
+    "loaderror": "Učitavanje nije uspjelo",
+    "notfound": "Postrojba nije pronađena",
+    "none": "Nema",
+    "backToArmy": "Natrag na vojsku",
+    "backToArmies": "Natrag na vojske",
+    "fields": {
+        "description": "Opis",
+        "unitType": "Vrsta postrojbe",
+        "unitTypeHint": "npr. Teško pješaštvo, Strijelci, Konjica",
+        "size": "Veličina (vojnika)",
+        "isElite": "Elitna postrojba",
+        "elite": "Elitna",
+        "army": "Vojska"
+    },
+    "ranks": {
+        "label": "Činovi",
+        "add": "dodaj",
+        "addTitle": "Novi čin",
+        "editTitle": "Uredi čin",
+        "name": "Naziv",
+        "description": "Opis",
+        "rankTitle": "Naziv čina",
+        "rankTitleHint": "npr. Narednik, Satnik, General",
+        "rankLevel": "Razina čina",
+        "requiredMissing": "Naziv je obavezan.",
+        "saveFailed": "Spremanje nije uspjelo.",
+        "deleteFailed": "Brisanje nije uspjelo.",
+        "deleteConfirm": "Obrisati čin „{{name}}”? Ovo se ne može poništiti.",
+        "cancel": "Odustani",
+        "save": "Spremi",
+        "delete": "Obriši"
+    },
+    "equipment": {
+        "label": "Oprema",
+        "add": "poveži",
+        "remove": "Ukloni poveznicu {{name}}",
+        "pick": "Odaberi opremu",
+        "confirm": "Poveži",
+        "addFailed": "Povezivanje nije uspjelo.",
+        "removeFailed": "Uklanjanje poveznice nije uspjelo."
+    },
+    "form": {
+        "newTitle": "Nova postrojba",
+        "editTitle": "Uredi postrojbu",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "missingArmy": "Postrojba mora pripadati vojsci.",
+        "history": "Povijest",
+        "save": "Spremi postrojbu",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}”? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

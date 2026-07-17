@@ -1,0 +1,70 @@
+{
+    "listTitle": "Vojske",
+    "search": "Pretraži vojske…",
+    "loaderror": "Učitavanje nije uspjelo",
+    "notfound": "Vojska nije pronađena",
+    "none": "Nema",
+    "backtolist": "Natrag na vojske",
+    "emptyTitle": "Još nema vojski",
+    "emptyText": "Borbene snage tvog svijeta — legije, horde i stalne pukovnije. Okupi prvu vojsku.",
+    "columns": {
+        "name": "Naziv",
+        "size": "Veličina",
+        "standing": "Vrsta",
+        "updated": "Ažurirano"
+    },
+    "standing": {
+        "yes": "Stalna",
+        "no": "Novačena"
+    },
+    "fields": {
+        "description": "Opis",
+        "size": "Veličina (vojnika)",
+        "isStandingArmy": "Stalna vojska",
+        "militaryOrganization": "Organizacija",
+        "faction": "Frakcija"
+    },
+    "units": {
+        "label": "Postrojbe",
+        "add": "dodaj postrojbu",
+        "addTitle": "Nova postrojba",
+        "name": "Naziv",
+        "unitType": "Vrsta postrojbe",
+        "unitTypeHint": "npr. Teško pješaštvo, Strijelci, Konjica",
+        "size": "Veličina",
+        "isElite": "Elitna",
+        "elite": "Elitna",
+        "open": "Otvori",
+        "requiredMissing": "Naziv je obavezan.",
+        "saveFailed": "Spremanje nije uspjelo.",
+        "deleteFailed": "Brisanje nije uspjelo.",
+        "deleteConfirm": "Obrisati postrojbu „{{name}}”? Ovo se ne može poništiti.",
+        "cancel": "Odustani",
+        "save": "Spremi",
+        "delete": "Obriši"
+    },
+    "battles": {
+        "label": "Bitke",
+        "add": "poveži",
+        "remove": "Ukloni poveznicu {{name}}",
+        "pick": "Odaberi bitku",
+        "confirm": "Poveži",
+        "addFailed": "Povezivanje nije uspjelo.",
+        "removeFailed": "Uklanjanje poveznice nije uspjelo."
+    },
+    "form": {
+        "newTitle": "Nova vojska",
+        "editTitle": "Uredi vojsku",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "history": "Povijest",
+        "save": "Spremi vojsku",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}”? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

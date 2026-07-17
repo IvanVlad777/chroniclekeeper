@@ -122,6 +122,23 @@ import GuildForm from "../components/entityViews/guild/form/GuildForm";
 import CorporationList from "../components/entityViews/corporation/list/CorporationList";
 import CorporationDetails from "../components/entityViews/corporation/detail/CorporationDetails";
 import CorporationForm from "../components/entityViews/corporation/form/CorporationForm";
+import ArmyList from "../components/entityViews/army/list/ArmyList";
+import ArmyDetails from "../components/entityViews/army/detail/ArmyDetails";
+import ArmyForm from "../components/entityViews/army/form/ArmyForm";
+import MilitaryUnitDetails from "../components/entityViews/militaryUnit/detail/MilitaryUnitDetails";
+import MilitaryUnitForm from "../components/entityViews/militaryUnit/form/MilitaryUnitForm";
+import MilitaryOrganizationList from "../components/entityViews/militaryOrganization/list/MilitaryOrganizationList";
+import MilitaryOrganizationDetails from "../components/entityViews/militaryOrganization/detail/MilitaryOrganizationDetails";
+import MilitaryOrganizationForm from "../components/entityViews/militaryOrganization/form/MilitaryOrganizationForm";
+import MilitaryDoctrineList from "../components/entityViews/militaryDoctrine/list/MilitaryDoctrineList";
+import MilitaryDoctrineDetails from "../components/entityViews/militaryDoctrine/detail/MilitaryDoctrineDetails";
+import MilitaryDoctrineForm from "../components/entityViews/militaryDoctrine/form/MilitaryDoctrineForm";
+import BattleList from "../components/entityViews/battle/list/BattleList";
+import BattleDetails from "../components/entityViews/battle/detail/BattleDetails";
+import BattleForm from "../components/entityViews/battle/form/BattleForm";
+import MilitaryEquipmentList from "../components/entityViews/militaryEquipment/list/MilitaryEquipmentList";
+import MilitaryEquipmentDetails from "../components/entityViews/militaryEquipment/detail/MilitaryEquipmentDetails";
+import MilitaryEquipmentForm from "../components/entityViews/militaryEquipment/form/MilitaryEquipmentForm";
 import { WorldProvider } from "../context/world/WorldProvider";
 import { AppShell } from "../components/shell/AppShell";
 
@@ -549,6 +566,74 @@ const AppRoutes = () => {
                 <Route
                     path="corporations/:id/edit"
                     element={<CorporationForm />}
+                />
+                <Route path="armies" element={<ArmyList />} />
+                <Route path="armies/new" element={<ArmyForm />} />
+                <Route path="armies/:id" element={<ArmyDetails />} />
+                <Route path="armies/:id/edit" element={<ArmyForm />} />
+                <Route
+                    path="military-units/new"
+                    element={<MilitaryUnitForm />}
+                />
+                <Route
+                    path="military-units/:id"
+                    element={<MilitaryUnitDetails />}
+                />
+                <Route
+                    path="military-units/:id/edit"
+                    element={<MilitaryUnitForm />}
+                />
+                <Route
+                    path="military-organizations"
+                    element={<MilitaryOrganizationList />}
+                />
+                <Route
+                    path="military-organizations/new"
+                    element={<MilitaryOrganizationForm />}
+                />
+                <Route
+                    path="military-organizations/:id"
+                    element={<MilitaryOrganizationDetails />}
+                />
+                <Route
+                    path="military-organizations/:id/edit"
+                    element={<MilitaryOrganizationForm />}
+                />
+                <Route
+                    path="military-doctrines"
+                    element={<MilitaryDoctrineList />}
+                />
+                <Route
+                    path="military-doctrines/new"
+                    element={<MilitaryDoctrineForm />}
+                />
+                <Route
+                    path="military-doctrines/:id"
+                    element={<MilitaryDoctrineDetails />}
+                />
+                <Route
+                    path="military-doctrines/:id/edit"
+                    element={<MilitaryDoctrineForm />}
+                />
+                <Route path="battles" element={<BattleList />} />
+                <Route path="battles/new" element={<BattleForm />} />
+                <Route path="battles/:id" element={<BattleDetails />} />
+                <Route path="battles/:id/edit" element={<BattleForm />} />
+                <Route
+                    path="military-equipment"
+                    element={<MilitaryEquipmentList />}
+                />
+                <Route
+                    path="military-equipment/new"
+                    element={<MilitaryEquipmentForm />}
+                />
+                <Route
+                    path="military-equipment/:id"
+                    element={<MilitaryEquipmentDetails />}
+                />
+                <Route
+                    path="military-equipment/:id/edit"
+                    element={<MilitaryEquipmentForm />}
                 />
                 <Route path="*" element={<NoPage />} />
             </Route>

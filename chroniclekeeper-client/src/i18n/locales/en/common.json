@@ -48,7 +48,12 @@
         "naturalResources": "Natural Resources",
         "tradeRoutes": "Trade Routes",
         "guilds": "Guilds",
-        "corporations": "Corporations"
+        "corporations": "Corporations",
+        "militaryDoctrines": "Military Doctrines",
+        "militaryOrganizations": "Military Organizations",
+        "armies": "Armies",
+        "battles": "Battles",
+        "militaryEquipment": "Military Equipment"
     },
     "navGroups": {
         "overview": "Overview",
@@ -58,6 +63,7 @@
         "society": "Society",
         "politics": "Politics & Law",
         "economy": "Economy",
+        "military": "Military",
         "knowledge": "Knowledge",
         "chronicle": "Chronicle",
         "artifacts": "Artifacts",
@@ -157,7 +163,9 @@
             "governmentSystem": "government system",
             "legalSystem": "legal system",
             "educationSystem": "education system",
-            "economicSystem": "economic system"
+            "economicSystem": "economic system",
+            "militaryDoctrine": "doctrine",
+            "militaryOrganization": "organization"
         }
     },
     "states": {

@@ -6,6 +6,8 @@ import { createGovernmentSystem } from '../../api/governmentSystems';
 import { createLegalSystem } from '../../api/legalSystems';
 import { createEducationSystem } from '../../api/educationSystems';
 import { createEconomicSystem } from '../../api/economicSystems';
+import { createMilitaryDoctrine } from '../../api/militaryDoctrines';
+import { createMilitaryOrganization } from '../../api/militaryOrganizations';
 
 /** Minimal result the picker needs back from a quick-create. */
 export interface QuickCreated {
@@ -170,6 +172,36 @@ const registry = {
         taxationSystemId: null,
         bankingSystemId: null,
         historyId: null,
+      }),
+  },
+  militaryDoctrine: {
+    create: (worldId, { name, description }) =>
+      createMilitaryDoctrine({
+        name,
+        description,
+        worldId,
+        historyId: null,
+        strategy: '',
+        philosophy: '',
+        prioritizesInfantry: false,
+        prioritizesCavalry: false,
+        prioritizesArtillery: false,
+        prioritizesNavalForces: false,
+        prioritizesAirForces: false,
+        requiresHeavyIndustry: false,
+        usesMercenaries: false,
+      }),
+  },
+  militaryOrganization: {
+    create: (worldId, { name, description }) =>
+      createMilitaryOrganization({
+        name,
+        description,
+        worldId,
+        historyId: null,
+        type: '',
+        role: '',
+        militaryDoctrineId: null,
       }),
   },
 } satisfies Record<string, QuickCreateDescriptor>;

@@ -1,0 +1,41 @@
+{
+    "listTitle": "Bitke",
+    "search": "Pretraži bitke…",
+    "loaderror": "Učitavanje nije uspjelo",
+    "notfound": "Bitka nije pronađena",
+    "none": "Nema",
+    "backtolist": "Natrag na bitke",
+    "emptyTitle": "Još nema bitaka",
+    "emptyText": "Sukobi koji preokreću povijest — opsade, okršaji i odlučujuće bitke. Zabilježi prvu bitku.",
+    "columns": {
+        "name": "Naziv",
+        "battleDate": "Datum",
+        "outcome": "Ishod",
+        "updated": "Ažurirano"
+    },
+    "fields": {
+        "description": "Opis",
+        "battleDate": "Datum",
+        "battleDateHint": "Slobodni datum svijeta, npr. „Godina 1042, Treće doba”",
+        "location": "Mjesto",
+        "locationHint": "npr. Crnobrodski prijevoj",
+        "outcome": "Ishod",
+        "outcomeHint": "npr. Odlučujuća pobjeda Koalicije",
+        "armies": "Sudjelujuće vojske"
+    },
+    "form": {
+        "newTitle": "Nova bitka",
+        "editTitle": "Uredi bitku",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "history": "Povijest",
+        "save": "Spremi bitku",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}”? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}
