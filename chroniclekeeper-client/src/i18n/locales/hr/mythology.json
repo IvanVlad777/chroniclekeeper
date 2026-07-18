@@ -1,0 +1,129 @@
+{
+    "search": "Pretraži…",
+    "none": "Nema",
+    "fields": {
+        "name": "Naziv",
+        "description": "Opis",
+        "updated": "Ažurirano",
+        "religion": "Religija",
+        "deity": "Božanstvo",
+        "location": "Lokacija",
+        "holySite": "Sveto mjesto"
+    },
+    "form": {
+        "requiredNote": "Polja označena * su obavezna.",
+        "select": "— odaberi —",
+        "save": "Spremi",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati \"{{name}}\"?",
+        "edit": "Uredi",
+        "history": "Povijest",
+        "saveFailed": "Spremanje nije uspjelo.",
+        "deleteFailed": "Brisanje nije uspjelo.",
+        "requiredMissing": "Molimo ispunite obavezna polja.",
+        "notFound": "Nije pronađeno",
+        "backToList": "Natrag na popis"
+    },
+    "links": {
+        "add": "Poveži",
+        "pick": "Odaberi…",
+        "confirm": "Dodaj",
+        "remove": "Ukloni {{name}}",
+        "addFailed": "Povezivanje nije uspjelo.",
+        "removeFailed": "Uklanjanje nije uspjelo."
+    },
+    "deityTypes": {
+        "Elemental": "Elementarno",
+        "Cosmic": "Kozmičko",
+        "Anthropomorphic": "Antropomorfno",
+        "Animalistic": "Životinjsko",
+        "Alien": "Vanzemaljsko",
+        "Machine": "Strojno",
+        "Unknown": "Nepoznato"
+    },
+    "deity": {
+        "listTitle": "Božanstva",
+        "newTitle": "Novo božanstvo",
+        "editTitle": "Uredi božanstvo",
+        "emptyTitle": "Još nema božanstava",
+        "emptyText": "Dodajte bogove i božanska bića ovog svijeta.",
+        "loadError": "Učitavanje božanstava nije uspjelo.",
+        "fields": {
+            "domain": "Domena",
+            "worshipMethods": "Načini štovanja",
+            "deityType": "Božanska priroda",
+            "isMonotheistic": "Jedini bog (monoteizam)",
+            "isImmortal": "Besmrtno",
+            "canManifestPhysically": "Može se fizički manifestirati",
+            "grantsPowers": "Daje moći"
+        },
+        "links": {
+            "orders": "Posvećeni redovi",
+            "allies": "Saveznička božanstva",
+            "rivals": "Suparnička božanstva",
+            "sacredTexts": "Sveti tekstovi",
+            "sacredSites": "Sveta mjesta",
+            "majorMyths": "Glavni mitovi"
+        }
+    },
+    "holySite": {
+        "listTitle": "Sveta mjesta",
+        "newTitle": "Novo sveto mjesto",
+        "editTitle": "Uredi sveto mjesto",
+        "emptyTitle": "Još nema svetih mjesta",
+        "emptyText": "Dodajte sveta mjesta hodočašća i štovanja.",
+        "loadError": "Učitavanje svetih mjesta nije uspjelo.",
+        "fields": {
+            "significance": "Značaj",
+            "isPilgrimageDestination": "Odredište hodočašća"
+        }
+    },
+    "religiousText": {
+        "listTitle": "Religijski tekstovi",
+        "newTitle": "Novi religijski tekst",
+        "editTitle": "Uredi religijski tekst",
+        "emptyTitle": "Još nema religijskih tekstova",
+        "emptyText": "Dodajte spise, proročanstva i svete tekstove.",
+        "loadError": "Učitavanje religijskih tekstova nije uspjelo.",
+        "fields": {
+            "type": "Vrsta",
+            "contentSummary": "Sažetak sadržaja"
+        }
+    },
+    "religiousOrder": {
+        "listTitle": "Religijski redovi",
+        "newTitle": "Novi religijski red",
+        "editTitle": "Uredi religijski red",
+        "emptyTitle": "Još nema religijskih redova",
+        "emptyText": "Dodajte svećenstvo, monaške redove, kultove i sekte.",
+        "loadError": "Učitavanje religijskih redova nije uspjelo.",
+        "fields": {
+            "orderType": "Vrsta reda",
+            "beliefs": "Vjerovanja",
+            "isMilitant": "Militantan",
+            "isSecretive": "Tajnovit"
+        },
+        "links": {
+            "factions": "Frakcije",
+            "deities": "Štovana božanstva",
+            "clergyTraining": "Obuka svećenstva"
+        }
+    },
+    "religiousFestival": {
+        "listTitle": "Religijski festivali",
+        "newTitle": "Novi religijski festival",
+        "editTitle": "Uredi religijski festival",
+        "emptyTitle": "Još nema religijskih festivala",
+        "emptyText": "Dodajte svete dane i religijske proslave.",
+        "loadError": "Učitavanje religijskih festivala nije uspjelo.",
+        "fields": {
+            "startDate": "Datum početka",
+            "startDateHint": "npr. Treći mjesec, Godina 512",
+            "durationDays": "Trajanje (dana)",
+            "traditions": "Tradicije",
+            "isPilgrimageEvent": "Hodočasnički događaj"
+        }
+    }
+}

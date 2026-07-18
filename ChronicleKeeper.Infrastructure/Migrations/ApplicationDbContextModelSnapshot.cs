@@ -996,6 +996,77 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.ToTable("CreatureEcosystems");
                 });
 
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.Deity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("CanManifestPhysically")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeityType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<string>("Domain")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("GrantsPowers")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("HistoryId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsImmortal")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsMonotheistic")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int?>("ReligionId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("WorshipMethods")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HistoryId");
+
+                    b.HasIndex("ReligionId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("Deities");
+                });
+
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.Race", b =>
                 {
                     b.Property<int>("Id")
@@ -2355,6 +2426,9 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Property<int>("CultureId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("DeityId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(4000)
@@ -2388,6 +2462,8 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CultureId");
+
+                    b.HasIndex("DeityId");
 
                     b.HasIndex("HistoryId");
 
@@ -3480,6 +3556,9 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Property<int>("ReligionId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ReligiousOrderId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
@@ -3494,6 +3573,8 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.HasIndex("CharacterId");
 
                     b.HasIndex("ReligionId");
+
+                    b.HasIndex("ReligiousOrderId");
 
                     b.HasIndex("WorldId", "Name");
 
@@ -4620,6 +4701,113 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.ToTable("PoliticalPartyNations");
                 });
 
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Religions.DeityAlliance", b =>
+                {
+                    b.Property<int>("DeityId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AlliedDeityId")
+                        .HasColumnType("int");
+
+                    b.HasKey("DeityId", "AlliedDeityId");
+
+                    b.HasIndex("AlliedDeityId");
+
+                    b.ToTable("DeityAlliances");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Religions.DeityReligiousOrder", b =>
+                {
+                    b.Property<int>("DeityId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ReligiousOrderId")
+                        .HasColumnType("int");
+
+                    b.HasKey("DeityId", "ReligiousOrderId");
+
+                    b.HasIndex("ReligiousOrderId");
+
+                    b.ToTable("DeityReligiousOrders");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Religions.DeityRivalry", b =>
+                {
+                    b.Property<int>("DeityId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RivalDeityId")
+                        .HasColumnType("int");
+
+                    b.HasKey("DeityId", "RivalDeityId");
+
+                    b.HasIndex("RivalDeityId");
+
+                    b.ToTable("DeityRivalries");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Religions.HolySite", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("DeityId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<int?>("HistoryId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsPilgrimageDestination")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("LocationId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("ReligionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Significance")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DeityId");
+
+                    b.HasIndex("HistoryId");
+
+                    b.HasIndex("LocationId");
+
+                    b.HasIndex("ReligionId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("HolySites");
+                });
+
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Religions.Religion", b =>
                 {
                     b.Property<int>("Id")
@@ -4668,6 +4856,204 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.HasIndex("WorldId", "Name");
 
                     b.ToTable("Religions");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Religions.ReligiousFestival", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<int>("DurationDays")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("HistoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("HolySiteId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsPilgrimageEvent")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("ReligionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StartDate")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Traditions")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HistoryId");
+
+                    b.HasIndex("HolySiteId");
+
+                    b.HasIndex("ReligionId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("ReligiousFestivals");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Religions.ReligiousOrder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Beliefs")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<int?>("HistoryId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsMilitant")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSecretive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("OrderType")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int?>("ReligionId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HistoryId");
+
+                    b.HasIndex("ReligionId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("ReligiousOrders");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Religions.ReligiousOrderFaction", b =>
+                {
+                    b.Property<int>("ReligiousOrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FactionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ReligiousOrderId", "FactionId");
+
+                    b.HasIndex("FactionId");
+
+                    b.ToTable("ReligiousOrderFactions");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Religions.ReligiousText", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ContentSummary")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("DeityId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<int?>("HistoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("ReligionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DeityId");
+
+                    b.HasIndex("HistoryId");
+
+                    b.HasIndex("ReligionId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("ReligiousTexts");
                 });
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Structure.SocialClass", b =>
@@ -6310,6 +6696,31 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Navigation("Ecosystem");
                 });
 
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.Deity", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.HistoryTimelines.History", "History")
+                        .WithMany()
+                        .HasForeignKey("HistoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Religions.Religion", "Religion")
+                        .WithMany("Deities")
+                        .HasForeignKey("ReligionId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("History");
+
+                    b.Navigation("Religion");
+
+                    b.Navigation("World");
+                });
+
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.Race", b =>
                 {
                     b.HasOne("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.SapientSpecies", "SapientSpecies")
@@ -7012,6 +7423,11 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.Deity", "Deity")
+                        .WithMany("MajorMyths")
+                        .HasForeignKey("DeityId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("ChronicleKeeper.Core.Entities.HistoryTimelines.History", "History")
                         .WithMany()
                         .HasForeignKey("HistoryId")
@@ -7029,6 +7445,8 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Culture");
+
+                    b.Navigation("Deity");
 
                     b.Navigation("History");
 
@@ -7640,6 +8058,11 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Religions.ReligiousOrder", "ReligiousOrder")
+                        .WithMany("ClergyTraining")
+                        .HasForeignKey("ReligiousOrderId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
                         .WithMany()
                         .HasForeignKey("WorldId")
@@ -7649,6 +8072,8 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Navigation("Character");
 
                     b.Navigation("Religion");
+
+                    b.Navigation("ReligiousOrder");
 
                     b.Navigation("World");
                 });
@@ -8182,6 +8607,104 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Navigation("PoliticalParty");
                 });
 
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Religions.DeityAlliance", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.Deity", "AlliedDeity")
+                        .WithMany()
+                        .HasForeignKey("AlliedDeityId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.Deity", "Deity")
+                        .WithMany("AlliedDeities")
+                        .HasForeignKey("DeityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AlliedDeity");
+
+                    b.Navigation("Deity");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Religions.DeityReligiousOrder", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.Deity", "Deity")
+                        .WithMany("OrdersDedicatedToDeity")
+                        .HasForeignKey("DeityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Religions.ReligiousOrder", "ReligiousOrder")
+                        .WithMany("Deities")
+                        .HasForeignKey("ReligiousOrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Deity");
+
+                    b.Navigation("ReligiousOrder");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Religions.DeityRivalry", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.Deity", "Deity")
+                        .WithMany("RivalDeities")
+                        .HasForeignKey("DeityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.Deity", "RivalDeity")
+                        .WithMany()
+                        .HasForeignKey("RivalDeityId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Deity");
+
+                    b.Navigation("RivalDeity");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Religions.HolySite", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.Deity", "Deity")
+                        .WithMany("SacredSitesOfDeity")
+                        .HasForeignKey("DeityId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.HistoryTimelines.History", "History")
+                        .WithMany()
+                        .HasForeignKey("HistoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Religions.Religion", "Religion")
+                        .WithMany("HolySites")
+                        .HasForeignKey("ReligionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Deity");
+
+                    b.Navigation("History");
+
+                    b.Navigation("Location");
+
+                    b.Navigation("Religion");
+
+                    b.Navigation("World");
+                });
+
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Religions.Religion", b =>
                 {
                     b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
@@ -8189,6 +8712,116 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .HasForeignKey("WorldId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Religions.ReligiousFestival", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.HistoryTimelines.History", "History")
+                        .WithMany()
+                        .HasForeignKey("HistoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Religions.HolySite", "HolySite")
+                        .WithMany()
+                        .HasForeignKey("HolySiteId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Religions.Religion", "Religion")
+                        .WithMany("ReligiousFestivals")
+                        .HasForeignKey("ReligionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("History");
+
+                    b.Navigation("HolySite");
+
+                    b.Navigation("Religion");
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Religions.ReligiousOrder", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.HistoryTimelines.History", "History")
+                        .WithMany()
+                        .HasForeignKey("HistoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Religions.Religion", "Religion")
+                        .WithMany("ReligiousOrders")
+                        .HasForeignKey("ReligionId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("History");
+
+                    b.Navigation("Religion");
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Religions.ReligiousOrderFaction", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Faction", "Faction")
+                        .WithMany()
+                        .HasForeignKey("FactionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Religions.ReligiousOrder", "ReligiousOrder")
+                        .WithMany("Factions")
+                        .HasForeignKey("ReligiousOrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Faction");
+
+                    b.Navigation("ReligiousOrder");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Religions.ReligiousText", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.Deity", "Deity")
+                        .WithMany("SacredTexts")
+                        .HasForeignKey("DeityId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.HistoryTimelines.History", "History")
+                        .WithMany()
+                        .HasForeignKey("HistoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Religions.Religion", "Religion")
+                        .WithMany("ReligiousTexts")
+                        .HasForeignKey("ReligionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Deity");
+
+                    b.Navigation("History");
+
+                    b.Navigation("Religion");
 
                     b.Navigation("World");
                 });
@@ -8493,6 +9126,21 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Navigation("Subspecies");
                 });
 
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.Deity", b =>
+                {
+                    b.Navigation("AlliedDeities");
+
+                    b.Navigation("MajorMyths");
+
+                    b.Navigation("OrdersDedicatedToDeity");
+
+                    b.Navigation("RivalDeities");
+
+                    b.Navigation("SacredSitesOfDeity");
+
+                    b.Navigation("SacredTexts");
+                });
+
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.SapientSpecies", b =>
                 {
                     b.Navigation("NativeRegions");
@@ -8755,11 +9403,30 @@ namespace ChronicleKeeper.Infrastructure.Migrations
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Religions.Religion", b =>
                 {
+                    b.Navigation("Deities");
+
                     b.Navigation("Followers");
+
+                    b.Navigation("HolySites");
 
                     b.Navigation("Myths");
 
+                    b.Navigation("ReligiousFestivals");
+
+                    b.Navigation("ReligiousOrders");
+
+                    b.Navigation("ReligiousTexts");
+
                     b.Navigation("Traditions");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Religions.ReligiousOrder", b =>
+                {
+                    b.Navigation("ClergyTraining");
+
+                    b.Navigation("Deities");
+
+                    b.Navigation("Factions");
                 });
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Structure.SocialClass", b =>

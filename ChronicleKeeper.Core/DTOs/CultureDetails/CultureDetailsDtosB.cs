@@ -126,6 +126,7 @@ namespace ChronicleKeeper.Core.DTOs.CultureDetails
         public bool HasReligiousConnections { get; set; }
         public int CultureId { get; set; }
         public int? ReligionId { get; set; }
+        public int? DeityId { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }
@@ -135,6 +136,7 @@ namespace ChronicleKeeper.Core.DTOs.CultureDetails
         public ReferenceDto? History { get; set; }
         public ReferenceDto? Culture { get; set; }
         public ReferenceDto? Religion { get; set; }
+        public ReferenceDto? Deity { get; set; }
     }
 
     public class MythCreateDto
@@ -153,6 +155,7 @@ namespace ChronicleKeeper.Core.DTOs.CultureDetails
         [Required]
         public int CultureId { get; set; }
         public int? ReligionId { get; set; }
+        public int? DeityId { get; set; }
     }
 
     public class MythUpdateDto
@@ -169,6 +172,7 @@ namespace ChronicleKeeper.Core.DTOs.CultureDetails
         [Required]
         public int CultureId { get; set; }
         public int? ReligionId { get; set; }
+        public int? DeityId { get; set; }
     }
 
     // ---------------- CulturalFestival ----------------

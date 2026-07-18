@@ -335,6 +335,12 @@ namespace ChronicleKeeper.Core.CQRS.Locations.Handlers
                     "This location is set as a river's source or mouth. Clear that reference first.");
             }
 
+            if (await _repository.IsReferencedByHolySiteAsync(request.Id, cancellationToken))
+            {
+                throw new DomainValidationException(
+                    "This location is used by a holy site. Delete or reassign the holy site first.");
+            }
+
             return await _repository.DeleteAsync(request.Id, cancellationToken);
         }
     }

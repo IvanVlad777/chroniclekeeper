@@ -74,7 +74,13 @@ namespace ChronicleKeeper.Core.DTOs.History
         Army,
         MilitaryUnit,
         Battle,
-        MilitaryEquipment
+        MilitaryEquipment,
+        // Mythology
+        Deity,
+        HolySite,
+        ReligiousText,
+        ReligiousOrder,
+        ReligiousFestival
     }
 
     public class HistoryCreateDto

@@ -156,6 +156,7 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .Include(m => m.History)
                 .Include(m => m.Culture)
                 .Include(m => m.Religion)
+                .Include(m => m.Deity)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.Id == id, ct);
 

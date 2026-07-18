@@ -96,6 +96,13 @@ namespace ChronicleKeeper.API.ServiceExtensions
             services.AddScoped<ICulturalFestivalRepository, CulturalFestivalRepository>();
             services.AddScoped<ICulturalInstitutionRepository, CulturalInstitutionRepository>();
 
+            // Mythology
+            services.AddScoped<IDeityRepository, DeityRepository>();
+            services.AddScoped<IHolySiteRepository, HolySiteRepository>();
+            services.AddScoped<IReligiousTextRepository, ReligiousTextRepository>();
+            services.AddScoped<IReligiousOrderRepository, ReligiousOrderRepository>();
+            services.AddScoped<IReligiousFestivalRepository, ReligiousFestivalRepository>();
+
             return services;
         }
     }

@@ -2825,6 +2825,7 @@ export interface MythDto {
     hasReligiousConnections: boolean;
     cultureId: number;
     religionId?: number | null;
+    deityId?: number | null;
     createdAt: string;
     updatedAt: string;
 }
@@ -2832,6 +2833,7 @@ export interface MythDetailsDto extends MythDto {
     history?: ReferenceDto | null;
     culture?: ReferenceDto | null;
     religion?: ReferenceDto | null;
+    deity?: ReferenceDto | null;
 }
 export interface MythCreateDto {
     name: string;
@@ -2843,6 +2845,7 @@ export interface MythCreateDto {
     hasReligiousConnections: boolean;
     cultureId: number;
     religionId?: number | null;
+    deityId?: number | null;
 }
 export type MythUpdateDto = Omit<MythCreateDto, "worldId">;
 
@@ -2911,3 +2914,195 @@ export interface CulturalInstitutionCreateDto {
     cityId?: number | null;
 }
 export type CulturalInstitutionUpdateDto = Omit<CulturalInstitutionCreateDto, "worldId">;
+
+// ================= Mythology (R3) =================
+
+export const deityTypes = [
+    "Elemental",
+    "Cosmic",
+    "Anthropomorphic",
+    "Animalistic",
+    "Alien",
+    "Machine",
+    "Unknown",
+] as const;
+export type DeityType = (typeof deityTypes)[number];
+
+// ---- HolySite ----
+export interface HolySiteDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    significance: string;
+    isPilgrimageDestination: boolean;
+    religionId: number;
+    deityId?: number | null;
+    locationId: number;
+    createdAt: string;
+    updatedAt: string;
+}
+export interface HolySiteDetailsDto extends HolySiteDto {
+    history?: ReferenceDto | null;
+    religion?: ReferenceDto | null;
+    deity?: ReferenceDto | null;
+    location?: ReferenceDto | null;
+}
+export interface HolySiteCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    significance: string;
+    isPilgrimageDestination: boolean;
+    religionId: number;
+    deityId?: number | null;
+    locationId: number;
+}
+export type HolySiteUpdateDto = Omit<HolySiteCreateDto, "worldId">;
+
+// ---- ReligiousText ----
+export interface ReligiousTextDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    type: string;
+    contentSummary: string;
+    religionId: number;
+    deityId?: number | null;
+    createdAt: string;
+    updatedAt: string;
+}
+export interface ReligiousTextDetailsDto extends ReligiousTextDto {
+    history?: ReferenceDto | null;
+    religion?: ReferenceDto | null;
+    deity?: ReferenceDto | null;
+}
+export interface ReligiousTextCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    type: string;
+    contentSummary: string;
+    religionId: number;
+    deityId?: number | null;
+}
+export type ReligiousTextUpdateDto = Omit<ReligiousTextCreateDto, "worldId">;
+
+// ---- ReligiousFestival ----
+export interface ReligiousFestivalDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    startDate?: string | null;
+    durationDays: number;
+    traditions: string;
+    isPilgrimageEvent: boolean;
+    religionId: number;
+    holySiteId?: number | null;
+    createdAt: string;
+    updatedAt: string;
+}
+export interface ReligiousFestivalDetailsDto extends ReligiousFestivalDto {
+    history?: ReferenceDto | null;
+    religion?: ReferenceDto | null;
+    holySite?: ReferenceDto | null;
+}
+export interface ReligiousFestivalCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    startDate?: string | null;
+    durationDays: number;
+    traditions: string;
+    isPilgrimageEvent: boolean;
+    religionId: number;
+    holySiteId?: number | null;
+}
+export type ReligiousFestivalUpdateDto = Omit<ReligiousFestivalCreateDto, "worldId">;
+
+// ---- ReligiousOrder ----
+export interface ReligiousOrderDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    orderType: string;
+    beliefs: string;
+    isMilitant: boolean;
+    isSecretive: boolean;
+    religionId?: number | null;
+    createdAt: string;
+    updatedAt: string;
+}
+export interface ReligiousOrderDetailsDto extends ReligiousOrderDto {
+    history?: ReferenceDto | null;
+    religion?: ReferenceDto | null;
+    deities: ReferenceDto[];
+    factions: ReferenceDto[];
+    clergyTraining: ReferenceDto[];
+}
+export interface ReligiousOrderCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    orderType: string;
+    beliefs: string;
+    isMilitant: boolean;
+    isSecretive: boolean;
+    religionId?: number | null;
+}
+export type ReligiousOrderUpdateDto = Omit<ReligiousOrderCreateDto, "worldId">;
+
+// ---- Deity ----
+export interface DeityDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    domain: string;
+    worshipMethods: string;
+    isMonotheistic: boolean;
+    deityType: DeityType;
+    isImmortal: boolean;
+    canManifestPhysically: boolean;
+    grantsPowers: boolean;
+    religionId?: number | null;
+    createdAt: string;
+    updatedAt: string;
+}
+export interface DeityDetailsDto extends DeityDto {
+    history?: ReferenceDto | null;
+    religion?: ReferenceDto | null;
+    sacredTexts: ReferenceDto[];
+    sacredSitesOfDeity: ReferenceDto[];
+    majorMyths: ReferenceDto[];
+    ordersDedicatedToDeity: ReferenceDto[];
+    alliedDeities: ReferenceDto[];
+    rivalDeities: ReferenceDto[];
+}
+export interface DeityCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    domain: string;
+    worshipMethods: string;
+    isMonotheistic: boolean;
+    deityType: DeityType;
+    isImmortal: boolean;
+    canManifestPhysically: boolean;
+    grantsPowers: boolean;
+    religionId?: number | null;
+}
+export type DeityUpdateDto = Omit<DeityCreateDto, "worldId">;

@@ -138,6 +138,18 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .Where(f => f.WorldId == id)
                 .ExecuteDeleteAsync(cancellationToken);
 
+            // 5m. Mitologija (vlastiti WorldId). HolySite.LocationId je Restrict → HolySites moraju
+            // nestati prije Locations (korak 6). Deity self-ref joinovi (Alliance/Rivalry) imaju Restrict
+            // stranu (Allied/RivalDeityId) → brišu se prvi da ne blokiraju brisanje Deityja.
+            // M:N joinovi DeityReligiousOrder/ReligiousOrderFaction kaskadiraju s roditeljima automatski.
+            await _context.DeityAlliances.Where(x => x.Deity!.WorldId == id).ExecuteDeleteAsync(cancellationToken);
+            await _context.DeityRivalries.Where(x => x.Deity!.WorldId == id).ExecuteDeleteAsync(cancellationToken);
+            await _context.ReligiousFestivals.Where(x => x.WorldId == id).ExecuteDeleteAsync(cancellationToken);
+            await _context.HolySites.Where(x => x.WorldId == id).ExecuteDeleteAsync(cancellationToken);
+            await _context.ReligiousTexts.Where(x => x.WorldId == id).ExecuteDeleteAsync(cancellationToken);
+            await _context.ReligiousOrders.Where(x => x.WorldId == id).ExecuteDeleteAsync(cancellationToken);
+            await _context.Deities.Where(x => x.WorldId == id).ExecuteDeleteAsync(cancellationToken);
+
             // 6. Lokacije (kaskadira LocationTags)
             await _context.Locations
                 .Where(l => l.WorldId == id)

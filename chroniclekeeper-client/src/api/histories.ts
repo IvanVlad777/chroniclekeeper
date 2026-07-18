@@ -63,7 +63,12 @@ export type HistoryLinkTargetType =
     | "Army"
     | "MilitaryUnit"
     | "Battle"
-    | "MilitaryEquipment";
+    | "MilitaryEquipment"
+    | "Deity"
+    | "HolySite"
+    | "ReligiousText"
+    | "ReligiousOrder"
+    | "ReligiousFestival";
 
 /** Attach a history to an entity (sets the entity's historyId). */
 export const linkHistory = async (

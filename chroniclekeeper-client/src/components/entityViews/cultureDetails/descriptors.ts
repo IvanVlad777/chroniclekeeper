@@ -1,6 +1,7 @@
 import type { SelectOption } from "../../ornate";
 import { getReligions } from "../../../api/religions";
 import { getLocations } from "../../../api/locations";
+import { getDeities } from "../../../api/deities";
 import * as customs from "../../../api/customs";
 import * as artForms from "../../../api/artForms";
 import * as cuisines from "../../../api/cuisines";
@@ -58,6 +59,11 @@ const loadReligions = (worldId: number): Promise<SelectOption[]> =>
 const loadLocations = (worldId: number): Promise<SelectOption[]> =>
     getLocations(worldId).then((ls) =>
         ls.map((l) => ({ value: String(l.id), label: l.name }))
+    );
+
+const loadDeities = (worldId: number): Promise<SelectOption[]> =>
+    getDeities(worldId).then((ds) =>
+        ds.map((d) => ({ value: String(d.id), label: d.name }))
     );
 
 export const descriptors: Descriptor[] = [
@@ -159,6 +165,7 @@ export const descriptors: Descriptor[] = [
             { key: "symbolism", kind: "textarea" },
             { key: "hasReligiousConnections", kind: "bool" },
             { key: "religionId", kind: "select", loadOptions: loadReligions },
+            { key: "deityId", kind: "select", loadOptions: loadDeities },
         ],
     },
     {

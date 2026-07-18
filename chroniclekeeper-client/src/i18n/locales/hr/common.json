@@ -55,7 +55,12 @@
         "battles": "Bitke",
         "militaryEquipment": "Vojna oprema",
         "customs": "Običaji",
-        "culturalInstitutions": "Kulturne institucije"
+        "culturalInstitutions": "Kulturne institucije",
+        "deities": "Božanstva",
+        "holySites": "Sveta mjesta",
+        "religiousTexts": "Religijski tekstovi",
+        "religiousOrders": "Religijski redovi",
+        "religiousFestivals": "Religijski festivali"
     },
     "navGroups": {
         "overview": "Pregled",
@@ -64,6 +69,7 @@
         "nature": "Priroda",
         "society": "Društvo",
         "culture": "Kultura",
+        "faith": "Vjera i mit",
         "politics": "Politika i pravo",
         "economy": "Gospodarstvo",
         "military": "Vojska",

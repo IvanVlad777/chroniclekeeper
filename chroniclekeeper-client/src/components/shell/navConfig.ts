@@ -104,6 +104,17 @@ export const navDomains: NavDomain[] = [
         ],
     },
     {
+        key: "faith",
+        glyph: "⛩",
+        entries: [
+            entry("deities", "/storymap/deities"),
+            entry("holySites", "/storymap/holy-sites"),
+            entry("religiousTexts", "/storymap/religious-texts"),
+            entry("religiousOrders", "/storymap/religious-orders"),
+            entry("religiousFestivals", "/storymap/religious-festivals"),
+        ],
+    },
+    {
         key: "politics",
         glyph: "⚖",
         entries: [

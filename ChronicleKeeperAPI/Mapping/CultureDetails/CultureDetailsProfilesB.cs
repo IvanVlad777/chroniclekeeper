@@ -35,7 +35,8 @@ namespace ChronicleKeeperAPI.Mapping.CultureDetails
             CreateMap<Myth, MythDetailsDto>()
                 .ForMember(d => d.History, o => o.MapFrom(s => s.History == null ? null : new ReferenceDto { Id = s.History.Id, Name = s.History.Name }))
                 .ForMember(d => d.Culture, o => o.MapFrom(s => s.Culture == null ? null : new ReferenceDto { Id = s.Culture.Id, Name = s.Culture.Name }))
-                .ForMember(d => d.Religion, o => o.MapFrom(s => s.Religion == null ? null : new ReferenceDto { Id = s.Religion.Id, Name = s.Religion.Name }));
+                .ForMember(d => d.Religion, o => o.MapFrom(s => s.Religion == null ? null : new ReferenceDto { Id = s.Religion.Id, Name = s.Religion.Name }))
+                .ForMember(d => d.Deity, o => o.MapFrom(s => s.Deity == null ? null : new ReferenceDto { Id = s.Deity.Id, Name = s.Deity.Name }));
 
             // ---- CulturalFestival ----
             CreateMap<CulturalFestival, CulturalFestivalDto>();

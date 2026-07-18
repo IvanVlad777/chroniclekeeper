@@ -1,4 +1,5 @@
 using ChronicleKeeper.Core.Entities.Base;
+using ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient;
 using ChronicleKeeper.Core.Entities.HistoryTimelines;
 using ChronicleKeeper.Core.Entities.Social.Religions;
 
@@ -20,7 +21,8 @@ namespace ChronicleKeeper.Core.Entities.Social.Cultures
         public int CultureId { get; set; }
         public virtual Culture? Culture { get; set; }
 
-        //public int? DeityId { get; set; } // TODO: Uncomment when Deity entity is revived (R3 Mythology)
-        //public virtual Deity? Deity { get; set; } // TODO: Uncomment when Deity entity is revived (R3 Mythology)
+        // Optional deity link — SetNull. (Deity.MajorMyths is the reverse.)
+        public int? DeityId { get; set; }
+        public virtual Deity? Deity { get; set; }
     }
 }

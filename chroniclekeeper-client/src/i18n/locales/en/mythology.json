@@ -1,0 +1,129 @@
+{
+    "search": "Search…",
+    "none": "None",
+    "fields": {
+        "name": "Name",
+        "description": "Description",
+        "updated": "Updated",
+        "religion": "Religion",
+        "deity": "Deity",
+        "location": "Location",
+        "holySite": "Holy site"
+    },
+    "form": {
+        "requiredNote": "Fields marked * are required.",
+        "select": "— select —",
+        "save": "Save",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete \"{{name}}\"?",
+        "edit": "Edit",
+        "history": "History",
+        "saveFailed": "Saving failed.",
+        "deleteFailed": "Deleting failed.",
+        "requiredMissing": "Please fill in the required fields.",
+        "notFound": "Not found",
+        "backToList": "Back to list"
+    },
+    "links": {
+        "add": "Link",
+        "pick": "Select…",
+        "confirm": "Add",
+        "remove": "Remove {{name}}",
+        "addFailed": "Linking failed.",
+        "removeFailed": "Removing failed."
+    },
+    "deityTypes": {
+        "Elemental": "Elemental",
+        "Cosmic": "Cosmic",
+        "Anthropomorphic": "Anthropomorphic",
+        "Animalistic": "Animalistic",
+        "Alien": "Alien",
+        "Machine": "Machine",
+        "Unknown": "Unknown"
+    },
+    "deity": {
+        "listTitle": "Deities",
+        "newTitle": "New deity",
+        "editTitle": "Edit deity",
+        "emptyTitle": "No deities yet",
+        "emptyText": "Add the gods and divine beings of this world.",
+        "loadError": "Failed to load deities.",
+        "fields": {
+            "domain": "Domain",
+            "worshipMethods": "Worship methods",
+            "deityType": "Divine nature",
+            "isMonotheistic": "Sole god (monotheistic)",
+            "isImmortal": "Immortal",
+            "canManifestPhysically": "Can manifest physically",
+            "grantsPowers": "Grants powers"
+        },
+        "links": {
+            "orders": "Dedicated orders",
+            "allies": "Allied deities",
+            "rivals": "Rival deities",
+            "sacredTexts": "Sacred texts",
+            "sacredSites": "Sacred sites",
+            "majorMyths": "Major myths"
+        }
+    },
+    "holySite": {
+        "listTitle": "Holy sites",
+        "newTitle": "New holy site",
+        "editTitle": "Edit holy site",
+        "emptyTitle": "No holy sites yet",
+        "emptyText": "Add sacred places of pilgrimage and worship.",
+        "loadError": "Failed to load holy sites.",
+        "fields": {
+            "significance": "Significance",
+            "isPilgrimageDestination": "Pilgrimage destination"
+        }
+    },
+    "religiousText": {
+        "listTitle": "Religious texts",
+        "newTitle": "New religious text",
+        "editTitle": "Edit religious text",
+        "emptyTitle": "No religious texts yet",
+        "emptyText": "Add scriptures, prophecies and sacred writings.",
+        "loadError": "Failed to load religious texts.",
+        "fields": {
+            "type": "Type",
+            "contentSummary": "Content summary"
+        }
+    },
+    "religiousOrder": {
+        "listTitle": "Religious orders",
+        "newTitle": "New religious order",
+        "editTitle": "Edit religious order",
+        "emptyTitle": "No religious orders yet",
+        "emptyText": "Add clergies, monastic orders, cults and sects.",
+        "loadError": "Failed to load religious orders.",
+        "fields": {
+            "orderType": "Order type",
+            "beliefs": "Beliefs",
+            "isMilitant": "Militant",
+            "isSecretive": "Secretive"
+        },
+        "links": {
+            "factions": "Factions",
+            "deities": "Deities served",
+            "clergyTraining": "Clergy training"
+        }
+    },
+    "religiousFestival": {
+        "listTitle": "Religious festivals",
+        "newTitle": "New religious festival",
+        "editTitle": "Edit religious festival",
+        "emptyTitle": "No religious festivals yet",
+        "emptyText": "Add holy days and religious celebrations.",
+        "loadError": "Failed to load religious festivals.",
+        "fields": {
+            "startDate": "Start date",
+            "startDateHint": "e.g. Third moon, Year 512",
+            "durationDays": "Duration (days)",
+            "traditions": "Traditions",
+            "isPilgrimageEvent": "Pilgrimage event"
+        }
+    }
+}

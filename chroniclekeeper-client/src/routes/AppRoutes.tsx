@@ -32,6 +32,21 @@ import CultureDetails from "../components/entityViews/culture/detail/CultureDeta
 import ArchitectureStyleDetail from "../components/entityViews/cultureDetails/ArchitectureStyleDetail";
 import FolkloreDetail from "../components/entityViews/cultureDetails/FolkloreDetail";
 import StandaloneCultureDetailPage from "../components/entityViews/cultureDetails/StandaloneCultureDetailPage";
+import DeityList from "../components/entityViews/mythology/deity/DeityList";
+import DeityDetails from "../components/entityViews/mythology/deity/DeityDetails";
+import DeityForm from "../components/entityViews/mythology/deity/DeityForm";
+import HolySiteList from "../components/entityViews/mythology/holySite/HolySiteList";
+import HolySiteDetails from "../components/entityViews/mythology/holySite/HolySiteDetails";
+import HolySiteForm from "../components/entityViews/mythology/holySite/HolySiteForm";
+import ReligiousTextList from "../components/entityViews/mythology/religiousText/ReligiousTextList";
+import ReligiousTextDetails from "../components/entityViews/mythology/religiousText/ReligiousTextDetails";
+import ReligiousTextForm from "../components/entityViews/mythology/religiousText/ReligiousTextForm";
+import ReligiousOrderList from "../components/entityViews/mythology/religiousOrder/ReligiousOrderList";
+import ReligiousOrderDetails from "../components/entityViews/mythology/religiousOrder/ReligiousOrderDetails";
+import ReligiousOrderForm from "../components/entityViews/mythology/religiousOrder/ReligiousOrderForm";
+import ReligiousFestivalList from "../components/entityViews/mythology/religiousFestival/ReligiousFestivalList";
+import ReligiousFestivalDetails from "../components/entityViews/mythology/religiousFestival/ReligiousFestivalDetails";
+import ReligiousFestivalForm from "../components/entityViews/mythology/religiousFestival/ReligiousFestivalForm";
 import CultureForm from "../components/entityViews/culture/form/CultureForm";
 import TimelineList from "../components/entityViews/timeline/list/TimelineList";
 import TimelineDetails from "../components/entityViews/timeline/detail/TimelineDetails";
@@ -264,6 +279,26 @@ const AppRoutes = () => {
                         />
                     }
                 />
+                <Route path="deities" element={<DeityList />} />
+                <Route path="deities/new" element={<DeityForm />} />
+                <Route path="deities/:id" element={<DeityDetails />} />
+                <Route path="deities/:id/edit" element={<DeityForm />} />
+                <Route path="holy-sites" element={<HolySiteList />} />
+                <Route path="holy-sites/new" element={<HolySiteForm />} />
+                <Route path="holy-sites/:id" element={<HolySiteDetails />} />
+                <Route path="holy-sites/:id/edit" element={<HolySiteForm />} />
+                <Route path="religious-texts" element={<ReligiousTextList />} />
+                <Route path="religious-texts/new" element={<ReligiousTextForm />} />
+                <Route path="religious-texts/:id" element={<ReligiousTextDetails />} />
+                <Route path="religious-texts/:id/edit" element={<ReligiousTextForm />} />
+                <Route path="religious-orders" element={<ReligiousOrderList />} />
+                <Route path="religious-orders/new" element={<ReligiousOrderForm />} />
+                <Route path="religious-orders/:id" element={<ReligiousOrderDetails />} />
+                <Route path="religious-orders/:id/edit" element={<ReligiousOrderForm />} />
+                <Route path="religious-festivals" element={<ReligiousFestivalList />} />
+                <Route path="religious-festivals/new" element={<ReligiousFestivalForm />} />
+                <Route path="religious-festivals/:id" element={<ReligiousFestivalDetails />} />
+                <Route path="religious-festivals/:id/edit" element={<ReligiousFestivalForm />} />
                 <Route path="timelines" element={<TimelineList />} />
                 <Route path="timelines/new" element={<TimelineForm />} />
                 <Route path="timelines/:id" element={<TimelineDetails />} />

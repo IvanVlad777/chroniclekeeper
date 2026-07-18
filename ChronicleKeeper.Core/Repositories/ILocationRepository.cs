@@ -20,6 +20,8 @@ namespace ChronicleKeeper.Core.Repositories
         /// <summary>Je li lokacija postavljena kao SourceLocation/MouthLocation neke rijeke (RiverEcosystem.Restrict FK-ovi).</summary>
         Task<bool> IsReferencedAsRiverEndpointAsync(int locationId, CancellationToken cancellationToken = default);
 
+        Task<bool> IsReferencedByHolySiteAsync(int locationId, CancellationToken cancellationToken = default);
+
         Task<bool> IsNativeSpeciesLinkedAsync(int regionId, int sapientSpeciesId, CancellationToken cancellationToken = default);
         Task AddNativeSpeciesAsync(int regionId, int sapientSpeciesId, CancellationToken cancellationToken = default);
         Task<bool> RemoveNativeSpeciesAsync(int regionId, int sapientSpeciesId, CancellationToken cancellationToken = default);

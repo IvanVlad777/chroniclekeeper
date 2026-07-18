@@ -224,6 +224,17 @@ namespace ChronicleKeeper.Infrastructure.Data
         public DbSet<FolkloreTimelineEvent> FolkloreTimelineEvents { get; set; }
         public DbSet<FolkloreSapientSpecies> FolkloreSapientSpecies { get; set; }
 
+        // Mythology
+        public DbSet<Deity> Deities { get; set; }
+        public DbSet<HolySite> HolySites { get; set; }
+        public DbSet<ReligiousText> ReligiousTexts { get; set; }
+        public DbSet<ReligiousOrder> ReligiousOrders { get; set; }
+        public DbSet<ReligiousFestival> ReligiousFestivals { get; set; }
+        public DbSet<DeityReligiousOrder> DeityReligiousOrders { get; set; }
+        public DbSet<ReligiousOrderFaction> ReligiousOrderFactions { get; set; }
+        public DbSet<DeityAlliance> DeityAlliances { get; set; }
+        public DbSet<DeityRivalry> DeityRivalries { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

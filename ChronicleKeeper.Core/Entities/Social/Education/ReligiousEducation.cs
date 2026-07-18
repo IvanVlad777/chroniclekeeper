@@ -14,8 +14,9 @@ namespace ChronicleKeeper.Core.Entities.Social.Education
         public int? CharacterId { get; set; }
         public virtual Character? Character { get; set; }
 
-        //public int? ReligiousOrderId { get; set; } // TODO: Uncomment when ReligiousOrder entity is revived
-        //public virtual ReligiousOrder? ReligiousOrder { get; set; }
+        // Optional order that runs this training — SetNull. (ReligiousOrder.ClergyTraining is the reverse.)
+        public int? ReligiousOrderId { get; set; }
+        public virtual ReligiousOrder? ReligiousOrder { get; set; }
 
         [Required]
         public int ReligionId { get; set; }

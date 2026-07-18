@@ -43,6 +43,17 @@ namespace ChronicleKeeper.Core.CQRS.CultureDetails.Handlers
             }
         }
 
+        public static async Task ValidateDeityAsync(IDeityRepository deityRepo, int? deityId, int worldId, CancellationToken ct)
+        {
+            if (deityId is int did)
+            {
+                var deity = await deityRepo.FindByIdAsync(did, ct)
+                    ?? throw new DomainValidationException($"Deity with ID {did} does not exist.");
+                if (deity.WorldId != worldId)
+                    throw new DomainValidationException($"Deity with ID {did} does not belong to this world.");
+            }
+        }
+
         public static async Task ValidateLocationAsync(ILocationRepository locationRepo, int? locationId, int worldId, CancellationToken ct)
         {
             if (locationId is int lid)
@@ -218,27 +229,29 @@ namespace ChronicleKeeper.Core.CQRS.CultureDetails.Handlers
     }
     public class CreateMythCommandHandler : IRequestHandler<CreateMythCommand, MythDto>
     {
-        private readonly IMythRepository _repo; private readonly IWorldRepository _world; private readonly IHistoryRepository _history; private readonly ICultureRepository _culture; private readonly IReligionRepository _religion; private readonly IMapper _mapper;
-        public CreateMythCommandHandler(IMythRepository repo, IWorldRepository world, IHistoryRepository history, ICultureRepository culture, IReligionRepository religion, IMapper mapper) { _repo = repo; _world = world; _history = history; _culture = culture; _religion = religion; _mapper = mapper; }
+        private readonly IMythRepository _repo; private readonly IWorldRepository _world; private readonly IHistoryRepository _history; private readonly ICultureRepository _culture; private readonly IReligionRepository _religion; private readonly IDeityRepository _deity; private readonly IMapper _mapper;
+        public CreateMythCommandHandler(IMythRepository repo, IWorldRepository world, IHistoryRepository history, ICultureRepository culture, IReligionRepository religion, IDeityRepository deity, IMapper mapper) { _repo = repo; _world = world; _history = history; _culture = culture; _religion = religion; _deity = deity; _mapper = mapper; }
         public async Task<MythDto> Handle(CreateMythCommand c, CancellationToken ct)
         {
             if (!await _world.ExistsAsync(c.Dto.WorldId, ct)) throw new DomainValidationException($"World with ID {c.Dto.WorldId} does not exist.");
             await CultureDetailsValidationB.ValidateHistoryAsync(_history, c.Dto.HistoryId, c.Dto.WorldId, ct);
             await CultureDetailsValidationB.ValidateCultureAsync(_culture, c.Dto.CultureId, c.Dto.WorldId, ct);
             await CultureDetailsValidationB.ValidateReligionAsync(_religion, c.Dto.ReligionId, c.Dto.WorldId, ct);
+            await CultureDetailsValidationB.ValidateDeityAsync(_deity, c.Dto.DeityId, c.Dto.WorldId, ct);
             return _mapper.Map<MythDto>(await _repo.CreateAsync(_mapper.Map<Myth>(c.Dto), ct));
         }
     }
     public class UpdateMythCommandHandler : IRequestHandler<UpdateMythCommand, MythDto>
     {
-        private readonly IMythRepository _repo; private readonly IHistoryRepository _history; private readonly ICultureRepository _culture; private readonly IReligionRepository _religion; private readonly IMapper _mapper;
-        public UpdateMythCommandHandler(IMythRepository repo, IHistoryRepository history, ICultureRepository culture, IReligionRepository religion, IMapper mapper) { _repo = repo; _history = history; _culture = culture; _religion = religion; _mapper = mapper; }
+        private readonly IMythRepository _repo; private readonly IHistoryRepository _history; private readonly ICultureRepository _culture; private readonly IReligionRepository _religion; private readonly IDeityRepository _deity; private readonly IMapper _mapper;
+        public UpdateMythCommandHandler(IMythRepository repo, IHistoryRepository history, ICultureRepository culture, IReligionRepository religion, IDeityRepository deity, IMapper mapper) { _repo = repo; _history = history; _culture = culture; _religion = religion; _deity = deity; _mapper = mapper; }
         public async Task<MythDto> Handle(UpdateMythCommand c, CancellationToken ct)
         {
             var e = await _repo.FindByIdAsync(c.Id, ct) ?? throw new EntityNotFoundException("Myth", c.Id);
             await CultureDetailsValidationB.ValidateHistoryAsync(_history, c.Dto.HistoryId, e.WorldId, ct);
             await CultureDetailsValidationB.ValidateCultureAsync(_culture, c.Dto.CultureId, e.WorldId, ct);
             await CultureDetailsValidationB.ValidateReligionAsync(_religion, c.Dto.ReligionId, e.WorldId, ct);
+            await CultureDetailsValidationB.ValidateDeityAsync(_deity, c.Dto.DeityId, e.WorldId, ct);
             _mapper.Map(c.Dto, e);
             return _mapper.Map<MythDto>(await _repo.UpdateAsync(e, ct));
         }

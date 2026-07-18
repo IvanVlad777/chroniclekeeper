@@ -1,5 +1,6 @@
 using ChronicleKeeper.Core.Entities.Geography;
 using ChronicleKeeper.Core.Entities.Geography.Ecosystems;
+using ChronicleKeeper.Core.Entities.Social.Religions;
 using ChronicleKeeper.Core.Repositories;
 using ChronicleKeeper.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -97,6 +98,12 @@ namespace ChronicleKeeper.Infrastructure.Repositories
         {
             return await _context.Set<RiverEcosystem>()
                 .AnyAsync(r => r.SourceLocationId == locationId || r.MouthLocationId == locationId, cancellationToken);
+        }
+
+        public async Task<bool> IsReferencedByHolySiteAsync(int locationId, CancellationToken cancellationToken = default)
+        {
+            return await _context.Set<HolySite>()
+                .AnyAsync(h => h.LocationId == locationId, cancellationToken);
         }
 
         public async Task<bool> WouldCreateCycleAsync(int locationId, int newParentId, CancellationToken cancellationToken = default)

@@ -55,7 +55,12 @@
         "battles": "Battles",
         "militaryEquipment": "Military Equipment",
         "customs": "Customs",
-        "culturalInstitutions": "Cultural Institutions"
+        "culturalInstitutions": "Cultural Institutions",
+        "deities": "Deities",
+        "holySites": "Holy Sites",
+        "religiousTexts": "Religious Texts",
+        "religiousOrders": "Religious Orders",
+        "religiousFestivals": "Religious Festivals"
     },
     "navGroups": {
         "overview": "Overview",
@@ -64,6 +69,7 @@
         "nature": "Nature",
         "society": "Society",
         "culture": "Culture",
+        "faith": "Faith & Myth",
         "politics": "Politics & Law",
         "economy": "Economy",
         "military": "Military",

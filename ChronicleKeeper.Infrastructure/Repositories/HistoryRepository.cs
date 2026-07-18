@@ -87,6 +87,16 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .Select(x => new HistoryLinkDto { Type = "Battle", Id = x.Id, Name = x.Name }).ToListAsync(cancellationToken));
             links.AddRange(await _context.MilitaryEquipments.Where(x => x.HistoryId == historyId)
                 .Select(x => new HistoryLinkDto { Type = "MilitaryEquipment", Id = x.Id, Name = x.Name }).ToListAsync(cancellationToken));
+            links.AddRange(await _context.Deities.Where(x => x.HistoryId == historyId)
+                .Select(x => new HistoryLinkDto { Type = "Deity", Id = x.Id, Name = x.Name }).ToListAsync(cancellationToken));
+            links.AddRange(await _context.HolySites.Where(x => x.HistoryId == historyId)
+                .Select(x => new HistoryLinkDto { Type = "HolySite", Id = x.Id, Name = x.Name }).ToListAsync(cancellationToken));
+            links.AddRange(await _context.ReligiousTexts.Where(x => x.HistoryId == historyId)
+                .Select(x => new HistoryLinkDto { Type = "ReligiousText", Id = x.Id, Name = x.Name }).ToListAsync(cancellationToken));
+            links.AddRange(await _context.ReligiousOrders.Where(x => x.HistoryId == historyId)
+                .Select(x => new HistoryLinkDto { Type = "ReligiousOrder", Id = x.Id, Name = x.Name }).ToListAsync(cancellationToken));
+            links.AddRange(await _context.ReligiousFestivals.Where(x => x.HistoryId == historyId)
+                .Select(x => new HistoryLinkDto { Type = "ReligiousFestival", Id = x.Id, Name = x.Name }).ToListAsync(cancellationToken));
 
             return links;
         }
@@ -119,6 +129,11 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 HistoryLinkTargetType.MilitaryUnit => await _context.MilitaryUnits.AnyAsync(x => x.Id == targetId && x.WorldId == worldId, cancellationToken),
                 HistoryLinkTargetType.Battle => await _context.Battles.AnyAsync(x => x.Id == targetId && x.WorldId == worldId, cancellationToken),
                 HistoryLinkTargetType.MilitaryEquipment => await _context.MilitaryEquipments.AnyAsync(x => x.Id == targetId && x.WorldId == worldId, cancellationToken),
+                HistoryLinkTargetType.Deity => await _context.Deities.AnyAsync(x => x.Id == targetId && x.WorldId == worldId, cancellationToken),
+                HistoryLinkTargetType.HolySite => await _context.HolySites.AnyAsync(x => x.Id == targetId && x.WorldId == worldId, cancellationToken),
+                HistoryLinkTargetType.ReligiousText => await _context.ReligiousTexts.AnyAsync(x => x.Id == targetId && x.WorldId == worldId, cancellationToken),
+                HistoryLinkTargetType.ReligiousOrder => await _context.ReligiousOrders.AnyAsync(x => x.Id == targetId && x.WorldId == worldId, cancellationToken),
+                HistoryLinkTargetType.ReligiousFestival => await _context.ReligiousFestivals.AnyAsync(x => x.Id == targetId && x.WorldId == worldId, cancellationToken),
                 _ => false,
             };
         }
@@ -199,6 +214,21 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                     .Where(x => x.Id == targetId && (onlyIfCurrentHistoryId == null || x.HistoryId == onlyIfCurrentHistoryId))
                     .ExecuteUpdateAsync(s => s.SetProperty(x => x.HistoryId, historyId), cancellationToken),
                 HistoryLinkTargetType.MilitaryEquipment => await _context.MilitaryEquipments
+                    .Where(x => x.Id == targetId && (onlyIfCurrentHistoryId == null || x.HistoryId == onlyIfCurrentHistoryId))
+                    .ExecuteUpdateAsync(s => s.SetProperty(x => x.HistoryId, historyId), cancellationToken),
+                HistoryLinkTargetType.Deity => await _context.Deities
+                    .Where(x => x.Id == targetId && (onlyIfCurrentHistoryId == null || x.HistoryId == onlyIfCurrentHistoryId))
+                    .ExecuteUpdateAsync(s => s.SetProperty(x => x.HistoryId, historyId), cancellationToken),
+                HistoryLinkTargetType.HolySite => await _context.HolySites
+                    .Where(x => x.Id == targetId && (onlyIfCurrentHistoryId == null || x.HistoryId == onlyIfCurrentHistoryId))
+                    .ExecuteUpdateAsync(s => s.SetProperty(x => x.HistoryId, historyId), cancellationToken),
+                HistoryLinkTargetType.ReligiousText => await _context.ReligiousTexts
+                    .Where(x => x.Id == targetId && (onlyIfCurrentHistoryId == null || x.HistoryId == onlyIfCurrentHistoryId))
+                    .ExecuteUpdateAsync(s => s.SetProperty(x => x.HistoryId, historyId), cancellationToken),
+                HistoryLinkTargetType.ReligiousOrder => await _context.ReligiousOrders
+                    .Where(x => x.Id == targetId && (onlyIfCurrentHistoryId == null || x.HistoryId == onlyIfCurrentHistoryId))
+                    .ExecuteUpdateAsync(s => s.SetProperty(x => x.HistoryId, historyId), cancellationToken),
+                HistoryLinkTargetType.ReligiousFestival => await _context.ReligiousFestivals
                     .Where(x => x.Id == targetId && (onlyIfCurrentHistoryId == null || x.HistoryId == onlyIfCurrentHistoryId))
                     .ExecuteUpdateAsync(s => s.SetProperty(x => x.HistoryId, historyId), cancellationToken),
                 _ => 0,

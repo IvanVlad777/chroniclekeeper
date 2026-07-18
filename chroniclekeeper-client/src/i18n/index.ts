@@ -28,6 +28,8 @@ import enCulture from "./locales/en/culture.json";
 import hrCulture from "./locales/hr/culture.json";
 import enCultureDetails from "./locales/en/cultureDetails.json";
 import hrCultureDetails from "./locales/hr/cultureDetails.json";
+import enMythology from "./locales/en/mythology.json";
+import hrMythology from "./locales/hr/mythology.json";
 import enTimeline from "./locales/en/timeline.json";
 import hrTimeline from "./locales/hr/timeline.json";
 import enTag from "./locales/en/tag.json";
@@ -121,6 +123,7 @@ i18n.use(LanguageDetector)
                 language: enLanguage,
                 culture: enCulture,
                 cultureDetails: enCultureDetails,
+                mythology: enMythology,
                 timeline: enTimeline,
                 tag: enTag,
                 note: enNote,
@@ -173,6 +176,7 @@ i18n.use(LanguageDetector)
                 language: hrLanguage,
                 culture: hrCulture,
                 cultureDetails: hrCultureDetails,
+                mythology: hrMythology,
                 timeline: hrTimeline,
                 tag: hrTag,
                 note: hrNote,
@@ -227,6 +231,7 @@ i18n.use(LanguageDetector)
             "language",
             "culture",
             "cultureDetails",
+            "mythology",
             "timeline",
             "tag",
             "note",

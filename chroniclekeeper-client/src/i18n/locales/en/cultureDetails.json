@@ -31,6 +31,7 @@
         "practice": "Practice",
         "isReligious": "Religious",
         "religionId": "Religion",
+        "deityId": "Deity",
         "materialsUsed": "Materials used",
         "isFortified": "Fortified",
         "story": "Story",
