@@ -155,7 +155,9 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .Where(l => l.WorldId == id)
                 .ExecuteDeleteAsync(cancellationToken);
 
-            // 7. Vrste (kaskadira Races — likova više nema pa Restrict ne blokira)
+            // 7. Vrste (SapientSpecies je sad Creature TPH subtip — briše 'Sapient' retke iz Creatures,
+            //    kaskadira Races/RegionSapientSpecies; likova više nema pa Restrict ne blokira.
+            //    ParentCreatureId razvezan u koraku 1, ostatak stvorenja se briše u koraku 7v.)
             await _context.SapientSpecies
                 .Where(s => s.WorldId == id)
                 .ExecuteDeleteAsync(cancellationToken);

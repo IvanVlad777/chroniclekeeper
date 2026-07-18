@@ -43,7 +43,10 @@ namespace ChronicleKeeper.Infrastructure.Repositories
 
         public async Task<List<Creature>> GetAllAsync(int? worldId = null, string? subtype = null, CancellationToken cancellationToken = default)
         {
-            var query = _context.Creatures.AsNoTracking();
+            // SapientSpecies shares the Creatures TPH table but has its own dedicated vertical
+            // (api/species) — keep it out of the generic creature list so the Creature UI stays clean.
+            var query = _context.Creatures.AsNoTracking()
+                .Where(c => EF.Property<string>(c, "CreatureSubtype") != "Sapient");
             if (worldId is int wid)
             {
                 query = query.Where(c => c.WorldId == wid);

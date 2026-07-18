@@ -9,6 +9,11 @@
     "emptyText": "Elves, dragons, thinking machines — every sapient kind of your world lives here. Create the first species to people your realms.",
     "humanoid": "Humanoid",
     "notHumanoid": "Non-humanoid",
+    "yes": "Yes",
+    "no": "No",
+    "artificial": "Artificial",
+    "years": "{{value}} yrs",
+    "sizeValue": "{{height}} m · {{weight}} kg",
     "columns": {
         "name": "Name",
         "commonName": "Common name",
@@ -21,7 +26,37 @@
         "scientificName": "Scientific name",
         "isHumanoid": "Humanoid form",
         "lifespan": "Lifespan",
-        "description": "Description"
+        "description": "Description",
+        "sapientType": "Sapient type",
+        "isSentient": "Sentient",
+        "isArtificial": "Artificial being",
+        "artificialOrigin": "Artificial origin",
+        "averageLifespan": "Avg. lifespan (years)",
+        "height": "Height (m)",
+        "weight": "Weight (kg)",
+        "size": "Size",
+        "parentCreature": "Descends from"
+    },
+    "sapientTypes": {
+        "Humanoid": "Humanoid",
+        "Bestial": "Bestial",
+        "Elemental": "Elemental",
+        "Celestial": "Celestial",
+        "Infernal": "Infernal",
+        "Spirit": "Spirit",
+        "Deity": "Deity",
+        "Otherworldly": "Otherworldly"
+    },
+    "artificialOrigins": {
+        "Robot": "Robot",
+        "AI": "AI",
+        "Cyborg": "Cyborg",
+        "Golem": "Golem",
+        "Clone": "Clone",
+        "Bioengineered": "Bioengineered"
+    },
+    "subspecies": {
+        "label": "Subspecies"
     },
     "races": {
         "label": "Races",
@@ -48,6 +83,9 @@
         "requiredNote": "Fields marked with an asterisk are required.",
         "requiredMissing": "Name is required.",
         "lifespanHint": "Free text — “~500 years”, “three human generations”…",
+        "parentHint": "The species this one descends from (optional).",
+        "noParent": "— No parent species —",
+        "noOrigin": "— Select origin —",
         "save": "Save species",
         "saving": "Saving…",
         "cancel": "Cancel",

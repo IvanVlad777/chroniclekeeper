@@ -5,20 +5,33 @@ import {
     Button,
     OrnateCheckbox,
     OrnateField,
+    OrnateSelect,
     OrnateTextArea,
     OrnateTextInput,
 } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
+import { EntityPicker } from "../../../quickCreate/EntityPicker";
 import {
     createSpecies,
     deleteSpecies,
+    getSpecies,
     getSpeciesById,
     updateSpecies,
 } from "../../../../api/species";
-import { SpeciesUpdateDto } from "../../../../interfaces/loreInterfaces";
+import {
+    artificialOrigins,
+    sapientTypes,
+    type ArtificialOrigin,
+    type SapientType,
+    type SpeciesDto,
+    type SpeciesUpdateDto,
+} from "../../../../interfaces/loreInterfaces";
 import { useWorld } from "../../../../hooks/useWorld";
+import { useAuth } from "../../../../hooks/useAuth";
 import { apiErrorMessage } from "../../../../utils/apiError";
 import s from "./styles.module.css";
+
+const editorRoles = ["Editor", "Admin", "SuperAdmin"];
 
 interface FormState {
     name: string;
@@ -27,6 +40,14 @@ interface FormState {
     scientificName: string;
     isHumanoid: boolean;
     lifespan: string;
+    sapientType: SapientType;
+    averageLifespan: string;
+    height: string;
+    weight: string;
+    isSentient: boolean;
+    isArtificial: boolean;
+    artificialOrigin: string;
+    parentCreatureId: string;
 }
 
 const emptyForm: FormState = {
@@ -36,7 +57,17 @@ const emptyForm: FormState = {
     scientificName: "",
     isHumanoid: true,
     lifespan: "",
+    sapientType: "Humanoid",
+    averageLifespan: "",
+    height: "",
+    weight: "",
+    isSentient: true,
+    isArtificial: false,
+    artificialOrigin: "",
+    parentCreatureId: "",
 };
+
+const toNum = (v: string): number => (v.trim() ? Number(v) : 0);
 
 function toDto(f: FormState): SpeciesUpdateDto {
     return {
@@ -46,6 +77,16 @@ function toDto(f: FormState): SpeciesUpdateDto {
         scientificName: f.scientificName.trim(),
         isHumanoid: f.isHumanoid,
         lifespan: f.lifespan.trim(),
+        sapientType: f.sapientType,
+        averageLifespan: toNum(f.averageLifespan),
+        height: toNum(f.height),
+        weight: toNum(f.weight),
+        isSentient: f.isSentient,
+        isArtificial: f.isArtificial,
+        artificialOrigin: f.isArtificial
+            ? (f.artificialOrigin as ArtificialOrigin) || null
+            : null,
+        parentCreatureId: f.parentCreatureId ? Number(f.parentCreatureId) : null,
     };
 }
 
@@ -58,8 +99,12 @@ export default function SpeciesForm() {
     const navigate = useNavigate();
     const { t } = useTranslation("species");
     const { selectedWorld, loading: worldLoading } = useWorld();
+    const { userInfo } = useAuth();
+    const canCreate =
+        userInfo?.roles.some((r) => editorRoles.includes(r)) ?? false;
 
     const [form, setForm] = useState<FormState>(emptyForm);
+    const [parents, setParents] = useState<SpeciesDto[]>([]);
     const [loading, setLoading] = useState(isEdit);
     const [loadError, setLoadError] = useState<string | null>(null);
     const [saveError, setSaveError] = useState<string | null>(null);
@@ -68,6 +113,14 @@ export default function SpeciesForm() {
 
     const set = <K extends keyof FormState>(key: K, value: FormState[K]) =>
         setForm((f) => ({ ...f, [key]: value }));
+
+    // Parent-species options (a sapient species descends from another species).
+    useEffect(() => {
+        if (!selectedWorld) return;
+        getSpecies(selectedWorld.id)
+            .then(setParents)
+            .catch((err) => console.error("Failed to load species:", err));
+    }, [selectedWorld]);
 
     useEffect(() => {
         if (!isEdit) return;
@@ -86,6 +139,25 @@ export default function SpeciesForm() {
                     scientificName: sp.scientificName ?? "",
                     isHumanoid: sp.isHumanoid,
                     lifespan: sp.lifespan ?? "",
+                    sapientType: sp.sapientType ?? "Humanoid",
+                    averageLifespan:
+                        sp.averageLifespan != null && sp.averageLifespan !== 0
+                            ? String(sp.averageLifespan)
+                            : "",
+                    height:
+                        sp.height != null && sp.height !== 0
+                            ? String(sp.height)
+                            : "",
+                    weight:
+                        sp.weight != null && sp.weight !== 0
+                            ? String(sp.weight)
+                            : "",
+                    isSentient: sp.isSentient,
+                    isArtificial: sp.isArtificial,
+                    artificialOrigin: sp.artificialOrigin ?? "",
+                    parentCreatureId: sp.parentCreatureId
+                        ? String(sp.parentCreatureId)
+                        : "",
                 });
             })
             .catch((err) => {
@@ -196,6 +268,50 @@ export default function SpeciesForm() {
                             }
                         />
                     </OrnateField>
+                    <OrnateField label={t("fields.sapientType")}>
+                        <OrnateSelect
+                            value={form.sapientType}
+                            onChange={(e) =>
+                                set(
+                                    "sapientType",
+                                    e.target.value as SapientType
+                                )
+                            }
+                        >
+                            {sapientTypes.map((v) => (
+                                <option key={v} value={v}>
+                                    {t(`sapientTypes.${v}`)}
+                                </option>
+                            ))}
+                        </OrnateSelect>
+                    </OrnateField>
+                    <OrnateField
+                        label={t("fields.parentCreature")}
+                        hint={t("form.parentHint")}
+                    >
+                        <EntityPicker
+                            value={form.parentCreatureId}
+                            onChange={(v) => set("parentCreatureId", v)}
+                            options={parents.map((p) => ({
+                                value: p.id,
+                                label: p.name,
+                            }))}
+                            kind="species"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("form.noParent")}
+                            excludeValue={editId ?? undefined}
+                            onCreated={(created) =>
+                                setParents((ps) => [
+                                    ...ps,
+                                    {
+                                        id: created.id,
+                                        name: created.name,
+                                    } as SpeciesDto,
+                                ])
+                            }
+                        />
+                    </OrnateField>
                 </div>
 
                 <div className={s.col}>
@@ -227,11 +343,71 @@ export default function SpeciesForm() {
                             onChange={(e) => set("lifespan", e.target.value)}
                         />
                     </OrnateField>
+                    <div className={s.row2}>
+                        <OrnateField label={t("fields.averageLifespan")}>
+                            <OrnateTextInput
+                                type="number"
+                                value={form.averageLifespan}
+                                onChange={(e) =>
+                                    set("averageLifespan", e.target.value)
+                                }
+                            />
+                        </OrnateField>
+                        <OrnateField label={t("fields.height")}>
+                            <OrnateTextInput
+                                type="number"
+                                value={form.height}
+                                onChange={(e) =>
+                                    set("height", e.target.value)
+                                }
+                            />
+                        </OrnateField>
+                        <OrnateField label={t("fields.weight")}>
+                            <OrnateTextInput
+                                type="number"
+                                value={form.weight}
+                                onChange={(e) =>
+                                    set("weight", e.target.value)
+                                }
+                            />
+                        </OrnateField>
+                    </div>
                     <OrnateCheckbox
                         label={t("fields.isHumanoid")}
                         checked={form.isHumanoid}
                         onChange={(e) => set("isHumanoid", e.target.checked)}
                     />
+                    <OrnateCheckbox
+                        label={t("fields.isSentient")}
+                        checked={form.isSentient}
+                        onChange={(e) => set("isSentient", e.target.checked)}
+                    />
+                    <OrnateCheckbox
+                        label={t("fields.isArtificial")}
+                        checked={form.isArtificial}
+                        onChange={(e) =>
+                            set("isArtificial", e.target.checked)
+                        }
+                    />
+                    {form.isArtificial && (
+                        <OrnateField label={t("fields.artificialOrigin")}>
+                            <OrnateSelect
+                                value={form.artificialOrigin}
+                                onChange={(e) =>
+                                    set("artificialOrigin", e.target.value)
+                                }
+                            >
+                                <option value="">
+                                    {t("form.noOrigin")}
+                                </option>
+                                {artificialOrigins.map((v) => (
+                                    <option key={v} value={v}>
+                                        {t(`artificialOrigins.${v}`)}
+                                    </option>
+                                ))}
+                            </OrnateSelect>
+                        </OrnateField>
+                    )}
                 </div>
             </div>
 

@@ -7,6 +7,7 @@ using ChronicleKeeper.Core.Exceptions;
 using ChronicleKeeper.Core.Repositories;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using static ChronicleKeeper.Core.Enums.CreatureEnums;
 
 namespace ChronicleKeeper.Core.CQRS.Species.Handlers
 {
@@ -77,7 +78,9 @@ namespace ChronicleKeeper.Core.CQRS.Species.Handlers
                 throw new DomainValidationException($"World with ID {dto.WorldId} does not exist.");
             }
 
-            var created = await _repository.CreateAsync(_mapper.Map<SapientSpecies>(dto), cancellationToken);
+            var species = _mapper.Map<SapientSpecies>(dto);
+            species.Type = CreatureType.Sapient; // a SapientSpecies is always of CreatureType.Sapient
+            var created = await _repository.CreateAsync(species, cancellationToken);
             return _mapper.Map<SpeciesDto>(created);
         }
     }

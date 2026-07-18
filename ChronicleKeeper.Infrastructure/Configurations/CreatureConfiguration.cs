@@ -2,6 +2,7 @@ using ChronicleKeeper.Core.Entities.Geography.Creatures;
 using ChronicleKeeper.Core.Entities.Geography.Creatures.Animals;
 using ChronicleKeeper.Core.Entities.Geography.Creatures.Fungi;
 using ChronicleKeeper.Core.Entities.Geography.Creatures.Plants;
+using ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient;
 using ChronicleKeeper.Core.Entities.Geography.Ecosystems;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -43,7 +44,8 @@ namespace ChronicleKeeper.Infrastructure.Configurations
                 .HasValue<Plant>("Plant")
                 .HasValue<Tree>("Tree")
                 .HasValue<Crop>("Crop")
-                .HasValue<Fungus>("Fungus");
+                .HasValue<Fungus>("Fungus")
+                .HasValue<SapientSpecies>("Sapient");
         }
     }
 

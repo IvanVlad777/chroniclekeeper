@@ -4,18 +4,28 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ChronicleKeeper.Infrastructure.Configurations
 {
-    public class SapientSpeciesConfiguration : LoreEntityConfiguration<SapientSpecies>
+    // SapientSpecies is a Creature TPH subtype (discriminator "Sapient"), NOT its own table —
+    // the LoreEntity/table setup comes from CreatureConfiguration. Here we only configure the
+    // subtype-specific columns, renaming the two that would otherwise collide inside the shared
+    // Creatures table (Lifespan: string vs Tree.Lifespan int; ScientificName: shared with Fungus).
+    public class SapientSpeciesConfiguration : IEntityTypeConfiguration<SapientSpecies>
     {
-        protected override void ConfigureEntity(EntityTypeBuilder<SapientSpecies> builder)
+        public void Configure(EntityTypeBuilder<SapientSpecies> builder)
         {
             builder.Property(s => s.CommonName)
                 .HasMaxLength(100);
 
             builder.Property(s => s.ScientificName)
+                .HasColumnName("Sapient_ScientificName")
                 .HasMaxLength(100);
 
             builder.Property(s => s.Lifespan)
+                .HasColumnName("Sapient_Lifespan")
                 .HasMaxLength(100);
+
+            builder.Property(s => s.SapientType)
+                .HasConversion<string>()
+                .HasMaxLength(30);
         }
     }
 

@@ -193,6 +193,7 @@ export default function SpeciesDetails() {
 
     const dash = "—";
     const kicker = [
+        t(`sapientTypes.${species.sapientType}`),
         species.isHumanoid ? t("humanoid") : t("notHumanoid"),
         species.lifespan || null,
     ]
@@ -226,6 +227,10 @@ export default function SpeciesDetails() {
             <div className={s.facts}>
                 <DisplayGrid cols={4}>
                     <OrnateDisplayBox
+                        label={t("fields.sapientType")}
+                        value={t(`sapientTypes.${species.sapientType}`)}
+                    />
+                    <OrnateDisplayBox
                         label={t("fields.lifespan")}
                         value={species.lifespan || dash}
                     />
@@ -238,6 +243,10 @@ export default function SpeciesDetails() {
                         }
                     />
                     <OrnateDisplayBox
+                        label={t("fields.isSentient")}
+                        value={species.isSentient ? t("yes") : t("no")}
+                    />
+                    <OrnateDisplayBox
                         label={t("fields.commonName")}
                         value={species.commonName || dash}
                     />
@@ -245,8 +254,72 @@ export default function SpeciesDetails() {
                         label={t("fields.scientificName")}
                         value={species.scientificName || dash}
                     />
+                    <OrnateDisplayBox
+                        label={t("fields.averageLifespan")}
+                        value={
+                            species.averageLifespan
+                                ? t("years", { value: species.averageLifespan })
+                                : dash
+                        }
+                    />
+                    <OrnateDisplayBox
+                        label={t("fields.size")}
+                        value={
+                            species.height || species.weight
+                                ? t("sizeValue", {
+                                      height: species.height || 0,
+                                      weight: species.weight || 0,
+                                  })
+                                : dash
+                        }
+                    />
+                    {species.isArtificial && (
+                        <OrnateDisplayBox
+                            label={t("fields.artificialOrigin")}
+                            value={
+                                species.artificialOrigin
+                                    ? t(
+                                          `artificialOrigins.${species.artificialOrigin}`
+                                      )
+                                    : t("artificial")
+                            }
+                        />
+                    )}
+                    {species.parentCreature && (
+                        <OrnateDisplayBox
+                            label={t("fields.parentCreature")}
+                            value={
+                                <Link
+                                    to={`/storymap/species/${species.parentCreature.id}`}
+                                >
+                                    {species.parentCreature.name}
+                                </Link>
+                            }
+                        />
+                    )}
                 </DisplayGrid>
             </div>
+
+            {species.subspecies.length > 0 && (
+                <>
+                    <div className={s.sectionHead}>
+                        <span className={s.sectionTitle}>
+                            {t("subspecies.label")}
+                        </span>
+                        <span className={s.sectionLine} />
+                    </div>
+                    <p className={s.prose}>
+                        {species.subspecies.map((sub, i) => (
+                            <span key={sub.id}>
+                                {i > 0 && " · "}
+                                <Link to={`/storymap/species/${sub.id}`}>
+                                    {sub.name}
+                                </Link>
+                            </span>
+                        ))}
+                    </p>
+                </>
+            )}
 
             <div className={s.sectionHead}>
                 <span className={s.sectionTitle}>

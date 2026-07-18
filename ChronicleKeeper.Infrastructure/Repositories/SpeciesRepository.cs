@@ -27,6 +27,9 @@ namespace ChronicleKeeper.Infrastructure.Repositories
         {
             return await _context.SapientSpecies
                 .Include(s => s.Races)
+                .Include(s => s.ParentCreature)
+                .Include(s => s.Subspecies)
+                .Include(s => s.History)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(s => s.Id == id, cancellationToken);
         }

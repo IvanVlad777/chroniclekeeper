@@ -28,6 +28,17 @@ export interface SpeciesDto {
     scientificName: string;
     isHumanoid: boolean;
     lifespan: string;
+    // Inherited from Creature (SapientSpecies is a Creature TPH subtype)
+    sapientType: SapientType;
+    type: CreatureType; // always "Sapient" — read-only classification
+    averageLifespan: number;
+    height: number;
+    weight: number;
+    isSentient: boolean;
+    isArtificial: boolean;
+    artificialOrigin?: ArtificialOrigin | null;
+    parentCreatureId?: number | null;
+    historyId?: number | null;
     createdAt: string;
     updatedAt: string;
 }
@@ -47,6 +58,9 @@ export interface RaceDto {
 
 export interface SpeciesDetailsDto extends SpeciesDto {
     races: RaceDto[];
+    parentCreature?: ReferenceDto | null;
+    subspecies: ReferenceDto[];
+    history?: ReferenceDto | null;
 }
 
 export interface SpeciesCreateDto {
@@ -57,6 +71,15 @@ export interface SpeciesCreateDto {
     scientificName: string;
     isHumanoid: boolean;
     lifespan: string;
+    sapientType: SapientType;
+    averageLifespan: number;
+    height: number;
+    weight: number;
+    isSentient: boolean;
+    isArtificial: boolean;
+    artificialOrigin?: ArtificialOrigin | null;
+    parentCreatureId?: number | null;
+    historyId?: number | null;
 }
 
 export type SpeciesUpdateDto = Omit<SpeciesCreateDto, "worldId">;
@@ -1952,6 +1975,18 @@ export type CreatureSubtype = (typeof creatureSubtypes)[number];
 
 export const creatureTypes = ["Sapient", "Animal", "Plant", "Fungus", "Spiritual", "Mythical"] as const;
 export type CreatureType = (typeof creatureTypes)[number];
+
+export const sapientTypes = [
+    "Humanoid",
+    "Bestial",
+    "Elemental",
+    "Celestial",
+    "Infernal",
+    "Spirit",
+    "Deity",
+    "Otherworldly",
+] as const;
+export type SapientType = (typeof sapientTypes)[number];
 
 export const dietTypes = ["Herbivore", "Carnivore", "Omnivore"] as const;
 export type DietType = (typeof dietTypes)[number];

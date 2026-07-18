@@ -9,6 +9,11 @@
     "emptyText": "Vilenjaci, zmajevi, misleći strojevi — svaka razumna vrsta tvog svijeta živi ovdje. Stvori prvu vrstu i naseli svoja kraljevstva.",
     "humanoid": "Humanoid",
     "notHumanoid": "Ne-humanoid",
+    "yes": "Da",
+    "no": "Ne",
+    "artificial": "Umjetno",
+    "years": "{{value}} god.",
+    "sizeValue": "{{height}} m · {{weight}} kg",
     "columns": {
         "name": "Naziv",
         "commonName": "Uobičajeno ime",
@@ -21,7 +26,37 @@
         "scientificName": "Znanstveno ime",
         "isHumanoid": "Humanoidni oblik",
         "lifespan": "Životni vijek",
-        "description": "Opis"
+        "description": "Opis",
+        "sapientType": "Tip razumnosti",
+        "isSentient": "Razumno",
+        "isArtificial": "Umjetno biće",
+        "artificialOrigin": "Umjetno podrijetlo",
+        "averageLifespan": "Pros. životni vijek (god.)",
+        "height": "Visina (m)",
+        "weight": "Težina (kg)",
+        "size": "Veličina",
+        "parentCreature": "Potječe od"
+    },
+    "sapientTypes": {
+        "Humanoid": "Humanoid",
+        "Bestial": "Zvjerski",
+        "Elemental": "Elementarni",
+        "Celestial": "Nebeski",
+        "Infernal": "Paklenski",
+        "Spirit": "Duh",
+        "Deity": "Božanstvo",
+        "Otherworldly": "Onostrani"
+    },
+    "artificialOrigins": {
+        "Robot": "Robot",
+        "AI": "UI",
+        "Cyborg": "Kiborg",
+        "Golem": "Golem",
+        "Clone": "Klon",
+        "Bioengineered": "Bioinženjerski"
+    },
+    "subspecies": {
+        "label": "Podvrste"
     },
     "races": {
         "label": "Rase",
@@ -48,6 +83,9 @@
         "requiredNote": "Polja označena zvjezdicom su obavezna.",
         "requiredMissing": "Naziv je obavezan.",
         "lifespanHint": "Slobodan tekst — „~500 godina“, „tri ljudske generacije“…",
+        "parentHint": "Vrsta od koje ova potječe (neobavezno).",
+        "noParent": "— Bez roditeljske vrste —",
+        "noOrigin": "— Odaberi podrijetlo —",
         "save": "Spremi vrstu",
         "saving": "Spremanje…",
         "cancel": "Odustani",

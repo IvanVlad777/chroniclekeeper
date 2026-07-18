@@ -37,6 +37,12 @@
     min-width: 0;
 }
 
+.row2 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
 .formError {
     margin: 16px 0 0;
     font-size: 13.5px;

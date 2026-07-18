@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using static ChronicleKeeper.Core.Enums.CreatureEnums;
 
 namespace ChronicleKeeper.Core.DTOs.Species
 {
@@ -12,6 +13,19 @@ namespace ChronicleKeeper.Core.DTOs.Species
         public string ScientificName { get; set; } = string.Empty;
         public bool IsHumanoid { get; set; }
         public string Lifespan { get; set; } = string.Empty;
+
+        // Inherited from Creature (SapientSpecies is now a Creature TPH subtype)
+        public SapientType SapientType { get; set; }
+        public CreatureType Type { get; set; } // always Sapient — read-only classification
+        public double AverageLifespan { get; set; }
+        public double Height { get; set; }
+        public double Weight { get; set; }
+        public bool IsSentient { get; set; }
+        public bool IsArtificial { get; set; }
+        public ArtificialOrigin? ArtificialOrigin { get; set; }
+        public int? ParentCreatureId { get; set; }
+        public int? HistoryId { get; set; }
+
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }
@@ -19,6 +33,9 @@ namespace ChronicleKeeper.Core.DTOs.Species
     public class SpeciesDetailsDto : SpeciesDto
     {
         public List<RaceDto> Races { get; set; } = new();
+        public ReferenceDto? ParentCreature { get; set; }
+        public List<ReferenceDto> Subspecies { get; set; } = new();
+        public ReferenceDto? History { get; set; }
     }
 
     public class SpeciesCreateDto
@@ -43,6 +60,16 @@ namespace ChronicleKeeper.Core.DTOs.Species
 
         [StringLength(100)]
         public string Lifespan { get; set; } = string.Empty;
+
+        public SapientType SapientType { get; set; }
+        public double AverageLifespan { get; set; }
+        public double Height { get; set; }
+        public double Weight { get; set; }
+        public bool IsSentient { get; set; } = true;
+        public bool IsArtificial { get; set; }
+        public ArtificialOrigin? ArtificialOrigin { get; set; }
+        public int? ParentCreatureId { get; set; }
+        public int? HistoryId { get; set; }
     }
 
     public class SpeciesUpdateDto
@@ -64,6 +91,16 @@ namespace ChronicleKeeper.Core.DTOs.Species
 
         [StringLength(100)]
         public string Lifespan { get; set; } = string.Empty;
+
+        public SapientType SapientType { get; set; }
+        public double AverageLifespan { get; set; }
+        public double Height { get; set; }
+        public double Weight { get; set; }
+        public bool IsSentient { get; set; } = true;
+        public bool IsArtificial { get; set; }
+        public ArtificialOrigin? ArtificialOrigin { get; set; }
+        public int? ParentCreatureId { get; set; }
+        public int? HistoryId { get; set; }
     }
 
     public class RaceDto
