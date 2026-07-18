@@ -33,4 +33,6 @@ namespace ChronicleKeeper.Core.CQRS.CultureDetails
     public class CreateCulturalInstitutionCommand : IRequest<CulturalInstitutionDto> { public CulturalInstitutionCreateDto Dto { get; set; } = new(); }
     public class UpdateCulturalInstitutionCommand : IRequest<CulturalInstitutionDto> { public int Id { get; set; } public CulturalInstitutionUpdateDto Dto { get; set; } = new(); }
     public class DeleteCulturalInstitutionCommand : IRequest<bool> { public int Id { get; set; } }
+    public class AddCulturalInstitutionArtistCommand : IRequest<bool> { public int InstitutionId { get; set; } public int CharacterId { get; set; } }
+    public class RemoveCulturalInstitutionArtistCommand : IRequest<bool> { public int InstitutionId { get; set; } public int CharacterId { get; set; } }
 }

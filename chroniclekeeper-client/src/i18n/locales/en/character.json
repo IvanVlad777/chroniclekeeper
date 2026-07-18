@@ -146,6 +146,33 @@
         "addFailed": "Linking the ability failed.",
         "removeFailed": "Unlinking the ability failed."
     },
+    "hobbies": {
+        "label": "Hobbies",
+        "add": "link",
+        "remove": "Unlink {{name}}",
+        "pick": "Pick a hobby",
+        "confirm": "Link",
+        "addFailed": "Linking the hobby failed.",
+        "removeFailed": "Unlinking the hobby failed."
+    },
+    "specialisations": {
+        "label": "Specialisations",
+        "add": "link",
+        "remove": "Unlink {{name}}",
+        "pick": "Pick a specialisation",
+        "confirm": "Link",
+        "addFailed": "Linking the specialisation failed.",
+        "removeFailed": "Unlinking the specialisation failed."
+    },
+    "clothing": {
+        "label": "Clothing",
+        "add": "link",
+        "remove": "Unlink {{name}}",
+        "pick": "Pick a clothing item",
+        "confirm": "Link",
+        "addFailed": "Linking the clothing failed.",
+        "removeFailed": "Unlinking the clothing failed."
+    },
     "equipment": {
         "label": "Equipment"
     }

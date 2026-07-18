@@ -47,6 +47,24 @@
     "alumni": {
         "label": "Alumni"
     },
+    "students": {
+        "label": "Students",
+        "add": "link",
+        "remove": "Remove {{name}}",
+        "pick": "Pick a character",
+        "confirm": "Link",
+        "addFailed": "Adding the student failed.",
+        "removeFailed": "Removing the student failed."
+    },
+    "teachers": {
+        "label": "Teachers",
+        "add": "link",
+        "remove": "Remove {{name}}",
+        "pick": "Pick a character",
+        "confirm": "Link",
+        "addFailed": "Adding the teacher failed.",
+        "removeFailed": "Removing the teacher failed."
+    },
     "trainedProfessions": {
         "label": "Trained professions"
     },

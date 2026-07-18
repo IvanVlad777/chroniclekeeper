@@ -898,6 +898,9 @@ export interface CharacterDetailsDto extends CharacterDto {
     educations: EducationRecordDto[];
     religiousEducations: ReligiousEducationDto[];
     abilities: ReferenceDto[];
+    hobbies: ReferenceDto[];
+    specialisations: ReferenceDto[];
+    clothing: ReferenceDto[];
     equipments: ReferenceDto[];
     background: BackgroundInfo;
     personality: PersonalityInfo;
@@ -1284,6 +1287,8 @@ export interface SchoolDetailsDto extends SchoolDto {
     subjects: SchoolSubjectDto[];
     alumni: ReferenceDto[];
     location?: ReferenceDto | null;
+    students: ReferenceDto[];
+    teachers: ReferenceDto[];
 }
 
 /** Svijet škole se izvodi iz sustava obrazovanja — ne šalje se worldId. */
@@ -1374,6 +1379,8 @@ export interface UniversityDto {
 export interface UniversityDetailsDto extends UniversityDto {
     majors: UniversityMajorDto[];
     alumni: ReferenceDto[];
+    students: ReferenceDto[];
+    professors: ReferenceDto[];
 }
 
 /** Svijet sveučilišta se izvodi iz sustava obrazovanja — ne šalje se worldId. */
@@ -1416,7 +1423,9 @@ export interface LibraryDto {
     updatedAt: string;
 }
 
-export type LibraryDetailsDto = LibraryDto;
+export interface LibraryDetailsDto extends LibraryDto {
+    scholars: ReferenceDto[];
+}
 
 export interface LibraryCreateDto {
     name: string;
@@ -3113,6 +3122,7 @@ export interface CulturalInstitutionDetailsDto extends CulturalInstitutionDto {
     history?: ReferenceDto | null;
     culture?: ReferenceDto | null;
     city?: ReferenceDto | null;
+    notableArtists: ReferenceDto[];
 }
 export interface CulturalInstitutionCreateDto {
     name: string;

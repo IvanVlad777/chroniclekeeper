@@ -37,3 +37,10 @@ export const updateLibrary = async (
 export const deleteLibrary = async (id: number): Promise<void> => {
     await api.delete(`/libraries/${id}`);
 };
+
+export const addLibraryScholar = async (libraryId: number, characterId: number): Promise<void> => {
+    await api.post(`/libraries/${libraryId}/scholars/${characterId}`);
+};
+export const removeLibraryScholar = async (libraryId: number, characterId: number): Promise<void> => {
+    await api.delete(`/libraries/${libraryId}/scholars/${characterId}`);
+};

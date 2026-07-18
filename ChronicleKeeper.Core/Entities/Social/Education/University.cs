@@ -17,7 +17,7 @@ namespace ChronicleKeeper.Core.Entities.Social.Education
         public virtual ICollection<EducationRecord> Alumni { get; set; } = new List<EducationRecord>();
         public virtual ICollection<UniversityMajor> Majors { get; set; } = new List<UniversityMajor>();
 
-        //public virtual ICollection<Characters.Character> Students { get; set; } = new List<Characters.Character>(); // TODO: Uncomment when Character many-to-many cross-links are revived
-        //public virtual ICollection<Characters.Character> Professors { get; set; } = new List<Characters.Character>(); // TODO: Uncomment when Character many-to-many cross-links are revived
+        public virtual ICollection<UniversityStudent> Students { get; set; } = new List<UniversityStudent>();
+        public virtual ICollection<UniversityProfessor> Professors { get; set; } = new List<UniversityProfessor>();
     }
 }

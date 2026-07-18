@@ -42,4 +42,40 @@ namespace ChronicleKeeper.Core.CQRS.Characters.Commands
         public int CharacterId { get; set; }
         public int AbilityId { get; set; }
     }
+
+    public class AddCharacterHobbyCommand : IRequest<bool>
+    {
+        public int CharacterId { get; set; }
+        public int HobbyId { get; set; }
+    }
+
+    public class RemoveCharacterHobbyCommand : IRequest<bool>
+    {
+        public int CharacterId { get; set; }
+        public int HobbyId { get; set; }
+    }
+
+    public class AddCharacterSpecialisationCommand : IRequest<bool>
+    {
+        public int CharacterId { get; set; }
+        public int SpecialisationId { get; set; }
+    }
+
+    public class RemoveCharacterSpecialisationCommand : IRequest<bool>
+    {
+        public int CharacterId { get; set; }
+        public int SpecialisationId { get; set; }
+    }
+
+    public class AddCharacterClothingCommand : IRequest<bool>
+    {
+        public int CharacterId { get; set; }
+        public int ClothingId { get; set; }
+    }
+
+    public class RemoveCharacterClothingCommand : IRequest<bool>
+    {
+        public int CharacterId { get; set; }
+        public int ClothingId { get; set; }
+    }
 }

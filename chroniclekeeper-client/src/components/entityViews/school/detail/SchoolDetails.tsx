@@ -11,16 +11,23 @@ import {
     Tag,
 } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
+import { LinkEditor } from "../../../linking/LinkEditor";
 import {
+    CharacterDto,
     SchoolDetailsDto,
     TradeSchoolDetailsDto,
 } from "../../../../interfaces/loreInterfaces";
 import {
+    addSchoolStudent,
+    addSchoolTeacher,
     createSchoolSubject,
     deleteSchoolSubject,
     getSchoolById,
+    removeSchoolStudent,
+    removeSchoolTeacher,
     updateSchoolSubject,
 } from "../../../../api/schools";
+import { getCharacters } from "../../../../api/characters";
 import { getTradeSchoolById } from "../../../../api/tradeSchools";
 import { useAuth } from "../../../../hooks/useAuth";
 import { apiErrorMessage } from "../../../../utils/apiError";
@@ -65,6 +72,9 @@ export default function SchoolDetails() {
     const [subjectForm, setSubjectForm] =
         useState<SubjectFormState>(emptySubjectForm);
     const [subjectError, setSubjectError] = useState<string | null>(null);
+    const [charCandidates, setCharCandidates] = useState<CharacterDto[] | null>(
+        null
+    );
 
     useEffect(() => {
         const schoolId = Number(id);
@@ -378,6 +388,56 @@ export default function SchoolDetails() {
                     ))}
                 </div>
             )}
+
+            <div className={`${s.sectionHead} ${s.sectionSpacer}`}>
+                <span className={s.sectionTitle}>{t("students.label")}</span>
+                <span className={s.sectionLine} />
+            </div>
+            <LinkEditor
+                items={school.students}
+                candidates={charCandidates}
+                onLoadCandidates={() =>
+                    getCharacters(school.worldId).then(setCharCandidates)
+                }
+                onAdd={(cid) => addSchoolStudent(school.id, cid)}
+                onRemove={(cid) => removeSchoolStudent(school.id, cid)}
+                onChanged={refetch}
+                canEdit={canEdit}
+                linkTo={(cid) => `/storymap/characters/${cid}`}
+                addLabel={t("students.add")}
+                noneLabel={t("none")}
+                pickLabel={t("students.pick")}
+                cancelLabel={t("form.cancel")}
+                confirmLabel={t("students.confirm")}
+                removeLabel={(name) => t("students.remove", { name })}
+                addFailedLabel={t("students.addFailed")}
+                removeFailedLabel={t("students.removeFailed")}
+            />
+
+            <div className={`${s.sectionHead} ${s.sectionSpacer}`}>
+                <span className={s.sectionTitle}>{t("teachers.label")}</span>
+                <span className={s.sectionLine} />
+            </div>
+            <LinkEditor
+                items={school.teachers}
+                candidates={charCandidates}
+                onLoadCandidates={() =>
+                    getCharacters(school.worldId).then(setCharCandidates)
+                }
+                onAdd={(cid) => addSchoolTeacher(school.id, cid)}
+                onRemove={(cid) => removeSchoolTeacher(school.id, cid)}
+                onChanged={refetch}
+                canEdit={canEdit}
+                linkTo={(cid) => `/storymap/characters/${cid}`}
+                addLabel={t("teachers.add")}
+                noneLabel={t("none")}
+                pickLabel={t("teachers.pick")}
+                cancelLabel={t("form.cancel")}
+                confirmLabel={t("teachers.confirm")}
+                removeLabel={(name) => t("teachers.remove", { name })}
+                addFailedLabel={t("teachers.addFailed")}
+                removeFailedLabel={t("teachers.removeFailed")}
+            />
         </div>
     );
 }

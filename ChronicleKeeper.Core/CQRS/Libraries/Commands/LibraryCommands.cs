@@ -18,4 +18,16 @@ namespace ChronicleKeeper.Core.CQRS.Libraries.Commands
     {
         public int Id { get; set; }
     }
+
+    public class AddLibraryScholarCommand : IRequest<bool>
+    {
+        public int LibraryId { get; set; }
+        public int CharacterId { get; set; }
+    }
+
+    public class RemoveLibraryScholarCommand : IRequest<bool>
+    {
+        public int LibraryId { get; set; }
+        public int CharacterId { get; set; }
+    }
 }

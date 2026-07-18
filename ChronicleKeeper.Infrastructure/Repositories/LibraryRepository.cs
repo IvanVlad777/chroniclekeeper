@@ -26,7 +26,9 @@ namespace ChronicleKeeper.Infrastructure.Repositories
             return await _context.Libraries
                 .Include(l => l.University)
                 .Include(l => l.Location)
+                .Include(l => l.Scholars).ThenInclude(ls => ls.Character)
                 .AsNoTracking()
+                .AsSplitQuery()
                 .FirstOrDefaultAsync(l => l.Id == id, cancellationToken);
         }
 
@@ -61,6 +63,23 @@ namespace ChronicleKeeper.Infrastructure.Repositories
         {
             var deleted = await _context.Libraries
                 .Where(l => l.Id == id)
+                .ExecuteDeleteAsync(cancellationToken);
+            return deleted > 0;
+        }
+
+        public Task<bool> IsScholarLinkedAsync(int libraryId, int characterId, CancellationToken cancellationToken = default)
+            => _context.LibraryScholars.AnyAsync(x => x.LibraryId == libraryId && x.CharacterId == characterId, cancellationToken);
+
+        public async Task AddScholarAsync(int libraryId, int characterId, CancellationToken cancellationToken = default)
+        {
+            _context.LibraryScholars.Add(new LibraryScholar { LibraryId = libraryId, CharacterId = characterId });
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task<bool> RemoveScholarAsync(int libraryId, int characterId, CancellationToken cancellationToken = default)
+        {
+            var deleted = await _context.LibraryScholars
+                .Where(x => x.LibraryId == libraryId && x.CharacterId == characterId)
                 .ExecuteDeleteAsync(cancellationToken);
             return deleted > 0;
         }

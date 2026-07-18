@@ -35,5 +35,15 @@
         "deleteConfirm": "Obrisati „{{name}}“? Ovo se ne može poništiti.",
         "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
         "deleteFailed": "Brisanje nije uspjelo."
+    },
+    "scholars": {
+        "label": "Učenjaci",
+        "add": "poveži",
+        "remove": "Ukloni {{name}}",
+        "pick": "Odaberi lik",
+        "confirm": "Poveži",
+        "cancel": "Odustani",
+        "addFailed": "Dodavanje učenjaka nije uspjelo.",
+        "removeFailed": "Uklanjanje učenjaka nije uspjelo."
     }
 }

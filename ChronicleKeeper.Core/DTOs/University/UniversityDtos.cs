@@ -23,6 +23,8 @@ namespace ChronicleKeeper.Core.DTOs.University
     {
         public List<UniversityMajorDto> Majors { get; set; } = new();
         public List<ReferenceDto> Alumni { get; set; } = new();
+        public List<ReferenceDto> Students { get; set; } = new();
+        public List<ReferenceDto> Professors { get; set; } = new();
     }
 
     public class UniversityCreateDto

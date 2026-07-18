@@ -22,6 +22,7 @@ namespace ChronicleKeeper.Core.DTOs.Library
 
     public class LibraryDetailsDto : LibraryDto
     {
+        public List<ReferenceDto> Scholars { get; set; } = new();
     }
 
     public class LibraryCreateDto

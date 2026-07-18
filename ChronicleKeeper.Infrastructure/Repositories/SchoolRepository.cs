@@ -28,7 +28,10 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .Include(s => s.Subjects)
                 .Include(s => s.Alumni)
                 .Include(s => s.Location)
+                .Include(s => s.Students).ThenInclude(ss => ss.Character)
+                .Include(s => s.Teachers).ThenInclude(st => st.Character)
                 .AsNoTracking()
+                .AsSplitQuery()
                 .FirstOrDefaultAsync(s => s.Id == id, cancellationToken);
         }
 
@@ -72,6 +75,40 @@ namespace ChronicleKeeper.Infrastructure.Repositories
         public async Task<int> CountEducationRecordsUsingSchoolAsync(int schoolId, CancellationToken cancellationToken = default)
         {
             return await _context.EducationRecords.CountAsync(e => e.SchoolId == schoolId, cancellationToken);
+        }
+
+        public Task<bool> IsStudentLinkedAsync(int schoolId, int characterId, CancellationToken cancellationToken = default)
+            => _context.SchoolStudents.AnyAsync(x => x.SchoolId == schoolId && x.CharacterId == characterId, cancellationToken);
+
+        public async Task AddStudentAsync(int schoolId, int characterId, CancellationToken cancellationToken = default)
+        {
+            _context.SchoolStudents.Add(new SchoolStudent { SchoolId = schoolId, CharacterId = characterId });
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task<bool> RemoveStudentAsync(int schoolId, int characterId, CancellationToken cancellationToken = default)
+        {
+            var deleted = await _context.SchoolStudents
+                .Where(x => x.SchoolId == schoolId && x.CharacterId == characterId)
+                .ExecuteDeleteAsync(cancellationToken);
+            return deleted > 0;
+        }
+
+        public Task<bool> IsTeacherLinkedAsync(int schoolId, int characterId, CancellationToken cancellationToken = default)
+            => _context.SchoolTeachers.AnyAsync(x => x.SchoolId == schoolId && x.CharacterId == characterId, cancellationToken);
+
+        public async Task AddTeacherAsync(int schoolId, int characterId, CancellationToken cancellationToken = default)
+        {
+            _context.SchoolTeachers.Add(new SchoolTeacher { SchoolId = schoolId, CharacterId = characterId });
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task<bool> RemoveTeacherAsync(int schoolId, int characterId, CancellationToken cancellationToken = default)
+        {
+            var deleted = await _context.SchoolTeachers
+                .Where(x => x.SchoolId == schoolId && x.CharacterId == characterId)
+                .ExecuteDeleteAsync(cancellationToken);
+            return deleted > 0;
         }
     }
 }

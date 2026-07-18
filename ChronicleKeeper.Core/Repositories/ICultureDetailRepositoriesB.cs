@@ -64,5 +64,10 @@ namespace ChronicleKeeper.Core.Repositories
         Task<bool> DeleteAsync(int id, CancellationToken ct = default);
 
         Task<bool> CityExistsInWorldAsync(int cityId, int worldId, CancellationToken ct = default);
+
+        // Notable artists (CulturalInstitutionArtist join with Character)
+        Task<bool> IsArtistLinkedAsync(int institutionId, int characterId, CancellationToken ct = default);
+        Task AddArtistAsync(int institutionId, int characterId, CancellationToken ct = default);
+        Task<bool> RemoveArtistAsync(int institutionId, int characterId, CancellationToken ct = default);
     }
 }

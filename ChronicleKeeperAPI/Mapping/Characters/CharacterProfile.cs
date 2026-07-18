@@ -33,6 +33,15 @@ public class CharacterProfile : Profile
             .ForMember(dest => dest.Abilities, opt => opt.MapFrom(src => src.Abilities
                 .Where(a => a.Ability != null)
                 .Select(a => new ReferenceDto { Id = a.Ability!.Id, Name = a.Ability.Name })))
+            .ForMember(dest => dest.Hobbies, opt => opt.MapFrom(src => src.Hobbies
+                .Where(h => h.Hobby != null)
+                .Select(h => new ReferenceDto { Id = h.Hobby!.Id, Name = h.Hobby.Name })))
+            .ForMember(dest => dest.Specialisations, opt => opt.MapFrom(src => src.Specialisations
+                .Where(sp => sp.Specialisation != null)
+                .Select(sp => new ReferenceDto { Id = sp.Specialisation!.Id, Name = sp.Specialisation.Name })))
+            .ForMember(dest => dest.Clothing, opt => opt.MapFrom(src => src.Clothing
+                .Where(cl => cl.Clothing != null)
+                .Select(cl => new ReferenceDto { Id = cl.Clothing!.Id, Name = cl.Clothing.Name })))
             .ForMember(dest => dest.Equipments, opt => opt.MapFrom(src => src.Equipments
                 .Select(i => new ReferenceDto { Id = i.Id, Name = i.Name })))
             .ForMember(dest => dest.Factions, opt => opt.MapFrom(src => src.Memberships

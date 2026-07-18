@@ -165,6 +165,66 @@ namespace ChronicleKeeperAPI.Controllers
             return NoContent();
         }
 
+        // POST/DELETE: /api/characters/{id}/hobbies/{hobbyId}
+        [HttpPost("{id}/hobbies/{hobbyId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Link a hobby to the character")]
+        public async Task<IActionResult> AddHobby(int id, int hobbyId)
+        {
+            await _mediator.Send(new AddCharacterHobbyCommand { CharacterId = id, HobbyId = hobbyId });
+            return NoContent();
+        }
+
+        [HttpDelete("{id}/hobbies/{hobbyId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Unlink a hobby from the character")]
+        public async Task<IActionResult> RemoveHobby(int id, int hobbyId)
+        {
+            var result = await _mediator.Send(new RemoveCharacterHobbyCommand { CharacterId = id, HobbyId = hobbyId });
+            if (!result) return NotFound();
+            return NoContent();
+        }
+
+        // POST/DELETE: /api/characters/{id}/specialisations/{specialisationId}
+        [HttpPost("{id}/specialisations/{specialisationId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Link a specialisation to the character")]
+        public async Task<IActionResult> AddSpecialisation(int id, int specialisationId)
+        {
+            await _mediator.Send(new AddCharacterSpecialisationCommand { CharacterId = id, SpecialisationId = specialisationId });
+            return NoContent();
+        }
+
+        [HttpDelete("{id}/specialisations/{specialisationId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Unlink a specialisation from the character")]
+        public async Task<IActionResult> RemoveSpecialisation(int id, int specialisationId)
+        {
+            var result = await _mediator.Send(new RemoveCharacterSpecialisationCommand { CharacterId = id, SpecialisationId = specialisationId });
+            if (!result) return NotFound();
+            return NoContent();
+        }
+
+        // POST/DELETE: /api/characters/{id}/clothing/{clothingId}
+        [HttpPost("{id}/clothing/{clothingId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Link a clothing item to the character")]
+        public async Task<IActionResult> AddClothing(int id, int clothingId)
+        {
+            await _mediator.Send(new AddCharacterClothingCommand { CharacterId = id, ClothingId = clothingId });
+            return NoContent();
+        }
+
+        [HttpDelete("{id}/clothing/{clothingId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Unlink a clothing item from the character")]
+        public async Task<IActionResult> RemoveClothing(int id, int clothingId)
+        {
+            var result = await _mediator.Send(new RemoveCharacterClothingCommand { CharacterId = id, ClothingId = clothingId });
+            if (!result) return NotFound();
+            return NoContent();
+        }
+
         // DELETE: /api/characters/{id}
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin,SuperAdmin")]

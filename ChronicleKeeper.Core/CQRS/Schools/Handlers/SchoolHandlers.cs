@@ -138,6 +138,72 @@ namespace ChronicleKeeper.Core.CQRS.Schools.Handlers
         }
     }
 
+    public class AddSchoolStudentCommandHandler : IRequestHandler<AddSchoolStudentCommand, bool>
+    {
+        private readonly ISchoolRepository _repository;
+        private readonly ICharacterRepository _characterRepository;
+
+        public AddSchoolStudentCommandHandler(ISchoolRepository repository, ICharacterRepository characterRepository)
+        {
+            _repository = repository;
+            _characterRepository = characterRepository;
+        }
+
+        public async Task<bool> Handle(AddSchoolStudentCommand request, CancellationToken cancellationToken)
+        {
+            var school = await _repository.FindByIdAsync(request.SchoolId, cancellationToken)
+                ?? throw new EntityNotFoundException("School", request.SchoolId);
+            if (!await _characterRepository.ExistsInWorldAsync(request.CharacterId, school.WorldId, cancellationToken))
+                throw new DomainValidationException($"Character with ID {request.CharacterId} does not exist in this world.");
+            if (await _repository.IsStudentLinkedAsync(request.SchoolId, request.CharacterId, cancellationToken))
+                throw new DomainValidationException("This character is already a student of the school.");
+
+            await _repository.AddStudentAsync(request.SchoolId, request.CharacterId, cancellationToken);
+            return true;
+        }
+    }
+
+    public class RemoveSchoolStudentCommandHandler : IRequestHandler<RemoveSchoolStudentCommand, bool>
+    {
+        private readonly ISchoolRepository _repository;
+        public RemoveSchoolStudentCommandHandler(ISchoolRepository repository) => _repository = repository;
+        public Task<bool> Handle(RemoveSchoolStudentCommand request, CancellationToken cancellationToken)
+            => _repository.RemoveStudentAsync(request.SchoolId, request.CharacterId, cancellationToken);
+    }
+
+    public class AddSchoolTeacherCommandHandler : IRequestHandler<AddSchoolTeacherCommand, bool>
+    {
+        private readonly ISchoolRepository _repository;
+        private readonly ICharacterRepository _characterRepository;
+
+        public AddSchoolTeacherCommandHandler(ISchoolRepository repository, ICharacterRepository characterRepository)
+        {
+            _repository = repository;
+            _characterRepository = characterRepository;
+        }
+
+        public async Task<bool> Handle(AddSchoolTeacherCommand request, CancellationToken cancellationToken)
+        {
+            var school = await _repository.FindByIdAsync(request.SchoolId, cancellationToken)
+                ?? throw new EntityNotFoundException("School", request.SchoolId);
+            if (!await _characterRepository.ExistsInWorldAsync(request.CharacterId, school.WorldId, cancellationToken))
+                throw new DomainValidationException($"Character with ID {request.CharacterId} does not exist in this world.");
+            if (await _repository.IsTeacherLinkedAsync(request.SchoolId, request.CharacterId, cancellationToken))
+                throw new DomainValidationException("This character is already a teacher of the school.");
+
+            await _repository.AddTeacherAsync(request.SchoolId, request.CharacterId, cancellationToken);
+            return true;
+        }
+    }
+
+    public class RemoveSchoolTeacherCommandHandler : IRequestHandler<RemoveSchoolTeacherCommand, bool>
+    {
+        private readonly ISchoolRepository _repository;
+        public RemoveSchoolTeacherCommandHandler(ISchoolRepository repository) => _repository = repository;
+        public Task<bool> Handle(RemoveSchoolTeacherCommand request, CancellationToken cancellationToken)
+            => _repository.RemoveTeacherAsync(request.SchoolId, request.CharacterId, cancellationToken);
+    }
+
     internal static class SchoolValidation
     {
         public static async Task ValidateLocationAsync(

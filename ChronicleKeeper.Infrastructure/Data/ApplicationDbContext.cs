@@ -171,6 +171,17 @@ namespace ChronicleKeeper.Infrastructure.Data
         public DbSet<AbilityLevel> AbilityLevels { get; set; }
         public DbSet<CharacterAbility> CharacterAbilities { get; set; }
 
+        // Character ↔ X cross-link join tables
+        public DbSet<CharacterHobby> CharacterHobbies { get; set; }
+        public DbSet<CharacterSpecialisation> CharacterSpecialisations { get; set; }
+        public DbSet<CharacterClothing> CharacterClothing { get; set; }
+        public DbSet<SchoolStudent> SchoolStudents { get; set; }
+        public DbSet<SchoolTeacher> SchoolTeachers { get; set; }
+        public DbSet<UniversityStudent> UniversityStudents { get; set; }
+        public DbSet<UniversityProfessor> UniversityProfessors { get; set; }
+        public DbSet<LibraryScholar> LibraryScholars { get; set; }
+        public DbSet<CulturalInstitutionArtist> CulturalInstitutionArtists { get; set; }
+
         // Equipment
         public DbSet<Item> Items { get; set; }
         public DbSet<OwnershipHistory> OwnershipHistories { get; set; }

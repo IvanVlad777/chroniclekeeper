@@ -146,6 +146,33 @@
         "addFailed": "Povezivanje sposobnosti nije uspjelo.",
         "removeFailed": "Odvezivanje sposobnosti nije uspjelo."
     },
+    "hobbies": {
+        "label": "Hobiji",
+        "add": "poveži",
+        "remove": "Odveži {{name}}",
+        "pick": "Odaberi hobi",
+        "confirm": "Poveži",
+        "addFailed": "Povezivanje hobija nije uspjelo.",
+        "removeFailed": "Odvezivanje hobija nije uspjelo."
+    },
+    "specialisations": {
+        "label": "Specijalizacije",
+        "add": "poveži",
+        "remove": "Odveži {{name}}",
+        "pick": "Odaberi specijalizaciju",
+        "confirm": "Poveži",
+        "addFailed": "Povezivanje specijalizacije nije uspjelo.",
+        "removeFailed": "Odvezivanje specijalizacije nije uspjelo."
+    },
+    "clothing": {
+        "label": "Odjeća",
+        "add": "poveži",
+        "remove": "Odveži {{name}}",
+        "pick": "Odaberi odjevni predmet",
+        "confirm": "Poveži",
+        "addFailed": "Povezivanje odjeće nije uspjelo.",
+        "removeFailed": "Odvezivanje odjeće nije uspjelo."
+    },
     "equipment": {
         "label": "Oprema"
     }

@@ -54,7 +54,10 @@ namespace ChronicleKeeperAPI.Mapping.CultureDetails
             CreateMap<CulturalInstitution, CulturalInstitutionDetailsDto>()
                 .ForMember(d => d.History, o => o.MapFrom(s => s.History == null ? null : new ReferenceDto { Id = s.History.Id, Name = s.History.Name }))
                 .ForMember(d => d.Culture, o => o.MapFrom(s => s.Culture == null ? null : new ReferenceDto { Id = s.Culture.Id, Name = s.Culture.Name }))
-                .ForMember(d => d.City, o => o.MapFrom(s => s.City == null ? null : new ReferenceDto { Id = s.City.Id, Name = s.City.Name }));
+                .ForMember(d => d.City, o => o.MapFrom(s => s.City == null ? null : new ReferenceDto { Id = s.City.Id, Name = s.City.Name }))
+                .ForMember(d => d.NotableArtists, o => o.MapFrom(s => s.NotableArtists
+                    .Where(a => a.Character != null)
+                    .Select(a => new ReferenceDto { Id = a.Character!.Id, Name = a.Character.Name })));
         }
     }
 }

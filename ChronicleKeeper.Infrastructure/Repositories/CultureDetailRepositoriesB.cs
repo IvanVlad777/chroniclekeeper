@@ -239,7 +239,9 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .Include(i => i.History)
                 .Include(i => i.Culture)
                 .Include(i => i.City)
+                .Include(i => i.NotableArtists).ThenInclude(a => a.Character)
                 .AsNoTracking()
+                .AsSplitQuery()
                 .FirstOrDefaultAsync(i => i.Id == id, ct);
 
         public Task<CulturalInstitution?> FindByIdAsync(int id, CancellationToken ct = default) =>
@@ -264,5 +266,19 @@ namespace ChronicleKeeper.Infrastructure.Repositories
 
         public Task<bool> CityExistsInWorldAsync(int cityId, int worldId, CancellationToken ct = default) =>
             _context.Cities.AnyAsync(c => c.Id == cityId && c.WorldId == worldId, ct);
+
+        public Task<bool> IsArtistLinkedAsync(int institutionId, int characterId, CancellationToken ct = default) =>
+            _context.CulturalInstitutionArtists.AnyAsync(x => x.CulturalInstitutionId == institutionId && x.CharacterId == characterId, ct);
+
+        public async Task AddArtistAsync(int institutionId, int characterId, CancellationToken ct = default)
+        {
+            _context.CulturalInstitutionArtists.Add(new CulturalInstitutionArtist { CulturalInstitutionId = institutionId, CharacterId = characterId });
+            await _context.SaveChangesAsync(ct);
+        }
+
+        public async Task<bool> RemoveArtistAsync(int institutionId, int characterId, CancellationToken ct = default) =>
+            await _context.CulturalInstitutionArtists
+                .Where(x => x.CulturalInstitutionId == institutionId && x.CharacterId == characterId)
+                .ExecuteDeleteAsync(ct) > 0;
     }
 }

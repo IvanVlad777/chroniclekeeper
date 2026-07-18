@@ -18,4 +18,28 @@ namespace ChronicleKeeper.Core.CQRS.Universities.Commands
     {
         public int Id { get; set; }
     }
+
+    public class AddUniversityStudentCommand : IRequest<bool>
+    {
+        public int UniversityId { get; set; }
+        public int CharacterId { get; set; }
+    }
+
+    public class RemoveUniversityStudentCommand : IRequest<bool>
+    {
+        public int UniversityId { get; set; }
+        public int CharacterId { get; set; }
+    }
+
+    public class AddUniversityProfessorCommand : IRequest<bool>
+    {
+        public int UniversityId { get; set; }
+        public int CharacterId { get; set; }
+    }
+
+    public class RemoveUniversityProfessorCommand : IRequest<bool>
+    {
+        public int UniversityId { get; set; }
+        public int CharacterId { get; set; }
+    }
 }

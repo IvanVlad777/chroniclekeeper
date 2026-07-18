@@ -9,6 +9,6 @@ namespace ChronicleKeeper.Core.Entities.Professions
         public int? ProfessionId { get; set; }
         public virtual Profession? Profession { get; set; }
 
-        //public virtual ICollection<Character> Experts { get; set; } = new List<Character>(); // TODO: Uncomment when Character many-to-many cross-links are revived
+        public virtual ICollection<CharacterSpecialisation> Experts { get; set; } = new List<CharacterSpecialisation>();
     }
 }

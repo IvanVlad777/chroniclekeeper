@@ -3,8 +3,17 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Button, DisplayGrid, OrnateDisplayBox } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
-import { LibraryDetailsDto } from "../../../../interfaces/loreInterfaces";
-import { getLibraryById } from "../../../../api/libraries";
+import { LinkEditor } from "../../../linking/LinkEditor";
+import {
+    CharacterDto,
+    LibraryDetailsDto,
+} from "../../../../interfaces/loreInterfaces";
+import {
+    addLibraryScholar,
+    getLibraryById,
+    removeLibraryScholar,
+} from "../../../../api/libraries";
+import { getCharacters } from "../../../../api/characters";
 import { useAuth } from "../../../../hooks/useAuth";
 import s from "./styles.module.css";
 
@@ -25,6 +34,9 @@ export default function LibraryDetails() {
     const [notFound, setNotFound] = useState(false);
     const [reloadKey, setReloadKey] = useState(0);
     const refetch = useCallback(() => setReloadKey((k) => k + 1), []);
+    const [charCandidates, setCharCandidates] = useState<CharacterDto[] | null>(
+        null
+    );
 
     useEffect(() => {
         const libraryId = Number(id);
@@ -160,6 +172,31 @@ export default function LibraryDetails() {
             ) : (
                 <p className={`${s.prose} ${s.muted}`}>{t("none")}</p>
             )}
+
+            <div className={`${s.sectionHead} ${s.sectionSpacer}`}>
+                <span className={s.sectionTitle}>{t("scholars.label")}</span>
+                <span className={s.sectionLine} />
+            </div>
+            <LinkEditor
+                items={library.scholars}
+                candidates={charCandidates}
+                onLoadCandidates={() =>
+                    getCharacters(library.worldId).then(setCharCandidates)
+                }
+                onAdd={(cid) => addLibraryScholar(library.id, cid)}
+                onRemove={(cid) => removeLibraryScholar(library.id, cid)}
+                onChanged={refetch}
+                canEdit={canEdit}
+                linkTo={(cid) => `/storymap/characters/${cid}`}
+                addLabel={t("scholars.add")}
+                noneLabel={t("none")}
+                pickLabel={t("scholars.pick")}
+                cancelLabel={t("scholars.cancel")}
+                confirmLabel={t("scholars.confirm")}
+                removeLabel={(name) => t("scholars.remove", { name })}
+                addFailedLabel={t("scholars.addFailed")}
+                removeFailedLabel={t("scholars.removeFailed")}
+            />
         </div>
     );
 }

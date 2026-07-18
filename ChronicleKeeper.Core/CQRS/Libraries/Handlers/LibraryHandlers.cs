@@ -164,4 +164,37 @@ namespace ChronicleKeeper.Core.CQRS.Libraries.Handlers
             return await _repository.DeleteAsync(request.Id, cancellationToken);
         }
     }
+
+    public class AddLibraryScholarCommandHandler : IRequestHandler<AddLibraryScholarCommand, bool>
+    {
+        private readonly ILibraryRepository _repository;
+        private readonly ICharacterRepository _characterRepository;
+
+        public AddLibraryScholarCommandHandler(ILibraryRepository repository, ICharacterRepository characterRepository)
+        {
+            _repository = repository;
+            _characterRepository = characterRepository;
+        }
+
+        public async Task<bool> Handle(AddLibraryScholarCommand request, CancellationToken cancellationToken)
+        {
+            var library = await _repository.FindByIdAsync(request.LibraryId, cancellationToken)
+                ?? throw new EntityNotFoundException("Library", request.LibraryId);
+            if (!await _characterRepository.ExistsInWorldAsync(request.CharacterId, library.WorldId, cancellationToken))
+                throw new DomainValidationException($"Character with ID {request.CharacterId} does not exist in this world.");
+            if (await _repository.IsScholarLinkedAsync(request.LibraryId, request.CharacterId, cancellationToken))
+                throw new DomainValidationException("This character is already a scholar of the library.");
+
+            await _repository.AddScholarAsync(request.LibraryId, request.CharacterId, cancellationToken);
+            return true;
+        }
+    }
+
+    public class RemoveLibraryScholarCommandHandler : IRequestHandler<RemoveLibraryScholarCommand, bool>
+    {
+        private readonly ILibraryRepository _repository;
+        public RemoveLibraryScholarCommandHandler(ILibraryRepository repository) => _repository = repository;
+        public Task<bool> Handle(RemoveLibraryScholarCommand request, CancellationToken cancellationToken)
+            => _repository.RemoveScholarAsync(request.LibraryId, request.CharacterId, cancellationToken);
+    }
 }

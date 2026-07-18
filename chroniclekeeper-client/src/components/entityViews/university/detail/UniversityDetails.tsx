@@ -10,13 +10,22 @@ import {
     Tag,
 } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
-import { UniversityDetailsDto } from "../../../../interfaces/loreInterfaces";
+import { LinkEditor } from "../../../linking/LinkEditor";
 import {
+    CharacterDto,
+    UniversityDetailsDto,
+} from "../../../../interfaces/loreInterfaces";
+import {
+    addUniversityProfessor,
+    addUniversityStudent,
     createUniversityMajor,
     deleteUniversityMajor,
     getUniversityById,
+    removeUniversityProfessor,
+    removeUniversityStudent,
     updateUniversityMajor,
 } from "../../../../api/universities";
+import { getCharacters } from "../../../../api/characters";
 import { useAuth } from "../../../../hooks/useAuth";
 import { apiErrorMessage } from "../../../../utils/apiError";
 import s from "./styles.module.css";
@@ -58,6 +67,9 @@ export default function UniversityDetails() {
     const [majorFormFor, setMajorFormFor] = useState<number | null>(null);
     const [majorForm, setMajorForm] = useState<MajorFormState>(emptyMajorForm);
     const [majorError, setMajorError] = useState<string | null>(null);
+    const [charCandidates, setCharCandidates] = useState<CharacterDto[] | null>(
+        null
+    );
 
     useEffect(() => {
         const universityId = Number(id);
@@ -308,6 +320,56 @@ export default function UniversityDetails() {
                     ))}
                 </div>
             )}
+
+            <div className={`${s.sectionHead} ${s.sectionSpacer}`}>
+                <span className={s.sectionTitle}>{t("students.label")}</span>
+                <span className={s.sectionLine} />
+            </div>
+            <LinkEditor
+                items={university.students}
+                candidates={charCandidates}
+                onLoadCandidates={() =>
+                    getCharacters(university.worldId).then(setCharCandidates)
+                }
+                onAdd={(cid) => addUniversityStudent(university.id, cid)}
+                onRemove={(cid) => removeUniversityStudent(university.id, cid)}
+                onChanged={refetch}
+                canEdit={canEdit}
+                linkTo={(cid) => `/storymap/characters/${cid}`}
+                addLabel={t("students.add")}
+                noneLabel={t("none")}
+                pickLabel={t("students.pick")}
+                cancelLabel={t("form.cancel")}
+                confirmLabel={t("students.confirm")}
+                removeLabel={(name) => t("students.remove", { name })}
+                addFailedLabel={t("students.addFailed")}
+                removeFailedLabel={t("students.removeFailed")}
+            />
+
+            <div className={`${s.sectionHead} ${s.sectionSpacer}`}>
+                <span className={s.sectionTitle}>{t("professors.label")}</span>
+                <span className={s.sectionLine} />
+            </div>
+            <LinkEditor
+                items={university.professors}
+                candidates={charCandidates}
+                onLoadCandidates={() =>
+                    getCharacters(university.worldId).then(setCharCandidates)
+                }
+                onAdd={(cid) => addUniversityProfessor(university.id, cid)}
+                onRemove={(cid) => removeUniversityProfessor(university.id, cid)}
+                onChanged={refetch}
+                canEdit={canEdit}
+                linkTo={(cid) => `/storymap/characters/${cid}`}
+                addLabel={t("professors.add")}
+                noneLabel={t("none")}
+                pickLabel={t("professors.pick")}
+                cancelLabel={t("form.cancel")}
+                confirmLabel={t("professors.confirm")}
+                removeLabel={(name) => t("professors.remove", { name })}
+                addFailedLabel={t("professors.addFailed")}
+                removeFailedLabel={t("professors.removeFailed")}
+            />
         </div>
     );
 }

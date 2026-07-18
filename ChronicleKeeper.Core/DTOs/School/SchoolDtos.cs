@@ -27,6 +27,8 @@ namespace ChronicleKeeper.Core.DTOs.School
         public List<SchoolSubjectDto> Subjects { get; set; } = new();
         public List<ReferenceDto> Alumni { get; set; } = new();
         public ReferenceDto? Location { get; set; }
+        public List<ReferenceDto> Students { get; set; } = new();
+        public List<ReferenceDto> Teachers { get; set; } = new();
     }
 
     public class SchoolCreateDto

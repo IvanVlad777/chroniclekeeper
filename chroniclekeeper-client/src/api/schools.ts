@@ -71,3 +71,16 @@ export const updateSchoolSubject = async (
 export const deleteSchoolSubject = async (id: number): Promise<void> => {
     await api.delete(`/school-subjects/${id}`);
 };
+
+export const addSchoolStudent = async (schoolId: number, characterId: number): Promise<void> => {
+    await api.post(`/schools/${schoolId}/students/${characterId}`);
+};
+export const removeSchoolStudent = async (schoolId: number, characterId: number): Promise<void> => {
+    await api.delete(`/schools/${schoolId}/students/${characterId}`);
+};
+export const addSchoolTeacher = async (schoolId: number, characterId: number): Promise<void> => {
+    await api.post(`/schools/${schoolId}/teachers/${characterId}`);
+};
+export const removeSchoolTeacher = async (schoolId: number, characterId: number): Promise<void> => {
+    await api.delete(`/schools/${schoolId}/teachers/${characterId}`);
+};

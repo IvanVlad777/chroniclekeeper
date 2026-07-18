@@ -24,6 +24,9 @@ public class LibraryProfile : Profile
                 : new ReferenceDto { Id = src.University.Id, Name = src.University.Name }))
             .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.Location == null
                 ? null
-                : new ReferenceDto { Id = src.Location.Id, Name = src.Location.Name }));
+                : new ReferenceDto { Id = src.Location.Id, Name = src.Location.Name }))
+            .ForMember(dest => dest.Scholars, opt => opt.MapFrom(src => src.Scholars
+                .Where(ls => ls.Character != null)
+                .Select(ls => new ReferenceDto { Id = ls.Character!.Id, Name = ls.Character.Name })));
     }
 }

@@ -35,5 +35,15 @@
         "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
         "saveFailed": "Saving failed. Check the fields and try again.",
         "deleteFailed": "Deleting failed."
+    },
+    "scholars": {
+        "label": "Scholars",
+        "add": "link",
+        "remove": "Remove {{name}}",
+        "pick": "Pick a character",
+        "confirm": "Link",
+        "cancel": "Cancel",
+        "addFailed": "Adding the scholar failed.",
+        "removeFailed": "Removing the scholar failed."
     }
 }

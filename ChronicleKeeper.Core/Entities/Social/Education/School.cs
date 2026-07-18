@@ -22,7 +22,7 @@ namespace ChronicleKeeper.Core.Entities.Social.Education
         public int? LocationId { get; set; }
         public virtual Geography.Location? Location { get; set; }
 
-        //public virtual ICollection<Characters.Character> Students { get; set; } = new List<Characters.Character>(); // TODO: Uncomment when Character many-to-many cross-links are revived
-        //public virtual ICollection<Characters.Character> Teachers { get; set; } = new List<Characters.Character>(); // TODO: Uncomment when Character many-to-many cross-links are revived
+        public virtual ICollection<SchoolStudent> Students { get; set; } = new List<SchoolStudent>();
+        public virtual ICollection<SchoolTeacher> Teachers { get; set; } = new List<SchoolTeacher>();
     }
 }

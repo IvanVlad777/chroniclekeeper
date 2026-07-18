@@ -9,7 +9,7 @@ namespace ChronicleKeeper.Core.Entities.Social.Education
         public bool FocusesOnMagic { get; set; } // Specializes in magical texts
         public bool FocusesOnHistory { get; set; } // Archives and historical records
 
-        //public virtual ICollection<Characters.Character> Scholars { get; set; } = new List<Characters.Character>(); // TODO: Uncomment when Character many-to-many cross-links are revived
+        public virtual ICollection<LibraryScholar> Scholars { get; set; } = new List<LibraryScholar>();
 
         public int? UniversityId { get; set; }
         public virtual University? University { get; set; }

@@ -12,5 +12,10 @@ namespace ChronicleKeeper.Core.Repositories
         Task<List<Library>> GetAllAsync(int? worldId = null, CancellationToken cancellationToken = default);
         Task<Library> UpdateAsync(Library library, CancellationToken cancellationToken = default);
         Task<bool> DeleteAsync(int id, CancellationToken cancellationToken = default);
+
+        // Scholars (LibraryScholar join with Character)
+        Task<bool> IsScholarLinkedAsync(int libraryId, int characterId, CancellationToken cancellationToken = default);
+        Task AddScholarAsync(int libraryId, int characterId, CancellationToken cancellationToken = default);
+        Task<bool> RemoveScholarAsync(int libraryId, int characterId, CancellationToken cancellationToken = default);
     }
 }

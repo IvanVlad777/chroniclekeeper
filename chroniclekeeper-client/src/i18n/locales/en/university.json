@@ -39,6 +39,24 @@
     "alumni": {
         "label": "Alumni"
     },
+    "students": {
+        "label": "Students",
+        "add": "link",
+        "remove": "Remove {{name}}",
+        "pick": "Pick a character",
+        "confirm": "Link",
+        "addFailed": "Adding the student failed.",
+        "removeFailed": "Removing the student failed."
+    },
+    "professors": {
+        "label": "Professors",
+        "add": "link",
+        "remove": "Remove {{name}}",
+        "pick": "Pick a character",
+        "confirm": "Link",
+        "addFailed": "Adding the professor failed.",
+        "removeFailed": "Removing the professor failed."
+    },
     "form": {
         "newTitle": "New university",
         "editTitle": "Edit university",

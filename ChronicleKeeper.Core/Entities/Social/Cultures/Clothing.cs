@@ -18,6 +18,6 @@ namespace ChronicleKeeper.Core.Entities.Social.Cultures
         public int CultureId { get; set; }
         public virtual Culture? Culture { get; set; }
 
-        //public virtual ICollection<Character> Wearers { get; set; } = new List<Character>(); // TODO: Character M:N deferred (defer-Character-M:N bucket)
+        public virtual ICollection<CharacterClothing> Wearers { get; set; } = new List<CharacterClothing>();
     }
 }

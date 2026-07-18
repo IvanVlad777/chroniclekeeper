@@ -1,6 +1,8 @@
 using ChronicleKeeper.Core.Entities.Characters;
 using ChronicleKeeper.Core.Entities.Characters.Abilities;
 using ChronicleKeeper.Core.Entities.Characters.CharacterInfo;
+using ChronicleKeeper.Core.Entities.Professions;
+using ChronicleKeeper.Core.Entities.Social.Cultures;
 using ChronicleKeeper.Core.Repositories;
 using static ChronicleKeeper.Core.Enums.LoreEnums;
 using ChronicleKeeper.Infrastructure.Data;
@@ -40,6 +42,9 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .Include(c => c.Profession)
                 .Include(c => c.Educations)
                 .Include(c => c.Abilities).ThenInclude(ca => ca.Ability)
+                .Include(c => c.Hobbies).ThenInclude(ch => ch.Hobby)
+                .Include(c => c.Specialisations).ThenInclude(cs => cs.Specialisation)
+                .Include(c => c.Clothing).ThenInclude(cc => cc.Clothing)
                 .Include(c => c.Equipments)
                 .Include(c => c.History)
                 .AsNoTracking()
@@ -139,6 +144,66 @@ namespace ChronicleKeeper.Infrastructure.Repositories
         {
             var deleted = await _context.CharacterAbilities
                 .Where(ca => ca.CharacterId == characterId && ca.AbilityId == abilityId)
+                .ExecuteDeleteAsync(cancellationToken);
+            return deleted > 0;
+        }
+
+        public async Task<bool> IsHobbyLinkedAsync(int characterId, int hobbyId, CancellationToken cancellationToken = default)
+        {
+            return await _context.CharacterHobbies
+                .AnyAsync(x => x.CharacterId == characterId && x.HobbyId == hobbyId, cancellationToken);
+        }
+
+        public async Task AddHobbyAsync(int characterId, int hobbyId, CancellationToken cancellationToken = default)
+        {
+            _context.CharacterHobbies.Add(new CharacterHobby { CharacterId = characterId, HobbyId = hobbyId });
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task<bool> RemoveHobbyAsync(int characterId, int hobbyId, CancellationToken cancellationToken = default)
+        {
+            var deleted = await _context.CharacterHobbies
+                .Where(x => x.CharacterId == characterId && x.HobbyId == hobbyId)
+                .ExecuteDeleteAsync(cancellationToken);
+            return deleted > 0;
+        }
+
+        public async Task<bool> IsSpecialisationLinkedAsync(int characterId, int specialisationId, CancellationToken cancellationToken = default)
+        {
+            return await _context.CharacterSpecialisations
+                .AnyAsync(x => x.CharacterId == characterId && x.SpecialisationId == specialisationId, cancellationToken);
+        }
+
+        public async Task AddSpecialisationAsync(int characterId, int specialisationId, CancellationToken cancellationToken = default)
+        {
+            _context.CharacterSpecialisations.Add(new CharacterSpecialisation { CharacterId = characterId, SpecialisationId = specialisationId });
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task<bool> RemoveSpecialisationAsync(int characterId, int specialisationId, CancellationToken cancellationToken = default)
+        {
+            var deleted = await _context.CharacterSpecialisations
+                .Where(x => x.CharacterId == characterId && x.SpecialisationId == specialisationId)
+                .ExecuteDeleteAsync(cancellationToken);
+            return deleted > 0;
+        }
+
+        public async Task<bool> IsClothingLinkedAsync(int characterId, int clothingId, CancellationToken cancellationToken = default)
+        {
+            return await _context.CharacterClothing
+                .AnyAsync(x => x.CharacterId == characterId && x.ClothingId == clothingId, cancellationToken);
+        }
+
+        public async Task AddClothingAsync(int characterId, int clothingId, CancellationToken cancellationToken = default)
+        {
+            _context.CharacterClothing.Add(new CharacterClothing { CharacterId = characterId, ClothingId = clothingId });
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task<bool> RemoveClothingAsync(int characterId, int clothingId, CancellationToken cancellationToken = default)
+        {
+            var deleted = await _context.CharacterClothing
+                .Where(x => x.CharacterId == characterId && x.ClothingId == clothingId)
                 .ExecuteDeleteAsync(cancellationToken);
             return deleted > 0;
         }

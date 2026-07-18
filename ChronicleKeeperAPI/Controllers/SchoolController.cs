@@ -87,5 +87,45 @@ namespace ChronicleKeeperAPI.Controllers
             if (!result) return NotFound();
             return NoContent();
         }
+
+        // POST/DELETE: /api/schools/{id}/students/{characterId}
+        [HttpPost("{id}/students/{characterId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Enrol a character as a student of the school")]
+        public async Task<IActionResult> AddStudent(int id, int characterId)
+        {
+            await _mediator.Send(new AddSchoolStudentCommand { SchoolId = id, CharacterId = characterId });
+            return NoContent();
+        }
+
+        [HttpDelete("{id}/students/{characterId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Remove a student from the school")]
+        public async Task<IActionResult> RemoveStudent(int id, int characterId)
+        {
+            var result = await _mediator.Send(new RemoveSchoolStudentCommand { SchoolId = id, CharacterId = characterId });
+            if (!result) return NotFound();
+            return NoContent();
+        }
+
+        // POST/DELETE: /api/schools/{id}/teachers/{characterId}
+        [HttpPost("{id}/teachers/{characterId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Add a character as a teacher of the school")]
+        public async Task<IActionResult> AddTeacher(int id, int characterId)
+        {
+            await _mediator.Send(new AddSchoolTeacherCommand { SchoolId = id, CharacterId = characterId });
+            return NoContent();
+        }
+
+        [HttpDelete("{id}/teachers/{characterId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Remove a teacher from the school")]
+        public async Task<IActionResult> RemoveTeacher(int id, int characterId)
+        {
+            var result = await _mediator.Send(new RemoveSchoolTeacherCommand { SchoolId = id, CharacterId = characterId });
+            if (!result) return NotFound();
+            return NoContent();
+        }
     }
 }

@@ -16,7 +16,8 @@ export interface LinkEditorProps {
     /** Nakon uspješnog add/remove — roditelj refetcha details. */
     onChanged: () => void;
     canEdit: boolean;
-    linkTo: (id: number) => string;
+    /** Omit for targets that have no dedicated detail page — the chip renders as plain text. */
+    linkTo?: (id: number) => string;
     addLabel: string;
     /** Aria-label za × gumb, npr. (name) => `Ukloni ${name}`. */
     removeLabel: (name: string) => string;
@@ -106,9 +107,13 @@ export function LinkEditor({
                 )}
                 {items.map((item) => (
                     <span key={item.id} className={s.chipRow}>
-                        <Link to={linkTo(item.id)} className={s.chipLink}>
+                        {linkTo ? (
+                            <Link to={linkTo(item.id)} className={s.chipLink}>
+                                <Tag tone="neutral">{item.name}</Tag>
+                            </Link>
+                        ) : (
                             <Tag tone="neutral">{item.name}</Tag>
-                        </Link>
+                        )}
                         {canEdit && (
                             <button
                                 type="button"

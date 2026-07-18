@@ -18,22 +18,34 @@ import {
     AbilityDto,
     CharacterDetailsDto,
     CharacterDto,
+    ClothingDto,
     GuildDto,
+    HobbyDto,
     RelationshipType,
     relationshipTypes,
     ReligionDto,
     SchoolDto,
+    SpecialisationDto,
     UniversityDto,
 } from "../../../../interfaces/loreInterfaces";
 import {
     addCharacterAbility,
+    addCharacterClothing,
+    addCharacterHobby,
+    addCharacterSpecialisation,
     addRelationship,
     getCharacter,
     getCharacters,
     removeCharacterAbility,
+    removeCharacterClothing,
+    removeCharacterHobby,
+    removeCharacterSpecialisation,
     removeRelationship,
 } from "../../../../api/characters";
 import { getAbilities } from "../../../../api/abilities";
+import { getHobbies } from "../../../../api/hobbies";
+import { getSpecialisations } from "../../../../api/professions";
+import { getClothing } from "../../../../api/clothing";
 import {
     createEducationRecord,
     deleteEducationRecord,
@@ -118,6 +130,15 @@ export default function CharacterDetail() {
     const [worldGuilds, setWorldGuilds] = useState<GuildDto[]>([]);
     const [abilityCandidates, setAbilityCandidates] = useState<
         AbilityDto[] | null
+    >(null);
+    const [hobbyCandidates, setHobbyCandidates] = useState<HobbyDto[] | null>(
+        null
+    );
+    const [specialisationCandidates, setSpecialisationCandidates] = useState<
+        SpecialisationDto[] | null
+    >(null);
+    const [clothingCandidates, setClothingCandidates] = useState<
+        ClothingDto[] | null
     >(null);
 
     // Inline forma za novu vezu
@@ -1185,6 +1206,111 @@ export default function CharacterDetail() {
                         removeLabel={(name) => t("abilities.remove", { name })}
                         addFailedLabel={t("abilities.addFailed")}
                         removeFailedLabel={t("abilities.removeFailed")}
+                    />
+
+                    <div className={`${s.sectionHead} ${s.sectionSpacer}`}>
+                        <span className={s.sectionTitle}>
+                            {t("hobbies.label")}
+                        </span>
+                        <span className={s.sectionLine} />
+                    </div>
+                    <LinkEditor
+                        items={character.hobbies}
+                        candidates={hobbyCandidates}
+                        onLoadCandidates={() =>
+                            getHobbies(character.worldId).then(
+                                setHobbyCandidates
+                            )
+                        }
+                        onAdd={(hobbyId) =>
+                            addCharacterHobby(character.id, hobbyId)
+                        }
+                        onRemove={(hobbyId) =>
+                            removeCharacterHobby(character.id, hobbyId)
+                        }
+                        onChanged={refetch}
+                        canEdit={canEdit}
+                        linkTo={(hobbyId) => `/storymap/hobbies/${hobbyId}`}
+                        addLabel={t("hobbies.add")}
+                        noneLabel={t("none")}
+                        pickLabel={t("hobbies.pick")}
+                        cancelLabel={t("form.cancel")}
+                        confirmLabel={t("hobbies.confirm")}
+                        removeLabel={(name) => t("hobbies.remove", { name })}
+                        addFailedLabel={t("hobbies.addFailed")}
+                        removeFailedLabel={t("hobbies.removeFailed")}
+                    />
+
+                    <div className={`${s.sectionHead} ${s.sectionSpacer}`}>
+                        <span className={s.sectionTitle}>
+                            {t("specialisations.label")}
+                        </span>
+                        <span className={s.sectionLine} />
+                    </div>
+                    <LinkEditor
+                        items={character.specialisations}
+                        candidates={specialisationCandidates}
+                        onLoadCandidates={() =>
+                            getSpecialisations({
+                                worldId: character.worldId,
+                            }).then(setSpecialisationCandidates)
+                        }
+                        onAdd={(specialisationId) =>
+                            addCharacterSpecialisation(
+                                character.id,
+                                specialisationId
+                            )
+                        }
+                        onRemove={(specialisationId) =>
+                            removeCharacterSpecialisation(
+                                character.id,
+                                specialisationId
+                            )
+                        }
+                        onChanged={refetch}
+                        canEdit={canEdit}
+                        addLabel={t("specialisations.add")}
+                        noneLabel={t("none")}
+                        pickLabel={t("specialisations.pick")}
+                        cancelLabel={t("form.cancel")}
+                        confirmLabel={t("specialisations.confirm")}
+                        removeLabel={(name) =>
+                            t("specialisations.remove", { name })
+                        }
+                        addFailedLabel={t("specialisations.addFailed")}
+                        removeFailedLabel={t("specialisations.removeFailed")}
+                    />
+
+                    <div className={`${s.sectionHead} ${s.sectionSpacer}`}>
+                        <span className={s.sectionTitle}>
+                            {t("clothing.label")}
+                        </span>
+                        <span className={s.sectionLine} />
+                    </div>
+                    <LinkEditor
+                        items={character.clothing}
+                        candidates={clothingCandidates}
+                        onLoadCandidates={() =>
+                            getClothing(character.worldId).then(
+                                setClothingCandidates
+                            )
+                        }
+                        onAdd={(clothingId) =>
+                            addCharacterClothing(character.id, clothingId)
+                        }
+                        onRemove={(clothingId) =>
+                            removeCharacterClothing(character.id, clothingId)
+                        }
+                        onChanged={refetch}
+                        canEdit={canEdit}
+                        addLabel={t("clothing.add")}
+                        noneLabel={t("none")}
+                        pickLabel={t("clothing.pick")}
+                        cancelLabel={t("form.cancel")}
+                        confirmLabel={t("clothing.confirm")}
+                        removeLabel={(name) => t("clothing.remove", { name })}
+                        addFailedLabel={t("clothing.addFailed")}
+                        removeFailedLabel={t("clothing.removeFailed")}
                     />
 
                     <div className={`${s.sectionHead} ${s.sectionSpacer}`}>

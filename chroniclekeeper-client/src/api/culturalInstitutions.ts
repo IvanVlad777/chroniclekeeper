@@ -49,3 +49,10 @@ export const updateCulturalInstitution = async (
 export const deleteCulturalInstitution = async (id: number): Promise<void> => {
     await api.delete(`/cultural-institutions/${id}`);
 };
+
+export const addCulturalInstitutionArtist = async (institutionId: number, characterId: number): Promise<void> => {
+    await api.post(`/cultural-institutions/${institutionId}/artists/${characterId}`);
+};
+export const removeCulturalInstitutionArtist = async (institutionId: number, characterId: number): Promise<void> => {
+    await api.delete(`/cultural-institutions/${institutionId}/artists/${characterId}`);
+};

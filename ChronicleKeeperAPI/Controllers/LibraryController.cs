@@ -86,5 +86,25 @@ namespace ChronicleKeeperAPI.Controllers
             if (!result) return NotFound();
             return NoContent();
         }
+
+        // POST/DELETE: /api/libraries/{id}/scholars/{characterId}
+        [HttpPost("{id}/scholars/{characterId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Add a character as a scholar of the library")]
+        public async Task<IActionResult> AddScholar(int id, int characterId)
+        {
+            await _mediator.Send(new AddLibraryScholarCommand { LibraryId = id, CharacterId = characterId });
+            return NoContent();
+        }
+
+        [HttpDelete("{id}/scholars/{characterId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Remove a scholar from the library")]
+        public async Task<IActionResult> RemoveScholar(int id, int characterId)
+        {
+            var result = await _mediator.Send(new RemoveLibraryScholarCommand { LibraryId = id, CharacterId = characterId });
+            if (!result) return NotFound();
+            return NoContent();
+        }
     }
 }

@@ -31,5 +31,20 @@ namespace ChronicleKeeper.Core.Repositories
         Task<bool> IsAbilityLinkedAsync(int characterId, int abilityId, CancellationToken cancellationToken = default);
         Task AddAbilityAsync(int characterId, int abilityId, CancellationToken cancellationToken = default);
         Task<bool> RemoveAbilityAsync(int characterId, int abilityId, CancellationToken cancellationToken = default);
+
+        // Hobbies (CharacterHobby join)
+        Task<bool> IsHobbyLinkedAsync(int characterId, int hobbyId, CancellationToken cancellationToken = default);
+        Task AddHobbyAsync(int characterId, int hobbyId, CancellationToken cancellationToken = default);
+        Task<bool> RemoveHobbyAsync(int characterId, int hobbyId, CancellationToken cancellationToken = default);
+
+        // Specialisations (CharacterSpecialisation join)
+        Task<bool> IsSpecialisationLinkedAsync(int characterId, int specialisationId, CancellationToken cancellationToken = default);
+        Task AddSpecialisationAsync(int characterId, int specialisationId, CancellationToken cancellationToken = default);
+        Task<bool> RemoveSpecialisationAsync(int characterId, int specialisationId, CancellationToken cancellationToken = default);
+
+        // Clothing (CharacterClothing join)
+        Task<bool> IsClothingLinkedAsync(int characterId, int clothingId, CancellationToken cancellationToken = default);
+        Task AddClothingAsync(int characterId, int clothingId, CancellationToken cancellationToken = default);
+        Task<bool> RemoveClothingAsync(int characterId, int clothingId, CancellationToken cancellationToken = default);
     }
 }

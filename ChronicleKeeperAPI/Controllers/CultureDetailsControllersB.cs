@@ -218,5 +218,17 @@ namespace ChronicleKeeperAPI.Controllers
         [HttpDelete("{id}"), Authorize(Roles = "Editor,Admin,SuperAdmin")]
         public async Task<IActionResult> Delete(int id) =>
             await _mediator.Send(new DeleteCulturalInstitutionCommand { Id = id }) ? NoContent() : NotFound();
+
+        // POST/DELETE: /api/cultural-institutions/{id}/artists/{characterId}
+        [HttpPost("{id}/artists/{characterId}"), Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        public async Task<IActionResult> AddArtist(int id, int characterId)
+        {
+            await _mediator.Send(new AddCulturalInstitutionArtistCommand { InstitutionId = id, CharacterId = characterId });
+            return NoContent();
+        }
+
+        [HttpDelete("{id}/artists/{characterId}"), Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        public async Task<IActionResult> RemoveArtist(int id, int characterId) =>
+            await _mediator.Send(new RemoveCulturalInstitutionArtistCommand { InstitutionId = id, CharacterId = characterId }) ? NoContent() : NotFound();
     }
 }

@@ -20,6 +20,6 @@ namespace ChronicleKeeper.Core.Entities.Social.Cultures
         public int? CityId { get; set; }
         public virtual City? City { get; set; }
 
-        //public virtual ICollection<Character> NotableArtists { get; set; } = new List<Character>(); // TODO: Character M:N deferred (defer-Character-M:N bucket)
+        public virtual ICollection<CulturalInstitutionArtist> NotableArtists { get; set; } = new List<CulturalInstitutionArtist>();
     }
 }

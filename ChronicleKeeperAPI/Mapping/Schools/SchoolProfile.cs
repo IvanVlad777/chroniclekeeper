@@ -22,6 +22,12 @@ public class SchoolProfile : Profile
                 .Select(e => new ReferenceDto { Id = e.Id, Name = e.Name })))
             .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.Location == null
                 ? null
-                : new ReferenceDto { Id = src.Location.Id, Name = src.Location.Name }));
+                : new ReferenceDto { Id = src.Location.Id, Name = src.Location.Name }))
+            .ForMember(dest => dest.Students, opt => opt.MapFrom(src => src.Students
+                .Where(ss => ss.Character != null)
+                .Select(ss => new ReferenceDto { Id = ss.Character!.Id, Name = ss.Character.Name })))
+            .ForMember(dest => dest.Teachers, opt => opt.MapFrom(src => src.Teachers
+                .Where(st => st.Character != null)
+                .Select(st => new ReferenceDto { Id = st.Character!.Id, Name = st.Character.Name })));
     }
 }

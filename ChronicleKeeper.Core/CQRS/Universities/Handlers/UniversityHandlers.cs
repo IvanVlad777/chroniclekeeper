@@ -135,4 +135,70 @@ namespace ChronicleKeeper.Core.CQRS.Universities.Handlers
             return await _repository.DeleteAsync(request.Id, cancellationToken);
         }
     }
+
+    public class AddUniversityStudentCommandHandler : IRequestHandler<AddUniversityStudentCommand, bool>
+    {
+        private readonly IUniversityRepository _repository;
+        private readonly ICharacterRepository _characterRepository;
+
+        public AddUniversityStudentCommandHandler(IUniversityRepository repository, ICharacterRepository characterRepository)
+        {
+            _repository = repository;
+            _characterRepository = characterRepository;
+        }
+
+        public async Task<bool> Handle(AddUniversityStudentCommand request, CancellationToken cancellationToken)
+        {
+            var university = await _repository.FindByIdAsync(request.UniversityId, cancellationToken)
+                ?? throw new EntityNotFoundException("University", request.UniversityId);
+            if (!await _characterRepository.ExistsInWorldAsync(request.CharacterId, university.WorldId, cancellationToken))
+                throw new DomainValidationException($"Character with ID {request.CharacterId} does not exist in this world.");
+            if (await _repository.IsStudentLinkedAsync(request.UniversityId, request.CharacterId, cancellationToken))
+                throw new DomainValidationException("This character is already a student of the university.");
+
+            await _repository.AddStudentAsync(request.UniversityId, request.CharacterId, cancellationToken);
+            return true;
+        }
+    }
+
+    public class RemoveUniversityStudentCommandHandler : IRequestHandler<RemoveUniversityStudentCommand, bool>
+    {
+        private readonly IUniversityRepository _repository;
+        public RemoveUniversityStudentCommandHandler(IUniversityRepository repository) => _repository = repository;
+        public Task<bool> Handle(RemoveUniversityStudentCommand request, CancellationToken cancellationToken)
+            => _repository.RemoveStudentAsync(request.UniversityId, request.CharacterId, cancellationToken);
+    }
+
+    public class AddUniversityProfessorCommandHandler : IRequestHandler<AddUniversityProfessorCommand, bool>
+    {
+        private readonly IUniversityRepository _repository;
+        private readonly ICharacterRepository _characterRepository;
+
+        public AddUniversityProfessorCommandHandler(IUniversityRepository repository, ICharacterRepository characterRepository)
+        {
+            _repository = repository;
+            _characterRepository = characterRepository;
+        }
+
+        public async Task<bool> Handle(AddUniversityProfessorCommand request, CancellationToken cancellationToken)
+        {
+            var university = await _repository.FindByIdAsync(request.UniversityId, cancellationToken)
+                ?? throw new EntityNotFoundException("University", request.UniversityId);
+            if (!await _characterRepository.ExistsInWorldAsync(request.CharacterId, university.WorldId, cancellationToken))
+                throw new DomainValidationException($"Character with ID {request.CharacterId} does not exist in this world.");
+            if (await _repository.IsProfessorLinkedAsync(request.UniversityId, request.CharacterId, cancellationToken))
+                throw new DomainValidationException("This character is already a professor of the university.");
+
+            await _repository.AddProfessorAsync(request.UniversityId, request.CharacterId, cancellationToken);
+            return true;
+        }
+    }
+
+    public class RemoveUniversityProfessorCommandHandler : IRequestHandler<RemoveUniversityProfessorCommand, bool>
+    {
+        private readonly IUniversityRepository _repository;
+        public RemoveUniversityProfessorCommandHandler(IUniversityRepository repository) => _repository = repository;
+        public Task<bool> Handle(RemoveUniversityProfessorCommand request, CancellationToken cancellationToken)
+            => _repository.RemoveProfessorAsync(request.UniversityId, request.CharacterId, cancellationToken);
+    }
 }

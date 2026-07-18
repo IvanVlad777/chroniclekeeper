@@ -39,6 +39,24 @@
     "alumni": {
         "label": "Alumni"
     },
+    "students": {
+        "label": "Studenti",
+        "add": "poveži",
+        "remove": "Ukloni {{name}}",
+        "pick": "Odaberi lik",
+        "confirm": "Poveži",
+        "addFailed": "Dodavanje studenta nije uspjelo.",
+        "removeFailed": "Uklanjanje studenta nije uspjelo."
+    },
+    "professors": {
+        "label": "Profesori",
+        "add": "poveži",
+        "remove": "Ukloni {{name}}",
+        "pick": "Odaberi lik",
+        "confirm": "Poveži",
+        "addFailed": "Dodavanje profesora nije uspjelo.",
+        "removeFailed": "Uklanjanje profesora nije uspjelo."
+    },
     "form": {
         "newTitle": "Novo sveučilište",
         "editTitle": "Uredi sveučilište",

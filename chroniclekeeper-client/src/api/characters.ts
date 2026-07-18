@@ -78,3 +78,24 @@ export const removeCharacterAbility = async (
 ): Promise<void> => {
     await api.delete(`/characters/${characterId}/abilities/${abilityId}`);
 };
+
+export const addCharacterHobby = async (characterId: number, hobbyId: number): Promise<void> => {
+    await api.post(`/characters/${characterId}/hobbies/${hobbyId}`);
+};
+export const removeCharacterHobby = async (characterId: number, hobbyId: number): Promise<void> => {
+    await api.delete(`/characters/${characterId}/hobbies/${hobbyId}`);
+};
+
+export const addCharacterSpecialisation = async (characterId: number, specialisationId: number): Promise<void> => {
+    await api.post(`/characters/${characterId}/specialisations/${specialisationId}`);
+};
+export const removeCharacterSpecialisation = async (characterId: number, specialisationId: number): Promise<void> => {
+    await api.delete(`/characters/${characterId}/specialisations/${specialisationId}`);
+};
+
+export const addCharacterClothing = async (characterId: number, clothingId: number): Promise<void> => {
+    await api.post(`/characters/${characterId}/clothing/${clothingId}`);
+};
+export const removeCharacterClothing = async (characterId: number, clothingId: number): Promise<void> => {
+    await api.delete(`/characters/${characterId}/clothing/${clothingId}`);
+};

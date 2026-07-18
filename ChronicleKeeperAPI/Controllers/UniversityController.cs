@@ -87,5 +87,45 @@ namespace ChronicleKeeperAPI.Controllers
             if (!result) return NotFound();
             return NoContent();
         }
+
+        // POST/DELETE: /api/universities/{id}/students/{characterId}
+        [HttpPost("{id}/students/{characterId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Enrol a character as a student of the university")]
+        public async Task<IActionResult> AddStudent(int id, int characterId)
+        {
+            await _mediator.Send(new AddUniversityStudentCommand { UniversityId = id, CharacterId = characterId });
+            return NoContent();
+        }
+
+        [HttpDelete("{id}/students/{characterId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Remove a student from the university")]
+        public async Task<IActionResult> RemoveStudent(int id, int characterId)
+        {
+            var result = await _mediator.Send(new RemoveUniversityStudentCommand { UniversityId = id, CharacterId = characterId });
+            if (!result) return NotFound();
+            return NoContent();
+        }
+
+        // POST/DELETE: /api/universities/{id}/professors/{characterId}
+        [HttpPost("{id}/professors/{characterId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Add a character as a professor of the university")]
+        public async Task<IActionResult> AddProfessor(int id, int characterId)
+        {
+            await _mediator.Send(new AddUniversityProfessorCommand { UniversityId = id, CharacterId = characterId });
+            return NoContent();
+        }
+
+        [HttpDelete("{id}/professors/{characterId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Remove a professor from the university")]
+        public async Task<IActionResult> RemoveProfessor(int id, int characterId)
+        {
+            var result = await _mediator.Send(new RemoveUniversityProfessorCommand { UniversityId = id, CharacterId = characterId });
+            if (!result) return NotFound();
+            return NoContent();
+        }
     }
 }

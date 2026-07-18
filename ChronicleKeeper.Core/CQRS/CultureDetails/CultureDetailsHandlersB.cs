@@ -362,4 +362,33 @@ namespace ChronicleKeeper.Core.CQRS.CultureDetails.Handlers
         public DeleteCulturalInstitutionCommandHandler(ICulturalInstitutionRepository repo) { _repo = repo; }
         public Task<bool> Handle(DeleteCulturalInstitutionCommand c, CancellationToken ct) => _repo.DeleteAsync(c.Id, ct);
     }
+
+    public class AddCulturalInstitutionArtistCommandHandler : IRequestHandler<AddCulturalInstitutionArtistCommand, bool>
+    {
+        private readonly ICulturalInstitutionRepository _repo;
+        private readonly ICharacterRepository _characterRepository;
+        public AddCulturalInstitutionArtistCommandHandler(ICulturalInstitutionRepository repo, ICharacterRepository characterRepository)
+        { _repo = repo; _characterRepository = characterRepository; }
+
+        public async Task<bool> Handle(AddCulturalInstitutionArtistCommand c, CancellationToken ct)
+        {
+            var institution = await _repo.FindByIdAsync(c.InstitutionId, ct)
+                ?? throw new EntityNotFoundException("CulturalInstitution", c.InstitutionId);
+            if (!await _characterRepository.ExistsInWorldAsync(c.CharacterId, institution.WorldId, ct))
+                throw new DomainValidationException($"Character with ID {c.CharacterId} does not exist in this world.");
+            if (await _repo.IsArtistLinkedAsync(c.InstitutionId, c.CharacterId, ct))
+                throw new DomainValidationException("This character is already a notable artist of the institution.");
+
+            await _repo.AddArtistAsync(c.InstitutionId, c.CharacterId, ct);
+            return true;
+        }
+    }
+
+    public class RemoveCulturalInstitutionArtistCommandHandler : IRequestHandler<RemoveCulturalInstitutionArtistCommand, bool>
+    {
+        private readonly ICulturalInstitutionRepository _repo;
+        public RemoveCulturalInstitutionArtistCommandHandler(ICulturalInstitutionRepository repo) { _repo = repo; }
+        public Task<bool> Handle(RemoveCulturalInstitutionArtistCommand c, CancellationToken ct)
+            => _repo.RemoveArtistAsync(c.InstitutionId, c.CharacterId, ct);
+    }
 }

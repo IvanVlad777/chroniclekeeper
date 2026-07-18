@@ -15,5 +15,13 @@ namespace ChronicleKeeper.Core.Repositories
         Task<bool> ExistsInWorldAsync(int universityId, int worldId, CancellationToken cancellationToken = default);
         Task<int> CountEducationRecordsUsingUniversityAsync(int universityId, CancellationToken cancellationToken = default);
         Task<int> CountLibrariesUsingUniversityAsync(int universityId, CancellationToken cancellationToken = default);
+
+        // Students / Professors (UniversityStudent / UniversityProfessor joins with Character)
+        Task<bool> IsStudentLinkedAsync(int universityId, int characterId, CancellationToken cancellationToken = default);
+        Task AddStudentAsync(int universityId, int characterId, CancellationToken cancellationToken = default);
+        Task<bool> RemoveStudentAsync(int universityId, int characterId, CancellationToken cancellationToken = default);
+        Task<bool> IsProfessorLinkedAsync(int universityId, int characterId, CancellationToken cancellationToken = default);
+        Task AddProfessorAsync(int universityId, int characterId, CancellationToken cancellationToken = default);
+        Task<bool> RemoveProfessorAsync(int universityId, int characterId, CancellationToken cancellationToken = default);
     }
 }

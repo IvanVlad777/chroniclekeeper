@@ -240,6 +240,111 @@ namespace ChronicleKeeper.Core.CQRS.Characters.Handlers
         }
     }
 
+    public class AddCharacterHobbyCommandHandler : IRequestHandler<AddCharacterHobbyCommand, bool>
+    {
+        private readonly ICharacterRepository _repository;
+        private readonly IHobbyRepository _hobbyRepository;
+
+        public AddCharacterHobbyCommandHandler(ICharacterRepository repository, IHobbyRepository hobbyRepository)
+        {
+            _repository = repository;
+            _hobbyRepository = hobbyRepository;
+        }
+
+        public async Task<bool> Handle(AddCharacterHobbyCommand request, CancellationToken cancellationToken)
+        {
+            var character = await _repository.FindByIdAsync(request.CharacterId, cancellationToken)
+                ?? throw new EntityNotFoundException("Character", request.CharacterId);
+            var hobby = await _hobbyRepository.FindByIdAsync(request.HobbyId, cancellationToken)
+                ?? throw new DomainValidationException($"Hobby with ID {request.HobbyId} does not exist.");
+            if (hobby.WorldId != character.WorldId)
+                throw new DomainValidationException($"Hobby with ID {request.HobbyId} does not belong to this world.");
+            if (await _repository.IsHobbyLinkedAsync(request.CharacterId, request.HobbyId, cancellationToken))
+                throw new DomainValidationException("This hobby is already linked to the character.");
+
+            await _repository.AddHobbyAsync(request.CharacterId, request.HobbyId, cancellationToken);
+            return true;
+        }
+    }
+
+    public class RemoveCharacterHobbyCommandHandler : IRequestHandler<RemoveCharacterHobbyCommand, bool>
+    {
+        private readonly ICharacterRepository _repository;
+        public RemoveCharacterHobbyCommandHandler(ICharacterRepository repository) => _repository = repository;
+        public Task<bool> Handle(RemoveCharacterHobbyCommand request, CancellationToken cancellationToken)
+            => _repository.RemoveHobbyAsync(request.CharacterId, request.HobbyId, cancellationToken);
+    }
+
+    public class AddCharacterSpecialisationCommandHandler : IRequestHandler<AddCharacterSpecialisationCommand, bool>
+    {
+        private readonly ICharacterRepository _repository;
+        private readonly ISpecialisationRepository _specialisationRepository;
+
+        public AddCharacterSpecialisationCommandHandler(ICharacterRepository repository, ISpecialisationRepository specialisationRepository)
+        {
+            _repository = repository;
+            _specialisationRepository = specialisationRepository;
+        }
+
+        public async Task<bool> Handle(AddCharacterSpecialisationCommand request, CancellationToken cancellationToken)
+        {
+            var character = await _repository.FindByIdAsync(request.CharacterId, cancellationToken)
+                ?? throw new EntityNotFoundException("Character", request.CharacterId);
+            var specialisation = await _specialisationRepository.FindByIdAsync(request.SpecialisationId, cancellationToken)
+                ?? throw new DomainValidationException($"Specialisation with ID {request.SpecialisationId} does not exist.");
+            if (specialisation.WorldId != character.WorldId)
+                throw new DomainValidationException($"Specialisation with ID {request.SpecialisationId} does not belong to this world.");
+            if (await _repository.IsSpecialisationLinkedAsync(request.CharacterId, request.SpecialisationId, cancellationToken))
+                throw new DomainValidationException("This specialisation is already linked to the character.");
+
+            await _repository.AddSpecialisationAsync(request.CharacterId, request.SpecialisationId, cancellationToken);
+            return true;
+        }
+    }
+
+    public class RemoveCharacterSpecialisationCommandHandler : IRequestHandler<RemoveCharacterSpecialisationCommand, bool>
+    {
+        private readonly ICharacterRepository _repository;
+        public RemoveCharacterSpecialisationCommandHandler(ICharacterRepository repository) => _repository = repository;
+        public Task<bool> Handle(RemoveCharacterSpecialisationCommand request, CancellationToken cancellationToken)
+            => _repository.RemoveSpecialisationAsync(request.CharacterId, request.SpecialisationId, cancellationToken);
+    }
+
+    public class AddCharacterClothingCommandHandler : IRequestHandler<AddCharacterClothingCommand, bool>
+    {
+        private readonly ICharacterRepository _repository;
+        private readonly IClothingRepository _clothingRepository;
+
+        public AddCharacterClothingCommandHandler(ICharacterRepository repository, IClothingRepository clothingRepository)
+        {
+            _repository = repository;
+            _clothingRepository = clothingRepository;
+        }
+
+        public async Task<bool> Handle(AddCharacterClothingCommand request, CancellationToken cancellationToken)
+        {
+            var character = await _repository.FindByIdAsync(request.CharacterId, cancellationToken)
+                ?? throw new EntityNotFoundException("Character", request.CharacterId);
+            var clothing = await _clothingRepository.FindByIdAsync(request.ClothingId, cancellationToken)
+                ?? throw new DomainValidationException($"Clothing with ID {request.ClothingId} does not exist.");
+            if (clothing.WorldId != character.WorldId)
+                throw new DomainValidationException($"Clothing with ID {request.ClothingId} does not belong to this world.");
+            if (await _repository.IsClothingLinkedAsync(request.CharacterId, request.ClothingId, cancellationToken))
+                throw new DomainValidationException("This clothing is already linked to the character.");
+
+            await _repository.AddClothingAsync(request.CharacterId, request.ClothingId, cancellationToken);
+            return true;
+        }
+    }
+
+    public class RemoveCharacterClothingCommandHandler : IRequestHandler<RemoveCharacterClothingCommand, bool>
+    {
+        private readonly ICharacterRepository _repository;
+        public RemoveCharacterClothingCommandHandler(ICharacterRepository repository) => _repository = repository;
+        public Task<bool> Handle(RemoveCharacterClothingCommand request, CancellationToken cancellationToken)
+            => _repository.RemoveClothingAsync(request.CharacterId, request.ClothingId, cancellationToken);
+    }
+
     internal static class CharacterValidation
     {
         /// <summary>

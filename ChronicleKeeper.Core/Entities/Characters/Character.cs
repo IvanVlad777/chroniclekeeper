@@ -7,7 +7,7 @@ using ChronicleKeeper.Core.Entities.Characters.Abilities;
 using ChronicleKeeper.Core.Entities.Characters.Equipment;
 using ChronicleKeeper.Core.Entities.HistoryTimelines;
 using ChronicleKeeper.Core.Entities.Professions;
-//using ChronicleKeeper.Core.Entities.Social.Cultures;
+using ChronicleKeeper.Core.Entities.Social.Cultures;
 using ChronicleKeeper.Core.Entities.Social.Education;
 using ChronicleKeeper.Core.Entities.Social.Nationality;
 using ChronicleKeeper.Core.Entities.Social.Religions;
@@ -77,7 +77,7 @@ namespace ChronicleKeeper.Core.Entities.Characters
         public virtual Profession? Profession { get; set; }
 
         public virtual ICollection<EducationRecord> Educations { get; set; } = new List<EducationRecord>();
-        //public virtual ICollection<Specialisation> Specialisations { get; set; } = new List<Specialisation>(); // TODO: Uncomment when Character many-to-many cross-links are revived
+        public virtual ICollection<CharacterSpecialisation> Specialisations { get; set; } = new List<CharacterSpecialisation>();
 
         // Relationships & Social Interactions
         public virtual ICollection<CharacterRelationship> Relationships { get; set; } = new List<CharacterRelationship>();
@@ -88,9 +88,9 @@ namespace ChronicleKeeper.Core.Entities.Characters
 
         // Equipment & Inventory
         public virtual ICollection<Item> Equipments { get; set; } = new List<Item>();
-        //public ICollection<Clothing> Clothing { get; set; } = new List<Clothing>(); // TODO: Uncomment when Clothing entity is revived
+        public virtual ICollection<CharacterClothing> Clothing { get; set; } = new List<CharacterClothing>();
 
         // Hobbies & Interests
-        //public virtual ICollection<Hobby> Hobbies { get; set; } = new List<Hobby>(); // TODO: Uncomment when Hobby entity is revived
+        public virtual ICollection<CharacterHobby> Hobbies { get; set; } = new List<CharacterHobby>();
     }
 }

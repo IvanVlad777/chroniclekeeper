@@ -47,6 +47,24 @@
     "alumni": {
         "label": "Alumni"
     },
+    "students": {
+        "label": "Učenici",
+        "add": "poveži",
+        "remove": "Ukloni {{name}}",
+        "pick": "Odaberi lik",
+        "confirm": "Poveži",
+        "addFailed": "Dodavanje učenika nije uspjelo.",
+        "removeFailed": "Uklanjanje učenika nije uspjelo."
+    },
+    "teachers": {
+        "label": "Učitelji",
+        "add": "poveži",
+        "remove": "Ukloni {{name}}",
+        "pick": "Odaberi lik",
+        "confirm": "Poveži",
+        "addFailed": "Dodavanje učitelja nije uspjelo.",
+        "removeFailed": "Uklanjanje učitelja nije uspjelo."
+    },
     "trainedProfessions": {
         "label": "Zanimanja koja se poučavaju"
     },

@@ -257,6 +257,7 @@ namespace ChronicleKeeper.Core.DTOs.CultureDetails
         public ReferenceDto? History { get; set; }
         public ReferenceDto? Culture { get; set; }
         public ReferenceDto? City { get; set; }
+        public List<ReferenceDto> NotableArtists { get; set; } = new();
     }
 
     public class CulturalInstitutionCreateDto

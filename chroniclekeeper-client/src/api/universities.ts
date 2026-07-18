@@ -73,3 +73,16 @@ export const updateUniversityMajor = async (
 export const deleteUniversityMajor = async (id: number): Promise<void> => {
     await api.delete(`/university-majors/${id}`);
 };
+
+export const addUniversityStudent = async (universityId: number, characterId: number): Promise<void> => {
+    await api.post(`/universities/${universityId}/students/${characterId}`);
+};
+export const removeUniversityStudent = async (universityId: number, characterId: number): Promise<void> => {
+    await api.delete(`/universities/${universityId}/students/${characterId}`);
+};
+export const addUniversityProfessor = async (universityId: number, characterId: number): Promise<void> => {
+    await api.post(`/universities/${universityId}/professors/${characterId}`);
+};
+export const removeUniversityProfessor = async (universityId: number, characterId: number): Promise<void> => {
+    await api.delete(`/universities/${universityId}/professors/${characterId}`);
+};
