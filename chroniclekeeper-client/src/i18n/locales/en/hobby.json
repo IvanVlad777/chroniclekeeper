@@ -1,0 +1,35 @@
+{
+    "listTitle": "Hobbies",
+    "search": "Search hobbies…",
+    "loaderror": "Failed to load",
+    "notfound": "Hobby not found",
+    "none": "None",
+    "backtolist": "Back to hobbies",
+    "emptyTitle": "No hobbies yet",
+    "emptyText": "Painting, hunting, chess, arcane study — the pastimes that give your characters colour. Create the first hobby to build the catalogue.",
+    "columns": {
+        "name": "Name",
+        "activity": "Activity",
+        "updated": "Updated"
+    },
+    "fields": {
+        "description": "Description",
+        "activity": "Activity",
+        "history": "History"
+    },
+    "form": {
+        "newTitle": "New hobby",
+        "editTitle": "Edit hobby",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "noHistory": "— No history —",
+        "save": "Save hobby",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

@@ -52,6 +52,7 @@
         "continentSpecifics": "Continent specifics",
         "regionSpecifics": "Region specifics",
         "districtType": "District type",
+        "landmarkType": "Landmark type",
         "isCapital": "Capital",
         "governmentSystem": "Government system",
         "legalSystem": "Legal system",

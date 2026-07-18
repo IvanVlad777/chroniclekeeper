@@ -1,0 +1,35 @@
+{
+    "listTitle": "Hobiji",
+    "search": "Pretraži hobije…",
+    "loaderror": "Učitavanje nije uspjelo",
+    "notfound": "Hobi nije pronađen",
+    "none": "Nema",
+    "backtolist": "Natrag na hobije",
+    "emptyTitle": "Još nema hobija",
+    "emptyText": "Slikanje, lov, šah, proučavanje magije — razonode koje daju boju tvojim likovima. Stvori prvi hobi da izgradiš katalog.",
+    "columns": {
+        "name": "Naziv",
+        "activity": "Aktivnost",
+        "updated": "Ažurirano"
+    },
+    "fields": {
+        "description": "Opis",
+        "activity": "Aktivnost",
+        "history": "Povijest"
+    },
+    "form": {
+        "newTitle": "Novi hobi",
+        "editTitle": "Uredi hobi",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "noHistory": "— Bez povijesti —",
+        "save": "Spremi hobi",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}”? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

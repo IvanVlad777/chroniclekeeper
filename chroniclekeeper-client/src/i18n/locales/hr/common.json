@@ -14,6 +14,9 @@
         "factions": "Frakcije",
         "species": "Vrste",
         "socialClasses": "Društveni slojevi",
+        "socialHierarchies": "Društvene hijerarhije",
+        "mutations": "Mutacije",
+        "hobbies": "Hobiji",
         "nations": "Nacije",
         "religions": "Religije",
         "languages": "Jezici",
@@ -174,7 +177,8 @@
             "educationSystem": "obrazovni sustav",
             "economicSystem": "ekonomski sustav",
             "militaryDoctrine": "doktrina",
-            "militaryOrganization": "organizacija"
+            "militaryOrganization": "organizacija",
+            "socialHierarchy": "društvena hijerarhija"
         }
     },
     "states": {

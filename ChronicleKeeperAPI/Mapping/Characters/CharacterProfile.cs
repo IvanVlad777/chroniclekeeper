@@ -1,5 +1,6 @@
 using AutoMapper;
 using ChronicleKeeper.Core.Entities.Characters;
+using ChronicleKeeper.Core.Entities.Characters.CharacterInfo;
 using ChronicleKeeper.Core.DTOs.Character;
 using ChronicleKeeper.Core.DTOs;
 using ChronicleKeeper.Core.DTOs.EducationRecord;
@@ -12,6 +13,10 @@ public class CharacterProfile : Profile
         CreateMap<CharacterDto, Character>();
         CreateMap<CharacterCreateDto, Character>();
         CreateMap<CharacterUpdateDto, Character>();
+
+        // Owned value types (inline on Characters table)
+        CreateMap<BackgroundInfo, BackgroundInfoDto>().ReverseMap();
+        CreateMap<PersonalityInfo, PersonalityInfoDto>().ReverseMap();
 
         CreateMap<Character, CharacterDetailsDto>()
             .ForMember(dest => dest.Father, opt => opt.MapFrom(src => src.Father == null ? null : new ReferenceDto { Id = src.Father.Id, Name = src.Father.Name }))

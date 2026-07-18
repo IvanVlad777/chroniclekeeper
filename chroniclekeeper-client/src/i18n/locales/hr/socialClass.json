@@ -19,10 +19,27 @@
         "isOutcast": "Izopćenik",
         "canOwnLand": "Smije posjedovati zemlju",
         "canHoldOffice": "Smije obnašati dužnost",
-        "hasTaxExemptions": "Porezne olakšice"
+        "hasTaxExemptions": "Porezne olakšice",
+        "socialHierarchy": "Društvena hijerarhija"
     },
     "members": {
         "label": "Članovi"
+    },
+    "privilegeLaws": {
+        "label": "Zakoni o privilegijama",
+        "add": "+ Dodaj zakon",
+        "none": "Još nema zakona o privilegijama.",
+        "name": "Naziv",
+        "grantsLegalImmunity": "Pravni imunitet",
+        "grantsLandOwnershipRights": "Pravo na vlasništvo zemlje",
+        "allowsPrivateArmies": "Privatne vojske",
+        "edit": "Uredi",
+        "save": "Spremi",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati ovaj zakon o privilegijama?",
+        "saveFailed": "Spremanje nije uspjelo.",
+        "deleteFailed": "Brisanje nije uspjelo."
     },
     "form": {
         "newTitle": "Novi društveni sloj",
@@ -31,6 +48,7 @@
         "requiredNote": "Polja označena zvjezdicom su obavezna.",
         "requiredMissing": "Naziv je obavezan.",
         "rightsLegend": "Prava i položaj",
+        "noHierarchy": "— Bez hijerarhije —",
         "save": "Spremi društveni sloj",
         "saving": "Spremanje…",
         "cancel": "Odustani",

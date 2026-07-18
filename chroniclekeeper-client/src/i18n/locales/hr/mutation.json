@@ -1,0 +1,51 @@
+{
+    "listTitle": "Mutacije",
+    "search": "Pretraži mutacije…",
+    "loaderror": "Učitavanje nije uspjelo",
+    "notfound": "Mutacija nije pronađena",
+    "none": "Nema",
+    "backtolist": "Natrag na mutacije",
+    "emptyTitle": "Još nema mutacija",
+    "emptyText": "Ožiljci od zračenja, čarobni darovi, inženjerske osobine — promjene koje izdvajaju biće. Stvori prvu mutaciju da ih katalogiziraš.",
+    "columns": {
+        "name": "Naziv",
+        "origin": "Podrijetlo",
+        "effect": "Učinak",
+        "updated": "Ažurirano"
+    },
+    "fields": {
+        "description": "Opis",
+        "origin": "Podrijetlo",
+        "effect": "Učinak",
+        "mutantCreature": "Zahvaćeno biće",
+        "history": "Povijest"
+    },
+    "origins": {
+        "Radiation": "Zračenje",
+        "Magic": "Magija",
+        "GeneticExperiment": "Genetički eksperiment",
+        "Disease": "Bolest",
+        "EvolutionaryAdaptation": "Evolucijska prilagodba"
+    },
+    "effects": {
+        "Beneficial": "Blagotvoran",
+        "Harmful": "Štetan",
+        "Mixed": "Mješovit"
+    },
+    "form": {
+        "newTitle": "Nova mutacija",
+        "editTitle": "Uredi mutaciju",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "noCreature": "— Bez bića —",
+        "noHistory": "— Bez povijesti —",
+        "save": "Spremi mutaciju",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}”? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

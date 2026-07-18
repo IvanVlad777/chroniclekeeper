@@ -29,6 +29,7 @@ namespace ChronicleKeeper.Core.DTOs.Location
         public int? EconomicSystemId { get; set; }
         public bool? IsCapital { get; set; }
         public string? DistrictType { get; set; }
+        public string? LandmarkType { get; set; }
 
         // Ecosystem hierarchy (shared base field)
         public string? UniqueFeatures { get; set; }
@@ -101,6 +102,7 @@ namespace ChronicleKeeper.Core.DTOs.Location
         public int? EconomicSystemId { get; set; }
         public bool? IsCapital { get; set; }
         public string? DistrictType { get; set; }
+        public string? LandmarkType { get; set; }
 
         public string? UniqueFeatures { get; set; }
         public double? WaterDepth { get; set; }
@@ -146,6 +148,7 @@ namespace ChronicleKeeper.Core.DTOs.Location
         public int? EconomicSystemId { get; set; }
         public bool? IsCapital { get; set; }
         public string? DistrictType { get; set; }
+        public string? LandmarkType { get; set; }
 
         public string? UniqueFeatures { get; set; }
         public double? WaterDepth { get; set; }

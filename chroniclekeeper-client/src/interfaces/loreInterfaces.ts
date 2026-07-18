@@ -85,6 +85,7 @@ export interface SocialClassDto {
     canOwnLand: boolean;
     canHoldOffice: boolean;
     hasTaxExemptions: boolean;
+    socialHierarchyId?: number | null;
     createdAt: string;
     updatedAt: string;
 }
@@ -103,6 +104,7 @@ export interface SocialClassCreateDto {
     canOwnLand: boolean;
     canHoldOffice: boolean;
     hasTaxExemptions: boolean;
+    socialHierarchyId?: number | null;
 }
 
 export type SocialClassUpdateDto = Omit<SocialClassCreateDto, "worldId">;
@@ -113,6 +115,7 @@ export interface NationDto {
     description: string;
     worldId: number;
     population: number;
+    socialHierarchyId?: number | null;
     historyId?: number | null;
     createdAt: string;
     updatedAt: string;
@@ -128,10 +131,139 @@ export interface NationCreateDto {
     description: string;
     worldId: number;
     population: number;
+    socialHierarchyId?: number | null;
     historyId?: number | null;
 }
 
 export type NationUpdateDto = Omit<NationCreateDto, "worldId">;
+
+// ── R4 Tail: Structure (SocialHierarchy, PrivilegeLaw), CharacterInfo (Hobby), Miscellaneous (Mutation) ──
+
+export interface SocialHierarchyDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    isCasteSystem: boolean;
+    allowsUpwardMobility: boolean;
+    allowsIntermarriage: boolean;
+    enforcesLegalSeparation: boolean;
+    historyId?: number | null;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface SocialHierarchyDetailsDto extends SocialHierarchyDto {
+    history?: ReferenceDto | null;
+    classes: ReferenceDto[];
+    nations: ReferenceDto[];
+}
+
+export interface SocialHierarchyCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    isCasteSystem: boolean;
+    allowsUpwardMobility: boolean;
+    allowsIntermarriage: boolean;
+    enforcesLegalSeparation: boolean;
+    historyId?: number | null;
+}
+
+export type SocialHierarchyUpdateDto = Omit<SocialHierarchyCreateDto, "worldId">;
+
+export interface PrivilegeLawDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    socialClassId: number;
+    grantsLegalImmunity: boolean;
+    grantsLandOwnershipRights: boolean;
+    allowsPrivateArmies: boolean;
+    historyId?: number | null;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface PrivilegeLawCreateDto {
+    name: string;
+    description: string;
+    socialClassId: number;
+    grantsLegalImmunity: boolean;
+    grantsLandOwnershipRights: boolean;
+    allowsPrivateArmies: boolean;
+    historyId?: number | null;
+}
+
+export type PrivilegeLawUpdateDto = Omit<PrivilegeLawCreateDto, "socialClassId">;
+
+export const mutationOrigins = [
+    "Radiation",
+    "Magic",
+    "GeneticExperiment",
+    "Disease",
+    "EvolutionaryAdaptation",
+] as const;
+export type MutationOrigin = (typeof mutationOrigins)[number];
+
+export const mutationEffects = ["Beneficial", "Harmful", "Mixed"] as const;
+export type MutationEffect = (typeof mutationEffects)[number];
+
+export interface MutationDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    origin: MutationOrigin;
+    effect: MutationEffect;
+    mutantCreatureId?: number | null;
+    historyId?: number | null;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface MutationDetailsDto extends MutationDto {
+    mutantCreature?: ReferenceDto | null;
+    history?: ReferenceDto | null;
+}
+
+export interface MutationCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    origin: MutationOrigin;
+    effect: MutationEffect;
+    mutantCreatureId?: number | null;
+    historyId?: number | null;
+}
+
+export type MutationUpdateDto = Omit<MutationCreateDto, "worldId">;
+
+export interface HobbyDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    activity: string;
+    historyId?: number | null;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface HobbyDetailsDto extends HobbyDto {
+    history?: ReferenceDto | null;
+}
+
+export interface HobbyCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    activity: string;
+    historyId?: number | null;
+}
+
+export type HobbyUpdateDto = Omit<HobbyCreateDto, "worldId">;
 
 export interface ReligionDto {
     id: number;
@@ -332,6 +464,44 @@ export interface NoteCreateDto {
 
 export type NoteUpdateDto = Omit<NoteCreateDto, "worldId">;
 
+/** Owned value type on Character — background / origin story. */
+export interface BackgroundInfo {
+    familyStatus: string;
+    childhood: string;
+    upbringing: string;
+    isImmigrant: boolean;
+    migrationHistory: string;
+}
+
+/** Owned value type on Character — personality profile. */
+export interface PersonalityInfo {
+    personalityTraits: string;
+    motivations: string;
+    virtues: string;
+    flaws: string;
+    psychologicalProfile: string;
+    fears: string;
+    ambitions: string;
+}
+
+export const emptyBackgroundInfo: BackgroundInfo = {
+    familyStatus: "",
+    childhood: "",
+    upbringing: "",
+    isImmigrant: false,
+    migrationHistory: "",
+};
+
+export const emptyPersonalityInfo: PersonalityInfo = {
+    personalityTraits: "",
+    motivations: "",
+    virtues: "",
+    flaws: "",
+    psychologicalProfile: "",
+    fears: "",
+    ambitions: "",
+};
+
 export interface CharacterDto {
     id: number;
     name: string;
@@ -447,6 +617,7 @@ export interface LocationDto {
     economicSystemId?: number | null;
     isCapital?: boolean | null;
     districtType?: string | null;
+    landmarkType?: string | null;
 
     // Ecosystem hierarchy
     uniqueFeatures?: string | null;
@@ -502,6 +673,7 @@ export interface LocationCreateDto {
     economicSystemId?: number | null;
     isCapital?: boolean | null;
     districtType?: string | null;
+    landmarkType?: string | null;
 
     uniqueFeatures?: string | null;
     waterDepth?: number | null;
@@ -625,6 +797,8 @@ export interface CharacterUpdateDto {
     religionId?: number | null;
     professionId?: number | null;
     historyId?: number | null;
+    background?: BackgroundInfo;
+    personality?: PersonalityInfo;
 }
 
 /** Enumi putuju kao stringovi (globalni JsonStringEnumConverter na API-ju). */
@@ -702,6 +876,8 @@ export interface CharacterDetailsDto extends CharacterDto {
     religiousEducations: ReligiousEducationDto[];
     abilities: ReferenceDto[];
     equipments: ReferenceDto[];
+    background: BackgroundInfo;
+    personality: PersonalityInfo;
 }
 
 export const electionSystems = [

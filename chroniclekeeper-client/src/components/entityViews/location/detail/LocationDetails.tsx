@@ -196,6 +196,12 @@ export default function LocationDetails() {
                             value={location.districtType || dash}
                         />
                     )}
+                    {location.type === "Landmark" && (
+                        <OrnateDisplayBox
+                            label={t("fields.landmarkType")}
+                            value={location.landmarkType || dash}
+                        />
+                    )}
                     {location.type === "City" && (
                         <OrnateDisplayBox
                             label={t("fields.isCapital")}

@@ -1,0 +1,45 @@
+{
+    "listTitle": "Social Hierarchies",
+    "search": "Search social hierarchies…",
+    "loaderror": "Failed to load",
+    "notfound": "Social hierarchy not found",
+    "none": "None",
+    "backtolist": "Back to social hierarchies",
+    "emptyTitle": "No social hierarchies yet",
+    "emptyText": "Caste systems, estates, ladders of standing — the frame that ranks your world's social classes. Create the first hierarchy to organize them.",
+    "columns": {
+        "name": "Name",
+        "traits": "Traits",
+        "updated": "Updated"
+    },
+    "fields": {
+        "description": "Description",
+        "history": "History",
+        "isCasteSystem": "Caste system",
+        "allowsUpwardMobility": "Upward mobility",
+        "allowsIntermarriage": "Intermarriage allowed",
+        "enforcesLegalSeparation": "Legal separation"
+    },
+    "classes": {
+        "label": "Social classes"
+    },
+    "nations": {
+        "label": "Nations"
+    },
+    "form": {
+        "newTitle": "New social hierarchy",
+        "editTitle": "Edit social hierarchy",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "rightsLegend": "Structure & rules",
+        "noHistory": "— No history —",
+        "save": "Save hierarchy",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

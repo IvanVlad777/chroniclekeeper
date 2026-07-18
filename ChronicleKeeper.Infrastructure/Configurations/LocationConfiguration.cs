@@ -32,8 +32,11 @@ namespace ChronicleKeeper.Infrastructure.Configurations
 
             // TPH: shadow string discriminator, same pattern as SchoolType/ContentType (School/Content
             // TPH roots elsewhere in this codebase). One value per C# subtype, not per LocationType —
-            // all 6 "plain" LocationType values (Town/Village/Building/Landmark/Wilderness/Other) share
-            // the base Location class. A prior attempt reused the Type column itself as the discriminator
+            // the 5 remaining "plain" LocationType values (Town/Village/Building/Wilderness/Other) share
+            // the base Location class. (Landmark graduated to its own subtype below — its LandmarkType
+            // free-text sub-kind is distinct from the LocationType.Landmark enum flag, same relationship
+            // as DesertEcosystem.DesertKind vs LocationType.Desert.)
+            // A prior attempt reused the Type column itself as the discriminator
             // (typed via LocationType with its own HasConversion<string>) but EF's discriminator-value
             // lookup doesn't consistently apply that converter when materializing mixed-subtype query
             // results — writes succeeded but reads threw "No discriminators matched the discriminator
@@ -49,6 +52,7 @@ namespace ChronicleKeeper.Infrastructure.Configurations
                 .HasValue<Country>("Country")
                 .HasValue<City>("City")
                 .HasValue<District>("District")
+                .HasValue<Landmark>("Landmark")
                 .HasValue<LakeEcosystem>("Lake")
                 .HasValue<SeaEcosystem>("Sea")
                 .HasValue<OceanEcosystem>("Ocean")

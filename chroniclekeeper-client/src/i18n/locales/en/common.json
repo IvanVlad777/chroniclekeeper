@@ -14,6 +14,9 @@
         "factions": "Factions",
         "species": "Species",
         "socialClasses": "Social Classes",
+        "socialHierarchies": "Social Hierarchies",
+        "mutations": "Mutations",
+        "hobbies": "Hobbies",
         "nations": "Nations",
         "religions": "Religions",
         "languages": "Languages",
@@ -174,7 +177,8 @@
             "educationSystem": "education system",
             "economicSystem": "economic system",
             "militaryDoctrine": "doctrine",
-            "militaryOrganization": "organization"
+            "militaryOrganization": "organization",
+            "socialHierarchy": "social hierarchy"
         }
     },
     "states": {

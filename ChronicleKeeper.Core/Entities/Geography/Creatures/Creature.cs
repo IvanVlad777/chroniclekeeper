@@ -31,7 +31,7 @@ namespace ChronicleKeeper.Core.Entities.Geography.Creatures
         public virtual ICollection<CreatureEcosystem> Habitants { get; set; } = new List<CreatureEcosystem>(); // Ecosystems it lives in
 
         // TODO: Uncomment when Mutation entity is revived
-        //public ICollection<Miscellaneous.Mutation> Mutations { get; set; } = new List<Miscellaneous.Mutation>();
+        public ICollection<Miscellaneous.Mutation> Mutations { get; set; } = new List<Miscellaneous.Mutation>();
         // TODO: Self-referencing many-to-many (join entities, e.g. CreatureSymbiosis/CreaturePredation) — deferred, new pattern for this codebase
         //public ICollection<Creature> SymbioticPartners { get; set; } = new List<Creature>();
         //public ICollection<Creature> Prey { get; set; } = new List<Creature>();

@@ -38,6 +38,24 @@
         "ExPartner": "Bivši partner",
         "Other": "Ostalo"
     },
+    "background": {
+        "legend": "Pozadina",
+        "familyStatus": "Obiteljski status",
+        "childhood": "Djetinjstvo",
+        "upbringing": "Odgoj",
+        "isImmigrant": "Doseljenik",
+        "migrationHistory": "Povijest migracije"
+    },
+    "personality": {
+        "legend": "Osobnost",
+        "personalityTraits": "Osobine",
+        "motivations": "Motivacije",
+        "virtues": "Vrline",
+        "flaws": "Mane",
+        "psychologicalProfile": "Psihološki profil",
+        "fears": "Strahovi",
+        "ambitions": "Ambicije"
+    },
     "form": {
         "newTitle": "Novi lik",
         "editTitle": "Uredi lika",

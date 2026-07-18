@@ -616,6 +616,82 @@ export default function CharacterDetail() {
                         <p className={`${s.prose} ${s.muted}`}>{t("none")}</p>
                     )}
 
+                    {(() => {
+                        const bg = character.background;
+                        const pr = character.personality;
+                        const bgRows: [string, string][] = [
+                            [t("background.familyStatus"), bg.familyStatus],
+                            [t("background.childhood"), bg.childhood],
+                            [t("background.upbringing"), bg.upbringing],
+                            [
+                                t("background.isImmigrant"),
+                                bg.isImmigrant ? "✓" : "",
+                            ],
+                            [
+                                t("background.migrationHistory"),
+                                bg.migrationHistory,
+                            ],
+                        ].filter(([, v]) => v) as [string, string][];
+                        const prRows: [string, string][] = [
+                            [
+                                t("personality.personalityTraits"),
+                                pr.personalityTraits,
+                            ],
+                            [t("personality.motivations"), pr.motivations],
+                            [t("personality.virtues"), pr.virtues],
+                            [t("personality.flaws"), pr.flaws],
+                            [t("personality.fears"), pr.fears],
+                            [t("personality.ambitions"), pr.ambitions],
+                            [
+                                t("personality.psychologicalProfile"),
+                                pr.psychologicalProfile,
+                            ],
+                        ].filter(([, v]) => v) as [string, string][];
+                        if (bgRows.length === 0 && prRows.length === 0) {
+                            return null;
+                        }
+                        return (
+                            <>
+                                {bgRows.length > 0 && (
+                                    <>
+                                        <div
+                                            className={`${s.sectionHead} ${s.sectionSpacer}`}
+                                        >
+                                            <span className={s.sectionTitle}>
+                                                {t("background.legend")}
+                                            </span>
+                                            <span className={s.sectionLine} />
+                                        </div>
+                                        {bgRows.map(([label, value]) => (
+                                            <p key={label} className={s.prose}>
+                                                <strong>{label}:</strong>{" "}
+                                                {value}
+                                            </p>
+                                        ))}
+                                    </>
+                                )}
+                                {prRows.length > 0 && (
+                                    <>
+                                        <div
+                                            className={`${s.sectionHead} ${s.sectionSpacer}`}
+                                        >
+                                            <span className={s.sectionTitle}>
+                                                {t("personality.legend")}
+                                            </span>
+                                            <span className={s.sectionLine} />
+                                        </div>
+                                        {prRows.map(([label, value]) => (
+                                            <p key={label} className={s.prose}>
+                                                <strong>{label}:</strong>{" "}
+                                                {value}
+                                            </p>
+                                        ))}
+                                    </>
+                                )}
+                            </>
+                        );
+                    })()}
+
                     <div className={s.linkGrid}>
                         <div>
                             <div className={s.listLabel}>{t("factions")}</div>

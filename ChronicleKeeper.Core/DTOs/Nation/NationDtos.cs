@@ -10,6 +10,7 @@ namespace ChronicleKeeper.Core.DTOs.Nation
         public string Description { get; set; } = string.Empty;
         public int WorldId { get; set; }
         public int Population { get; set; }
+        public int? SocialHierarchyId { get; set; }
         public int? HistoryId { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
@@ -35,6 +36,7 @@ namespace ChronicleKeeper.Core.DTOs.Nation
 
         [Range(0, int.MaxValue, ErrorMessage = "Population cannot be negative")]
         public int Population { get; set; }
+        public int? SocialHierarchyId { get; set; }
         public int? HistoryId { get; set; }
     }
 
@@ -49,6 +51,7 @@ namespace ChronicleKeeper.Core.DTOs.Nation
 
         [Range(0, int.MaxValue, ErrorMessage = "Population cannot be negative")]
         public int Population { get; set; }
+        public int? SocialHierarchyId { get; set; }
         public int? HistoryId { get; set; }
     }
 }

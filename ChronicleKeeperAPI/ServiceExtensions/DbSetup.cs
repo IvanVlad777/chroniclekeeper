@@ -103,6 +103,12 @@ namespace ChronicleKeeper.API.ServiceExtensions
             services.AddScoped<IReligiousOrderRepository, ReligiousOrderRepository>();
             services.AddScoped<IReligiousFestivalRepository, ReligiousFestivalRepository>();
 
+            // R4 Tail (Structure / CharacterInfo / Miscellaneous)
+            services.AddScoped<ISocialHierarchyRepository, SocialHierarchyRepository>();
+            services.AddScoped<IPrivilegeLawRepository, PrivilegeLawRepository>();
+            services.AddScoped<IMutationRepository, MutationRepository>();
+            services.AddScoped<IHobbyRepository, HobbyRepository>();
+
             return services;
         }
     }

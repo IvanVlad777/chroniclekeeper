@@ -112,6 +112,7 @@ namespace ChronicleKeeper.Core.CQRS.Locations.Handlers
                     EconomicSystemId = dto.EconomicSystemId
                 },
                 LocationType.District => new District { DistrictType = dto.DistrictType ?? string.Empty },
+                LocationType.Landmark => new Landmark { LandmarkType = dto.LandmarkType ?? string.Empty },
                 LocationType.Lake => new LakeEcosystem
                 {
                     WaterDepth = dto.WaterDepth ?? 0,
@@ -250,6 +251,9 @@ namespace ChronicleKeeper.Core.CQRS.Locations.Handlers
                     break;
                 case District district:
                     district.DistrictType = dto.DistrictType ?? string.Empty;
+                    break;
+                case Landmark landmark:
+                    landmark.LandmarkType = dto.LandmarkType ?? string.Empty;
                     break;
                 case LakeEcosystem lake:
                     lake.WaterDepth = dto.WaterDepth ?? 0;
@@ -464,7 +468,7 @@ namespace ChronicleKeeper.Core.CQRS.Locations.Handlers
         public static string DiscriminatorGroup(LocationType type) => type switch
         {
             LocationType.Continent or LocationType.Region or LocationType.Country
-                or LocationType.City or LocationType.District
+                or LocationType.City or LocationType.District or LocationType.Landmark
                 or LocationType.Lake or LocationType.Sea or LocationType.Ocean or LocationType.River
                 or LocationType.Mountain or LocationType.MountainRange or LocationType.Swamp
                 or LocationType.Desert or LocationType.Forest or LocationType.Cave or LocationType.Grassland

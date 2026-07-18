@@ -61,3 +61,15 @@
 .footerSpacer {
     flex: 1;
 }
+
+/* Section legend for Background / Personality groups (R4 Tail) */
+.legend {
+    display: block;
+    font-family: var(--font-ui);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-muted);
+    margin-bottom: 0.5rem;
+}

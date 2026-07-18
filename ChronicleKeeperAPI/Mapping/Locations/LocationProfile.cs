@@ -23,6 +23,7 @@ public class LocationProfile : Profile
             .ForMember(d => d.EconomicSystemId, opt => opt.MapFrom(src => GetEconomicSystemId(src)))
             .ForMember(d => d.IsCapital, opt => opt.MapFrom(src => GetIsCapital(src)))
             .ForMember(d => d.DistrictType, opt => opt.MapFrom(src => GetDistrictType(src)))
+            .ForMember(d => d.LandmarkType, opt => opt.MapFrom(src => GetLandmarkType(src)))
             .ForMember(d => d.UniqueFeatures, opt => opt.MapFrom(src => GetUniqueFeatures(src)))
             .ForMember(d => d.WaterDepth, opt => opt.MapFrom(src => GetWaterDepth(src)))
             .ForMember(d => d.Volume, opt => opt.MapFrom(src => GetVolume(src)))
@@ -100,6 +101,7 @@ public class LocationProfile : Profile
     private static bool? GetIsCapital(Location location) => location is City city ? city.IsCapital : null;
 
     private static string? GetDistrictType(Location location) => location is District d ? d.DistrictType : null;
+    private static string? GetLandmarkType(Location location) => location is Landmark l ? l.LandmarkType : null;
 
     private static ReferenceDto? GetGovernmentSystem(Location location)
     {

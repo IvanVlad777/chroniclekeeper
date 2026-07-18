@@ -65,9 +65,9 @@ namespace ChronicleKeeper.Core.Entities.Characters
         public int? HistoryId { get; set; }
         public virtual History? History { get; set; }
 
-        // Personality & Background
-        //public BackgroundInfo Background { get; set; } = new BackgroundInfo(); // TODO: Uncomment when BackgroundInfo entity is revived
-        //public PersonalityInfo Personality { get; set; } = new PersonalityInfo(); // TODO: Uncomment when PersonalityInfo entity is revived
+        // Personality & Background — EF owned types, stored inline as columns on the Characters table.
+        public BackgroundInfo Background { get; set; } = new BackgroundInfo();
+        public PersonalityInfo Personality { get; set; } = new PersonalityInfo();
 
         // Abilities & Skills
         public virtual ICollection<CharacterAbility> Abilities { get; set; } = new List<CharacterAbility>();

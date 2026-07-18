@@ -18,6 +18,15 @@ import SpeciesForm from "../components/entityViews/species/form/SpeciesForm";
 import SocialClassList from "../components/entityViews/socialClass/list/SocialClassList";
 import SocialClassDetails from "../components/entityViews/socialClass/detail/SocialClassDetails";
 import SocialClassForm from "../components/entityViews/socialClass/form/SocialClassForm";
+import SocialHierarchyList from "../components/entityViews/socialHierarchy/list/SocialHierarchyList";
+import SocialHierarchyDetails from "../components/entityViews/socialHierarchy/detail/SocialHierarchyDetails";
+import SocialHierarchyForm from "../components/entityViews/socialHierarchy/form/SocialHierarchyForm";
+import MutationList from "../components/entityViews/mutation/list/MutationList";
+import MutationDetails from "../components/entityViews/mutation/detail/MutationDetails";
+import MutationForm from "../components/entityViews/mutation/form/MutationForm";
+import HobbyList from "../components/entityViews/hobby/list/HobbyList";
+import HobbyDetails from "../components/entityViews/hobby/detail/HobbyDetails";
+import HobbyForm from "../components/entityViews/hobby/form/HobbyForm";
 import NationList from "../components/entityViews/nation/list/NationList";
 import NationDetails from "../components/entityViews/nation/detail/NationDetails";
 import NationForm from "../components/entityViews/nation/form/NationForm";
@@ -228,6 +237,33 @@ const AppRoutes = () => {
                     path="social-classes/:id/edit"
                     element={<SocialClassForm />}
                 />
+                <Route
+                    path="social-hierarchies"
+                    element={<SocialHierarchyList />}
+                />
+                <Route
+                    path="social-hierarchies/new"
+                    element={<SocialHierarchyForm />}
+                />
+                <Route
+                    path="social-hierarchies/:id"
+                    element={<SocialHierarchyDetails />}
+                />
+                <Route
+                    path="social-hierarchies/:id/edit"
+                    element={<SocialHierarchyForm />}
+                />
+                <Route path="mutations" element={<MutationList />} />
+                <Route path="mutations/new" element={<MutationForm />} />
+                <Route path="mutations/:id" element={<MutationDetails />} />
+                <Route
+                    path="mutations/:id/edit"
+                    element={<MutationForm />}
+                />
+                <Route path="hobbies" element={<HobbyList />} />
+                <Route path="hobbies/new" element={<HobbyForm />} />
+                <Route path="hobbies/:id" element={<HobbyDetails />} />
+                <Route path="hobbies/:id/edit" element={<HobbyForm />} />
                 <Route path="nations" element={<NationList />} />
                 <Route path="nations/new" element={<NationForm />} />
                 <Route path="nations/:id" element={<NationDetails />} />

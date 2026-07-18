@@ -58,5 +58,8 @@ namespace ChronicleKeeper.Core.DTOs.Character
 
         public int? ProfessionId { get; set; }
         public int? HistoryId { get; set; }
+
+        public BackgroundInfoDto Background { get; set; } = new();
+        public PersonalityInfoDto Personality { get; set; } = new();
     }
 }

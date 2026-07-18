@@ -16,13 +16,13 @@ namespace ChronicleKeeper.Core.Entities.Social.Structure
         public bool CanHoldOffice { get; set; } // True if eligible for political roles
         public bool HasTaxExemptions { get; set; } // If this class is taxed differently
 
-        //public int? SocialHierarchyId { get; set; } // TODO: Uncomment when SocialHierarchy entity is revived
-        //public virtual SocialHierarchy? SocialHierarchy { get; set; }
+        public int? SocialHierarchyId { get; set; }
+        public virtual SocialHierarchy? SocialHierarchy { get; set; }
 
         //public ICollection<Profession> TypicalProfessions { get; set; } = new List<Profession>(); // TODO: Uncomment when Profession entity is revived
         // NOTE: relation to Guild already exists via the GuildSocialClass join entity (Guild owns the nav) — target side gets no nav per convention.
         //public ICollection<Culture> Cultures { get; set; } = new List<Culture>(); // TODO: Uncomment when Culture entity is revived
         public ICollection<Character> Members { get; set; } = new List<Character>();
-        //public ICollection<PrivilegeLaw> PrivilegeLaws { get; set; } = new List<PrivilegeLaw>(); // TODO: Uncomment when PrivilegeLaw entity is revived
+        public ICollection<PrivilegeLaw> PrivilegeLaws { get; set; } = new List<PrivilegeLaw>();
     }
 }

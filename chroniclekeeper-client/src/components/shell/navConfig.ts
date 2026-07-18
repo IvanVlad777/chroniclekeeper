@@ -58,6 +58,7 @@ export const navDomains: NavDomain[] = [
             entry("species", "/storymap/species"),
             entry("professions", "/storymap/professions"),
             entry("abilities", "/storymap/abilities"),
+            entry("hobbies", "/storymap/hobbies"),
         ],
     },
     {
@@ -73,7 +74,10 @@ export const navDomains: NavDomain[] = [
     {
         key: "nature",
         glyph: "❦",
-        entries: [entry("creatures", "/storymap/creatures")],
+        entries: [
+            entry("creatures", "/storymap/creatures"),
+            entry("mutations", "/storymap/mutations"),
+        ],
     },
     {
         key: "society",
@@ -85,6 +89,7 @@ export const navDomains: NavDomain[] = [
             entry("cultures", "/storymap/cultures"),
             entry("languages", "/storymap/languages"),
             entry("socialClasses", "/storymap/social-classes"),
+            entry("socialHierarchies", "/storymap/social-hierarchies"),
         ],
     },
     {

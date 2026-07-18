@@ -23,12 +23,16 @@ import { getNations } from "../../../../api/nations";
 import { getReligions } from "../../../../api/religions";
 import { getProfessions } from "../../../../api/professions";
 import {
+    BackgroundInfo,
     CharacterUpdateDto,
     NationDto,
+    PersonalityInfo,
     ProfessionDto,
     RaceDto,
     ReligionDto,
     SocialClassDto,
+    emptyBackgroundInfo,
+    emptyPersonalityInfo,
 } from "../../../../interfaces/loreInterfaces";
 import { useWorld } from "../../../../hooks/useWorld";
 import { useAuth } from "../../../../hooks/useAuth";
@@ -63,6 +67,8 @@ interface FormState {
     historyId: string;
     fatherId: string;
     motherId: string;
+    background: BackgroundInfo;
+    personality: PersonalityInfo;
 }
 
 const emptyForm: FormState = {
@@ -89,6 +95,8 @@ const emptyForm: FormState = {
     historyId: "",
     fatherId: "",
     motherId: "",
+    background: { ...emptyBackgroundInfo },
+    personality: { ...emptyPersonalityInfo },
 };
 
 const toId = (v: string): number | null => (v ? Number(v) : null);
@@ -120,6 +128,8 @@ function toUpdateDto(f: FormState): CharacterUpdateDto {
         historyId: toId(f.historyId),
         fatherId: toId(f.fatherId),
         motherId: toId(f.motherId),
+        background: f.background,
+        personality: f.personality,
     };
 }
 
@@ -154,6 +164,24 @@ export default function CharacterForm() {
 
     const set = <K extends keyof FormState>(key: K, value: FormState[K]) =>
         setForm((f) => ({ ...f, [key]: value }));
+
+    const setBg = <K extends keyof BackgroundInfo>(
+        key: K,
+        value: BackgroundInfo[K]
+    ) =>
+        setForm((f) => ({
+            ...f,
+            background: { ...f.background, [key]: value },
+        }));
+
+    const setPers = <K extends keyof PersonalityInfo>(
+        key: K,
+        value: PersonalityInfo[K]
+    ) =>
+        setForm((f) => ({
+            ...f,
+            personality: { ...f.personality, [key]: value },
+        }));
 
     // Učitavanje šifrarnika (vrste, rase, likovi za roditelje) + lika u edit modu
     useEffect(() => {
@@ -216,6 +244,14 @@ export default function CharacterForm() {
                         historyId: c.historyId ? String(c.historyId) : "",
                         fatherId: c.fatherId ? String(c.fatherId) : "",
                         motherId: c.motherId ? String(c.motherId) : "",
+                        background: {
+                            ...emptyBackgroundInfo,
+                            ...(c.background ?? {}),
+                        },
+                        personality: {
+                            ...emptyPersonalityInfo,
+                            ...(c.personality ?? {}),
+                        },
                     });
                 }
             })
@@ -606,6 +642,131 @@ export default function CharacterForm() {
                         checked={form.isArtificial}
                         onChange={(e) => set("isArtificial", e.target.checked)}
                     />
+                </div>
+            </div>
+
+            <div className={s.grid}>
+                <div className={s.col}>
+                    <span className={s.legend}>{t("background.legend")}</span>
+                    <OrnateField label={t("background.familyStatus")}>
+                        <OrnateTextInput
+                            value={form.background.familyStatus}
+                            maxLength={200}
+                            onChange={(e) =>
+                                setBg("familyStatus", e.target.value)
+                            }
+                        />
+                    </OrnateField>
+                    <OrnateField label={t("background.childhood")}>
+                        <OrnateTextArea
+                            value={form.background.childhood}
+                            rows={3}
+                            maxLength={4000}
+                            onChange={(e) =>
+                                setBg("childhood", e.target.value)
+                            }
+                        />
+                    </OrnateField>
+                    <OrnateField label={t("background.upbringing")}>
+                        <OrnateTextArea
+                            value={form.background.upbringing}
+                            rows={3}
+                            maxLength={4000}
+                            onChange={(e) =>
+                                setBg("upbringing", e.target.value)
+                            }
+                        />
+                    </OrnateField>
+                    <OrnateCheckbox
+                        label={t("background.isImmigrant")}
+                        checked={form.background.isImmigrant}
+                        onChange={(e) =>
+                            setBg("isImmigrant", e.target.checked)
+                        }
+                    />
+                    <OrnateField label={t("background.migrationHistory")}>
+                        <OrnateTextArea
+                            value={form.background.migrationHistory}
+                            rows={3}
+                            maxLength={4000}
+                            onChange={(e) =>
+                                setBg("migrationHistory", e.target.value)
+                            }
+                        />
+                    </OrnateField>
+                </div>
+
+                <div className={s.col}>
+                    <span className={s.legend}>{t("personality.legend")}</span>
+                    <OrnateField label={t("personality.personalityTraits")}>
+                        <OrnateTextArea
+                            value={form.personality.personalityTraits}
+                            rows={2}
+                            maxLength={2000}
+                            onChange={(e) =>
+                                setPers("personalityTraits", e.target.value)
+                            }
+                        />
+                    </OrnateField>
+                    <OrnateField label={t("personality.motivations")}>
+                        <OrnateTextArea
+                            value={form.personality.motivations}
+                            rows={2}
+                            maxLength={2000}
+                            onChange={(e) =>
+                                setPers("motivations", e.target.value)
+                            }
+                        />
+                    </OrnateField>
+                    <OrnateField label={t("personality.virtues")}>
+                        <OrnateTextInput
+                            value={form.personality.virtues}
+                            maxLength={2000}
+                            onChange={(e) =>
+                                setPers("virtues", e.target.value)
+                            }
+                        />
+                    </OrnateField>
+                    <OrnateField label={t("personality.flaws")}>
+                        <OrnateTextInput
+                            value={form.personality.flaws}
+                            maxLength={2000}
+                            onChange={(e) =>
+                                setPers("flaws", e.target.value)
+                            }
+                        />
+                    </OrnateField>
+                    <OrnateField label={t("personality.fears")}>
+                        <OrnateTextInput
+                            value={form.personality.fears}
+                            maxLength={2000}
+                            onChange={(e) =>
+                                setPers("fears", e.target.value)
+                            }
+                        />
+                    </OrnateField>
+                    <OrnateField label={t("personality.ambitions")}>
+                        <OrnateTextInput
+                            value={form.personality.ambitions}
+                            maxLength={2000}
+                            onChange={(e) =>
+                                setPers("ambitions", e.target.value)
+                            }
+                        />
+                    </OrnateField>
+                    <OrnateField label={t("personality.psychologicalProfile")}>
+                        <OrnateTextArea
+                            value={form.personality.psychologicalProfile}
+                            rows={3}
+                            maxLength={4000}
+                            onChange={(e) =>
+                                setPers(
+                                    "psychologicalProfile",
+                                    e.target.value
+                                )
+                            }
+                        />
+                    </OrnateField>
                 </div>
             </div>
 

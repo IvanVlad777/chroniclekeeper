@@ -15,7 +15,12 @@ import {
     getSocialClassById,
     updateSocialClass,
 } from "../../../../api/socialClasses";
-import { SocialClassUpdateDto } from "../../../../interfaces/loreInterfaces";
+import { getSocialHierarchies } from "../../../../api/socialHierarchies";
+import {
+    SocialClassUpdateDto,
+    SocialHierarchyDto,
+} from "../../../../interfaces/loreInterfaces";
+import { EntityPicker } from "../../../quickCreate/EntityPicker";
 import { useWorld } from "../../../../hooks/useWorld";
 import { useAuth } from "../../../../hooks/useAuth";
 import { apiErrorMessage } from "../../../../utils/apiError";
@@ -32,6 +37,7 @@ interface FormState {
     canOwnLand: boolean;
     canHoldOffice: boolean;
     hasTaxExemptions: boolean;
+    socialHierarchyId: string;
 }
 
 const emptyForm: FormState = {
@@ -43,6 +49,7 @@ const emptyForm: FormState = {
     canOwnLand: false,
     canHoldOffice: false,
     hasTaxExemptions: false,
+    socialHierarchyId: "",
 };
 
 function toDto(f: FormState): SocialClassUpdateDto {
@@ -55,6 +62,9 @@ function toDto(f: FormState): SocialClassUpdateDto {
         canOwnLand: f.canOwnLand,
         canHoldOffice: f.canHoldOffice,
         hasTaxExemptions: f.hasTaxExemptions,
+        socialHierarchyId: f.socialHierarchyId
+            ? Number(f.socialHierarchyId)
+            : null,
     };
 }
 
@@ -70,8 +80,10 @@ export default function SocialClassForm() {
     const { userInfo } = useAuth();
     const canDelete =
         userInfo?.roles.some((r) => editorRoles.includes(r)) ?? false;
+    const canCreate = canDelete;
 
     const [form, setForm] = useState<FormState>(emptyForm);
+    const [hierarchies, setHierarchies] = useState<SocialHierarchyDto[]>([]);
     const [loading, setLoading] = useState(isEdit);
     const [loadError, setLoadError] = useState<string | null>(null);
     const [saveError, setSaveError] = useState<string | null>(null);
@@ -80,6 +92,15 @@ export default function SocialClassForm() {
 
     const set = <K extends keyof FormState>(key: K, value: FormState[K]) =>
         setForm((f) => ({ ...f, [key]: value }));
+
+    useEffect(() => {
+        if (!selectedWorld) return;
+        getSocialHierarchies(selectedWorld.id)
+            .then(setHierarchies)
+            .catch((err) =>
+                console.error("Failed to load social hierarchies:", err)
+            );
+    }, [selectedWorld]);
 
     useEffect(() => {
         if (!isEdit) return;
@@ -100,6 +121,9 @@ export default function SocialClassForm() {
                     canOwnLand: sc.canOwnLand,
                     canHoldOffice: sc.canHoldOffice,
                     hasTaxExemptions: sc.hasTaxExemptions,
+                    socialHierarchyId: sc.socialHierarchyId
+                        ? String(sc.socialHierarchyId)
+                        : "",
                 });
             })
             .catch((err) => {
@@ -207,6 +231,29 @@ export default function SocialClassForm() {
                             maxLength={4000}
                             onChange={(e) =>
                                 set("description", e.target.value)
+                            }
+                        />
+                    </OrnateField>
+                    <OrnateField label={t("fields.socialHierarchy")}>
+                        <EntityPicker
+                            value={form.socialHierarchyId}
+                            onChange={(v) => set("socialHierarchyId", v)}
+                            options={hierarchies.map((h) => ({
+                                value: h.id,
+                                label: h.name,
+                            }))}
+                            kind="socialHierarchy"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("form.noHierarchy")}
+                            onCreated={(created) =>
+                                setHierarchies((hs) => [
+                                    ...hs,
+                                    {
+                                        id: created.id,
+                                        name: created.name,
+                                    } as SocialHierarchyDto,
+                                ])
                             }
                         />
                     </OrnateField>

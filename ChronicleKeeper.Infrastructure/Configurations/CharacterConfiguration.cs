@@ -97,6 +97,30 @@ namespace ChronicleKeeper.Infrastructure.Configurations
                 .HasForeignKey(c => c.HistoryId)
                 .OnDelete(DeleteBehavior.SetNull);
 
+            // Owned value types — stored inline as columns on the Characters table
+            // (Background_*, Personality_*). Required so existing rows get non-null defaults
+            // and reads always reconstruct the object (never null).
+            builder.OwnsOne(c => c.Background, b =>
+            {
+                b.Property(x => x.FamilyStatus).HasMaxLength(200);
+                b.Property(x => x.Childhood).HasMaxLength(4000);
+                b.Property(x => x.Upbringing).HasMaxLength(4000);
+                b.Property(x => x.MigrationHistory).HasMaxLength(4000);
+            });
+            builder.Navigation(c => c.Background).IsRequired();
+
+            builder.OwnsOne(c => c.Personality, b =>
+            {
+                b.Property(x => x.PersonalityTraits).HasMaxLength(2000);
+                b.Property(x => x.Motivations).HasMaxLength(2000);
+                b.Property(x => x.Virtues).HasMaxLength(2000);
+                b.Property(x => x.Flaws).HasMaxLength(2000);
+                b.Property(x => x.PsychologicalProfile).HasMaxLength(4000);
+                b.Property(x => x.Fears).HasMaxLength(2000);
+                b.Property(x => x.Ambitions).HasMaxLength(2000);
+            });
+            builder.Navigation(c => c.Personality).IsRequired();
+
             builder.ToTable(t =>
             {
                 t.HasCheckConstraint("CK_Characters_Father_NotSelf", "[FatherId] <> [Id]");

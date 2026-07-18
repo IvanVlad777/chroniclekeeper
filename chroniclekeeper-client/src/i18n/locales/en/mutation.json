@@ -1,0 +1,51 @@
+{
+    "listTitle": "Mutations",
+    "search": "Search mutations…",
+    "loaderror": "Failed to load",
+    "notfound": "Mutation not found",
+    "none": "None",
+    "backtolist": "Back to mutations",
+    "emptyTitle": "No mutations yet",
+    "emptyText": "Radiation scars, arcane gifts, engineered traits — the changes that set a creature apart. Create the first mutation to catalogue them.",
+    "columns": {
+        "name": "Name",
+        "origin": "Origin",
+        "effect": "Effect",
+        "updated": "Updated"
+    },
+    "fields": {
+        "description": "Description",
+        "origin": "Origin",
+        "effect": "Effect",
+        "mutantCreature": "Affected creature",
+        "history": "History"
+    },
+    "origins": {
+        "Radiation": "Radiation",
+        "Magic": "Magic",
+        "GeneticExperiment": "Genetic experiment",
+        "Disease": "Disease",
+        "EvolutionaryAdaptation": "Evolutionary adaptation"
+    },
+    "effects": {
+        "Beneficial": "Beneficial",
+        "Harmful": "Harmful",
+        "Mixed": "Mixed"
+    },
+    "form": {
+        "newTitle": "New mutation",
+        "editTitle": "Edit mutation",
+        "edit": "Edit",
+        "requiredNote": "Fields marked with an asterisk are required.",
+        "requiredMissing": "Name is required.",
+        "noCreature": "— No creature —",
+        "noHistory": "— No history —",
+        "save": "Save mutation",
+        "saving": "Saving…",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "deleteConfirm": "Delete “{{name}}”? This cannot be undone.",
+        "saveFailed": "Saving failed. Check the fields and try again.",
+        "deleteFailed": "Deleting failed."
+    }
+}

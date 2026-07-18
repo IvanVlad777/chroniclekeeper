@@ -60,6 +60,7 @@ interface FormState {
     economicSystemId: string;
     isCapital: boolean;
     districtType: string;
+    landmarkType: string;
     uniqueFeatures: string;
     waterDepth: string;
     volume: string;
@@ -97,6 +98,7 @@ const emptyForm: FormState = {
     economicSystemId: "",
     isCapital: false,
     districtType: "",
+    landmarkType: "",
     uniqueFeatures: "",
     waterDepth: "",
     volume: "",
@@ -148,6 +150,7 @@ function toDto(f: FormState): LocationUpdateDto {
             f.type === "Country" || f.type === "City" ? toId(f.economicSystemId) : null,
         isCapital: f.type === "City" ? f.isCapital : null,
         districtType: f.type === "District" ? toStr(f.districtType) : null,
+        landmarkType: f.type === "Landmark" ? toStr(f.landmarkType) : null,
         uniqueFeatures: isEcosystemType(f.type) ? toStr(f.uniqueFeatures) : null,
         waterDepth: isWaterType(f.type) ? toNum(f.waterDepth) : null,
         volume: f.type === "Lake" ? toNum(f.volume) : null,
@@ -249,6 +252,7 @@ export default function LocationForm() {
                             : "",
                         isCapital: l.isCapital ?? false,
                         districtType: l.districtType ?? "",
+                        landmarkType: l.landmarkType ?? "",
                         uniqueFeatures: l.uniqueFeatures ?? "",
                         waterDepth: l.waterDepth != null ? String(l.waterDepth) : "",
                         volume: l.volume != null ? String(l.volume) : "",
@@ -427,6 +431,16 @@ export default function LocationForm() {
                                 value={form.districtType}
                                 onChange={(e) =>
                                     set("districtType", e.target.value)
+                                }
+                            />
+                        </OrnateField>
+                    )}
+                    {form.type === "Landmark" && (
+                        <OrnateField label={t("fields.landmarkType")}>
+                            <OrnateTextInput
+                                value={form.landmarkType}
+                                onChange={(e) =>
+                                    set("landmarkType", e.target.value)
                                 }
                             />
                         </OrnateField>

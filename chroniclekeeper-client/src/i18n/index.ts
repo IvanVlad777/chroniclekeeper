@@ -104,6 +104,12 @@ import enBattle from "./locales/en/battle.json";
 import hrBattle from "./locales/hr/battle.json";
 import enMilitaryEquipment from "./locales/en/militaryEquipment.json";
 import hrMilitaryEquipment from "./locales/hr/militaryEquipment.json";
+import enSocialHierarchy from "./locales/en/socialHierarchy.json";
+import hrSocialHierarchy from "./locales/hr/socialHierarchy.json";
+import enMutation from "./locales/en/mutation.json";
+import hrMutation from "./locales/hr/mutation.json";
+import enHobby from "./locales/en/hobby.json";
+import hrHobby from "./locales/hr/hobby.json";
 
 i18n.use(LanguageDetector)
     .use(initReactI18next)
@@ -161,6 +167,9 @@ i18n.use(LanguageDetector)
                 militaryUnit: enMilitaryUnit,
                 battle: enBattle,
                 militaryEquipment: enMilitaryEquipment,
+                socialHierarchy: enSocialHierarchy,
+                mutation: enMutation,
+                hobby: enHobby,
             },
             hr: {
                 common: hrCommon,
@@ -214,6 +223,9 @@ i18n.use(LanguageDetector)
                 militaryUnit: hrMilitaryUnit,
                 battle: hrBattle,
                 militaryEquipment: hrMilitaryEquipment,
+                socialHierarchy: hrSocialHierarchy,
+                mutation: hrMutation,
+                hobby: hrHobby,
             },
         },
         fallbackLng: "en",
@@ -269,6 +281,9 @@ i18n.use(LanguageDetector)
             "militaryUnit",
             "battle",
             "militaryEquipment",
+            "socialHierarchy",
+            "mutation",
+            "hobby",
         ], //namespaces
         defaultNS: "common",
         interpolation: {

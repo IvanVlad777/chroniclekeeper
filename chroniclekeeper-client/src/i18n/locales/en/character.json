@@ -38,6 +38,24 @@
         "ExPartner": "Ex-partner",
         "Other": "Other"
     },
+    "background": {
+        "legend": "Background",
+        "familyStatus": "Family status",
+        "childhood": "Childhood",
+        "upbringing": "Upbringing",
+        "isImmigrant": "Immigrant",
+        "migrationHistory": "Migration history"
+    },
+    "personality": {
+        "legend": "Personality",
+        "personalityTraits": "Personality traits",
+        "motivations": "Motivations",
+        "virtues": "Virtues",
+        "flaws": "Flaws",
+        "psychologicalProfile": "Psychological profile",
+        "fears": "Fears",
+        "ambitions": "Ambitions"
+    },
     "form": {
         "newTitle": "New character",
         "editTitle": "Edit character",

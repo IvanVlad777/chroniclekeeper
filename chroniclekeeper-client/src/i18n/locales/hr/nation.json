@@ -15,6 +15,7 @@
     "fields": {
         "description": "Opis",
         "population": "Stanovništvo",
+        "socialHierarchy": "Društvena hijerarhija",
         "history": "Povijest"
     },
     "citizens": {
@@ -26,6 +27,7 @@
         "edit": "Uredi",
         "requiredNote": "Polja označena zvjezdicom su obavezna.",
         "requiredMissing": "Naziv je obavezan.",
+        "noHierarchy": "— Bez hijerarhije —",
         "save": "Spremi naciju",
         "saving": "Spremanje…",
         "cancel": "Odustani",

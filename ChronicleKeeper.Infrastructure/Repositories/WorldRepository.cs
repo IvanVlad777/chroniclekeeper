@@ -373,6 +373,15 @@ namespace ChronicleKeeper.Infrastructure.Repositories
             await _context.MilitaryOrganizations.Where(o => o.WorldId == id).ExecuteDeleteAsync(cancellationToken);
             await _context.MilitaryDoctrines.Where(d => d.WorldId == id).ExecuteDeleteAsync(cancellationToken);
 
+            // 7af. R4 Tail. PrivilegeLaws Cascade s SocialClass (već obrisan u 7b) — ovo je sigurnosna
+            // mreža za retke bez klase (briše 0 na konzistentnim podacima). SocialHierarchies imaju
+            // SetNull FK-ove sa SocialClass/Nation (obje već obrisane, pa ništa ne referencira zonu).
+            // Mutations (SetNull na Creature/History) i Hobbies (SetNull na History) su neovisni o redoslijedu.
+            await _context.PrivilegeLaws.Where(p => p.WorldId == id).ExecuteDeleteAsync(cancellationToken);
+            await _context.SocialHierarchies.Where(h => h.WorldId == id).ExecuteDeleteAsync(cancellationToken);
+            await _context.Mutations.Where(m => m.WorldId == id).ExecuteDeleteAsync(cancellationToken);
+            await _context.Hobbies.Where(h => h.WorldId == id).ExecuteDeleteAsync(cancellationToken);
+
             // 8. Tagovi i bilješke
             await _context.Tags
                 .Where(t => t.WorldId == id)

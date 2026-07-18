@@ -66,8 +66,13 @@ namespace ChronicleKeeper.Infrastructure.Repositories
 
         public async Task<Character> UpdateAsync(Character character, CancellationToken cancellationToken = default)
         {
-            // Označi samo korijenski entitet kao izmijenjen
+            // Označi korijenski entitet kao izmijenjen
             _context.Entry(character).State = EntityState.Modified;
+            // Owned value tipovi (Background/Personality) su zasebni tracking-entryji — postavljanje
+            // stanja korijena ih ne označava, pa ih eksplicitno markiramo da se PUT full-replace
+            // propagira na njihove inline stupce.
+            _context.Entry(character.Background).State = EntityState.Modified;
+            _context.Entry(character.Personality).State = EntityState.Modified;
             await _context.SaveChangesAsync(cancellationToken);
             return character;
         }

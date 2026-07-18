@@ -300,6 +300,49 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Characters.CharacterInfo.Hobby", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Activity")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<int?>("HistoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HistoryId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("Hobbies");
+                });
+
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Characters.Equipment.Item", b =>
                 {
                     b.Property<int>("Id")
@@ -1420,6 +1463,60 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.HasIndex("CharacterId");
 
                     b.ToTable("TimelineEventCharacters");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Miscellaneous.Mutation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<string>("Effect")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<int?>("HistoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MutantCreatureId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Origin")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HistoryId");
+
+                    b.HasIndex("MutantCreatureId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("Mutations");
                 });
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Notes.Note", b =>
@@ -4356,6 +4453,9 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Property<int>("Population")
                         .HasColumnType("int");
 
+                    b.Property<int?>("SocialHierarchyId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
@@ -4365,6 +4465,8 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("HistoryId");
+
+                    b.HasIndex("SocialHierarchyId");
 
                     b.HasIndex("WorldId", "Name");
 
@@ -5056,6 +5158,59 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.ToTable("ReligiousTexts");
                 });
 
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Structure.PrivilegeLaw", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("AllowsPrivateArmies")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<bool>("GrantsLandOwnershipRights")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("GrantsLegalImmunity")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("HistoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("SocialClassId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HistoryId");
+
+                    b.HasIndex("SocialClassId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("PrivilegeLaws");
+                });
+
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Structure.SocialClass", b =>
                 {
                     b.Property<int>("Id")
@@ -5095,6 +5250,9 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<int?>("SocialHierarchyId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
@@ -5103,9 +5261,62 @@ namespace ChronicleKeeper.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("SocialHierarchyId");
+
                     b.HasIndex("WorldId", "Name");
 
                     b.ToTable("SocialClasses");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Structure.SocialHierarchy", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("AllowsIntermarriage")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("AllowsUpwardMobility")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<bool>("EnforcesLegalSeparation")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("HistoryId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsCasteSystem")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HistoryId");
+
+                    b.HasIndex("WorldId", "Name");
+
+                    b.ToTable("SocialHierarchies");
                 });
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Tags.CharacterTag", b =>
@@ -5859,6 +6070,22 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.HasDiscriminator().HasValue("Ecosystem");
                 });
 
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Landmark", b =>
+                {
+                    b.HasBaseType("ChronicleKeeper.Core.Entities.Geography.Location");
+
+                    b.Property<string>("LandmarkType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToTable(t =>
+                        {
+                            t.HasCheckConstraint("CK_Locations_Parent_NotSelf", "[ParentLocationId] <> [Id]");
+                        });
+
+                    b.HasDiscriminator().HasValue("Landmark");
+                });
+
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Region", b =>
                 {
                     b.HasBaseType("ChronicleKeeper.Core.Entities.Geography.Location");
@@ -6290,6 +6517,93 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.OwnsOne("ChronicleKeeper.Core.Entities.Characters.CharacterInfo.BackgroundInfo", "Background", b1 =>
+                        {
+                            b1.Property<int>("CharacterId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Childhood")
+                                .IsRequired()
+                                .HasMaxLength(4000)
+                                .HasColumnType("nvarchar(4000)");
+
+                            b1.Property<string>("FamilyStatus")
+                                .IsRequired()
+                                .HasMaxLength(200)
+                                .HasColumnType("nvarchar(200)");
+
+                            b1.Property<bool>("IsImmigrant")
+                                .HasColumnType("bit");
+
+                            b1.Property<string>("MigrationHistory")
+                                .IsRequired()
+                                .HasMaxLength(4000)
+                                .HasColumnType("nvarchar(4000)");
+
+                            b1.Property<string>("Upbringing")
+                                .IsRequired()
+                                .HasMaxLength(4000)
+                                .HasColumnType("nvarchar(4000)");
+
+                            b1.HasKey("CharacterId");
+
+                            b1.ToTable("Characters");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CharacterId");
+                        });
+
+                    b.OwnsOne("ChronicleKeeper.Core.Entities.Characters.CharacterInfo.PersonalityInfo", "Personality", b1 =>
+                        {
+                            b1.Property<int>("CharacterId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Ambitions")
+                                .IsRequired()
+                                .HasMaxLength(2000)
+                                .HasColumnType("nvarchar(2000)");
+
+                            b1.Property<string>("Fears")
+                                .IsRequired()
+                                .HasMaxLength(2000)
+                                .HasColumnType("nvarchar(2000)");
+
+                            b1.Property<string>("Flaws")
+                                .IsRequired()
+                                .HasMaxLength(2000)
+                                .HasColumnType("nvarchar(2000)");
+
+                            b1.Property<string>("Motivations")
+                                .IsRequired()
+                                .HasMaxLength(2000)
+                                .HasColumnType("nvarchar(2000)");
+
+                            b1.Property<string>("PersonalityTraits")
+                                .IsRequired()
+                                .HasMaxLength(2000)
+                                .HasColumnType("nvarchar(2000)");
+
+                            b1.Property<string>("PsychologicalProfile")
+                                .IsRequired()
+                                .HasMaxLength(4000)
+                                .HasColumnType("nvarchar(4000)");
+
+                            b1.Property<string>("Virtues")
+                                .IsRequired()
+                                .HasMaxLength(2000)
+                                .HasColumnType("nvarchar(2000)");
+
+                            b1.HasKey("CharacterId");
+
+                            b1.ToTable("Characters");
+
+                            b1.WithOwner()
+                                .HasForeignKey("CharacterId");
+                        });
+
+                    b.Navigation("Background")
+                        .IsRequired();
+
                     b.Navigation("Father");
 
                     b.Navigation("History");
@@ -6297,6 +6611,9 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Navigation("Mother");
 
                     b.Navigation("Nation");
+
+                    b.Navigation("Personality")
+                        .IsRequired();
 
                     b.Navigation("Profession");
 
@@ -6328,6 +6645,24 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Navigation("Character");
 
                     b.Navigation("RelatedCharacter");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Characters.CharacterInfo.Hobby", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.HistoryTimelines.History", "History")
+                        .WithMany()
+                        .HasForeignKey("HistoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("History");
+
+                    b.Navigation("World");
                 });
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Characters.Equipment.Item", b =>
@@ -6867,6 +7202,31 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Navigation("Character");
 
                     b.Navigation("TimelineEvent");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Miscellaneous.Mutation", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.HistoryTimelines.History", "History")
+                        .WithMany()
+                        .HasForeignKey("HistoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Creatures.Creature", "MutantCreature")
+                        .WithMany("Mutations")
+                        .HasForeignKey("MutantCreatureId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("History");
+
+                    b.Navigation("MutantCreature");
+
+                    b.Navigation("World");
                 });
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Notes.Note", b =>
@@ -8465,6 +8825,11 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .HasForeignKey("HistoryId")
                         .OnDelete(DeleteBehavior.SetNull);
 
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Structure.SocialHierarchy", "SocialHierarchy")
+                        .WithMany("Nations")
+                        .HasForeignKey("SocialHierarchyId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
                         .WithMany()
                         .HasForeignKey("WorldId")
@@ -8472,6 +8837,8 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("History");
+
+                    b.Navigation("SocialHierarchy");
 
                     b.Navigation("World");
                 });
@@ -8826,13 +9193,64 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Navigation("World");
                 });
 
-            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Structure.SocialClass", b =>
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Structure.PrivilegeLaw", b =>
                 {
+                    b.HasOne("ChronicleKeeper.Core.Entities.HistoryTimelines.History", "History")
+                        .WithMany()
+                        .HasForeignKey("HistoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Structure.SocialClass", "SocialClass")
+                        .WithMany("PrivilegeLaws")
+                        .HasForeignKey("SocialClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
                         .WithMany()
                         .HasForeignKey("WorldId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("History");
+
+                    b.Navigation("SocialClass");
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Structure.SocialClass", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Structure.SocialHierarchy", "SocialHierarchy")
+                        .WithMany("Classes")
+                        .HasForeignKey("SocialHierarchyId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("SocialHierarchy");
+
+                    b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Structure.SocialHierarchy", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.HistoryTimelines.History", "History")
+                        .WithMany()
+                        .HasForeignKey("HistoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Worlds.World", "World")
+                        .WithMany()
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("History");
 
                     b.Navigation("World");
                 });
@@ -9122,6 +9540,8 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Navigation("CitiesItInhabits");
 
                     b.Navigation("Habitants");
+
+                    b.Navigation("Mutations");
 
                     b.Navigation("Subspecies");
                 });
@@ -9432,6 +9852,15 @@ namespace ChronicleKeeper.Infrastructure.Migrations
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Structure.SocialClass", b =>
                 {
                     b.Navigation("Members");
+
+                    b.Navigation("PrivilegeLaws");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Structure.SocialHierarchy", b =>
+                {
+                    b.Navigation("Classes");
+
+                    b.Navigation("Nations");
                 });
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Content.Book.Book", b =>

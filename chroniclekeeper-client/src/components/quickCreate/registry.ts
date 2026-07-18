@@ -8,6 +8,7 @@ import { createEducationSystem } from '../../api/educationSystems';
 import { createEconomicSystem } from '../../api/economicSystems';
 import { createMilitaryDoctrine } from '../../api/militaryDoctrines';
 import { createMilitaryOrganization } from '../../api/militaryOrganizations';
+import { createSocialHierarchy } from '../../api/socialHierarchies';
 
 /** Minimal result the picker needs back from a quick-create. */
 export interface QuickCreated {
@@ -202,6 +203,19 @@ const registry = {
         type: '',
         role: '',
         militaryDoctrineId: null,
+      }),
+  },
+  socialHierarchy: {
+    create: (worldId, { name, description }) =>
+      createSocialHierarchy({
+        name,
+        description,
+        worldId,
+        isCasteSystem: false,
+        allowsUpwardMobility: false,
+        allowsIntermarriage: false,
+        enforcesLegalSeparation: false,
+        historyId: null,
       }),
   },
 } satisfies Record<string, QuickCreateDescriptor>;

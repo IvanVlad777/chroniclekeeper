@@ -1,0 +1,45 @@
+{
+    "listTitle": "Društvene hijerarhije",
+    "search": "Pretraži društvene hijerarhije…",
+    "loaderror": "Učitavanje nije uspjelo",
+    "notfound": "Društvena hijerarhija nije pronađena",
+    "none": "Nema",
+    "backtolist": "Natrag na društvene hijerarhije",
+    "emptyTitle": "Još nema društvenih hijerarhija",
+    "emptyText": "Kastinski sustavi, staleži, ljestvice ugleda — okvir koji rangira društvene slojeve tvog svijeta. Stvori prvu hijerarhiju da ih organiziraš.",
+    "columns": {
+        "name": "Naziv",
+        "traits": "Značajke",
+        "updated": "Ažurirano"
+    },
+    "fields": {
+        "description": "Opis",
+        "history": "Povijest",
+        "isCasteSystem": "Kastinski sustav",
+        "allowsUpwardMobility": "Uspon po ljestvici",
+        "allowsIntermarriage": "Dozvoljeni brakovi među slojevima",
+        "enforcesLegalSeparation": "Pravna podjela"
+    },
+    "classes": {
+        "label": "Društveni slojevi"
+    },
+    "nations": {
+        "label": "Nacije"
+    },
+    "form": {
+        "newTitle": "Nova društvena hijerarhija",
+        "editTitle": "Uredi društvenu hijerarhiju",
+        "edit": "Uredi",
+        "requiredNote": "Polja označena zvjezdicom su obavezna.",
+        "requiredMissing": "Naziv je obavezan.",
+        "rightsLegend": "Struktura i pravila",
+        "noHistory": "— Bez povijesti —",
+        "save": "Spremi hijerarhiju",
+        "saving": "Spremanje…",
+        "cancel": "Odustani",
+        "delete": "Obriši",
+        "deleteConfirm": "Obrisati „{{name}}”? Ovo se ne može poništiti.",
+        "saveFailed": "Spremanje nije uspjelo. Provjeri polja i pokušaj ponovno.",
+        "deleteFailed": "Brisanje nije uspjelo."
+    }
+}

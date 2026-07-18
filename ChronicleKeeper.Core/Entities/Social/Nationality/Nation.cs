@@ -5,7 +5,7 @@ using ChronicleKeeper.Core.Entities.HistoryTimelines;
 //using ChronicleKeeper.Core.Entities.Social.Politics;
 //using ChronicleKeeper.Core.Entities.Social.Religions;
 //using ChronicleKeeper.Core.Entities.Social.Cultures;
-//using ChronicleKeeper.Core.Entities.Social.Structure;
+using ChronicleKeeper.Core.Entities.Social.Structure;
 
 namespace ChronicleKeeper.Core.Entities.Social.Nationality
 {
@@ -23,8 +23,8 @@ namespace ChronicleKeeper.Core.Entities.Social.Nationality
         //public ICollection<Language> LanguagesSpoken { get; set; } = new List<Language>(); // TODO: Uncomment when Language entity is revived
         //public ICollection<Culture> Culture { get; set; } = new List<Culture>(); // TODO: Uncomment when Culture entity is revived
 
-        //public int? SocialHierarchyId { get; set; } // TODO: Uncomment when SocialHierarchy entity is revived
-        //public SocialHierarchy? SocialHierarchy { get; set; }
+        public int? SocialHierarchyId { get; set; }
+        public SocialHierarchy? SocialHierarchy { get; set; }
 
         //public ICollection<DiplomaticAgreement> DiplomaticAgreements { get; set; } = new List<DiplomaticAgreement>(); // TODO: Uncomment when DiplomaticAgreement entity is revived
 

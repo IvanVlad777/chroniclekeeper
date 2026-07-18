@@ -128,3 +128,63 @@
     text-decoration-color: var(--color-border);
     text-underline-offset: 3px;
 }
+
+/* Privilege-laws inline section (R4 Tail) */
+.lawList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.lawRow {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.4rem 0.6rem;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+}
+
+.lawName {
+    font-weight: 600;
+    min-width: 8rem;
+}
+
+.lawTraits {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    flex: 1;
+}
+
+.lawActions {
+    display: flex;
+    gap: 0.4rem;
+}
+
+.lawEditor {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+}
+
+.lawChecks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.lawEditorActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.formError {
+    color: var(--color-danger, #b00);
+    margin: 0.5rem 0;
+}

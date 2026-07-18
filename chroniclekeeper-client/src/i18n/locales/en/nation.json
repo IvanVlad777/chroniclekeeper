@@ -15,6 +15,7 @@
     "fields": {
         "description": "Description",
         "population": "Population",
+        "socialHierarchy": "Social hierarchy",
         "history": "History"
     },
     "citizens": {
@@ -26,6 +27,7 @@
         "edit": "Edit",
         "requiredNote": "Fields marked with an asterisk are required.",
         "requiredMissing": "Name is required.",
+        "noHierarchy": "— No hierarchy —",
         "save": "Save nation",
         "saving": "Saving…",
         "cancel": "Cancel",

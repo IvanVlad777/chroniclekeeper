@@ -6,6 +6,7 @@ import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
 import { SocialClassDetailsDto } from "../../../../interfaces/loreInterfaces";
 import { getSocialClassById } from "../../../../api/socialClasses";
 import { useAuth } from "../../../../hooks/useAuth";
+import PrivilegeLawsSection from "./PrivilegeLawsSection";
 import s from "./styles.module.css";
 
 const editorRoles = ["Editor", "Admin", "SuperAdmin"];
@@ -177,6 +178,11 @@ export default function SocialClassDetails() {
                     ))}
                 </div>
             )}
+
+            <PrivilegeLawsSection
+                socialClassId={socialClass.id}
+                canEdit={canEdit}
+            />
         </div>
     );
 }

@@ -21,6 +21,8 @@ namespace ChronicleKeeper.Core.DTOs.Character
         public List<ReligiousEducationDto> ReligiousEducations { get; set; } = new();
         public List<ReferenceDto> Abilities { get; set; } = new();
         public List<ReferenceDto> Equipments { get; set; } = new();
+        public BackgroundInfoDto Background { get; set; } = new();
+        public PersonalityInfoDto Personality { get; set; } = new();
 
         // TODO: Otkomentirati kada budem dodavao veze
         //public List<ReferenceDto> Hobbies { get; set; } = new();

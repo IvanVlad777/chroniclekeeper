@@ -15,6 +15,7 @@ namespace ChronicleKeeper.Core.DTOs.SocialClass
         public bool CanOwnLand { get; set; }
         public bool CanHoldOffice { get; set; }
         public bool HasTaxExemptions { get; set; }
+        public int? SocialHierarchyId { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }
@@ -42,6 +43,7 @@ namespace ChronicleKeeper.Core.DTOs.SocialClass
         public bool CanOwnLand { get; set; }
         public bool CanHoldOffice { get; set; }
         public bool HasTaxExemptions { get; set; }
+        public int? SocialHierarchyId { get; set; }
     }
 
     public class SocialClassUpdateDto
@@ -59,5 +61,6 @@ namespace ChronicleKeeper.Core.DTOs.SocialClass
         public bool CanOwnLand { get; set; }
         public bool CanHoldOffice { get; set; }
         public bool HasTaxExemptions { get; set; }
+        public int? SocialHierarchyId { get; set; }
     }
 }

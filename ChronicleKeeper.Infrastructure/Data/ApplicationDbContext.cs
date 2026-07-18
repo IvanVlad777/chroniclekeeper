@@ -16,6 +16,7 @@ using ChronicleKeeper.Core.Entities.Geography.Creatures.Plants;
 using ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient;
 using ChronicleKeeper.Core.Entities.Geography.Ecosystems;
 using ChronicleKeeper.Core.Entities.HistoryTimelines;
+using ChronicleKeeper.Core.Entities.Miscellaneous;
 using ChronicleKeeper.Core.Entities.Notes;
 using ChronicleKeeper.Core.Entities.Professions;
 using ChronicleKeeper.Core.Entities.Social;
@@ -234,6 +235,12 @@ namespace ChronicleKeeper.Infrastructure.Data
         public DbSet<ReligiousOrderFaction> ReligiousOrderFactions { get; set; }
         public DbSet<DeityAlliance> DeityAlliances { get; set; }
         public DbSet<DeityRivalry> DeityRivalries { get; set; }
+
+        // R4 Tail (Structure / CharacterInfo / Miscellaneous)
+        public DbSet<SocialHierarchy> SocialHierarchies { get; set; }
+        public DbSet<PrivilegeLaw> PrivilegeLaws { get; set; }
+        public DbSet<Mutation> Mutations { get; set; }
+        public DbSet<Hobby> Hobbies { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
