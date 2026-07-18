@@ -1,36 +1,24 @@
-﻿using ChronicleKeeper.Core.Entities.Base;
-using ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient;
+using ChronicleKeeper.Core.Entities.Base;
 using ChronicleKeeper.Core.Entities.HistoryTimelines;
-using ChronicleKeeper.Core.Interfaces;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ChronicleKeeper.Core.Entities.Social.Cultures
 {
-    public class Folklore : ILoreEntity
+    public class Folklore : LoreEntity
     {
-        [Key]
-        public int Id { get; set; }
-        [Required]
-        public string Name { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
-        [Required]
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        [Required]
-        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+        public int? HistoryId { get; set; }
         public virtual History? History { get; set; }
 
         public string Story { get; set; } = string.Empty; // Description of the legend or folktale
         public string Moral { get; set; } = string.Empty; // Lesson or message of the story
         public bool IsHistorical { get; set; } // True if based on actual events
 
-        //[ForeignKey("Culture")]
         public int CultureId { get; set; }
-        public Culture Culture { get; set; } = null!;
+        public virtual Culture? Culture { get; set; }
 
-        public ICollection<TimelineEvent> RelatedEvents { get; set; } = new List<TimelineEvent>();
+        // M:N with TimelineEvent (join entity) — owner side.
+        public virtual ICollection<FolkloreTimelineEvent> RelatedEvents { get; set; } = new List<FolkloreTimelineEvent>();
 
-        public ICollection<SapientSpecies> OriginatedFromSpecies { get; set; } = new List<SapientSpecies>(); // ✅ Which species created this folklore
+        // M:N with SapientSpecies (join entity) — owner side. Which species created this folklore.
+        public virtual ICollection<FolkloreSapientSpecies> OriginatedFromSpecies { get; set; } = new List<FolkloreSapientSpecies>();
     }
-
 }

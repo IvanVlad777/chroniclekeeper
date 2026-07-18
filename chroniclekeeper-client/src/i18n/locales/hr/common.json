@@ -53,7 +53,9 @@
         "militaryOrganizations": "Vojne organizacije",
         "armies": "Vojske",
         "battles": "Bitke",
-        "militaryEquipment": "Vojna oprema"
+        "militaryEquipment": "Vojna oprema",
+        "customs": "Običaji",
+        "culturalInstitutions": "Kulturne institucije"
     },
     "navGroups": {
         "overview": "Pregled",
@@ -61,6 +63,7 @@
         "places": "Mjesta",
         "nature": "Priroda",
         "society": "Društvo",
+        "culture": "Kultura",
         "politics": "Politika i pravo",
         "economy": "Gospodarstvo",
         "military": "Vojska",

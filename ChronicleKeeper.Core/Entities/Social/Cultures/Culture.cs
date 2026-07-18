@@ -20,15 +20,16 @@ namespace ChronicleKeeper.Core.Entities.Social.Cultures
         public TechnologicalLevel TechnologicalLevel { get; set; } // enum
         public string ConflictResolution { get; set; } = string.Empty; // Rat, diplomacija, dueli itd.
 
-        //public virtual ICollection<Custom> Customs { get; set; } = new List<Custom>(); // TODO: Uncomment when Custom entity is revived
-        //public virtual ICollection<Clothing> Clothing { get; set; } = new List<Clothing>(); // TODO: Uncomment when Clothing entity is revived
-        //public virtual ICollection<ArtForm> ArtForms { get; set; } = new List<ArtForm>(); // TODO: Uncomment when ArtForm entity is revived
-        //public virtual ICollection<Cuisine> Cuisines { get; set; } = new List<Cuisine>(); // TODO: Uncomment when Cuisine entity is revived
-        //public virtual ICollection<Tradition> Traditions { get; set; } = new List<Tradition>(); // TODO: Uncomment when Tradition entity is revived
-        //public virtual ICollection<ArchitectureStyle> ArchitectureStyles { get; set; } = new List<ArchitectureStyle>(); // TODO: Uncomment when ArchitectureStyle entity is revived
-        //public virtual ICollection<Folklore> Folktales { get; set; } = new List<Folklore>(); // TODO: Uncomment when Folklore entity is revived
-        //public virtual ICollection<Myth> Myths { get; set; } = new List<Myth>(); // TODO: Uncomment when Myth entity is revived
-        //public virtual ICollection<CulturalInstitution> CulturalInstitutions { get; set; } = new List<CulturalInstitution>(); // TODO: Uncomment when CulturalInstitution entity is revived
+        public virtual ICollection<Custom> Customs { get; set; } = new List<Custom>();
+        public virtual ICollection<Clothing> Clothing { get; set; } = new List<Clothing>();
+        public virtual ICollection<ArtForm> ArtForms { get; set; } = new List<ArtForm>();
+        public virtual ICollection<Cuisine> Cuisines { get; set; } = new List<Cuisine>();
+        public virtual ICollection<Tradition> Traditions { get; set; } = new List<Tradition>();
+        public virtual ICollection<ArchitectureStyle> ArchitectureStyles { get; set; } = new List<ArchitectureStyle>();
+        public virtual ICollection<Folklore> Folktales { get; set; } = new List<Folklore>();
+        public virtual ICollection<Myth> Myths { get; set; } = new List<Myth>();
+        public virtual ICollection<CulturalInstitution> CulturalInstitutions { get; set; } = new List<CulturalInstitution>();
+        public virtual ICollection<CulturalFestival> Festivals { get; set; } = new List<CulturalFestival>();
 
         public virtual ICollection<CultureNation> Nations { get; set; } = new List<CultureNation>();
         public virtual ICollection<CultureSapientSpecies> PracticedBySpecies { get; set; } = new List<CultureSapientSpecies>();

@@ -163,6 +163,20 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .Where(n => n.WorldId == id)
                 .ExecuteDeleteAsync(cancellationToken);
 
+            // 7cc. Culture-detail entiteti (vlastiti WorldId; brišu se prije Kultura.
+            // Cascade-djeca bi ionako nestala s Culture, ali Custom/CulturalInstitution imaju SetNull Culture FK
+            // pa ostaju — zato eksplicitno brišemo svih 10 po WorldId. Join tablice cascade s child strane.)
+            await _context.Customs.Where(x => x.WorldId == id).ExecuteDeleteAsync(cancellationToken);
+            await _context.Clothing.Where(x => x.WorldId == id).ExecuteDeleteAsync(cancellationToken);
+            await _context.ArtForms.Where(x => x.WorldId == id).ExecuteDeleteAsync(cancellationToken);
+            await _context.Cuisines.Where(x => x.WorldId == id).ExecuteDeleteAsync(cancellationToken);
+            await _context.Traditions.Where(x => x.WorldId == id).ExecuteDeleteAsync(cancellationToken);
+            await _context.ArchitectureStyles.Where(x => x.WorldId == id).ExecuteDeleteAsync(cancellationToken);
+            await _context.Folktales.Where(x => x.WorldId == id).ExecuteDeleteAsync(cancellationToken);
+            await _context.Myths.Where(x => x.WorldId == id).ExecuteDeleteAsync(cancellationToken);
+            await _context.CulturalInstitutions.Where(x => x.WorldId == id).ExecuteDeleteAsync(cancellationToken);
+            await _context.CulturalFestivals.Where(x => x.WorldId == id).ExecuteDeleteAsync(cancellationToken);
+
             // 7d. Kulture (moraju nestati prije Religions/Languages — Culture ima Restrict FK na oboje)
             await _context.Cultures
                 .Where(c => c.WorldId == id)

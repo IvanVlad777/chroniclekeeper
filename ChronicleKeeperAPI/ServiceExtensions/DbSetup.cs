@@ -84,6 +84,18 @@ namespace ChronicleKeeper.API.ServiceExtensions
             services.AddScoped<IBattleRepository, BattleRepository>();
             services.AddScoped<IMilitaryEquipmentRepository, MilitaryEquipmentRepository>();
 
+            // Culture details
+            services.AddScoped<ICustomRepository, CustomRepository>();
+            services.AddScoped<IArtFormRepository, ArtFormRepository>();
+            services.AddScoped<ICuisineRepository, CuisineRepository>();
+            services.AddScoped<IClothingRepository, ClothingRepository>();
+            services.AddScoped<ITraditionRepository, TraditionRepository>();
+            services.AddScoped<IArchitectureStyleRepository, ArchitectureStyleRepository>();
+            services.AddScoped<IFolkloreRepository, FolkloreRepository>();
+            services.AddScoped<IMythRepository, MythRepository>();
+            services.AddScoped<ICulturalFestivalRepository, CulturalFestivalRepository>();
+            services.AddScoped<ICulturalInstitutionRepository, CulturalInstitutionRepository>();
+
             return services;
         }
     }

@@ -53,7 +53,9 @@
         "militaryOrganizations": "Military Organizations",
         "armies": "Armies",
         "battles": "Battles",
-        "militaryEquipment": "Military Equipment"
+        "militaryEquipment": "Military Equipment",
+        "customs": "Customs",
+        "culturalInstitutions": "Cultural Institutions"
     },
     "navGroups": {
         "overview": "Overview",
@@ -61,6 +63,7 @@
         "places": "Places",
         "nature": "Nature",
         "society": "Society",
+        "culture": "Culture",
         "politics": "Politics & Law",
         "economy": "Economy",
         "military": "Military",

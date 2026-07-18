@@ -209,6 +209,21 @@ namespace ChronicleKeeper.Infrastructure.Data
         public DbSet<MilitaryOrganizationCountry> MilitaryOrganizationCountries { get; set; }
         public DbSet<MilitaryOrganizationFaction> MilitaryOrganizationFactions { get; set; }
 
+        // Culture details
+        public DbSet<Custom> Customs { get; set; }
+        public DbSet<Clothing> Clothing { get; set; }
+        public DbSet<ArtForm> ArtForms { get; set; }
+        public DbSet<Cuisine> Cuisines { get; set; }
+        public DbSet<Tradition> Traditions { get; set; }
+        public DbSet<ArchitectureStyle> ArchitectureStyles { get; set; }
+        public DbSet<Folklore> Folktales { get; set; }
+        public DbSet<Myth> Myths { get; set; }
+        public DbSet<CulturalInstitution> CulturalInstitutions { get; set; }
+        public DbSet<CulturalFestival> CulturalFestivals { get; set; }
+        public DbSet<ArchitectureStyleLocation> ArchitectureStyleLocations { get; set; }
+        public DbSet<FolkloreTimelineEvent> FolkloreTimelineEvents { get; set; }
+        public DbSet<FolkloreSapientSpecies> FolkloreSapientSpecies { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

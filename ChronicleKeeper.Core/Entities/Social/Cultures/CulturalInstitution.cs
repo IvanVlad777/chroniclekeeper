@@ -1,36 +1,25 @@
-﻿using ChronicleKeeper.Core.Entities.Characters;
+using ChronicleKeeper.Core.Entities.Base;
 using ChronicleKeeper.Core.Entities.Geography;
 using ChronicleKeeper.Core.Entities.HistoryTimelines;
-using ChronicleKeeper.Core.Interfaces;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ChronicleKeeper.Core.Entities.Social.Cultures
 {
-    public class CulturalInstitution : ILoreEntity
+    public class CulturalInstitution : LoreEntity
     {
-        [Key]
-        public int Id { get; set; }
-        [Required]
-        public string Name { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
-        [Required]
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        [Required]
-        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+        public int? HistoryId { get; set; }
         public virtual History? History { get; set; }
 
         public string InstitutionType { get; set; } = string.Empty; // Theater, Museum, Art Gallery
         public bool IsGovernmentFunded { get; set; } // If state-controlled
 
-        public ICollection<Character> NotableArtists { get; set; } = new List<Character>(); // People associated
+        // Optional culture link — SetNull. (Was mis-named CountryId in the dormant scaffold.)
+        public int? CultureId { get; set; }
+        public virtual Culture? Culture { get; set; }
 
-        //[ForeignKey("Culture")]
-        public int? CountryId { get; set; }
-        public Culture? Culture { get; set; }
-
-        //[ForeignKey("City")]
+        // Optional city link — SetNull. (City is mapped but has no API/picker yet.)
         public int? CityId { get; set; }
-        public City? City { get; set; }
+        public virtual City? City { get; set; }
+
+        //public virtual ICollection<Character> NotableArtists { get; set; } = new List<Character>(); // TODO: Character M:N deferred (defer-Character-M:N bucket)
     }
 }

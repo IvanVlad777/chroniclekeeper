@@ -29,6 +29,9 @@ import LanguageDetails from "../components/entityViews/language/detail/LanguageD
 import LanguageForm from "../components/entityViews/language/form/LanguageForm";
 import CultureList from "../components/entityViews/culture/list/CultureList";
 import CultureDetails from "../components/entityViews/culture/detail/CultureDetails";
+import ArchitectureStyleDetail from "../components/entityViews/cultureDetails/ArchitectureStyleDetail";
+import FolkloreDetail from "../components/entityViews/cultureDetails/FolkloreDetail";
+import StandaloneCultureDetailPage from "../components/entityViews/cultureDetails/StandaloneCultureDetailPage";
 import CultureForm from "../components/entityViews/culture/form/CultureForm";
 import TimelineList from "../components/entityViews/timeline/list/TimelineList";
 import TimelineDetails from "../components/entityViews/timeline/detail/TimelineDetails";
@@ -237,6 +240,29 @@ const AppRoutes = () => {
                 <Route
                     path="cultures/:id/edit"
                     element={<CultureForm />}
+                />
+                <Route
+                    path="architecture-styles/:id"
+                    element={<ArchitectureStyleDetail />}
+                />
+                <Route path="folklore/:id" element={<FolkloreDetail />} />
+                <Route
+                    path="customs"
+                    element={
+                        <StandaloneCultureDetailPage
+                            descriptorKey="custom"
+                            glyph="🎎"
+                        />
+                    }
+                />
+                <Route
+                    path="cultural-institutions"
+                    element={
+                        <StandaloneCultureDetailPage
+                            descriptorKey="culturalInstitution"
+                            glyph="🏛"
+                        />
+                    }
                 />
                 <Route path="timelines" element={<TimelineList />} />
                 <Route path="timelines/new" element={<TimelineForm />} />

@@ -2,7 +2,7 @@
 using ChronicleKeeper.Core.Entities.Characters;
 //using ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient;
 //using ChronicleKeeper.Core.Entities.Geography;
-//using ChronicleKeeper.Core.Entities.Social.Cultures;
+using ChronicleKeeper.Core.Entities.Social.Cultures;
 
 namespace ChronicleKeeper.Core.Entities.Social.Religions
 {
@@ -19,8 +19,8 @@ namespace ChronicleKeeper.Core.Entities.Social.Religions
         //public ICollection<ReligiousOrder> ReligiousOrders { get; set; } = new List<ReligiousOrder>(); // TODO: Uncomment when ReligiousOrder entity is revived
         //public ICollection<HolySite> HolySites { get; set; } = new List<HolySite>(); // TODO: Uncomment when HolySite entity is revived
         //public ICollection<ReligiousText> ReligiousTexts { get; set; } = new List<ReligiousText>(); // TODO: Uncomment when ReligiousText entity is revived
-        //public ICollection<Myth> Myths { get; set; } = new List<Myth>(); // TODO: Uncomment when Myth entity is revived
-        //public ICollection<Tradition> Traditions { get; set; } = new List<Tradition>(); // TODO: Uncomment when Tradition entity is revived
+        public ICollection<Myth> Myths { get; set; } = new List<Myth>();
+        public ICollection<Tradition> Traditions { get; set; } = new List<Tradition>();
         //public ICollection<Culture> Cultures { get; set; } = new List<Culture>(); // TODO: Uncomment when Culture entity is revived
 
         //public ICollection<Country> InCountries { get; set; } = new List<Country>(); // TODO: Uncomment when Country entity is revived

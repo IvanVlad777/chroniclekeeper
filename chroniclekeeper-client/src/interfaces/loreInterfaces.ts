@@ -2592,3 +2592,322 @@ export interface MilitaryEquipmentCreateDto {
 }
 
 export type MilitaryEquipmentUpdateDto = Omit<MilitaryEquipmentCreateDto, "worldId">;
+
+// ================= Culture details (R2) =================
+
+// ---- Custom ----
+export interface CustomDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    isUniversal: boolean;
+    cultureId?: number | null;
+    createdAt: string;
+    updatedAt: string;
+}
+export interface CustomDetailsDto extends CustomDto {
+    history?: ReferenceDto | null;
+    culture?: ReferenceDto | null;
+}
+export interface CustomCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    isUniversal: boolean;
+    cultureId?: number | null;
+}
+export type CustomUpdateDto = Omit<CustomCreateDto, "worldId">;
+
+// ---- ArtForm ----
+export interface ArtFormDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    type: string;
+    notableArtists: string;
+    historicalInfluences: string;
+    cultureId: number;
+    createdAt: string;
+    updatedAt: string;
+}
+export interface ArtFormDetailsDto extends ArtFormDto {
+    history?: ReferenceDto | null;
+    culture?: ReferenceDto | null;
+}
+export interface ArtFormCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    type: string;
+    notableArtists: string;
+    historicalInfluences: string;
+    cultureId: number;
+}
+export type ArtFormUpdateDto = Omit<ArtFormCreateDto, "worldId">;
+
+// ---- Cuisine ----
+export interface CuisineDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    mainIngredients: string;
+    cookingMethods: string;
+    isVegetarian: boolean;
+    typicalDishes: string;
+    cultureId: number;
+    createdAt: string;
+    updatedAt: string;
+}
+export interface CuisineDetailsDto extends CuisineDto {
+    history?: ReferenceDto | null;
+    culture?: ReferenceDto | null;
+}
+export interface CuisineCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    mainIngredients: string;
+    cookingMethods: string;
+    isVegetarian: boolean;
+    typicalDishes: string;
+    cultureId: number;
+}
+export type CuisineUpdateDto = Omit<CuisineCreateDto, "worldId">;
+
+// ---- Clothing ----
+export interface ClothingDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    clothingType: string;
+    materials: string;
+    designFeatures: string;
+    isRitualistic: boolean;
+    isArmor: boolean;
+    specialProperties: string;
+    cultureId: number;
+    createdAt: string;
+    updatedAt: string;
+}
+export interface ClothingDetailsDto extends ClothingDto {
+    history?: ReferenceDto | null;
+    culture?: ReferenceDto | null;
+}
+export interface ClothingCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    clothingType: string;
+    materials: string;
+    designFeatures: string;
+    isRitualistic: boolean;
+    isArmor: boolean;
+    specialProperties: string;
+    cultureId: number;
+}
+export type ClothingUpdateDto = Omit<ClothingCreateDto, "worldId">;
+
+// ---- Tradition ----
+export interface TraditionDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    practice: string;
+    isReligious: boolean;
+    cultureId: number;
+    religionId?: number | null;
+    createdAt: string;
+    updatedAt: string;
+}
+export interface TraditionDetailsDto extends TraditionDto {
+    history?: ReferenceDto | null;
+    culture?: ReferenceDto | null;
+    religion?: ReferenceDto | null;
+}
+export interface TraditionCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    practice: string;
+    isReligious: boolean;
+    cultureId: number;
+    religionId?: number | null;
+}
+export type TraditionUpdateDto = Omit<TraditionCreateDto, "worldId">;
+
+// ---- ArchitectureStyle ----
+export interface ArchitectureStyleDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    materialsUsed: string;
+    designFeatures: string;
+    isFortified: boolean;
+    cultureId: number;
+    createdAt: string;
+    updatedAt: string;
+}
+export interface ArchitectureStyleDetailsDto extends ArchitectureStyleDto {
+    history?: ReferenceDto | null;
+    culture?: ReferenceDto | null;
+    typicalLocations: ReferenceDto[];
+}
+export interface ArchitectureStyleCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    materialsUsed: string;
+    designFeatures: string;
+    isFortified: boolean;
+    cultureId: number;
+}
+export type ArchitectureStyleUpdateDto = Omit<ArchitectureStyleCreateDto, "worldId">;
+
+// ---- Folklore ----
+export interface FolkloreDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    story: string;
+    moral: string;
+    isHistorical: boolean;
+    cultureId: number;
+    createdAt: string;
+    updatedAt: string;
+}
+export interface FolkloreDetailsDto extends FolkloreDto {
+    history?: ReferenceDto | null;
+    culture?: ReferenceDto | null;
+    relatedEvents: ReferenceDto[];
+    originatedFromSpecies: ReferenceDto[];
+}
+export interface FolkloreCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    story: string;
+    moral: string;
+    isHistorical: boolean;
+    cultureId: number;
+}
+export type FolkloreUpdateDto = Omit<FolkloreCreateDto, "worldId">;
+
+// ---- Myth ----
+export interface MythDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    creationStory: string;
+    symbolism: string;
+    hasReligiousConnections: boolean;
+    cultureId: number;
+    religionId?: number | null;
+    createdAt: string;
+    updatedAt: string;
+}
+export interface MythDetailsDto extends MythDto {
+    history?: ReferenceDto | null;
+    culture?: ReferenceDto | null;
+    religion?: ReferenceDto | null;
+}
+export interface MythCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    creationStory: string;
+    symbolism: string;
+    hasReligiousConnections: boolean;
+    cultureId: number;
+    religionId?: number | null;
+}
+export type MythUpdateDto = Omit<MythCreateDto, "worldId">;
+
+// ---- CulturalFestival ----
+export interface CulturalFestivalDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    startDate?: string | null;
+    durationDays: number;
+    activities: string;
+    isNationalHoliday: boolean;
+    cultureId: number;
+    locationId?: number | null;
+    createdAt: string;
+    updatedAt: string;
+}
+export interface CulturalFestivalDetailsDto extends CulturalFestivalDto {
+    history?: ReferenceDto | null;
+    culture?: ReferenceDto | null;
+    location?: ReferenceDto | null;
+}
+export interface CulturalFestivalCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    startDate?: string | null;
+    durationDays: number;
+    activities: string;
+    isNationalHoliday: boolean;
+    cultureId: number;
+    locationId?: number | null;
+}
+export type CulturalFestivalUpdateDto = Omit<CulturalFestivalCreateDto, "worldId">;
+
+// ---- CulturalInstitution ----
+export interface CulturalInstitutionDto {
+    id: number;
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    institutionType: string;
+    isGovernmentFunded: boolean;
+    cultureId?: number | null;
+    cityId?: number | null;
+    createdAt: string;
+    updatedAt: string;
+}
+export interface CulturalInstitutionDetailsDto extends CulturalInstitutionDto {
+    history?: ReferenceDto | null;
+    culture?: ReferenceDto | null;
+    city?: ReferenceDto | null;
+}
+export interface CulturalInstitutionCreateDto {
+    name: string;
+    description: string;
+    worldId: number;
+    historyId?: number | null;
+    institutionType: string;
+    isGovernmentFunded: boolean;
+    cultureId?: number | null;
+    cityId?: number | null;
+}
+export type CulturalInstitutionUpdateDto = Omit<CulturalInstitutionCreateDto, "worldId">;

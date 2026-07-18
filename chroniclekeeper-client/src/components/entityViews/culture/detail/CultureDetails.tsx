@@ -23,6 +23,8 @@ import { getNations } from "../../../../api/nations";
 import { getSpecies } from "../../../../api/species";
 import { getSocialClasses } from "../../../../api/socialClasses";
 import { useAuth } from "../../../../hooks/useAuth";
+import CultureDetailSection from "../../cultureDetails/CultureDetailSection";
+import { descriptors } from "../../cultureDetails/descriptors";
 import s from "./styles.module.css";
 
 const editorRoles = ["Editor", "Admin", "SuperAdmin"];
@@ -328,6 +330,16 @@ export default function CultureDetails() {
                 addFailedLabel={t("links.addFailed")}
                 removeFailedLabel={t("links.removeFailed")}
             />
+
+            {descriptors.map((d) => (
+                <CultureDetailSection
+                    key={d.key}
+                    descriptor={d}
+                    worldId={culture.worldId}
+                    cultureId={culture.id}
+                    canEdit={canEdit}
+                />
+            ))}
         </div>
     );
 }

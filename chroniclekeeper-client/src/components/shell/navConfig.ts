@@ -88,6 +88,22 @@ export const navDomains: NavDomain[] = [
         ],
     },
     {
+        key: "culture",
+        glyph: "🎭",
+        entries: [
+            {
+                key: "customs",
+                route: "/storymap/customs",
+                newRoute: "/storymap/customs",
+            },
+            {
+                key: "culturalInstitutions",
+                route: "/storymap/cultural-institutions",
+                newRoute: "/storymap/cultural-institutions",
+            },
+        ],
+    },
+    {
         key: "politics",
         glyph: "⚖",
         entries: [

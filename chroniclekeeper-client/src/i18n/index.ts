@@ -26,6 +26,8 @@ import enLanguage from "./locales/en/language.json";
 import hrLanguage from "./locales/hr/language.json";
 import enCulture from "./locales/en/culture.json";
 import hrCulture from "./locales/hr/culture.json";
+import enCultureDetails from "./locales/en/cultureDetails.json";
+import hrCultureDetails from "./locales/hr/cultureDetails.json";
 import enTimeline from "./locales/en/timeline.json";
 import hrTimeline from "./locales/hr/timeline.json";
 import enTag from "./locales/en/tag.json";
@@ -118,6 +120,7 @@ i18n.use(LanguageDetector)
                 religion: enReligion,
                 language: enLanguage,
                 culture: enCulture,
+                cultureDetails: enCultureDetails,
                 timeline: enTimeline,
                 tag: enTag,
                 note: enNote,
@@ -169,6 +172,7 @@ i18n.use(LanguageDetector)
                 religion: hrReligion,
                 language: hrLanguage,
                 culture: hrCulture,
+                cultureDetails: hrCultureDetails,
                 timeline: hrTimeline,
                 tag: hrTag,
                 note: hrNote,
@@ -222,6 +226,7 @@ i18n.use(LanguageDetector)
             "religion",
             "language",
             "culture",
+            "cultureDetails",
             "timeline",
             "tag",
             "note",
