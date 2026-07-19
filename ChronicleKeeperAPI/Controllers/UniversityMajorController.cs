@@ -36,9 +36,9 @@ namespace ChronicleKeeperAPI.Controllers
         [HttpGet("{id}")]
         [Authorize]
         [SwaggerOperation(Summary = "Get university major by ID")]
-        [SwaggerResponse(200, "University major found", typeof(UniversityMajorDto))]
+        [SwaggerResponse(200, "University major found", typeof(UniversityMajorDetailsDto))]
         [SwaggerResponse(404, "University major not found")]
-        public async Task<ActionResult<UniversityMajorDto>> GetById(int id)
+        public async Task<ActionResult<UniversityMajorDetailsDto>> GetById(int id)
         {
             var major = await _mediator.Send(new GetUniversityMajorByIdQuery { Id = id });
             if (major == null) return NotFound();
@@ -83,6 +83,54 @@ namespace ChronicleKeeperAPI.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _mediator.Send(new DeleteUniversityMajorCommand { Id = id });
+            if (!result) return NotFound();
+            return NoContent();
+        }
+
+        // POST/DELETE: /api/university-majors/{id}/professors/{characterId}
+        [HttpPost("{id}/professors/{characterId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Link a professor (character) to this major")]
+        [SwaggerResponse(204, "Professor linked")]
+        [SwaggerResponse(400, "Invalid target / already linked")]
+        public async Task<IActionResult> AddProfessor(int id, int characterId)
+        {
+            await _mediator.Send(new AddUniversityMajorProfessorCommand { UniversityMajorId = id, CharacterId = characterId });
+            return NoContent();
+        }
+
+        [HttpDelete("{id}/professors/{characterId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Unlink a professor from this major")]
+        [SwaggerResponse(204, "Professor unlinked")]
+        [SwaggerResponse(404, "Link not found")]
+        public async Task<IActionResult> RemoveProfessor(int id, int characterId)
+        {
+            var result = await _mediator.Send(new RemoveUniversityMajorProfessorCommand { UniversityMajorId = id, CharacterId = characterId });
+            if (!result) return NotFound();
+            return NoContent();
+        }
+
+        // POST/DELETE: /api/university-majors/{id}/students/{characterId}
+        [HttpPost("{id}/students/{characterId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Link a student (character) to this major")]
+        [SwaggerResponse(204, "Student linked")]
+        [SwaggerResponse(400, "Invalid target / already linked")]
+        public async Task<IActionResult> AddStudent(int id, int characterId)
+        {
+            await _mediator.Send(new AddUniversityMajorStudentCommand { UniversityMajorId = id, CharacterId = characterId });
+            return NoContent();
+        }
+
+        [HttpDelete("{id}/students/{characterId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Unlink a student from this major")]
+        [SwaggerResponse(204, "Student unlinked")]
+        [SwaggerResponse(404, "Link not found")]
+        public async Task<IActionResult> RemoveStudent(int id, int characterId)
+        {
+            var result = await _mediator.Send(new RemoveUniversityMajorStudentCommand { UniversityMajorId = id, CharacterId = characterId });
             if (!result) return NotFound();
             return NoContent();
         }

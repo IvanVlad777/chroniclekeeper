@@ -696,11 +696,14 @@ export interface LocationDetailsDto extends LocationDto {
     religions: ReferenceDto[];
     factions: ReferenceDto[]; // Country only
     culturalInstitutions: ReferenceDto[]; // City only
+    currencies: ReferenceDto[];
+    taxationSystems: ReferenceDto[];
 
     // Reverse read-only lists
     militaryOrganizations: ReferenceDto[]; // Country
     tradeRoutes: ReferenceDto[]; // Country/City
     creatures: ReferenceDto[]; // City
+    armies: ReferenceDto[]; // City — armies stationed here
     timelineEvents: ReferenceDto[]; // any location — events that took place here
 }
 
@@ -1298,6 +1301,12 @@ export interface SchoolSubjectDto {
 export interface SchoolSubjectDetailsDto extends SchoolSubjectDto {
     school?: ReferenceDto | null;
     teachers: ReferenceDto[];
+}
+
+export interface UniversityMajorDetailsDto extends UniversityMajorDto {
+    university?: ReferenceDto | null;
+    professors: ReferenceDto[];
+    students: ReferenceDto[];
 }
 
 export interface SchoolDto {

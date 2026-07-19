@@ -44,7 +44,7 @@ namespace ChronicleKeeper.Infrastructure.Configurations
         {
             // Optional pointers — SetNull.
             builder.HasOne(a => a.City)
-                .WithMany()
+                .WithMany(c => c.Armies)
                 .HasForeignKey(a => a.CityId)
                 .OnDelete(DeleteBehavior.SetNull);
 

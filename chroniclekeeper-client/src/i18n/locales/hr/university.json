@@ -1,4 +1,24 @@
 {
+    "major": {
+        "single": "Sveučilišni smjer",
+        "loadError": "Učitavanje nije uspjelo",
+        "notFound": "Smjer nije pronađen",
+        "description": "Opis",
+        "none": "Nema",
+        "professors": "Profesori",
+        "students": "Studenti",
+        "link": "poveži",
+        "pick": "Odaberi lik",
+        "confirm": "Poveži",
+        "cancel": "Odustani",
+        "remove": "Odveži {{name}}",
+        "addFailed": "Povezivanje nije uspjelo.",
+        "removeFailed": "Odvezivanje nije uspjelo.",
+        "fields": {
+            "majorName": "Smjer",
+            "degreeLevel": "Razina studija"
+        }
+    },
     "listTitle": "Sveučilišta",
     "search": "Traži sveučilišta…",
     "loaderror": "Neuspješno učitavanje",

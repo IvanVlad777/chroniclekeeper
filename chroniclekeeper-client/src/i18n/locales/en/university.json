@@ -1,4 +1,24 @@
 {
+    "major": {
+        "single": "University major",
+        "loadError": "Failed to load",
+        "notFound": "Major not found",
+        "description": "Description",
+        "none": "None",
+        "professors": "Professors",
+        "students": "Students",
+        "link": "link",
+        "pick": "Pick a character",
+        "confirm": "Link",
+        "cancel": "Cancel",
+        "remove": "Unlink {{name}}",
+        "addFailed": "Linking failed.",
+        "removeFailed": "Unlinking failed.",
+        "fields": {
+            "majorName": "Major",
+            "degreeLevel": "Degree level"
+        }
+    },
     "listTitle": "Universities",
     "search": "Search universities…",
     "loaderror": "Failed to load",

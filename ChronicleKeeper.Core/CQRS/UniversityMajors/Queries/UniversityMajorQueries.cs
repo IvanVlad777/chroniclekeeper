@@ -9,7 +9,7 @@ namespace ChronicleKeeper.Core.CQRS.UniversityMajors.Queries
         public int? UniversityId { get; set; }
     }
 
-    public class GetUniversityMajorByIdQuery : IRequest<UniversityMajorDto?>
+    public class GetUniversityMajorByIdQuery : IRequest<UniversityMajorDetailsDto?>
     {
         public int Id { get; set; }
     }

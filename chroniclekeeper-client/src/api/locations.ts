@@ -66,7 +66,9 @@ export type LocationLinkTargetType =
     | "Faction"
     | "Culture"
     | "Religion"
-    | "CulturalInstitution";
+    | "CulturalInstitution"
+    | "Currency"
+    | "TaxationSystem";
 
 export const addLocationCrossLink = async (
     locationId: number,

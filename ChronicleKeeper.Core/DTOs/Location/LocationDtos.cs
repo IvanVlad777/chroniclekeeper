@@ -83,11 +83,14 @@ namespace ChronicleKeeper.Core.DTOs.Location
         public List<ReferenceDto> Religions { get; set; } = new();
         public List<ReferenceDto> Factions { get; set; } = new();               // Country only
         public List<ReferenceDto> CulturalInstitutions { get; set; } = new();   // City only
+        public List<ReferenceDto> Currencies { get; set; } = new();
+        public List<ReferenceDto> TaxationSystems { get; set; } = new();
 
         // Reverse read-only lists (write side owned by the other entity).
         public List<ReferenceDto> MilitaryOrganizations { get; set; } = new();  // Country
         public List<ReferenceDto> TradeRoutes { get; set; } = new();            // Country/City
         public List<ReferenceDto> Creatures { get; set; } = new();              // City
+        public List<ReferenceDto> Armies { get; set; } = new();                // City — armies stationed here
         public List<ReferenceDto> TimelineEvents { get; set; } = new();         // any location — events that took place here
     }
 
@@ -102,7 +105,9 @@ namespace ChronicleKeeper.Core.DTOs.Location
         Faction,            // Country only
         Culture,
         Religion,
-        CulturalInstitution // City only
+        CulturalInstitution, // City only
+        Currency,
+        TaxationSystem
     }
 
     public class LocationCreateDto

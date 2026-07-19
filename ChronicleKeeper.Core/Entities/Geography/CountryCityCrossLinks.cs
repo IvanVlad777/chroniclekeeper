@@ -176,4 +176,46 @@ namespace ChronicleKeeper.Core.Entities.Geography
         public int ReligionId { get; set; }
         public virtual Religion? Religion { get; set; }
     }
+
+    // ---- Country/City ↔ economy-system cross-links (added alongside the society links) ----
+
+    /// <summary>Join: Country ↔ Currency (currencies used in the country).</summary>
+    public class CountryCurrency
+    {
+        public int CountryId { get; set; }
+        public virtual Country? Country { get; set; }
+
+        public int CurrencyId { get; set; }
+        public virtual Currency? Currency { get; set; }
+    }
+
+    /// <summary>Join: City ↔ Currency (currencies used in the city).</summary>
+    public class CityCurrency
+    {
+        public int CityId { get; set; }
+        public virtual City? City { get; set; }
+
+        public int CurrencyId { get; set; }
+        public virtual Currency? Currency { get; set; }
+    }
+
+    /// <summary>Join: Country ↔ TaxationSystem (taxation systems in force in the country).</summary>
+    public class CountryTaxationSystem
+    {
+        public int CountryId { get; set; }
+        public virtual Country? Country { get; set; }
+
+        public int TaxationSystemId { get; set; }
+        public virtual TaxationSystem? TaxationSystem { get; set; }
+    }
+
+    /// <summary>Join: City ↔ TaxationSystem (taxation systems in force in the city).</summary>
+    public class CityTaxationSystem
+    {
+        public int CityId { get; set; }
+        public virtual City? City { get; set; }
+
+        public int TaxationSystemId { get; set; }
+        public virtual TaxationSystem? TaxationSystem { get; set; }
+    }
 }

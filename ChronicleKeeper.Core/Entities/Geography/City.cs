@@ -36,6 +36,11 @@ namespace ChronicleKeeper.Core.Entities.Geography
         public virtual ICollection<CityCulture> PredominantCultures { get; set; } = new List<CityCulture>();
         public virtual ICollection<CityNation> Nations { get; set; } = new List<CityNation>();
         public virtual ICollection<CityReligion> Religions { get; set; } = new List<CityReligion>();
+        public virtual ICollection<CityCurrency> Currencies { get; set; } = new List<CityCurrency>();
+        public virtual ICollection<CityTaxationSystem> TaxationSystems { get; set; } = new List<CityTaxationSystem>();
+
+        // Reverse read-only nav for the Army.CityId FK (armies stationed in this city).
+        public virtual ICollection<Social.Military.Army> Armies { get; set; } = new List<Social.Military.Army>();
 
         // Reverse read-only nav for the creature-owned CreatureCity join (surfaced as a read list
         // on the City detail — no LinkEditor, the Creature owns the write side).

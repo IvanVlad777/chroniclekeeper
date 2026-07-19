@@ -188,4 +188,50 @@ namespace ChronicleKeeper.Infrastructure.Configurations
             builder.HasIndex(x => x.ReligionId);
         }
     }
+
+    // ---- economy-system links ----
+
+    public class CountryCurrencyConfiguration : IEntityTypeConfiguration<CountryCurrency>
+    {
+        public void Configure(EntityTypeBuilder<CountryCurrency> builder)
+        {
+            builder.HasKey(x => new { x.CountryId, x.CurrencyId });
+            builder.HasOne(x => x.Country).WithMany(c => c.Currencies).HasForeignKey(x => x.CountryId).OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne(x => x.Currency).WithMany().HasForeignKey(x => x.CurrencyId).OnDelete(DeleteBehavior.Cascade);
+            builder.HasIndex(x => x.CurrencyId);
+        }
+    }
+
+    public class CityCurrencyConfiguration : IEntityTypeConfiguration<CityCurrency>
+    {
+        public void Configure(EntityTypeBuilder<CityCurrency> builder)
+        {
+            builder.HasKey(x => new { x.CityId, x.CurrencyId });
+            builder.HasOne(x => x.City).WithMany(c => c.Currencies).HasForeignKey(x => x.CityId).OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne(x => x.Currency).WithMany().HasForeignKey(x => x.CurrencyId).OnDelete(DeleteBehavior.Cascade);
+            builder.HasIndex(x => x.CurrencyId);
+        }
+    }
+
+    public class CountryTaxationSystemConfiguration : IEntityTypeConfiguration<CountryTaxationSystem>
+    {
+        public void Configure(EntityTypeBuilder<CountryTaxationSystem> builder)
+        {
+            builder.HasKey(x => new { x.CountryId, x.TaxationSystemId });
+            builder.HasOne(x => x.Country).WithMany(c => c.TaxationSystems).HasForeignKey(x => x.CountryId).OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne(x => x.TaxationSystem).WithMany().HasForeignKey(x => x.TaxationSystemId).OnDelete(DeleteBehavior.Cascade);
+            builder.HasIndex(x => x.TaxationSystemId);
+        }
+    }
+
+    public class CityTaxationSystemConfiguration : IEntityTypeConfiguration<CityTaxationSystem>
+    {
+        public void Configure(EntityTypeBuilder<CityTaxationSystem> builder)
+        {
+            builder.HasKey(x => new { x.CityId, x.TaxationSystemId });
+            builder.HasOne(x => x.City).WithMany(c => c.TaxationSystems).HasForeignKey(x => x.CityId).OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne(x => x.TaxationSystem).WithMany().HasForeignKey(x => x.TaxationSystemId).OnDelete(DeleteBehavior.Cascade);
+            builder.HasIndex(x => x.TaxationSystemId);
+        }
+    }
 }

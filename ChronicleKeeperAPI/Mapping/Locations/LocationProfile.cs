@@ -74,10 +74,13 @@ public class LocationProfile : Profile
             .ForMember(dest => dest.Religions, opt => opt.MapFrom(src => GetReligions(src)))
             .ForMember(dest => dest.Factions, opt => opt.MapFrom(src => GetFactions(src)))
             .ForMember(dest => dest.CulturalInstitutions, opt => opt.MapFrom(src => GetCulturalInstitutions(src)))
+            .ForMember(dest => dest.Currencies, opt => opt.MapFrom(src => GetCurrencies(src)))
+            .ForMember(dest => dest.TaxationSystems, opt => opt.MapFrom(src => GetTaxationSystems(src)))
             // Reverse read-only lists
             .ForMember(dest => dest.MilitaryOrganizations, opt => opt.MapFrom(src => GetMilitaryOrganizations(src)))
             .ForMember(dest => dest.TradeRoutes, opt => opt.MapFrom(src => GetTradeRoutes(src)))
             .ForMember(dest => dest.Creatures, opt => opt.MapFrom(src => GetInhabitingCreatures(src)))
+            .ForMember(dest => dest.Armies, opt => opt.MapFrom(src => GetArmies(src)))
             .ForMember(dest => dest.TimelineEvents, opt => opt.MapFrom(src => src.TimelineEvents
                 .Select(e => new ReferenceDto { Id = e.Id, Name = e.Name })));
     }
@@ -260,6 +263,24 @@ public class LocationProfile : Profile
 
     private static List<ReferenceDto> GetCulturalInstitutions(Location location) => location is City city
         ? city.CulturalInstitutions.Where(x => x.CulturalInstitution != null).Select(x => new ReferenceDto { Id = x.CulturalInstitution!.Id, Name = x.CulturalInstitution.Name }).ToList()
+        : new List<ReferenceDto>();
+
+    private static List<ReferenceDto> GetCurrencies(Location location) => location switch
+    {
+        Country c => c.Currencies.Where(x => x.Currency != null).Select(x => new ReferenceDto { Id = x.Currency!.Id, Name = x.Currency.Name }).ToList(),
+        City c => c.Currencies.Where(x => x.Currency != null).Select(x => new ReferenceDto { Id = x.Currency!.Id, Name = x.Currency.Name }).ToList(),
+        _ => new List<ReferenceDto>()
+    };
+
+    private static List<ReferenceDto> GetTaxationSystems(Location location) => location switch
+    {
+        Country c => c.TaxationSystems.Where(x => x.TaxationSystem != null).Select(x => new ReferenceDto { Id = x.TaxationSystem!.Id, Name = x.TaxationSystem.Name }).ToList(),
+        City c => c.TaxationSystems.Where(x => x.TaxationSystem != null).Select(x => new ReferenceDto { Id = x.TaxationSystem!.Id, Name = x.TaxationSystem.Name }).ToList(),
+        _ => new List<ReferenceDto>()
+    };
+
+    private static List<ReferenceDto> GetArmies(Location location) => location is City city
+        ? city.Armies.Select(a => new ReferenceDto { Id = a.Id, Name = a.Name }).ToList()
         : new List<ReferenceDto>();
 
     // ---- Reverse read-only lists ----

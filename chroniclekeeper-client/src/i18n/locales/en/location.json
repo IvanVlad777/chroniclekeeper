@@ -126,9 +126,12 @@
         "religions": "Religions",
         "factions": "Factions",
         "culturalInstitutions": "Cultural institutions",
+        "currencies": "Currencies",
+        "taxationSystems": "Taxation systems",
         "reverseMilitary": "Military organizations",
         "reverseTradeRoutes": "Trade routes",
         "reverseCreatures": "Creatures",
+        "reverseArmies": "Armies stationed here",
         "timelineEvents": "Events here"
     },
     "form": {

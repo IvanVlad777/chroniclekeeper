@@ -126,9 +126,12 @@
         "religions": "Religije",
         "factions": "Frakcije",
         "culturalInstitutions": "Kulturne institucije",
+        "currencies": "Valute",
+        "taxationSystems": "Porezni sustavi",
         "reverseMilitary": "Vojne organizacije",
         "reverseTradeRoutes": "Trgovački putovi",
         "reverseCreatures": "Bića",
+        "reverseArmies": "Vojske stacionirane ovdje",
         "timelineEvents": "Događaji ovdje"
     },
     "form": {

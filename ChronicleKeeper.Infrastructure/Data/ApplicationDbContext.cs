@@ -76,6 +76,10 @@ namespace ChronicleKeeper.Infrastructure.Data
         public DbSet<CityCulture> CityCultures { get; set; }
         public DbSet<CityNation> CityNations { get; set; }
         public DbSet<CityReligion> CityReligions { get; set; }
+        public DbSet<CountryCurrency> CountryCurrencies { get; set; }
+        public DbSet<CityCurrency> CityCurrencies { get; set; }
+        public DbSet<CountryTaxationSystem> CountryTaxationSystems { get; set; }
+        public DbSet<CityTaxationSystem> CityTaxationSystems { get; set; }
 
         // Ecosystems (TPH subtypes of Location)
         public DbSet<Ecosystem> Ecosystems { get; set; }
@@ -185,6 +189,8 @@ namespace ChronicleKeeper.Infrastructure.Data
         public DbSet<SchoolSubjectTeacher> SchoolSubjectTeachers { get; set; }
         public DbSet<EducationRecord> EducationRecords { get; set; }
         public DbSet<UniversityMajor> UniversityMajors { get; set; }
+        public DbSet<UniversityMajorProfessor> UniversityMajorProfessors { get; set; }
+        public DbSet<UniversityMajorStudent> UniversityMajorStudents { get; set; }
         public DbSet<ReligiousEducation> ReligiousEducations { get; set; }
 
         // Abilities

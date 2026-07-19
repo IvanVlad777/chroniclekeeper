@@ -15,6 +15,13 @@ namespace ChronicleKeeper.Core.DTOs.UniversityMajor
         public DateTime UpdatedAt { get; set; }
     }
 
+    public class UniversityMajorDetailsDto : UniversityMajorDto
+    {
+        public ReferenceDto? University { get; set; }
+        public List<ReferenceDto> Professors { get; set; } = new();
+        public List<ReferenceDto> Students { get; set; } = new();
+    }
+
     public class UniversityMajorCreateDto
     {
         [Required]

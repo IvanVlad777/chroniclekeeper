@@ -264,7 +264,9 @@ export default function UniversityDetails() {
             ) : (
                 university.majors.map((m) => (
                     <div key={m.id} className={s.childRow}>
-                        <span className={s.childName}>{m.majorName || m.name}</span>
+                        <Link to={`/storymap/university-majors/${m.id}`} className={s.childName}>
+                            {m.majorName || m.name}
+                        </Link>
                         <div className={s.childBody}>
                             {m.description && <p className={s.childDesc}>{m.description}</p>}
                             {m.degreeLevel && <p className={s.childMeta}>{m.degreeLevel}</p>}

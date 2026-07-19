@@ -4,6 +4,7 @@ import {
     UniversityDetailsDto,
     UniversityDto,
     UniversityMajorCreateDto,
+    UniversityMajorDetailsDto,
     UniversityMajorDto,
     UniversityMajorUpdateDto,
     UniversityUpdateDto,
@@ -72,6 +73,26 @@ export const updateUniversityMajor = async (
 
 export const deleteUniversityMajor = async (id: number): Promise<void> => {
     await api.delete(`/university-majors/${id}`);
+};
+
+export const getUniversityMajorById = async (
+    id: number
+): Promise<UniversityMajorDetailsDto> => {
+    const response = await api.get<UniversityMajorDetailsDto>(`/university-majors/${id}`);
+    return response.data;
+};
+
+export const addUniversityMajorProfessor = async (majorId: number, characterId: number): Promise<void> => {
+    await api.post(`/university-majors/${majorId}/professors/${characterId}`);
+};
+export const removeUniversityMajorProfessor = async (majorId: number, characterId: number): Promise<void> => {
+    await api.delete(`/university-majors/${majorId}/professors/${characterId}`);
+};
+export const addUniversityMajorStudent = async (majorId: number, characterId: number): Promise<void> => {
+    await api.post(`/university-majors/${majorId}/students/${characterId}`);
+};
+export const removeUniversityMajorStudent = async (majorId: number, characterId: number): Promise<void> => {
+    await api.delete(`/university-majors/${majorId}/students/${characterId}`);
 };
 
 export const addUniversityStudent = async (universityId: number, characterId: number): Promise<void> => {

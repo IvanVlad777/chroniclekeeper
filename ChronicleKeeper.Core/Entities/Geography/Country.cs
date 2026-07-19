@@ -34,6 +34,8 @@ namespace ChronicleKeeper.Core.Entities.Geography
         public virtual ICollection<CountryFaction> Factions { get; set; } = new List<CountryFaction>();
         public virtual ICollection<CountryCulture> PredominantCultures { get; set; } = new List<CountryCulture>();
         public virtual ICollection<CountryReligion> Religions { get; set; } = new List<CountryReligion>();
+        public virtual ICollection<CountryCurrency> Currencies { get; set; } = new List<CountryCurrency>();
+        public virtual ICollection<CountryTaxationSystem> TaxationSystems { get; set; } = new List<CountryTaxationSystem>();
 
         // Reverse read-only nav for the org-owned MilitaryOrganizationCountry join (surfaced as a
         // read list on the Country detail — no LinkEditor, the org owns the write side).

@@ -51,6 +51,8 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .Include(l => ((Country)l).Factions).ThenInclude(x => x.Faction)
                 .Include(l => ((Country)l).PredominantCultures).ThenInclude(x => x.Culture)
                 .Include(l => ((Country)l).Religions).ThenInclude(x => x.Religion)
+                .Include(l => ((Country)l).Currencies).ThenInclude(x => x.Currency)
+                .Include(l => ((Country)l).TaxationSystems).ThenInclude(x => x.TaxationSystem)
                 .Include(l => ((Country)l).MilitaryOrganizations).ThenInclude(x => x.MilitaryOrganization)
                 // City cross-links (+ reverse read-only inhabiting creatures)
                 .Include(l => ((City)l).Industries).ThenInclude(x => x.Industry)
@@ -61,7 +63,10 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .Include(l => ((City)l).PredominantCultures).ThenInclude(x => x.Culture)
                 .Include(l => ((City)l).Nations).ThenInclude(x => x.Nation)
                 .Include(l => ((City)l).Religions).ThenInclude(x => x.Religion)
+                .Include(l => ((City)l).Currencies).ThenInclude(x => x.Currency)
+                .Include(l => ((City)l).TaxationSystems).ThenInclude(x => x.TaxationSystem)
                 .Include(l => ((City)l).InhabitingCreatures).ThenInclude(x => x.Creature)
+                .Include(l => ((City)l).Armies)
                 // Reverse read-only trade routes (owned by TradeRoute via TradeRouteLocation) — base Location nav
                 .Include(l => l.TradeRouteLinks).ThenInclude(x => x.TradeRoute)
                 // Reverse read-only timeline events that took place at this location
@@ -184,6 +189,8 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 LocationLinkTargetType.Culture => _context.Cultures.AnyAsync(x => x.Id == targetId && x.WorldId == worldId, cancellationToken),
                 LocationLinkTargetType.Religion => _context.Religions.AnyAsync(x => x.Id == targetId && x.WorldId == worldId, cancellationToken),
                 LocationLinkTargetType.CulturalInstitution => _context.CulturalInstitutions.AnyAsync(x => x.Id == targetId && x.WorldId == worldId, cancellationToken),
+                LocationLinkTargetType.Currency => _context.Currencies.AnyAsync(x => x.Id == targetId && x.WorldId == worldId, cancellationToken),
+                LocationLinkTargetType.TaxationSystem => _context.TaxationSystems.AnyAsync(x => x.Id == targetId && x.WorldId == worldId, cancellationToken),
                 _ => Task.FromResult(false),
             };
         }
@@ -208,6 +215,10 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 (true, LocationLinkTargetType.Culture) => _context.CityCultures.AnyAsync(x => x.CityId == locationId && x.CultureId == targetId, cancellationToken),
                 (true, LocationLinkTargetType.Nation) => _context.CityNations.AnyAsync(x => x.CityId == locationId && x.NationId == targetId, cancellationToken),
                 (true, LocationLinkTargetType.Religion) => _context.CityReligions.AnyAsync(x => x.CityId == locationId && x.ReligionId == targetId, cancellationToken),
+                (false, LocationLinkTargetType.Currency) => _context.CountryCurrencies.AnyAsync(x => x.CountryId == locationId && x.CurrencyId == targetId, cancellationToken),
+                (true, LocationLinkTargetType.Currency) => _context.CityCurrencies.AnyAsync(x => x.CityId == locationId && x.CurrencyId == targetId, cancellationToken),
+                (false, LocationLinkTargetType.TaxationSystem) => _context.CountryTaxationSystems.AnyAsync(x => x.CountryId == locationId && x.TaxationSystemId == targetId, cancellationToken),
+                (true, LocationLinkTargetType.TaxationSystem) => _context.CityTaxationSystems.AnyAsync(x => x.CityId == locationId && x.TaxationSystemId == targetId, cancellationToken),
                 _ => Task.FromResult(false),
             };
         }
@@ -232,6 +243,10 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 (true, LocationLinkTargetType.Culture) => new CityCulture { CityId = locationId, CultureId = targetId },
                 (true, LocationLinkTargetType.Nation) => new CityNation { CityId = locationId, NationId = targetId },
                 (true, LocationLinkTargetType.Religion) => new CityReligion { CityId = locationId, ReligionId = targetId },
+                (false, LocationLinkTargetType.Currency) => new CountryCurrency { CountryId = locationId, CurrencyId = targetId },
+                (true, LocationLinkTargetType.Currency) => new CityCurrency { CityId = locationId, CurrencyId = targetId },
+                (false, LocationLinkTargetType.TaxationSystem) => new CountryTaxationSystem { CountryId = locationId, TaxationSystemId = targetId },
+                (true, LocationLinkTargetType.TaxationSystem) => new CityTaxationSystem { CityId = locationId, TaxationSystemId = targetId },
                 _ => throw new InvalidOperationException($"Unsupported cross-link {targetType} for {(isCity ? "City" : "Country")}."),
             };
             _context.Add(join);
@@ -258,6 +273,10 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 (true, LocationLinkTargetType.Culture) => await _context.CityCultures.Where(x => x.CityId == locationId && x.CultureId == targetId).ExecuteDeleteAsync(cancellationToken),
                 (true, LocationLinkTargetType.Nation) => await _context.CityNations.Where(x => x.CityId == locationId && x.NationId == targetId).ExecuteDeleteAsync(cancellationToken),
                 (true, LocationLinkTargetType.Religion) => await _context.CityReligions.Where(x => x.CityId == locationId && x.ReligionId == targetId).ExecuteDeleteAsync(cancellationToken),
+                (false, LocationLinkTargetType.Currency) => await _context.CountryCurrencies.Where(x => x.CountryId == locationId && x.CurrencyId == targetId).ExecuteDeleteAsync(cancellationToken),
+                (true, LocationLinkTargetType.Currency) => await _context.CityCurrencies.Where(x => x.CityId == locationId && x.CurrencyId == targetId).ExecuteDeleteAsync(cancellationToken),
+                (false, LocationLinkTargetType.TaxationSystem) => await _context.CountryTaxationSystems.Where(x => x.CountryId == locationId && x.TaxationSystemId == targetId).ExecuteDeleteAsync(cancellationToken),
+                (true, LocationLinkTargetType.TaxationSystem) => await _context.CityTaxationSystems.Where(x => x.CityId == locationId && x.TaxationSystemId == targetId).ExecuteDeleteAsync(cancellationToken),
                 _ => 0,
             };
             return deleted > 0;

@@ -33,6 +33,8 @@ import { getFactions } from "../../../../api/factions";
 import { getCultures } from "../../../../api/cultures";
 import { getReligions } from "../../../../api/religions";
 import { getCulturalInstitutions } from "../../../../api/culturalInstitutions";
+import { getCurrencies } from "../../../../api/currencies";
+import { getTaxationSystems } from "../../../../api/taxationSystems";
 import { useAuth } from "../../../../hooks/useAuth";
 import { locationGlyphs } from "../locationGlyphs";
 import s from "./styles.module.css";
@@ -557,6 +559,8 @@ export default function LocationDetails() {
                         { type: "Nation", title: t("crossLinks.nations"), items: location.nations, load: () => getNations(w), linkTo: (id) => `/storymap/nations/${id}` },
                         { type: "Culture", title: t("crossLinks.cultures"), items: location.cultures, load: () => getCultures(w), linkTo: (id) => `/storymap/cultures/${id}` },
                         { type: "Religion", title: t("crossLinks.religions"), items: location.religions, load: () => getReligions(w), linkTo: (id) => `/storymap/religions/${id}` },
+                        { type: "Currency", title: t("crossLinks.currencies"), items: location.currencies, load: () => getCurrencies(w), linkTo: (id) => `/storymap/currencies/${id}` },
+                        { type: "TaxationSystem", title: t("crossLinks.taxationSystems"), items: location.taxationSystems, load: () => getTaxationSystems(w), linkTo: (id) => `/storymap/taxation-systems/${id}` },
                     ];
                     if (isCity) {
                         // CulturalInstitution has no dedicated detail page → no linkTo (plain chip).
@@ -569,6 +573,7 @@ export default function LocationDetails() {
                     const reverse: Rev[] = [];
                     if (isCity) {
                         reverse.push({ title: t("crossLinks.reverseCreatures"), items: location.creatures, linkTo: (id) => `/storymap/creatures/${id}` });
+                        reverse.push({ title: t("crossLinks.reverseArmies"), items: location.armies, linkTo: (id) => `/storymap/armies/${id}` });
                     } else {
                         reverse.push({ title: t("crossLinks.reverseMilitary"), items: location.militaryOrganizations, linkTo: (id) => `/storymap/military-organizations/${id}` });
                     }

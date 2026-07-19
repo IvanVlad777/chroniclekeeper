@@ -28,7 +28,7 @@ namespace ChronicleKeeper.Core.CQRS.UniversityMajors.Handlers
         }
     }
 
-    public class GetUniversityMajorByIdQueryHandler : IRequestHandler<GetUniversityMajorByIdQuery, UniversityMajorDto?>
+    public class GetUniversityMajorByIdQueryHandler : IRequestHandler<GetUniversityMajorByIdQuery, UniversityMajorDetailsDto?>
     {
         private readonly IUniversityMajorRepository _repository;
         private readonly IMapper _mapper;
@@ -39,10 +39,96 @@ namespace ChronicleKeeper.Core.CQRS.UniversityMajors.Handlers
             _mapper = mapper;
         }
 
-        public async Task<UniversityMajorDto?> Handle(GetUniversityMajorByIdQuery request, CancellationToken cancellationToken)
+        public async Task<UniversityMajorDetailsDto?> Handle(GetUniversityMajorByIdQuery request, CancellationToken cancellationToken)
         {
-            var major = await _repository.FindByIdAsync(request.Id, cancellationToken);
-            return major == null ? null : _mapper.Map<UniversityMajorDto>(major);
+            var major = await _repository.GetByIdAsync(request.Id, cancellationToken);
+            return major == null ? null : _mapper.Map<UniversityMajorDetailsDto>(major);
+        }
+    }
+
+    public class AddUniversityMajorProfessorCommandHandler : IRequestHandler<AddUniversityMajorProfessorCommand, bool>
+    {
+        private readonly IUniversityMajorRepository _repository;
+        private readonly ICharacterRepository _characterRepository;
+
+        public AddUniversityMajorProfessorCommandHandler(IUniversityMajorRepository repository, ICharacterRepository characterRepository)
+        {
+            _repository = repository;
+            _characterRepository = characterRepository;
+        }
+
+        public async Task<bool> Handle(AddUniversityMajorProfessorCommand request, CancellationToken cancellationToken)
+        {
+            var major = await _repository.FindByIdAsync(request.UniversityMajorId, cancellationToken)
+                ?? throw new EntityNotFoundException("UniversityMajor", request.UniversityMajorId);
+            if (!await _characterRepository.ExistsInWorldAsync(request.CharacterId, major.WorldId, cancellationToken))
+            {
+                throw new DomainValidationException($"Character with ID {request.CharacterId} does not exist in this world.");
+            }
+            if (await _repository.IsProfessorLinkedAsync(request.UniversityMajorId, request.CharacterId, cancellationToken))
+            {
+                throw new DomainValidationException("This character is already a professor of the major.");
+            }
+            await _repository.AddProfessorAsync(request.UniversityMajorId, request.CharacterId, cancellationToken);
+            return true;
+        }
+    }
+
+    public class RemoveUniversityMajorProfessorCommandHandler : IRequestHandler<RemoveUniversityMajorProfessorCommand, bool>
+    {
+        private readonly IUniversityMajorRepository _repository;
+
+        public RemoveUniversityMajorProfessorCommandHandler(IUniversityMajorRepository repository)
+        {
+            _repository = repository;
+        }
+
+        public Task<bool> Handle(RemoveUniversityMajorProfessorCommand request, CancellationToken cancellationToken)
+        {
+            return _repository.RemoveProfessorAsync(request.UniversityMajorId, request.CharacterId, cancellationToken);
+        }
+    }
+
+    public class AddUniversityMajorStudentCommandHandler : IRequestHandler<AddUniversityMajorStudentCommand, bool>
+    {
+        private readonly IUniversityMajorRepository _repository;
+        private readonly ICharacterRepository _characterRepository;
+
+        public AddUniversityMajorStudentCommandHandler(IUniversityMajorRepository repository, ICharacterRepository characterRepository)
+        {
+            _repository = repository;
+            _characterRepository = characterRepository;
+        }
+
+        public async Task<bool> Handle(AddUniversityMajorStudentCommand request, CancellationToken cancellationToken)
+        {
+            var major = await _repository.FindByIdAsync(request.UniversityMajorId, cancellationToken)
+                ?? throw new EntityNotFoundException("UniversityMajor", request.UniversityMajorId);
+            if (!await _characterRepository.ExistsInWorldAsync(request.CharacterId, major.WorldId, cancellationToken))
+            {
+                throw new DomainValidationException($"Character with ID {request.CharacterId} does not exist in this world.");
+            }
+            if (await _repository.IsStudentLinkedAsync(request.UniversityMajorId, request.CharacterId, cancellationToken))
+            {
+                throw new DomainValidationException("This character is already a student of the major.");
+            }
+            await _repository.AddStudentAsync(request.UniversityMajorId, request.CharacterId, cancellationToken);
+            return true;
+        }
+    }
+
+    public class RemoveUniversityMajorStudentCommandHandler : IRequestHandler<RemoveUniversityMajorStudentCommand, bool>
+    {
+        private readonly IUniversityMajorRepository _repository;
+
+        public RemoveUniversityMajorStudentCommandHandler(IUniversityMajorRepository repository)
+        {
+            _repository = repository;
+        }
+
+        public Task<bool> Handle(RemoveUniversityMajorStudentCommand request, CancellationToken cancellationToken)
+        {
+            return _repository.RemoveStudentAsync(request.UniversityMajorId, request.CharacterId, cancellationToken);
         }
     }
 
