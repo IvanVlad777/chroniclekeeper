@@ -1,3 +1,4 @@
+using ChronicleKeeper.Core.DTOs.Location;
 using ChronicleKeeper.Core.Entities.Geography;
 
 namespace ChronicleKeeper.Core.Repositories
@@ -25,5 +26,12 @@ namespace ChronicleKeeper.Core.Repositories
         Task<bool> IsNativeSpeciesLinkedAsync(int regionId, int sapientSpeciesId, CancellationToken cancellationToken = default);
         Task AddNativeSpeciesAsync(int regionId, int sapientSpeciesId, CancellationToken cancellationToken = default);
         Task<bool> RemoveNativeSpeciesAsync(int regionId, int sapientSpeciesId, CancellationToken cancellationToken = default);
+
+        // Country/City ↔ X cross-links. isCity selects the City-owned vs Country-owned join table;
+        // targetType selects which target the join points at.
+        Task<bool> CrossLinkTargetExistsInWorldAsync(LocationLinkTargetType targetType, int targetId, int worldId, CancellationToken cancellationToken = default);
+        Task<bool> IsCrossLinkedAsync(int locationId, bool isCity, LocationLinkTargetType targetType, int targetId, CancellationToken cancellationToken = default);
+        Task AddCrossLinkAsync(int locationId, bool isCity, LocationLinkTargetType targetType, int targetId, CancellationToken cancellationToken = default);
+        Task<bool> RemoveCrossLinkAsync(int locationId, bool isCity, LocationLinkTargetType targetType, int targetId, CancellationToken cancellationToken = default);
     }
 }

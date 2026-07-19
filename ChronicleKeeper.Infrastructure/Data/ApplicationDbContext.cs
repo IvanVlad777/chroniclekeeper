@@ -59,6 +59,24 @@ namespace ChronicleKeeper.Infrastructure.Data
         public DbSet<District> Districts { get; set; }
         public DbSet<RegionSapientSpecies> RegionSapientSpecies { get; set; }
 
+        // Country/City ↔ X many-to-many cross-links (join tables)
+        public DbSet<CountryIndustry> CountryIndustries { get; set; }
+        public DbSet<CountryCorporation> CountryCorporations { get; set; }
+        public DbSet<CountryGuild> CountryGuilds { get; set; }
+        public DbSet<CountryPoliticalParty> CountryPoliticalParties { get; set; }
+        public DbSet<CountryNation> CountryNations { get; set; }
+        public DbSet<CountryFaction> CountryFactions { get; set; }
+        public DbSet<CountryCulture> CountryCultures { get; set; }
+        public DbSet<CountryReligion> CountryReligions { get; set; }
+        public DbSet<CityIndustry> CityIndustries { get; set; }
+        public DbSet<CityCorporation> CityCorporations { get; set; }
+        public DbSet<CityGuild> CityGuilds { get; set; }
+        public DbSet<CityCulturalInstitution> CityCulturalInstitutions { get; set; }
+        public DbSet<CityPoliticalParty> CityPoliticalParties { get; set; }
+        public DbSet<CityCulture> CityCultures { get; set; }
+        public DbSet<CityNation> CityNations { get; set; }
+        public DbSet<CityReligion> CityReligions { get; set; }
+
         // Ecosystems (TPH subtypes of Location)
         public DbSet<Ecosystem> Ecosystems { get; set; }
         public DbSet<LakeEcosystem> LakeEcosystems { get; set; }

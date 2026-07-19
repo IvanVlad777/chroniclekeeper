@@ -113,5 +113,32 @@ namespace ChronicleKeeperAPI.Controllers
             if (!result) return NotFound();
             return NoContent();
         }
+
+        // POST: /api/locations/{id}/links/{targetType}/{targetId}
+        [HttpPost("{id}/links/{targetType}/{targetId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Cross-link a Country/City to an entity",
+            Description = "TargetType: Industry | Corporation | Guild | PoliticalParty | Nation | Faction (Country only) | Culture | Religion | CulturalInstitution (City only)")]
+        [SwaggerResponse(204, "Linked")]
+        [SwaggerResponse(400, "Invalid target / already linked / unsupported for this location type")]
+        [SwaggerResponse(404, "Location not found")]
+        public async Task<IActionResult> AddCrossLink(int id, LocationLinkTargetType targetType, int targetId)
+        {
+            await _mediator.Send(new AddLocationCrossLinkCommand { LocationId = id, TargetType = targetType, TargetId = targetId });
+            return NoContent();
+        }
+
+        // DELETE: /api/locations/{id}/links/{targetType}/{targetId}
+        [HttpDelete("{id}/links/{targetType}/{targetId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Remove a Country/City cross-link")]
+        [SwaggerResponse(204, "Unlinked")]
+        [SwaggerResponse(404, "Link not found")]
+        public async Task<IActionResult> RemoveCrossLink(int id, LocationLinkTargetType targetType, int targetId)
+        {
+            var result = await _mediator.Send(new RemoveLocationCrossLinkCommand { LocationId = id, TargetType = targetType, TargetId = targetId });
+            if (!result) return NotFound();
+            return NoContent();
+        }
     }
 }

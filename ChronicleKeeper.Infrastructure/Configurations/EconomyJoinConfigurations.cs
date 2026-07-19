@@ -119,7 +119,7 @@ namespace ChronicleKeeper.Infrastructure.Configurations
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(tl => tl.Location)
-                .WithMany()
+                .WithMany(l => l.TradeRouteLinks)
                 .HasForeignKey(tl => tl.LocationId)
                 .OnDelete(DeleteBehavior.Cascade);
 

@@ -181,7 +181,7 @@ namespace ChronicleKeeper.Infrastructure.Configurations
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(oc => oc.Country)
-                .WithMany()
+                .WithMany(c => c.MilitaryOrganizations)
                 .HasForeignKey(oc => oc.CountryId)
                 .OnDelete(DeleteBehavior.Cascade);
         }

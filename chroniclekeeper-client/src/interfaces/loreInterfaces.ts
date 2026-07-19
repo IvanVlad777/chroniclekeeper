@@ -675,6 +675,22 @@ export interface LocationDetailsDto extends LocationDto {
     nativeSpecies: ReferenceDto[];
     sourceLocation?: ReferenceDto | null;
     mouthLocation?: ReferenceDto | null;
+
+    // Country/City cross-links (editable; empty for other location types)
+    industries: ReferenceDto[];
+    corporations: ReferenceDto[];
+    guilds: ReferenceDto[];
+    politicalParties: ReferenceDto[];
+    nations: ReferenceDto[];
+    cultures: ReferenceDto[];
+    religions: ReferenceDto[];
+    factions: ReferenceDto[]; // Country only
+    culturalInstitutions: ReferenceDto[]; // City only
+
+    // Reverse read-only lists
+    militaryOrganizations: ReferenceDto[]; // Country
+    tradeRoutes: ReferenceDto[]; // Country/City
+    creatures: ReferenceDto[]; // City
 }
 
 export interface LocationCreateDto {

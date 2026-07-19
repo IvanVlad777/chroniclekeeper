@@ -1,3 +1,4 @@
+using ChronicleKeeper.Core.Entities.Geography.Creatures;
 using ChronicleKeeper.Core.Entities.Social.Politics;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -24,17 +25,23 @@ namespace ChronicleKeeper.Core.Entities.Geography
         //public Army? Army { get; set; } // TODO: Uncomment when Army entity is revived
         public int? EconomicSystemId { get; set; }
         public Social.Economy.EconomicSystem? EconomicSystem { get; set; }
-        //public ICollection<Industry> MajorIndustries { get; set; } = new List<Industry>(); // TODO: Many-to-many cross-link, needs join entity — deferred, same pattern as Culture<->Nation
-        //public ICollection<Corporation> Corporations { get; set; } = new List<Corporation>(); // TODO: Many-to-many cross-link, needs join entity — deferred, same pattern as Culture<->Nation
-        //public ICollection<Guild> Guilds { get; set; } = new List<Guild>(); // TODO: Many-to-many cross-link, needs join entity — deferred, same pattern as Culture<->Nation
-        //public ICollection<CulturalInstitution> CulturalInstitutions { get; set; } = new List<CulturalInstitution>(); // TODO: Uncomment when CulturalInstitution entity is revived
-        //public ICollection<TradeRoute> TradeRoutes { get; set; } = new List<TradeRoute>(); // TODO: Many-to-many cross-link, needs join entity — deferred; waypoints already possible via TradeRouteLocation (target side gets no nav)
-        // NOTE: relation to Creature already exists via the CreatureCity join entity (Creature owns the nav) — target side gets no nav per convention.
 
-        //public ICollection<PoliticalParty> PoliticalParties { get; set; } = new List<PoliticalParty>(); // TODO: Many-to-many cross-link, needs join entity — deferred, same pattern as Culture<->Nation
-        //public ICollection<Social.Cultures.Culture> PredominantCultures { get; set; } = new List<Social.Cultures.Culture>(); // TODO: Many-to-many cross-link, needs join entity — deferred, same pattern as Culture<->Nation
-        //public ICollection<Social.Nationality.Nation> Nations { get; set; } = new List<Social.Nationality.Nation>(); // TODO: Many-to-many cross-link, needs join entity — deferred, same pattern as Culture<->Nation
-        //public ICollection<Social.Religions.Religion> Religion { get; set; } = new List<Social.Religions.Religion>(); // TODO: Many-to-many cross-link, needs join entity — deferred, same pattern as Culture<->Nation
+        // City-owned many-to-many cross-links (join entities in CountryCityCrossLinks.cs).
+        // Owner side holds the nav; target entities get no reverse nav (asymmetric convention).
+        public virtual ICollection<CityIndustry> Industries { get; set; } = new List<CityIndustry>();
+        public virtual ICollection<CityCorporation> Corporations { get; set; } = new List<CityCorporation>();
+        public virtual ICollection<CityGuild> Guilds { get; set; } = new List<CityGuild>();
+        public virtual ICollection<CityCulturalInstitution> CulturalInstitutions { get; set; } = new List<CityCulturalInstitution>();
+        public virtual ICollection<CityPoliticalParty> PoliticalParties { get; set; } = new List<CityPoliticalParty>();
+        public virtual ICollection<CityCulture> PredominantCultures { get; set; } = new List<CityCulture>();
+        public virtual ICollection<CityNation> Nations { get; set; } = new List<CityNation>();
+        public virtual ICollection<CityReligion> Religions { get; set; } = new List<CityReligion>();
+
+        // Reverse read-only nav for the creature-owned CreatureCity join (surfaced as a read list
+        // on the City detail — no LinkEditor, the Creature owns the write side).
+        public virtual ICollection<CreatureCity> InhabitingCreatures { get; set; } = new List<CreatureCity>();
+        // NOTE: relation to TradeRoute already exists via the TradeRouteLocation join (TradeRoute owns
+        // the nav); City surfaces it read-only through the inherited Location.TradeRouteLinks nav.
 
         [NotMapped]
         public Country? Country => ParentLocation as Country;

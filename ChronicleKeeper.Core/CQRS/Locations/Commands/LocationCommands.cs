@@ -30,4 +30,18 @@ namespace ChronicleKeeper.Core.CQRS.Locations.Commands
         public int RegionId { get; set; }
         public int SapientSpeciesId { get; set; }
     }
+
+    public class AddLocationCrossLinkCommand : IRequest<bool>
+    {
+        public int LocationId { get; set; }
+        public LocationLinkTargetType TargetType { get; set; }
+        public int TargetId { get; set; }
+    }
+
+    public class RemoveLocationCrossLinkCommand : IRequest<bool>
+    {
+        public int LocationId { get; set; }
+        public LocationLinkTargetType TargetType { get; set; }
+        public int TargetId { get; set; }
+    }
 }

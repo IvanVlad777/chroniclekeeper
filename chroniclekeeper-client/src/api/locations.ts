@@ -55,3 +55,31 @@ export const removeRegionNativeSpecies = async (
 ): Promise<void> => {
     await api.delete(`/locations/${regionId}/native-species/${speciesId}`);
 };
+
+/** Target entity kinds a Country/City can be cross-linked to (must match the C# LocationLinkTargetType enum names). */
+export type LocationLinkTargetType =
+    | "Industry"
+    | "Corporation"
+    | "Guild"
+    | "PoliticalParty"
+    | "Nation"
+    | "Faction"
+    | "Culture"
+    | "Religion"
+    | "CulturalInstitution";
+
+export const addLocationCrossLink = async (
+    locationId: number,
+    targetType: LocationLinkTargetType,
+    targetId: number
+): Promise<void> => {
+    await api.post(`/locations/${locationId}/links/${targetType}/${targetId}`);
+};
+
+export const removeLocationCrossLink = async (
+    locationId: number,
+    targetType: LocationLinkTargetType,
+    targetId: number
+): Promise<void> => {
+    await api.delete(`/locations/${locationId}/links/${targetType}/${targetId}`);
+};

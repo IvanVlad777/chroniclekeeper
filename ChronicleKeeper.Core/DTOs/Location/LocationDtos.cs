@@ -72,6 +72,36 @@ namespace ChronicleKeeper.Core.DTOs.Location
         public List<ReferenceDto> NativeSpecies { get; set; } = new();
         public ReferenceDto? SourceLocation { get; set; }
         public ReferenceDto? MouthLocation { get; set; }
+
+        // Country/City ↔ X cross-links (editable; populated only for Country/City, empty otherwise).
+        public List<ReferenceDto> Industries { get; set; } = new();
+        public List<ReferenceDto> Corporations { get; set; } = new();
+        public List<ReferenceDto> Guilds { get; set; } = new();
+        public List<ReferenceDto> PoliticalParties { get; set; } = new();
+        public List<ReferenceDto> Nations { get; set; } = new();
+        public List<ReferenceDto> Cultures { get; set; } = new();
+        public List<ReferenceDto> Religions { get; set; } = new();
+        public List<ReferenceDto> Factions { get; set; } = new();               // Country only
+        public List<ReferenceDto> CulturalInstitutions { get; set; } = new();   // City only
+
+        // Reverse read-only lists (write side owned by the other entity).
+        public List<ReferenceDto> MilitaryOrganizations { get; set; } = new();  // Country
+        public List<ReferenceDto> TradeRoutes { get; set; } = new();            // Country/City
+        public List<ReferenceDto> Creatures { get; set; } = new();              // City
+    }
+
+    /// <summary>Entity types that a Country/City can be cross-linked to (owner: Country or City).</summary>
+    public enum LocationLinkTargetType
+    {
+        Industry,
+        Corporation,
+        Guild,
+        PoliticalParty,
+        Nation,
+        Faction,            // Country only
+        Culture,
+        Religion,
+        CulturalInstitution // City only
     }
 
     public class LocationCreateDto

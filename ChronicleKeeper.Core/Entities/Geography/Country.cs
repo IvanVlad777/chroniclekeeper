@@ -1,3 +1,4 @@
+using ChronicleKeeper.Core.Entities.Social.Military;
 using ChronicleKeeper.Core.Entities.Social.Politics;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -23,17 +24,22 @@ namespace ChronicleKeeper.Core.Entities.Geography
         public int? EconomicSystemId { get; set; }
         public Social.Economy.EconomicSystem? EconomicSystem { get; set; }
 
-        //public ICollection<MilitaryOrganization> MilitaryOrganizations { get; set; } = new List<MilitaryOrganization>(); // TODO: Uncomment when MilitaryOrganization entity is revived
-        //public ICollection<Industry> MajorIndustries { get; set; } = new List<Industry>(); // TODO: Many-to-many cross-link, needs join entity — deferred, same pattern as Culture<->Nation
-        //public ICollection<Corporation> Corporations { get; set; } = new List<Corporation>(); // TODO: Many-to-many cross-link, needs join entity — deferred, same pattern as Culture<->Nation
-        //public ICollection<Guild> Guilds { get; set; } = new List<Guild>(); // TODO: Many-to-many cross-link, needs join entity — deferred, same pattern as Culture<->Nation
-        //public ICollection<TradeRoute> TradeRoutes { get; set; } = new List<TradeRoute>(); // TODO: Many-to-many cross-link, needs join entity — deferred; waypoints already possible via TradeRouteLocation (target side gets no nav)
+        // Country-owned many-to-many cross-links (join entities in CountryCityCrossLinks.cs).
+        // Owner side holds the nav; target entities get no reverse nav (asymmetric convention).
+        public virtual ICollection<CountryIndustry> Industries { get; set; } = new List<CountryIndustry>();
+        public virtual ICollection<CountryCorporation> Corporations { get; set; } = new List<CountryCorporation>();
+        public virtual ICollection<CountryGuild> Guilds { get; set; } = new List<CountryGuild>();
+        public virtual ICollection<CountryPoliticalParty> PoliticalParties { get; set; } = new List<CountryPoliticalParty>();
+        public virtual ICollection<CountryNation> Nations { get; set; } = new List<CountryNation>();
+        public virtual ICollection<CountryFaction> Factions { get; set; } = new List<CountryFaction>();
+        public virtual ICollection<CountryCulture> PredominantCultures { get; set; } = new List<CountryCulture>();
+        public virtual ICollection<CountryReligion> Religions { get; set; } = new List<CountryReligion>();
 
-        //public ICollection<PoliticalParty> PoliticalParties { get; set; } = new List<PoliticalParty>(); // TODO: Many-to-many cross-link, needs join entity — deferred, same pattern as Culture<->Nation
-        //public ICollection<Nation> Nations { get; set; } = new List<Nation>(); // TODO: Many-to-many cross-link, needs join entity — deferred, same pattern as Culture<->Nation
-        //public ICollection<Faction> Factions { get; set; } = new List<Faction>(); // TODO: Many-to-many cross-link, needs join entity — deferred, same pattern as Culture<->Nation
-        //public ICollection<Social.Cultures.Culture> PredominantCultures { get; set; } = new List<Social.Cultures.Culture>(); // TODO: Many-to-many cross-link, needs join entity — deferred, same pattern as Culture<->Nation
-        //public ICollection<Social.Religions.Religion> Religions { get; set; } = new List<Social.Religions.Religion>(); // TODO: Many-to-many cross-link, needs join entity — deferred, same pattern as Culture<->Nation
+        // Reverse read-only nav for the org-owned MilitaryOrganizationCountry join (surfaced as a
+        // read list on the Country detail — no LinkEditor, the org owns the write side).
+        public virtual ICollection<MilitaryOrganizationCountry> MilitaryOrganizations { get; set; } = new List<MilitaryOrganizationCountry>();
+        // NOTE: relation to TradeRoute already exists via the TradeRouteLocation join (TradeRoute owns
+        // the nav); Country surfaces it read-only through the inherited Location.TradeRouteLinks nav.
 
         [NotMapped]
         public Region? Region => ParentLocation as Region;

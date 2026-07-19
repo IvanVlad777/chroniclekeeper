@@ -116,6 +116,20 @@
         "addFailed": "Povezivanje nije uspjelo.",
         "removeFailed": "Odvezivanje nije uspjelo."
     },
+    "crossLinks": {
+        "industries": "Industrije",
+        "corporations": "Korporacije",
+        "guilds": "Cehovi",
+        "politicalParties": "Političke stranke",
+        "nations": "Narodi",
+        "cultures": "Predominantne kulture",
+        "religions": "Religije",
+        "factions": "Frakcije",
+        "culturalInstitutions": "Kulturne institucije",
+        "reverseMilitary": "Vojne organizacije",
+        "reverseTradeRoutes": "Trgovački putovi",
+        "reverseCreatures": "Bića"
+    },
     "form": {
         "newTitle": "Nova lokacija",
         "editTitle": "Uredi lokaciju",

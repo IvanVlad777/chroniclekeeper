@@ -116,6 +116,20 @@
         "addFailed": "Linking failed.",
         "removeFailed": "Unlinking failed."
     },
+    "crossLinks": {
+        "industries": "Industries",
+        "corporations": "Corporations",
+        "guilds": "Guilds",
+        "politicalParties": "Political parties",
+        "nations": "Nations",
+        "cultures": "Predominant cultures",
+        "religions": "Religions",
+        "factions": "Factions",
+        "culturalInstitutions": "Cultural institutions",
+        "reverseMilitary": "Military organizations",
+        "reverseTradeRoutes": "Trade routes",
+        "reverseCreatures": "Creatures"
+    },
     "form": {
         "newTitle": "New location",
         "editTitle": "Edit location",

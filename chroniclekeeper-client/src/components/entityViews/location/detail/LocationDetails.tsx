@@ -10,14 +10,27 @@ import {
     ecosystemLocationTypes,
     LocationDetailsDto,
     LocationType,
+    ReferenceDto,
     SpeciesDto,
 } from "../../../../interfaces/loreInterfaces";
 import {
+    addLocationCrossLink,
     addRegionNativeSpecies,
     getLocation,
+    LocationLinkTargetType,
+    removeLocationCrossLink,
     removeRegionNativeSpecies,
 } from "../../../../api/locations";
 import { getSpecies } from "../../../../api/species";
+import { getIndustries } from "../../../../api/industries";
+import { getCorporations } from "../../../../api/corporations";
+import { getGuilds } from "../../../../api/guilds";
+import { getPoliticalParties } from "../../../../api/politicalParties";
+import { getNations } from "../../../../api/nations";
+import { getFactions } from "../../../../api/factions";
+import { getCultures } from "../../../../api/cultures";
+import { getReligions } from "../../../../api/religions";
+import { getCulturalInstitutions } from "../../../../api/culturalInstitutions";
 import { useAuth } from "../../../../hooks/useAuth";
 import { locationGlyphs } from "../locationGlyphs";
 import s from "./styles.module.css";
@@ -42,6 +55,18 @@ export default function LocationDetails() {
     const refetch = useCallback(() => setReloadKey((k) => k + 1), []);
     const [speciesCandidates, setSpeciesCandidates] = useState<SpeciesDto[] | null>(
         null
+    );
+    // Country/City cross-link candidate lists, lazily loaded per target type.
+    const [crossCand, setCrossCand] = useState<
+        Record<string, ReferenceDto[] | null>
+    >({});
+    const loadCross = useCallback(
+        (key: LocationLinkTargetType, loader: () => Promise<ReferenceDto[]>) => {
+            loader().then((list) =>
+                setCrossCand((prev) => ({ ...prev, [key]: list }))
+            );
+        },
+        []
     );
 
     useEffect(() => {
@@ -510,6 +535,100 @@ export default function LocationDetails() {
                     />
                 </>
             )}
+
+            {(location.type === "Country" || location.type === "City") &&
+                (() => {
+                    const isCity = location.type === "City";
+                    const w = location.worldId;
+                    type Sec = {
+                        type: LocationLinkTargetType;
+                        title: string;
+                        items: ReferenceDto[];
+                        load: () => Promise<ReferenceDto[]>;
+                        linkTo?: (id: number) => string;
+                    };
+                    const secs: Sec[] = [
+                        { type: "Industry", title: t("crossLinks.industries"), items: location.industries, load: () => getIndustries(w), linkTo: (id) => `/storymap/industries/${id}` },
+                        { type: "Corporation", title: t("crossLinks.corporations"), items: location.corporations, load: () => getCorporations(w), linkTo: (id) => `/storymap/corporations/${id}` },
+                        { type: "Guild", title: t("crossLinks.guilds"), items: location.guilds, load: () => getGuilds(w), linkTo: (id) => `/storymap/guilds/${id}` },
+                        { type: "PoliticalParty", title: t("crossLinks.politicalParties"), items: location.politicalParties, load: () => getPoliticalParties(w), linkTo: (id) => `/storymap/political-parties/${id}` },
+                        { type: "Nation", title: t("crossLinks.nations"), items: location.nations, load: () => getNations(w), linkTo: (id) => `/storymap/nations/${id}` },
+                        { type: "Culture", title: t("crossLinks.cultures"), items: location.cultures, load: () => getCultures(w), linkTo: (id) => `/storymap/cultures/${id}` },
+                        { type: "Religion", title: t("crossLinks.religions"), items: location.religions, load: () => getReligions(w), linkTo: (id) => `/storymap/religions/${id}` },
+                    ];
+                    if (isCity) {
+                        // CulturalInstitution has no dedicated detail page → no linkTo (plain chip).
+                        secs.push({ type: "CulturalInstitution", title: t("crossLinks.culturalInstitutions"), items: location.culturalInstitutions, load: () => getCulturalInstitutions(w) });
+                    } else {
+                        secs.push({ type: "Faction", title: t("crossLinks.factions"), items: location.factions, load: () => getFactions(w), linkTo: (id) => `/storymap/factions/${id}` });
+                    }
+
+                    type Rev = { title: string; items: ReferenceDto[]; linkTo: (id: number) => string };
+                    const reverse: Rev[] = [];
+                    if (isCity) {
+                        reverse.push({ title: t("crossLinks.reverseCreatures"), items: location.creatures, linkTo: (id) => `/storymap/creatures/${id}` });
+                    } else {
+                        reverse.push({ title: t("crossLinks.reverseMilitary"), items: location.militaryOrganizations, linkTo: (id) => `/storymap/military-organizations/${id}` });
+                    }
+                    reverse.push({ title: t("crossLinks.reverseTradeRoutes"), items: location.tradeRoutes, linkTo: (id) => `/storymap/trade-routes/${id}` });
+
+                    return (
+                        <>
+                            {secs.map((sec) => (
+                                <div key={sec.type}>
+                                    <div className={s.sectionHead}>
+                                        <span className={s.sectionTitle}>{sec.title}</span>
+                                        <span className={s.sectionLine} />
+                                    </div>
+                                    <LinkEditor
+                                        items={sec.items}
+                                        candidates={crossCand[sec.type] ?? null}
+                                        onLoadCandidates={() => loadCross(sec.type, sec.load)}
+                                        onAdd={(id) => addLocationCrossLink(location.id, sec.type, id)}
+                                        onRemove={(id) => removeLocationCrossLink(location.id, sec.type, id)}
+                                        onChanged={refetch}
+                                        canEdit={canEdit}
+                                        linkTo={sec.linkTo}
+                                        addLabel={t("links.add")}
+                                        noneLabel={t("none")}
+                                        pickLabel={t("links.pick")}
+                                        cancelLabel={t("form.cancel")}
+                                        confirmLabel={t("links.confirm")}
+                                        removeLabel={(name) => t("links.remove", { name })}
+                                        addFailedLabel={t("links.addFailed")}
+                                        removeFailedLabel={t("links.removeFailed")}
+                                    />
+                                </div>
+                            ))}
+                            {reverse.map((rev) => (
+                                <div key={rev.title}>
+                                    <div className={s.sectionHead}>
+                                        <span className={s.sectionTitle}>{rev.title}</span>
+                                        <span className={s.sectionLine} />
+                                    </div>
+                                    <LinkEditor
+                                        items={rev.items}
+                                        candidates={[]}
+                                        onLoadCandidates={() => {}}
+                                        onAdd={() => Promise.resolve()}
+                                        onRemove={() => Promise.resolve()}
+                                        onChanged={refetch}
+                                        canEdit={false}
+                                        linkTo={rev.linkTo}
+                                        addLabel={t("links.add")}
+                                        noneLabel={t("none")}
+                                        pickLabel={t("links.pick")}
+                                        cancelLabel={t("form.cancel")}
+                                        confirmLabel={t("links.confirm")}
+                                        removeLabel={(name) => t("links.remove", { name })}
+                                        addFailedLabel={t("links.addFailed")}
+                                        removeFailedLabel={t("links.removeFailed")}
+                                    />
+                                </div>
+                            ))}
+                        </>
+                    );
+                })()}
         </div>
     );
 }

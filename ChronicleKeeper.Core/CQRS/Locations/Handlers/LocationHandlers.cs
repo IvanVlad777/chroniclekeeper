@@ -401,6 +401,58 @@ namespace ChronicleKeeper.Core.CQRS.Locations.Handlers
         }
     }
 
+    public class AddLocationCrossLinkCommandHandler : IRequestHandler<AddLocationCrossLinkCommand, bool>
+    {
+        private readonly ILocationRepository _repository;
+
+        public AddLocationCrossLinkCommandHandler(ILocationRepository repository)
+        {
+            _repository = repository;
+        }
+
+        public async Task<bool> Handle(AddLocationCrossLinkCommand request, CancellationToken cancellationToken)
+        {
+            var location = await _repository.FindByIdAsync(request.LocationId, cancellationToken)
+                ?? throw new EntityNotFoundException("Location", request.LocationId);
+
+            var isCity = LocationValidation.EnsureCrossLinkOwner(location, request.TargetType);
+
+            if (!await _repository.CrossLinkTargetExistsInWorldAsync(request.TargetType, request.TargetId, location.WorldId, cancellationToken))
+            {
+                throw new DomainValidationException(
+                    $"{request.TargetType} with ID {request.TargetId} does not exist in this world.");
+            }
+
+            if (await _repository.IsCrossLinkedAsync(request.LocationId, isCity, request.TargetType, request.TargetId, cancellationToken))
+            {
+                throw new DomainValidationException($"This {request.TargetType} is already linked to the location.");
+            }
+
+            await _repository.AddCrossLinkAsync(request.LocationId, isCity, request.TargetType, request.TargetId, cancellationToken);
+            return true;
+        }
+    }
+
+    public class RemoveLocationCrossLinkCommandHandler : IRequestHandler<RemoveLocationCrossLinkCommand, bool>
+    {
+        private readonly ILocationRepository _repository;
+
+        public RemoveLocationCrossLinkCommandHandler(ILocationRepository repository)
+        {
+            _repository = repository;
+        }
+
+        public async Task<bool> Handle(RemoveLocationCrossLinkCommand request, CancellationToken cancellationToken)
+        {
+            var location = await _repository.FindByIdAsync(request.LocationId, cancellationToken)
+                ?? throw new EntityNotFoundException("Location", request.LocationId);
+
+            var isCity = LocationValidation.EnsureCrossLinkOwner(location, request.TargetType);
+
+            return await _repository.RemoveCrossLinkAsync(request.LocationId, isCity, request.TargetType, request.TargetId, cancellationToken);
+        }
+    }
+
     internal static class LocationValidation
     {
         /// <summary>Parent types allowed under each hierarchy subtype — Continent and the
@@ -445,6 +497,30 @@ namespace ChronicleKeeper.Core.CQRS.Locations.Handlers
             {
                 throw new DomainValidationException(
                     $"A {location.Type} location cannot be parented under a {parent.Type} location.");
+            }
+        }
+
+        /// <summary>Cross-links are owned by Country or City only. Returns true when the owner is a City,
+        /// false for a Country; throws for any other location type or for a target the owner can't hold
+        /// (Country has no CulturalInstitutions, City has no Factions).</summary>
+        public static bool EnsureCrossLinkOwner(Location location, LocationLinkTargetType targetType)
+        {
+            switch (location)
+            {
+                case City:
+                    if (targetType == LocationLinkTargetType.Faction)
+                    {
+                        throw new DomainValidationException("A City cannot be linked to a Faction.");
+                    }
+                    return true;
+                case Country:
+                    if (targetType == LocationLinkTargetType.CulturalInstitution)
+                    {
+                        throw new DomainValidationException("A Country cannot be linked to a CulturalInstitution.");
+                    }
+                    return false;
+                default:
+                    throw new DomainValidationException("Only Country and City locations support these cross-links.");
             }
         }
 

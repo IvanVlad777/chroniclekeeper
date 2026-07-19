@@ -63,7 +63,21 @@ public class LocationProfile : Profile
                 .Select(s => new ReferenceDto { Id = s.Id, Name = s.Name })))
             .ForMember(dest => dest.NativeSpecies, opt => opt.MapFrom(src => GetNativeSpecies(src)))
             .ForMember(dest => dest.SourceLocation, opt => opt.MapFrom(src => GetSourceLocation(src)))
-            .ForMember(dest => dest.MouthLocation, opt => opt.MapFrom(src => GetMouthLocation(src)));
+            .ForMember(dest => dest.MouthLocation, opt => opt.MapFrom(src => GetMouthLocation(src)))
+            // Country/City cross-links (editable)
+            .ForMember(dest => dest.Industries, opt => opt.MapFrom(src => GetIndustries(src)))
+            .ForMember(dest => dest.Corporations, opt => opt.MapFrom(src => GetCorporations(src)))
+            .ForMember(dest => dest.Guilds, opt => opt.MapFrom(src => GetGuilds(src)))
+            .ForMember(dest => dest.PoliticalParties, opt => opt.MapFrom(src => GetPoliticalParties(src)))
+            .ForMember(dest => dest.Nations, opt => opt.MapFrom(src => GetNations(src)))
+            .ForMember(dest => dest.Cultures, opt => opt.MapFrom(src => GetCultures(src)))
+            .ForMember(dest => dest.Religions, opt => opt.MapFrom(src => GetReligions(src)))
+            .ForMember(dest => dest.Factions, opt => opt.MapFrom(src => GetFactions(src)))
+            .ForMember(dest => dest.CulturalInstitutions, opt => opt.MapFrom(src => GetCulturalInstitutions(src)))
+            // Reverse read-only lists
+            .ForMember(dest => dest.MilitaryOrganizations, opt => opt.MapFrom(src => GetMilitaryOrganizations(src)))
+            .ForMember(dest => dest.TradeRoutes, opt => opt.MapFrom(src => GetTradeRoutes(src)))
+            .ForMember(dest => dest.Creatures, opt => opt.MapFrom(src => GetInhabitingCreatures(src)));
     }
 
     private static string? GetContinentSpecifics(Location location) => location is Continent c ? c.ContinentSpecifics : null;
@@ -186,4 +200,77 @@ public class LocationProfile : Profile
     private static ReferenceDto? GetMouthLocation(Location location) => location is RiverEcosystem { MouthLocation: { } mouth }
         ? new ReferenceDto { Id = mouth.Id, Name = mouth.Name }
         : null;
+
+    // ---- Country/City cross-links (editable) ----
+
+    private static List<ReferenceDto> GetIndustries(Location location) => location switch
+    {
+        Country c => c.Industries.Where(x => x.Industry != null).Select(x => new ReferenceDto { Id = x.Industry!.Id, Name = x.Industry.Name }).ToList(),
+        City c => c.Industries.Where(x => x.Industry != null).Select(x => new ReferenceDto { Id = x.Industry!.Id, Name = x.Industry.Name }).ToList(),
+        _ => new List<ReferenceDto>()
+    };
+
+    private static List<ReferenceDto> GetCorporations(Location location) => location switch
+    {
+        Country c => c.Corporations.Where(x => x.Corporation != null).Select(x => new ReferenceDto { Id = x.Corporation!.Id, Name = x.Corporation.Name }).ToList(),
+        City c => c.Corporations.Where(x => x.Corporation != null).Select(x => new ReferenceDto { Id = x.Corporation!.Id, Name = x.Corporation.Name }).ToList(),
+        _ => new List<ReferenceDto>()
+    };
+
+    private static List<ReferenceDto> GetGuilds(Location location) => location switch
+    {
+        Country c => c.Guilds.Where(x => x.Guild != null).Select(x => new ReferenceDto { Id = x.Guild!.Id, Name = x.Guild.Name }).ToList(),
+        City c => c.Guilds.Where(x => x.Guild != null).Select(x => new ReferenceDto { Id = x.Guild!.Id, Name = x.Guild.Name }).ToList(),
+        _ => new List<ReferenceDto>()
+    };
+
+    private static List<ReferenceDto> GetPoliticalParties(Location location) => location switch
+    {
+        Country c => c.PoliticalParties.Where(x => x.PoliticalParty != null).Select(x => new ReferenceDto { Id = x.PoliticalParty!.Id, Name = x.PoliticalParty.Name }).ToList(),
+        City c => c.PoliticalParties.Where(x => x.PoliticalParty != null).Select(x => new ReferenceDto { Id = x.PoliticalParty!.Id, Name = x.PoliticalParty.Name }).ToList(),
+        _ => new List<ReferenceDto>()
+    };
+
+    private static List<ReferenceDto> GetNations(Location location) => location switch
+    {
+        Country c => c.Nations.Where(x => x.Nation != null).Select(x => new ReferenceDto { Id = x.Nation!.Id, Name = x.Nation.Name }).ToList(),
+        City c => c.Nations.Where(x => x.Nation != null).Select(x => new ReferenceDto { Id = x.Nation!.Id, Name = x.Nation.Name }).ToList(),
+        _ => new List<ReferenceDto>()
+    };
+
+    private static List<ReferenceDto> GetCultures(Location location) => location switch
+    {
+        Country c => c.PredominantCultures.Where(x => x.Culture != null).Select(x => new ReferenceDto { Id = x.Culture!.Id, Name = x.Culture.Name }).ToList(),
+        City c => c.PredominantCultures.Where(x => x.Culture != null).Select(x => new ReferenceDto { Id = x.Culture!.Id, Name = x.Culture.Name }).ToList(),
+        _ => new List<ReferenceDto>()
+    };
+
+    private static List<ReferenceDto> GetReligions(Location location) => location switch
+    {
+        Country c => c.Religions.Where(x => x.Religion != null).Select(x => new ReferenceDto { Id = x.Religion!.Id, Name = x.Religion.Name }).ToList(),
+        City c => c.Religions.Where(x => x.Religion != null).Select(x => new ReferenceDto { Id = x.Religion!.Id, Name = x.Religion.Name }).ToList(),
+        _ => new List<ReferenceDto>()
+    };
+
+    private static List<ReferenceDto> GetFactions(Location location) => location is Country country
+        ? country.Factions.Where(x => x.Faction != null).Select(x => new ReferenceDto { Id = x.Faction!.Id, Name = x.Faction.Name }).ToList()
+        : new List<ReferenceDto>();
+
+    private static List<ReferenceDto> GetCulturalInstitutions(Location location) => location is City city
+        ? city.CulturalInstitutions.Where(x => x.CulturalInstitution != null).Select(x => new ReferenceDto { Id = x.CulturalInstitution!.Id, Name = x.CulturalInstitution.Name }).ToList()
+        : new List<ReferenceDto>();
+
+    // ---- Reverse read-only lists ----
+
+    private static List<ReferenceDto> GetMilitaryOrganizations(Location location) => location is Country country
+        ? country.MilitaryOrganizations.Where(x => x.MilitaryOrganization != null).Select(x => new ReferenceDto { Id = x.MilitaryOrganization!.Id, Name = x.MilitaryOrganization.Name }).ToList()
+        : new List<ReferenceDto>();
+
+    private static List<ReferenceDto> GetInhabitingCreatures(Location location) => location is City city
+        ? city.InhabitingCreatures.Where(x => x.Creature != null).Select(x => new ReferenceDto { Id = x.Creature!.Id, Name = x.Creature.Name }).ToList()
+        : new List<ReferenceDto>();
+
+    private static List<ReferenceDto> GetTradeRoutes(Location location) => location is Country or City
+        ? location.TradeRouteLinks.Where(x => x.TradeRoute != null).Select(x => new ReferenceDto { Id = x.TradeRoute!.Id, Name = x.TradeRoute.Name }).ToList()
+        : new List<ReferenceDto>();
 }
