@@ -5,11 +5,14 @@ import {
     Button,
     OrnateCheckbox,
     OrnateField,
-    OrnateSelect,
     OrnateTextArea,
     OrnateTextInput,
 } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
+import {
+    EntityPicker,
+    type EntityOption,
+} from "../../../quickCreate/EntityPicker";
 import {
     createMilitaryDoctrine,
     deleteMilitaryDoctrine,
@@ -18,7 +21,6 @@ import {
 } from "../../../../api/militaryDoctrines";
 import { getHistories } from "../../../../api/histories";
 import {
-    HistoryDto,
     MilitaryDoctrineUpdateDto,
 } from "../../../../interfaces/loreInterfaces";
 import { useWorld } from "../../../../hooks/useWorld";
@@ -83,11 +85,12 @@ export default function MilitaryDoctrineForm() {
     const { t } = useTranslation("militaryDoctrine");
     const { selectedWorld, loading: worldLoading } = useWorld();
     const { userInfo } = useAuth();
-    const canDelete =
+    const canCreate =
         userInfo?.roles.some((r) => editorRoles.includes(r)) ?? false;
+    const canDelete = canCreate;
 
     const [form, setForm] = useState<FormState>(emptyForm);
-    const [histories, setHistories] = useState<HistoryDto[]>([]);
+    const [historyOptions, setHistoryOptions] = useState<EntityOption[]>([]);
     const [loading, setLoading] = useState(true);
     const [loadError, setLoadError] = useState<string | null>(null);
     const [saveError, setSaveError] = useState<string | null>(null);
@@ -105,7 +108,9 @@ export default function MilitaryDoctrineForm() {
         getHistories(selectedWorld.id)
             .then(async (historiesData) => {
                 if (cancelled) return;
-                setHistories(historiesData);
+                setHistoryOptions(
+                    historiesData.map((h) => ({ value: h.id, label: h.name }))
+                );
                 if (isEdit) {
                     const d = await getMilitaryDoctrineById(editId);
                     if (cancelled) return;
@@ -245,17 +250,21 @@ export default function MilitaryDoctrineForm() {
                         />
                     </OrnateField>
                     <OrnateField label={t("form.history")}>
-                        <OrnateSelect
+                        <EntityPicker
+                            kind="history"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("none")}
                             value={form.historyId}
-                            onChange={(e) => set("historyId", e.target.value)}
-                        >
-                            <option value="">{t("none")}</option>
-                            {histories.map((h) => (
-                                <option key={h.id} value={h.id}>
-                                    {h.name}
-                                </option>
-                            ))}
-                        </OrnateSelect>
+                            options={historyOptions}
+                            onChange={(v) => set("historyId", v)}
+                            onCreated={(h) =>
+                                setHistoryOptions((prev) => [
+                                    ...prev,
+                                    { value: h.id, label: h.name },
+                                ])
+                            }
+                        />
                     </OrnateField>
                 </div>
 

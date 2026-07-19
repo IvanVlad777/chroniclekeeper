@@ -5,11 +5,14 @@ import {
     Button,
     OrnateCheckbox,
     OrnateField,
-    OrnateSelect,
     OrnateTextArea,
     OrnateTextInput,
 } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
+import {
+    EntityPicker,
+    type EntityOption,
+} from "../../../quickCreate/EntityPicker";
 import {
     createEconomicSystem,
     deleteEconomicSystem,
@@ -19,12 +22,7 @@ import {
 import { getBankingSystems } from "../../../../api/bankingSystems";
 import { getTaxationSystems } from "../../../../api/taxationSystems";
 import { getHistories } from "../../../../api/histories";
-import {
-    BankingSystemDto,
-    EconomicSystemUpdateDto,
-    HistoryDto,
-    TaxationSystemDto,
-} from "../../../../interfaces/loreInterfaces";
+import { EconomicSystemUpdateDto } from "../../../../interfaces/loreInterfaces";
 import { useWorld } from "../../../../hooks/useWorld";
 import { useAuth } from "../../../../hooks/useAuth";
 import { apiErrorMessage } from "../../../../utils/apiError";
@@ -83,15 +81,18 @@ export default function EconomicSystemForm() {
     const { t } = useTranslation("economicSystem");
     const { selectedWorld, loading: worldLoading } = useWorld();
     const { userInfo } = useAuth();
-    const canDelete =
+    const canCreate =
         userInfo?.roles.some((r) => editorRoles.includes(r)) ?? false;
+    const canDelete = canCreate;
 
     const [form, setForm] = useState<FormState>(emptyForm);
-    const [taxationSystems, setTaxationSystems] = useState<TaxationSystemDto[]>(
-        []
-    );
-    const [bankingSystems, setBankingSystems] = useState<BankingSystemDto[]>([]);
-    const [histories, setHistories] = useState<HistoryDto[]>([]);
+    const [taxationSystemOptions, setTaxationSystemOptions] = useState<
+        EntityOption[]
+    >([]);
+    const [bankingSystemOptions, setBankingSystemOptions] = useState<
+        EntityOption[]
+    >([]);
+    const [historyOptions, setHistoryOptions] = useState<EntityOption[]>([]);
     const [loading, setLoading] = useState(true);
     const [loadError, setLoadError] = useState<string | null>(null);
     const [saveError, setSaveError] = useState<string | null>(null);
@@ -115,9 +116,15 @@ export default function EconomicSystemForm() {
         ])
             .then(async ([taxationData, bankingData, historiesData]) => {
                 if (cancelled) return;
-                setTaxationSystems(taxationData);
-                setBankingSystems(bankingData);
-                setHistories(historiesData);
+                setTaxationSystemOptions(
+                    taxationData.map((ts) => ({ value: ts.id, label: ts.name }))
+                );
+                setBankingSystemOptions(
+                    bankingData.map((bs) => ({ value: bs.id, label: bs.name }))
+                );
+                setHistoryOptions(
+                    historiesData.map((h) => ({ value: h.id, label: h.name }))
+                );
 
                 if (isEdit) {
                     const es = await getEconomicSystemById(editId);
@@ -247,51 +254,59 @@ export default function EconomicSystemForm() {
                         />
                     </OrnateField>
                     <OrnateField label={t("form.history")}>
-                        <OrnateSelect
+                        <EntityPicker
+                            kind="history"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("none")}
                             value={form.historyId}
-                            onChange={(e) => set("historyId", e.target.value)}
-                        >
-                            <option value="">{t("none")}</option>
-                            {histories.map((h) => (
-                                <option key={h.id} value={h.id}>
-                                    {h.name}
-                                </option>
-                            ))}
-                        </OrnateSelect>
+                            options={historyOptions}
+                            onChange={(v) => set("historyId", v)}
+                            onCreated={(h) =>
+                                setHistoryOptions((prev) => [
+                                    ...prev,
+                                    { value: h.id, label: h.name },
+                                ])
+                            }
+                        />
                     </OrnateField>
                 </div>
 
                 <div className={s.col}>
                     <div className={s.row2}>
                         <OrnateField label={t("fields.taxationSystem")}>
-                            <OrnateSelect
+                            <EntityPicker
+                                kind="taxationSystem"
+                                worldId={selectedWorld.id}
+                                canCreate={canCreate}
+                                noneLabel={t("none")}
                                 value={form.taxationSystemId}
-                                onChange={(e) =>
-                                    set("taxationSystemId", e.target.value)
+                                options={taxationSystemOptions}
+                                onChange={(v) => set("taxationSystemId", v)}
+                                onCreated={(ts) =>
+                                    setTaxationSystemOptions((prev) => [
+                                        ...prev,
+                                        { value: ts.id, label: ts.name },
+                                    ])
                                 }
-                            >
-                                <option value="">{t("none")}</option>
-                                {taxationSystems.map((ts) => (
-                                    <option key={ts.id} value={ts.id}>
-                                        {ts.name}
-                                    </option>
-                                ))}
-                            </OrnateSelect>
+                            />
                         </OrnateField>
                         <OrnateField label={t("fields.bankingSystem")}>
-                            <OrnateSelect
+                            <EntityPicker
+                                kind="bankingSystem"
+                                worldId={selectedWorld.id}
+                                canCreate={canCreate}
+                                noneLabel={t("none")}
                                 value={form.bankingSystemId}
-                                onChange={(e) =>
-                                    set("bankingSystemId", e.target.value)
+                                options={bankingSystemOptions}
+                                onChange={(v) => set("bankingSystemId", v)}
+                                onCreated={(bs) =>
+                                    setBankingSystemOptions((prev) => [
+                                        ...prev,
+                                        { value: bs.id, label: bs.name },
+                                    ])
                                 }
-                            >
-                                <option value="">{t("none")}</option>
-                                {bankingSystems.map((bs) => (
-                                    <option key={bs.id} value={bs.id}>
-                                        {bs.name}
-                                    </option>
-                                ))}
-                            </OrnateSelect>
+                            />
                         </OrnateField>
                     </div>
                     <OrnateCheckbox

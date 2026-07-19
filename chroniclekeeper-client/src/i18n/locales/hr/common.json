@@ -178,7 +178,23 @@
             "economicSystem": "ekonomski sustav",
             "militaryDoctrine": "doktrina",
             "militaryOrganization": "organizacija",
-            "socialHierarchy": "društvena hijerarhija"
+            "socialHierarchy": "društvena hijerarhija",
+            "socialClass": "društveni sloj",
+            "nation": "nacija",
+            "religion": "religija",
+            "language": "jezik",
+            "profession": "zanimanje",
+            "currency": "valuta",
+            "content": "sadržaj",
+            "bankingSystem": "bankarski sustav",
+            "taxationSystem": "porezni sustav",
+            "industry": "industrija",
+            "creature": "stvorenje",
+            "politicalIdeology": "politička ideologija",
+            "extractionMethod": "metoda vađenja",
+            "history": "povijest",
+            "university": "sveučilište",
+            "corporation": "korporacija"
         }
     },
     "states": {

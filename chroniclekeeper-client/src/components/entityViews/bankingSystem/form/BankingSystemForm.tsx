@@ -5,11 +5,14 @@ import {
     Button,
     OrnateCheckbox,
     OrnateField,
-    OrnateSelect,
     OrnateTextArea,
     OrnateTextInput,
 } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
+import {
+    EntityPicker,
+    type EntityOption,
+} from "../../../quickCreate/EntityPicker";
 import {
     createBankingSystem,
     deleteBankingSystem,
@@ -20,8 +23,6 @@ import { getCurrencies } from "../../../../api/currencies";
 import { getHistories } from "../../../../api/histories";
 import {
     BankingSystemUpdateDto,
-    CurrencyDto,
-    HistoryDto,
 } from "../../../../interfaces/loreInterfaces";
 import { useWorld } from "../../../../hooks/useWorld";
 import { useAuth } from "../../../../hooks/useAuth";
@@ -78,12 +79,13 @@ export default function BankingSystemForm() {
     const { t } = useTranslation("bankingSystem");
     const { selectedWorld, loading: worldLoading } = useWorld();
     const { userInfo } = useAuth();
-    const canDelete =
+    const canCreate =
         userInfo?.roles.some((r) => editorRoles.includes(r)) ?? false;
+    const canDelete = canCreate;
 
     const [form, setForm] = useState<FormState>(emptyForm);
-    const [currencies, setCurrencies] = useState<CurrencyDto[]>([]);
-    const [histories, setHistories] = useState<HistoryDto[]>([]);
+    const [currencyOptions, setCurrencyOptions] = useState<EntityOption[]>([]);
+    const [historyOptions, setHistoryOptions] = useState<EntityOption[]>([]);
     const [loading, setLoading] = useState(true);
     const [loadError, setLoadError] = useState<string | null>(null);
     const [saveError, setSaveError] = useState<string | null>(null);
@@ -106,8 +108,12 @@ export default function BankingSystemForm() {
         ])
             .then(async ([currenciesData, historiesData]) => {
                 if (cancelled) return;
-                setCurrencies(currenciesData);
-                setHistories(historiesData);
+                setCurrencyOptions(
+                    currenciesData.map((c) => ({ value: c.id, label: c.name }))
+                );
+                setHistoryOptions(
+                    historiesData.map((h) => ({ value: h.id, label: h.name }))
+                );
 
                 if (isEdit) {
                     const b = await getBankingSystemById(editId);
@@ -232,17 +238,21 @@ export default function BankingSystemForm() {
                         />
                     </OrnateField>
                     <OrnateField label={t("form.history")}>
-                        <OrnateSelect
+                        <EntityPicker
+                            kind="history"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("none")}
                             value={form.historyId}
-                            onChange={(e) => set("historyId", e.target.value)}
-                        >
-                            <option value="">{t("none")}</option>
-                            {histories.map((h) => (
-                                <option key={h.id} value={h.id}>
-                                    {h.name}
-                                </option>
-                            ))}
-                        </OrnateSelect>
+                            options={historyOptions}
+                            onChange={(v) => set("historyId", v)}
+                            onCreated={(h) =>
+                                setHistoryOptions((prev) => [
+                                    ...prev,
+                                    { value: h.id, label: h.name },
+                                ])
+                            }
+                        />
                     </OrnateField>
                 </div>
 
@@ -267,19 +277,21 @@ export default function BankingSystemForm() {
                             />
                         </OrnateField>
                         <OrnateField label={t("fields.currency")}>
-                            <OrnateSelect
+                            <EntityPicker
+                                kind="currency"
+                                worldId={selectedWorld.id}
+                                canCreate={canCreate}
+                                noneLabel={t("none")}
                                 value={form.currencyId}
-                                onChange={(e) =>
-                                    set("currencyId", e.target.value)
+                                options={currencyOptions}
+                                onChange={(v) => set("currencyId", v)}
+                                onCreated={(c) =>
+                                    setCurrencyOptions((prev) => [
+                                        ...prev,
+                                        { value: c.id, label: c.name },
+                                    ])
                                 }
-                            >
-                                <option value="">{t("none")}</option>
-                                {currencies.map((c) => (
-                                    <option key={c.id} value={c.id}>
-                                        {c.name}
-                                    </option>
-                                ))}
-                            </OrnateSelect>
+                            />
                         </OrnateField>
                     </div>
                     <OrnateCheckbox

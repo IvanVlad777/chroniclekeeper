@@ -11,6 +11,10 @@ import {
 } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
 import {
+    EntityPicker,
+    type EntityOption,
+} from "../../../quickCreate/EntityPicker";
+import {
     createPoliticalParty,
     deletePoliticalParty,
     getPoliticalPartyById,
@@ -19,8 +23,6 @@ import {
 import { getPoliticalIdeologies } from "../../../../api/politicalIdeologies";
 import { getGovernmentSystems } from "../../../../api/governmentSystems";
 import {
-    GovernmentSystemDto,
-    PoliticalIdeologyDto,
     PoliticalPartyUpdateDto,
     ScaleLevel,
     scaleLevels,
@@ -76,13 +78,14 @@ export default function PoliticalPartyForm() {
     const { t } = useTranslation("politicalParty");
     const { selectedWorld, loading: worldLoading } = useWorld();
     const { userInfo } = useAuth();
-    const canDelete =
+    const canCreate =
         userInfo?.roles.some((r) => editorRoles.includes(r)) ?? false;
+    const canDelete = canCreate;
 
     const [form, setForm] = useState<FormState>(emptyForm);
-    const [ideologies, setIdeologies] = useState<PoliticalIdeologyDto[]>([]);
-    const [governmentSystems, setGovernmentSystems] = useState<
-        GovernmentSystemDto[]
+    const [ideologyOptions, setIdeologyOptions] = useState<EntityOption[]>([]);
+    const [governmentSystemOptions, setGovernmentSystemOptions] = useState<
+        EntityOption[]
     >([]);
     const [loading, setLoading] = useState(true);
     const [loadError, setLoadError] = useState<string | null>(null);
@@ -106,8 +109,15 @@ export default function PoliticalPartyForm() {
         ])
             .then(async ([ideologiesData, governmentSystemsData]) => {
                 if (cancelled) return;
-                setIdeologies(ideologiesData);
-                setGovernmentSystems(governmentSystemsData);
+                setIdeologyOptions(
+                    ideologiesData.map((i) => ({ value: i.id, label: i.name }))
+                );
+                setGovernmentSystemOptions(
+                    governmentSystemsData.map((g) => ({
+                        value: g.id,
+                        label: g.name,
+                    }))
+                );
 
                 if (isEdit) {
                     const p = await getPoliticalPartyById(editId);
@@ -256,34 +266,38 @@ export default function PoliticalPartyForm() {
 
                 <div className={s.col}>
                     <OrnateField label={t("fields.politicalIdeology")} required>
-                        <OrnateSelect
+                        <EntityPicker
+                            kind="politicalIdeology"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("none")}
                             value={form.politicalIdeologyId}
-                            onChange={(e) =>
-                                set("politicalIdeologyId", e.target.value)
+                            options={ideologyOptions}
+                            onChange={(v) => set("politicalIdeologyId", v)}
+                            onCreated={(i) =>
+                                setIdeologyOptions((prev) => [
+                                    ...prev,
+                                    { value: i.id, label: i.name },
+                                ])
                             }
-                        >
-                            <option value="">{t("none")}</option>
-                            {ideologies.map((i) => (
-                                <option key={i.id} value={i.id}>
-                                    {i.name}
-                                </option>
-                            ))}
-                        </OrnateSelect>
+                        />
                     </OrnateField>
                     <OrnateField label={t("fields.governmentSystem")}>
-                        <OrnateSelect
+                        <EntityPicker
+                            kind="governmentSystem"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("none")}
                             value={form.governmentSystemId}
-                            onChange={(e) =>
-                                set("governmentSystemId", e.target.value)
+                            options={governmentSystemOptions}
+                            onChange={(v) => set("governmentSystemId", v)}
+                            onCreated={(g) =>
+                                setGovernmentSystemOptions((prev) => [
+                                    ...prev,
+                                    { value: g.id, label: g.name },
+                                ])
                             }
-                        >
-                            <option value="">{t("none")}</option>
-                            {governmentSystems.map((g) => (
-                                <option key={g.id} value={g.id}>
-                                    {g.name}
-                                </option>
-                            ))}
-                        </OrnateSelect>
+                        />
                     </OrnateField>
                     <OrnateField label={t("fields.influenceLevel")}>
                         <OrnateSelect

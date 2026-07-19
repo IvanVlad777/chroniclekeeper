@@ -5,11 +5,14 @@ import {
     Button,
     OrnateCheckbox,
     OrnateField,
-    OrnateSelect,
     OrnateTextArea,
     OrnateTextInput,
 } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
+import {
+    EntityPicker,
+    type EntityOption,
+} from "../../../quickCreate/EntityPicker";
 import {
     createGuild,
     deleteGuild,
@@ -21,14 +24,7 @@ import { getIndustries } from "../../../../api/industries";
 import { getLegalSystems } from "../../../../api/legalSystems";
 import { getEducationSystems } from "../../../../api/educationSystems";
 import { getHistories } from "../../../../api/histories";
-import {
-    EducationSystemDto,
-    GuildUpdateDto,
-    HistoryDto,
-    IndustryDto,
-    LegalSystemDto,
-    TaxationSystemDto,
-} from "../../../../interfaces/loreInterfaces";
+import { GuildUpdateDto } from "../../../../interfaces/loreInterfaces";
 import { useWorld } from "../../../../hooks/useWorld";
 import { useAuth } from "../../../../hooks/useAuth";
 import { apiErrorMessage } from "../../../../utils/apiError";
@@ -89,19 +85,22 @@ export default function GuildForm() {
     const { t } = useTranslation("guild");
     const { selectedWorld, loading: worldLoading } = useWorld();
     const { userInfo } = useAuth();
-    const canDelete =
+    const canCreate =
         userInfo?.roles.some((r) => editorRoles.includes(r)) ?? false;
+    const canDelete = canCreate;
 
     const [form, setForm] = useState<FormState>(emptyForm);
-    const [taxationSystems, setTaxationSystems] = useState<TaxationSystemDto[]>(
+    const [taxationSystemOptions, setTaxationSystemOptions] = useState<
+        EntityOption[]
+    >([]);
+    const [industryOptions, setIndustryOptions] = useState<EntityOption[]>([]);
+    const [legalSystemOptions, setLegalSystemOptions] = useState<EntityOption[]>(
         []
     );
-    const [industries, setIndustries] = useState<IndustryDto[]>([]);
-    const [legalSystems, setLegalSystems] = useState<LegalSystemDto[]>([]);
-    const [educationSystems, setEducationSystems] = useState<
-        EducationSystemDto[]
+    const [educationSystemOptions, setEducationSystemOptions] = useState<
+        EntityOption[]
     >([]);
-    const [histories, setHistories] = useState<HistoryDto[]>([]);
+    const [historyOptions, setHistoryOptions] = useState<EntityOption[]>([]);
     const [loading, setLoading] = useState(true);
     const [loadError, setLoadError] = useState<string | null>(null);
     const [saveError, setSaveError] = useState<string | null>(null);
@@ -134,11 +133,33 @@ export default function GuildForm() {
                     historiesData,
                 ]) => {
                     if (cancelled) return;
-                    setTaxationSystems(taxationData);
-                    setIndustries(industriesData);
-                    setLegalSystems(legalData);
-                    setEducationSystems(educationData);
-                    setHistories(historiesData);
+                    setTaxationSystemOptions(
+                        taxationData.map((ts) => ({
+                            value: ts.id,
+                            label: ts.name,
+                        }))
+                    );
+                    setIndustryOptions(
+                        industriesData.map((i) => ({
+                            value: i.id,
+                            label: i.name,
+                        }))
+                    );
+                    setLegalSystemOptions(
+                        legalData.map((l) => ({ value: l.id, label: l.name }))
+                    );
+                    setEducationSystemOptions(
+                        educationData.map((es) => ({
+                            value: es.id,
+                            label: es.name,
+                        }))
+                    );
+                    setHistoryOptions(
+                        historiesData.map((h) => ({
+                            value: h.id,
+                            label: h.name,
+                        }))
+                    );
 
                     if (isEdit) {
                         const g = await getGuildById(editId);
@@ -304,80 +325,92 @@ export default function GuildForm() {
                 <div className={s.col}>
                     <div className={s.row2}>
                         <OrnateField label={t("fields.taxationSystem")}>
-                            <OrnateSelect
+                            <EntityPicker
+                                kind="taxationSystem"
+                                worldId={selectedWorld.id}
+                                canCreate={canCreate}
+                                noneLabel={t("none")}
                                 value={form.taxationSystemId}
-                                onChange={(e) =>
-                                    set("taxationSystemId", e.target.value)
+                                options={taxationSystemOptions}
+                                onChange={(v) => set("taxationSystemId", v)}
+                                onCreated={(ts) =>
+                                    setTaxationSystemOptions((prev) => [
+                                        ...prev,
+                                        { value: ts.id, label: ts.name },
+                                    ])
                                 }
-                            >
-                                <option value="">{t("none")}</option>
-                                {taxationSystems.map((ts) => (
-                                    <option key={ts.id} value={ts.id}>
-                                        {ts.name}
-                                    </option>
-                                ))}
-                            </OrnateSelect>
+                            />
                         </OrnateField>
                         <OrnateField label={t("fields.industry")}>
-                            <OrnateSelect
+                            <EntityPicker
+                                kind="industry"
+                                worldId={selectedWorld.id}
+                                canCreate={canCreate}
+                                noneLabel={t("none")}
                                 value={form.industryId}
-                                onChange={(e) =>
-                                    set("industryId", e.target.value)
+                                options={industryOptions}
+                                onChange={(v) => set("industryId", v)}
+                                onCreated={(i) =>
+                                    setIndustryOptions((prev) => [
+                                        ...prev,
+                                        { value: i.id, label: i.name },
+                                    ])
                                 }
-                            >
-                                <option value="">{t("none")}</option>
-                                {industries.map((i) => (
-                                    <option key={i.id} value={i.id}>
-                                        {i.name}
-                                    </option>
-                                ))}
-                            </OrnateSelect>
+                            />
                         </OrnateField>
                     </div>
                     <div className={s.row2}>
                         <OrnateField label={t("fields.legalSystem")}>
-                            <OrnateSelect
+                            <EntityPicker
+                                kind="legalSystem"
+                                worldId={selectedWorld.id}
+                                canCreate={canCreate}
+                                noneLabel={t("none")}
                                 value={form.legalSystemId}
-                                onChange={(e) =>
-                                    set("legalSystemId", e.target.value)
+                                options={legalSystemOptions}
+                                onChange={(v) => set("legalSystemId", v)}
+                                onCreated={(l) =>
+                                    setLegalSystemOptions((prev) => [
+                                        ...prev,
+                                        { value: l.id, label: l.name },
+                                    ])
                                 }
-                            >
-                                <option value="">{t("none")}</option>
-                                {legalSystems.map((l) => (
-                                    <option key={l.id} value={l.id}>
-                                        {l.name}
-                                    </option>
-                                ))}
-                            </OrnateSelect>
+                            />
                         </OrnateField>
                         <OrnateField label={t("fields.educationSystem")}>
-                            <OrnateSelect
+                            <EntityPicker
+                                kind="educationSystem"
+                                worldId={selectedWorld.id}
+                                canCreate={canCreate}
+                                noneLabel={t("none")}
                                 value={form.educationSystemId}
-                                onChange={(e) =>
-                                    set("educationSystemId", e.target.value)
+                                options={educationSystemOptions}
+                                onChange={(v) => set("educationSystemId", v)}
+                                onCreated={(es) =>
+                                    setEducationSystemOptions((prev) => [
+                                        ...prev,
+                                        { value: es.id, label: es.name },
+                                    ])
                                 }
-                            >
-                                <option value="">{t("none")}</option>
-                                {educationSystems.map((es) => (
-                                    <option key={es.id} value={es.id}>
-                                        {es.name}
-                                    </option>
-                                ))}
-                            </OrnateSelect>
+                            />
                         </OrnateField>
                     </div>
                     <OrnateField label={t("form.history")}>
-                        <OrnateSelect
+                        <EntityPicker
+                            kind="history"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("none")}
                             value={form.historyId}
-                            onChange={(e) => set("historyId", e.target.value)}
-                        >
-                            <option value="">{t("none")}</option>
-                            {histories.map((h) => (
-                                <option key={h.id} value={h.id}>
-                                    {h.name}
-                                </option>
-                            ))}
-                        </OrnateSelect>
+                            options={historyOptions}
+                            onChange={(v) => set("historyId", v)}
+                            onCreated={(h) =>
+                                setHistoryOptions((prev) => [
+                                    ...prev,
+                                    { value: h.id, label: h.name },
+                                ])
+                            }
+                        />
                     </OrnateField>
                 </div>
             </div>

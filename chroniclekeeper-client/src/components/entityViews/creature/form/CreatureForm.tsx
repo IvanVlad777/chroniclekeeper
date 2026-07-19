@@ -11,6 +11,10 @@ import {
 } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
 import {
+    EntityPicker,
+    type EntityOption,
+} from "../../../quickCreate/EntityPicker";
+import {
     createCreature,
     deleteCreature,
     getCreatureById,
@@ -20,13 +24,11 @@ import {
 import { getHistories } from "../../../../api/histories";
 import {
     ArtificialOrigin,
-    CreatureDto,
     CreatureSubtype,
     CreatureType,
     CreatureUpdateDto,
     CropType,
     DietType,
-    HistoryDto,
     LeafType,
     PlantType,
     CreatureRarity,
@@ -248,12 +250,15 @@ export default function CreatureForm() {
     const { t } = useTranslation("creature");
     const { selectedWorld, loading: worldLoading } = useWorld();
     const { userInfo } = useAuth();
-    const canDelete =
+    const canCreate =
         userInfo?.roles.some((r) => editorRoles.includes(r)) ?? false;
+    const canDelete = canCreate;
 
     const [form, setForm] = useState<FormState>(emptyForm);
-    const [parentCandidates, setParentCandidates] = useState<CreatureDto[]>([]);
-    const [histories, setHistories] = useState<HistoryDto[]>([]);
+    const [parentCreatureOptions, setParentCreatureOptions] = useState<
+        EntityOption[]
+    >([]);
+    const [historyOptions, setHistoryOptions] = useState<EntityOption[]>([]);
     const [loading, setLoading] = useState(true);
     const [loadError, setLoadError] = useState<string | null>(null);
     const [saveError, setSaveError] = useState<string | null>(null);
@@ -276,8 +281,12 @@ export default function CreatureForm() {
         ])
             .then(async ([creatures, historiesData]) => {
                 if (cancelled) return;
-                setParentCandidates(creatures);
-                setHistories(historiesData);
+                setParentCreatureOptions(
+                    creatures.map((c) => ({ value: c.id, label: c.name }))
+                );
+                setHistoryOptions(
+                    historiesData.map((h) => ({ value: h.id, label: h.name }))
+                );
                 if (isEdit) {
                     const c = await getCreatureById(editId);
                     if (cancelled) return;
@@ -535,32 +544,39 @@ export default function CreatureForm() {
                         </OrnateField>
                     )}
                     <OrnateField label={t("fields.parentCreature")}>
-                        <OrnateSelect
+                        <EntityPicker
+                            kind="creature"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("none")}
                             value={form.parentCreatureId}
-                            onChange={(e) => set("parentCreatureId", e.target.value)}
-                        >
-                            <option value="">{t("none")}</option>
-                            {parentCandidates
-                                .filter((c) => c.id !== editId)
-                                .map((c) => (
-                                    <option key={c.id} value={c.id}>
-                                        {c.name}
-                                    </option>
-                                ))}
-                        </OrnateSelect>
+                            options={parentCreatureOptions}
+                            excludeValue={editId ?? undefined}
+                            onChange={(v) => set("parentCreatureId", v)}
+                            onCreated={(c) =>
+                                setParentCreatureOptions((prev) => [
+                                    ...prev,
+                                    { value: c.id, label: c.name },
+                                ])
+                            }
+                        />
                     </OrnateField>
                     <OrnateField label={t("fields.history")}>
-                        <OrnateSelect
+                        <EntityPicker
+                            kind="history"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("none")}
                             value={form.historyId}
-                            onChange={(e) => set("historyId", e.target.value)}
-                        >
-                            <option value="">{t("none")}</option>
-                            {histories.map((h) => (
-                                <option key={h.id} value={h.id}>
-                                    {h.name}
-                                </option>
-                            ))}
-                        </OrnateSelect>
+                            options={historyOptions}
+                            onChange={(v) => set("historyId", v)}
+                            onCreated={(h) =>
+                                setHistoryOptions((prev) => [
+                                    ...prev,
+                                    { value: h.id, label: h.name },
+                                ])
+                            }
+                        />
                     </OrnateField>
                 </div>
 

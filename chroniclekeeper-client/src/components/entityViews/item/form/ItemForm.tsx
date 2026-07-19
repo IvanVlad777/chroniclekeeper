@@ -11,6 +11,10 @@ import {
 } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
 import {
+    EntityPicker,
+    type EntityOption,
+} from "../../../quickCreate/EntityPicker";
+import {
     createItem,
     deleteItem,
     getItemById,
@@ -20,12 +24,9 @@ import { getCharacters } from "../../../../api/characters";
 import { getLocations } from "../../../../api/locations";
 import { getFactions } from "../../../../api/factions";
 import {
-    CharacterDto,
-    FactionDto,
     ItemCategory,
     ItemRarity,
     ItemUpdateDto,
-    LocationDto,
     itemCategories,
     itemRarities,
 } from "../../../../interfaces/loreInterfaces";
@@ -89,13 +90,14 @@ export default function ItemForm() {
     const { t } = useTranslation("item");
     const { selectedWorld, loading: worldLoading } = useWorld();
     const { userInfo } = useAuth();
-    const canDelete =
+    const canCreate =
         userInfo?.roles.some((r) => editorRoles.includes(r)) ?? false;
+    const canDelete = canCreate;
 
     const [form, setForm] = useState<FormState>(emptyForm);
-    const [characters, setCharacters] = useState<CharacterDto[]>([]);
-    const [locations, setLocations] = useState<LocationDto[]>([]);
-    const [factions, setFactions] = useState<FactionDto[]>([]);
+    const [characterOptions, setCharacterOptions] = useState<EntityOption[]>([]);
+    const [locationOptions, setLocationOptions] = useState<EntityOption[]>([]);
+    const [factionOptions, setFactionOptions] = useState<EntityOption[]>([]);
     const [loading, setLoading] = useState(true);
     const [loadError, setLoadError] = useState<string | null>(null);
     const [saveError, setSaveError] = useState<string | null>(null);
@@ -119,9 +121,15 @@ export default function ItemForm() {
         ])
             .then(async ([chars, locs, facs]) => {
                 if (cancelled) return;
-                setCharacters(chars);
-                setLocations(locs);
-                setFactions(facs);
+                setCharacterOptions(
+                    chars.map((c) => ({ value: c.id, label: c.name }))
+                );
+                setLocationOptions(
+                    locs.map((l) => ({ value: l.id, label: l.name }))
+                );
+                setFactionOptions(
+                    facs.map((f) => ({ value: f.id, label: f.name }))
+                );
                 if (isEdit) {
                     const i = await getItemById(editId);
                     if (cancelled) return;
@@ -303,45 +311,55 @@ export default function ItemForm() {
                         </OrnateSelect>
                     </OrnateField>
                     <OrnateField label={t("fields.currentOwner")}>
-                        <OrnateSelect
+                        <EntityPicker
+                            kind="character"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("none")}
                             value={form.currentOwnerId}
-                            onChange={(e) =>
-                                set("currentOwnerId", e.target.value)
+                            options={characterOptions}
+                            onChange={(v) => set("currentOwnerId", v)}
+                            onCreated={(c) =>
+                                setCharacterOptions((prev) => [
+                                    ...prev,
+                                    { value: c.id, label: c.name },
+                                ])
                             }
-                        >
-                            <option value="">{t("none")}</option>
-                            {characters.map((c) => (
-                                <option key={c.id} value={c.id}>
-                                    {c.name}
-                                </option>
-                            ))}
-                        </OrnateSelect>
+                        />
                     </OrnateField>
                     <OrnateField label={t("fields.storedAt")}>
-                        <OrnateSelect
+                        <EntityPicker
+                            kind="location"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("none")}
                             value={form.storedAtId}
-                            onChange={(e) => set("storedAtId", e.target.value)}
-                        >
-                            <option value="">{t("none")}</option>
-                            {locations.map((l) => (
-                                <option key={l.id} value={l.id}>
-                                    {l.name}
-                                </option>
-                            ))}
-                        </OrnateSelect>
+                            options={locationOptions}
+                            onChange={(v) => set("storedAtId", v)}
+                            onCreated={(l) =>
+                                setLocationOptions((prev) => [
+                                    ...prev,
+                                    { value: l.id, label: l.name },
+                                ])
+                            }
+                        />
                     </OrnateField>
                     <OrnateField label={t("fields.faction")}>
-                        <OrnateSelect
+                        <EntityPicker
+                            kind="faction"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("none")}
                             value={form.factionId}
-                            onChange={(e) => set("factionId", e.target.value)}
-                        >
-                            <option value="">{t("none")}</option>
-                            {factions.map((f) => (
-                                <option key={f.id} value={f.id}>
-                                    {f.name}
-                                </option>
-                            ))}
-                        </OrnateSelect>
+                            options={factionOptions}
+                            onChange={(v) => set("factionId", v)}
+                            onCreated={(f) =>
+                                setFactionOptions((prev) => [
+                                    ...prev,
+                                    { value: f.id, label: f.name },
+                                ])
+                            }
+                        />
                     </OrnateField>
                 </div>
             </div>

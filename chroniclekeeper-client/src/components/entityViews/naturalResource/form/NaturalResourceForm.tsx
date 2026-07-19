@@ -5,11 +5,14 @@ import {
     Button,
     OrnateCheckbox,
     OrnateField,
-    OrnateSelect,
     OrnateTextArea,
     OrnateTextInput,
 } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
+import {
+    EntityPicker,
+    type EntityOption,
+} from "../../../quickCreate/EntityPicker";
 import {
     createNaturalResource,
     deleteNaturalResource,
@@ -19,8 +22,6 @@ import {
 import { getExtractionMethods } from "../../../../api/extractionMethods";
 import { getHistories } from "../../../../api/histories";
 import {
-    ExtractionMethodDto,
-    HistoryDto,
     NaturalResourceUpdateDto,
 } from "../../../../interfaces/loreInterfaces";
 import { useWorld } from "../../../../hooks/useWorld";
@@ -80,14 +81,15 @@ export default function NaturalResourceForm() {
     const { t } = useTranslation("naturalResource");
     const { selectedWorld, loading: worldLoading } = useWorld();
     const { userInfo } = useAuth();
-    const canDelete =
+    const canCreate =
         userInfo?.roles.some((r) => editorRoles.includes(r)) ?? false;
+    const canDelete = canCreate;
 
     const [form, setForm] = useState<FormState>(emptyForm);
-    const [extractionMethods, setExtractionMethods] = useState<
-        ExtractionMethodDto[]
+    const [extractionMethodOptions, setExtractionMethodOptions] = useState<
+        EntityOption[]
     >([]);
-    const [histories, setHistories] = useState<HistoryDto[]>([]);
+    const [historyOptions, setHistoryOptions] = useState<EntityOption[]>([]);
     const [loading, setLoading] = useState(true);
     const [loadError, setLoadError] = useState<string | null>(null);
     const [saveError, setSaveError] = useState<string | null>(null);
@@ -110,8 +112,12 @@ export default function NaturalResourceForm() {
         ])
             .then(async ([methodsData, historiesData]) => {
                 if (cancelled) return;
-                setExtractionMethods(methodsData);
-                setHistories(historiesData);
+                setExtractionMethodOptions(
+                    methodsData.map((m) => ({ value: m.id, label: m.name }))
+                );
+                setHistoryOptions(
+                    historiesData.map((h) => ({ value: h.id, label: h.name }))
+                );
 
                 if (isEdit) {
                     const nr = await getNaturalResourceById(editId);
@@ -238,17 +244,21 @@ export default function NaturalResourceForm() {
                         />
                     </OrnateField>
                     <OrnateField label={t("form.history")}>
-                        <OrnateSelect
+                        <EntityPicker
+                            kind="history"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("none")}
                             value={form.historyId}
-                            onChange={(e) => set("historyId", e.target.value)}
-                        >
-                            <option value="">{t("none")}</option>
-                            {histories.map((h) => (
-                                <option key={h.id} value={h.id}>
-                                    {h.name}
-                                </option>
-                            ))}
-                        </OrnateSelect>
+                            options={historyOptions}
+                            onChange={(v) => set("historyId", v)}
+                            onCreated={(h) =>
+                                setHistoryOptions((prev) => [
+                                    ...prev,
+                                    { value: h.id, label: h.name },
+                                ])
+                            }
+                        />
                     </OrnateField>
                 </div>
 
@@ -284,19 +294,21 @@ export default function NaturalResourceForm() {
                         </OrnateField>
                     </div>
                     <OrnateField label={t("fields.extractionMethod")}>
-                        <OrnateSelect
+                        <EntityPicker
+                            kind="extractionMethod"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("none")}
                             value={form.extractionMethodId}
-                            onChange={(e) =>
-                                set("extractionMethodId", e.target.value)
+                            options={extractionMethodOptions}
+                            onChange={(v) => set("extractionMethodId", v)}
+                            onCreated={(m) =>
+                                setExtractionMethodOptions((prev) => [
+                                    ...prev,
+                                    { value: m.id, label: m.name },
+                                ])
                             }
-                        >
-                            <option value="">{t("none")}</option>
-                            {extractionMethods.map((m) => (
-                                <option key={m.id} value={m.id}>
-                                    {m.name}
-                                </option>
-                            ))}
-                        </OrnateSelect>
+                        />
                     </OrnateField>
                     <OrnateCheckbox
                         label={t("fields.isRenewable")}

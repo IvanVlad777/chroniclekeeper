@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import {
     Button,
     OrnateField,
-    OrnateSelect,
     OrnateTextArea,
     OrnateTextInput,
 } from "../../../ornate";
@@ -18,7 +17,6 @@ import {
 import { getMilitaryDoctrines } from "../../../../api/militaryDoctrines";
 import { getHistories } from "../../../../api/histories";
 import {
-    HistoryDto,
     MilitaryOrganizationUpdateDto,
 } from "../../../../interfaces/loreInterfaces";
 import { useWorld } from "../../../../hooks/useWorld";
@@ -73,7 +71,7 @@ export default function MilitaryOrganizationForm() {
 
     const [form, setForm] = useState<FormState>(emptyForm);
     const [doctrineOptions, setDoctrineOptions] = useState<EntityOption[]>([]);
-    const [histories, setHistories] = useState<HistoryDto[]>([]);
+    const [historyOptions, setHistoryOptions] = useState<EntityOption[]>([]);
     const [loading, setLoading] = useState(true);
     const [loadError, setLoadError] = useState<string | null>(null);
     const [saveError, setSaveError] = useState<string | null>(null);
@@ -97,7 +95,9 @@ export default function MilitaryOrganizationForm() {
                 setDoctrineOptions(
                     doctrines.map((d) => ({ value: d.id, label: d.name }))
                 );
-                setHistories(historiesData);
+                setHistoryOptions(
+                    historiesData.map((h) => ({ value: h.id, label: h.name }))
+                );
                 if (isEdit) {
                     const o = await getMilitaryOrganizationById(editId);
                     if (cancelled) return;
@@ -255,17 +255,21 @@ export default function MilitaryOrganizationForm() {
                         />
                     </OrnateField>
                     <OrnateField label={t("form.history")}>
-                        <OrnateSelect
+                        <EntityPicker
+                            kind="history"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("none")}
                             value={form.historyId}
-                            onChange={(e) => set("historyId", e.target.value)}
-                        >
-                            <option value="">{t("none")}</option>
-                            {histories.map((h) => (
-                                <option key={h.id} value={h.id}>
-                                    {h.name}
-                                </option>
-                            ))}
-                        </OrnateSelect>
+                            options={historyOptions}
+                            onChange={(v) => set("historyId", v)}
+                            onCreated={(h) =>
+                                setHistoryOptions((prev) => [
+                                    ...prev,
+                                    { value: h.id, label: h.name },
+                                ])
+                            }
+                        />
                     </OrnateField>
                 </div>
             </div>

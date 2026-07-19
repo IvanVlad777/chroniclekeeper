@@ -9,6 +9,22 @@ import { createEconomicSystem } from '../../api/economicSystems';
 import { createMilitaryDoctrine } from '../../api/militaryDoctrines';
 import { createMilitaryOrganization } from '../../api/militaryOrganizations';
 import { createSocialHierarchy } from '../../api/socialHierarchies';
+import { createSocialClass } from '../../api/socialClasses';
+import { createNation } from '../../api/nations';
+import { createReligion } from '../../api/religions';
+import { createLanguage } from '../../api/languages';
+import { createProfession } from '../../api/professions';
+import { createCurrency } from '../../api/currencies';
+import { createContent } from '../../api/contents';
+import { createBankingSystem } from '../../api/bankingSystems';
+import { createTaxationSystem } from '../../api/taxationSystems';
+import { createIndustry } from '../../api/industries';
+import { createCreature } from '../../api/creatures';
+import { createPoliticalIdeology } from '../../api/politicalIdeologies';
+import { createExtractionMethod } from '../../api/extractionMethods';
+import { createUniversity } from '../../api/universities';
+import { createHistory } from '../../api/histories';
+import { createCorporation } from '../../api/corporations';
 
 /** Minimal result the picker needs back from a quick-create. */
 export interface QuickCreated {
@@ -29,6 +45,8 @@ export interface QuickCreateInput {
  */
 export interface QuickCreateContext {
   sapientSpeciesId?: number;
+  /** parent education system — a University derives its world from it. */
+  educationSystemId?: number;
 }
 
 interface QuickCreateDescriptor {
@@ -225,6 +243,215 @@ const registry = {
         allowsIntermarriage: false,
         enforcesLegalSeparation: false,
         historyId: null,
+      }),
+  },
+  socialClass: {
+    create: (worldId, { name, description }) =>
+      createSocialClass({
+        name,
+        description,
+        worldId,
+        isNoble: false,
+        isMerchantClass: false,
+        isOutcast: false,
+        canOwnLand: false,
+        canHoldOffice: false,
+        hasTaxExemptions: false,
+        socialHierarchyId: null,
+      }),
+  },
+  nation: {
+    create: (worldId, { name, description }) =>
+      createNation({
+        name,
+        description,
+        worldId,
+        population: 0,
+        socialHierarchyId: null,
+        historyId: null,
+      }),
+  },
+  religion: {
+    create: (worldId, { name, description }) =>
+      createReligion({
+        name,
+        description,
+        worldId,
+        coreBeliefs: '',
+        practices: '',
+        hasDeities: false,
+        isStateReligion: false,
+      }),
+  },
+  language: {
+    create: (worldId, { name, description }) =>
+      createLanguage({
+        name,
+        description,
+        worldId,
+        writingSystem: '',
+        isExtinct: false,
+        dialects: '',
+      }),
+  },
+  profession: {
+    create: (worldId, { name, description }) =>
+      createProfession({
+        name,
+        description,
+        worldId,
+        requiredSkills: '',
+        workEnvironment: '',
+      }),
+  },
+  currency: {
+    create: (worldId, { name, description }) =>
+      createCurrency({
+        name,
+        description,
+        worldId,
+        symbol: '',
+        exchangeRate: 0,
+        backingType: '',
+        historyId: null,
+      }),
+  },
+  content: {
+    create: (worldId, { name, description }) =>
+      createContent({
+        name,
+        description,
+        worldId,
+        type: 'Book',
+      }),
+  },
+  bankingSystem: {
+    create: (worldId, { name, description }) =>
+      createBankingSystem({
+        name,
+        description,
+        worldId,
+        systemType: '',
+        interestRate: 0,
+        allowsLoans: false,
+        hasStateControl: false,
+        supportsForeignInvestment: false,
+        currencyId: null,
+        historyId: null,
+      }),
+  },
+  taxationSystem: {
+    create: (worldId, { name, description }) =>
+      createTaxationSystem({
+        name,
+        description,
+        worldId,
+        incomeTaxRate: 0,
+        corporateTaxRate: 0,
+        tradeTariffRate: 0,
+        hasFlatTax: false,
+        hasWealthTax: false,
+        historyId: null,
+      }),
+  },
+  industry: {
+    create: (worldId, { name, description }) =>
+      createIndustry({
+        name,
+        description,
+        worldId,
+        sector: '',
+        employmentRate: 0,
+        historyId: null,
+      }),
+  },
+  creature: {
+    create: (worldId, { name, description }) =>
+      createCreature({
+        name,
+        description,
+        worldId,
+        // Subtype is required (non-empty) and must be a CreatureSubtype —
+        // "Sapient" creatures are filtered out of the list, so default to Animal.
+        subtype: 'Animal',
+        type: 'Animal',
+        averageLifespan: 0,
+        height: 0,
+        weight: 0,
+        isSentient: false,
+        isArtificial: false,
+        artificialOrigin: null,
+        parentCreatureId: null,
+        historyId: null,
+      }),
+  },
+  politicalIdeology: {
+    create: (worldId, { name, description }) =>
+      createPoliticalIdeology({
+        name,
+        description,
+        worldId,
+        isAuthoritarian: false,
+        isSocialist: false,
+        isLiberal: false,
+        isRadical: false,
+        isMilitaristic: false,
+        supportsFreeMarket: false,
+        supportsPlannedEconomy: false,
+      }),
+  },
+  extractionMethod: {
+    create: (worldId, { name, description }) =>
+      createExtractionMethod({
+        name,
+        description,
+        worldId,
+        methodType: '',
+        isSustainable: false,
+        historyId: null,
+      }),
+  },
+  history: {
+    create: (worldId, { name, description }) =>
+      createHistory({
+        name,
+        description,
+        worldId,
+        summary: '',
+        isOfficial: false,
+      }),
+  },
+  corporation: {
+    create: (worldId, { name, description }) =>
+      createCorporation({
+        name,
+        description,
+        worldId,
+        industrySector: '',
+        revenue: 0,
+        numberOfEmployees: 0,
+        isPubliclyTraded: false,
+        isStateOwned: false,
+        industryId: null,
+        taxationSystemId: null,
+        bankingSystemId: null,
+        parentCorporationId: null,
+        historyId: null,
+      }),
+  },
+  university: {
+    // A University derives its world from its parent education system —
+    // needs it in context (hidden add-row until one is chosen).
+    requiresContext: (ctx) => !ctx?.educationSystemId,
+    create: (_worldId, { name, description }, ctx) =>
+      createUniversity({
+        name,
+        description,
+        educationSystemId: ctx?.educationSystemId ?? 0,
+        focusesOnScience: false,
+        focusesOnMagic: false,
+        focusesOnPhilosophy: false,
+        focusesOnMilitaryStudies: false,
       }),
   },
 } satisfies Record<string, QuickCreateDescriptor>;

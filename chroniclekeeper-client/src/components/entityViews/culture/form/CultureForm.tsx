@@ -11,6 +11,10 @@ import {
 } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
 import {
+    EntityPicker,
+    type EntityOption,
+} from "../../../quickCreate/EntityPicker";
+import {
     createCulture,
     deleteCulture,
     getCultureById,
@@ -20,8 +24,6 @@ import { getLanguages } from "../../../../api/languages";
 import { getReligions } from "../../../../api/religions";
 import {
     CultureUpdateDto,
-    LanguageDto,
-    ReligionDto,
     TechnologicalLevel,
     XenophobiaLevel,
     technologicalLevels,
@@ -87,12 +89,13 @@ export default function CultureForm() {
     const { t } = useTranslation("culture");
     const { selectedWorld, loading: worldLoading } = useWorld();
     const { userInfo } = useAuth();
-    const canDelete =
+    const canCreate =
         userInfo?.roles.some((r) => editorRoles.includes(r)) ?? false;
+    const canDelete = canCreate;
 
     const [form, setForm] = useState<FormState>(emptyForm);
-    const [languages, setLanguages] = useState<LanguageDto[]>([]);
-    const [religions, setReligions] = useState<ReligionDto[]>([]);
+    const [languageOptions, setLanguageOptions] = useState<EntityOption[]>([]);
+    const [religionOptions, setReligionOptions] = useState<EntityOption[]>([]);
     const [loading, setLoading] = useState(true);
     const [loadError, setLoadError] = useState<string | null>(null);
     const [saveError, setSaveError] = useState<string | null>(null);
@@ -116,8 +119,12 @@ export default function CultureForm() {
         ])
             .then(async ([languagesData, religionsData]) => {
                 if (cancelled) return;
-                setLanguages(languagesData);
-                setReligions(religionsData);
+                setLanguageOptions(
+                    languagesData.map((l) => ({ value: l.id, label: l.name }))
+                );
+                setReligionOptions(
+                    religionsData.map((r) => ({ value: r.id, label: r.name }))
+                );
 
                 if (isEdit) {
                     const c = await getCultureById(editId);
@@ -282,34 +289,38 @@ export default function CultureForm() {
 
                 <div className={s.col}>
                     <OrnateField label={t("form.language")} required>
-                        <OrnateSelect
+                        <EntityPicker
+                            kind="language"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("none")}
                             value={form.languageId}
-                            onChange={(e) =>
-                                set("languageId", e.target.value)
+                            options={languageOptions}
+                            onChange={(v) => set("languageId", v)}
+                            onCreated={(l) =>
+                                setLanguageOptions((prev) => [
+                                    ...prev,
+                                    { value: l.id, label: l.name },
+                                ])
                             }
-                        >
-                            <option value="">{t("none")}</option>
-                            {languages.map((l) => (
-                                <option key={l.id} value={l.id}>
-                                    {l.name}
-                                </option>
-                            ))}
-                        </OrnateSelect>
+                        />
                     </OrnateField>
                     <OrnateField label={t("form.religion")}>
-                        <OrnateSelect
+                        <EntityPicker
+                            kind="religion"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("none")}
                             value={form.religionId}
-                            onChange={(e) =>
-                                set("religionId", e.target.value)
+                            options={religionOptions}
+                            onChange={(v) => set("religionId", v)}
+                            onCreated={(r) =>
+                                setReligionOptions((prev) => [
+                                    ...prev,
+                                    { value: r.id, label: r.name },
+                                ])
                             }
-                        >
-                            <option value="">{t("none")}</option>
-                            {religions.map((r) => (
-                                <option key={r.id} value={r.id}>
-                                    {r.name}
-                                </option>
-                            ))}
-                        </OrnateSelect>
+                        />
                     </OrnateField>
                     <div className={s.row2}>
                         <OrnateField label={t("fields.xenophobiaLevel")}>

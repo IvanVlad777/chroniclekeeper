@@ -178,7 +178,23 @@
             "economicSystem": "economic system",
             "militaryDoctrine": "doctrine",
             "militaryOrganization": "organization",
-            "socialHierarchy": "social hierarchy"
+            "socialHierarchy": "social hierarchy",
+            "socialClass": "social class",
+            "nation": "nation",
+            "religion": "religion",
+            "language": "language",
+            "profession": "profession",
+            "currency": "currency",
+            "content": "content",
+            "bankingSystem": "banking system",
+            "taxationSystem": "taxation system",
+            "industry": "industry",
+            "creature": "creature",
+            "politicalIdeology": "political ideology",
+            "extractionMethod": "extraction method",
+            "history": "history",
+            "university": "university",
+            "corporation": "corporation"
         }
     },
     "states": {

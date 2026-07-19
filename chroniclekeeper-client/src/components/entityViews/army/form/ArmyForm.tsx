@@ -5,7 +5,6 @@ import {
     Button,
     OrnateCheckbox,
     OrnateField,
-    OrnateSelect,
     OrnateTextArea,
     OrnateTextInput,
 } from "../../../ornate";
@@ -19,7 +18,7 @@ import {
 import { getMilitaryOrganizations } from "../../../../api/militaryOrganizations";
 import { getFactions } from "../../../../api/factions";
 import { getHistories } from "../../../../api/histories";
-import { ArmyUpdateDto, HistoryDto } from "../../../../interfaces/loreInterfaces";
+import { ArmyUpdateDto } from "../../../../interfaces/loreInterfaces";
 import { useWorld } from "../../../../hooks/useWorld";
 import { useAuth } from "../../../../hooks/useAuth";
 import { editorRoles } from "../../../shell/roles";
@@ -79,7 +78,7 @@ export default function ArmyForm() {
         EntityOption[]
     >([]);
     const [factionOptions, setFactionOptions] = useState<EntityOption[]>([]);
-    const [histories, setHistories] = useState<HistoryDto[]>([]);
+    const [historyOptions, setHistoryOptions] = useState<EntityOption[]>([]);
     const [loading, setLoading] = useState(true);
     const [loadError, setLoadError] = useState<string | null>(null);
     const [saveError, setSaveError] = useState<string | null>(null);
@@ -107,7 +106,9 @@ export default function ArmyForm() {
                 setFactionOptions(
                     factions.map((f) => ({ value: f.id, label: f.name }))
                 );
-                setHistories(historiesData);
+                setHistoryOptions(
+                    historiesData.map((h) => ({ value: h.id, label: h.name }))
+                );
                 if (isEdit) {
                     const a = await getArmyById(editId);
                     if (cancelled) return;
@@ -284,17 +285,21 @@ export default function ArmyForm() {
                         />
                     </OrnateField>
                     <OrnateField label={t("form.history")}>
-                        <OrnateSelect
+                        <EntityPicker
+                            kind="history"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("none")}
                             value={form.historyId}
-                            onChange={(e) => set("historyId", e.target.value)}
-                        >
-                            <option value="">{t("none")}</option>
-                            {histories.map((h) => (
-                                <option key={h.id} value={h.id}>
-                                    {h.name}
-                                </option>
-                            ))}
-                        </OrnateSelect>
+                            options={historyOptions}
+                            onChange={(v) => set("historyId", v)}
+                            onCreated={(h) =>
+                                setHistoryOptions((prev) => [
+                                    ...prev,
+                                    { value: h.id, label: h.name },
+                                ])
+                            }
+                        />
                     </OrnateField>
                 </div>
             </div>

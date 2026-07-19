@@ -5,11 +5,14 @@ import {
     Button,
     OrnateCheckbox,
     OrnateField,
-    OrnateSelect,
     OrnateTextArea,
     OrnateTextInput,
 } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
+import {
+    EntityPicker,
+    type EntityOption,
+} from "../../../quickCreate/EntityPicker";
 import {
     createDiplomaticAgreement,
     deleteDiplomaticAgreement,
@@ -17,10 +20,7 @@ import {
     updateDiplomaticAgreement,
 } from "../../../../api/diplomaticAgreements";
 import { getNations } from "../../../../api/nations";
-import {
-    DiplomaticAgreementUpdateDto,
-    NationDto,
-} from "../../../../interfaces/loreInterfaces";
+import { DiplomaticAgreementUpdateDto } from "../../../../interfaces/loreInterfaces";
 import { useWorld } from "../../../../hooks/useWorld";
 import { useAuth } from "../../../../hooks/useAuth";
 import { apiErrorMessage } from "../../../../utils/apiError";
@@ -81,11 +81,12 @@ export default function DiplomaticAgreementForm() {
     const { t } = useTranslation("diplomaticAgreement");
     const { selectedWorld, loading: worldLoading } = useWorld();
     const { userInfo } = useAuth();
-    const canDelete =
+    const canCreate =
         userInfo?.roles.some((r) => editorRoles.includes(r)) ?? false;
+    const canDelete = canCreate;
 
     const [form, setForm] = useState<FormState>(emptyForm);
-    const [nations, setNations] = useState<NationDto[]>([]);
+    const [nationOptions, setNationOptions] = useState<EntityOption[]>([]);
     const [loading, setLoading] = useState(true);
     const [loadError, setLoadError] = useState<string | null>(null);
     const [saveError, setSaveError] = useState<string | null>(null);
@@ -105,7 +106,9 @@ export default function DiplomaticAgreementForm() {
         getNations(selectedWorld.id)
             .then(async (nationsData) => {
                 if (cancelled) return;
-                setNations(nationsData);
+                setNationOptions(
+                    nationsData.map((n) => ({ value: n.id, label: n.name }))
+                );
 
                 if (isEdit) {
                     const a = await getDiplomaticAgreementById(editId);
@@ -258,34 +261,40 @@ export default function DiplomaticAgreementForm() {
 
                 <div className={s.col}>
                     <OrnateField label={t("fields.firstNation")} required>
-                        <OrnateSelect
+                        <EntityPicker
+                            kind="nation"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("none")}
                             value={form.firstNationId}
-                            onChange={(e) =>
-                                set("firstNationId", e.target.value)
+                            options={nationOptions}
+                            excludeValue={form.secondNationId}
+                            onChange={(v) => set("firstNationId", v)}
+                            onCreated={(n) =>
+                                setNationOptions((prev) => [
+                                    ...prev,
+                                    { value: n.id, label: n.name },
+                                ])
                             }
-                        >
-                            <option value="">{t("none")}</option>
-                            {nations.map((n) => (
-                                <option key={n.id} value={n.id}>
-                                    {n.name}
-                                </option>
-                            ))}
-                        </OrnateSelect>
+                        />
                     </OrnateField>
                     <OrnateField label={t("fields.secondNation")} required>
-                        <OrnateSelect
+                        <EntityPicker
+                            kind="nation"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("none")}
                             value={form.secondNationId}
-                            onChange={(e) =>
-                                set("secondNationId", e.target.value)
+                            options={nationOptions}
+                            excludeValue={form.firstNationId}
+                            onChange={(v) => set("secondNationId", v)}
+                            onCreated={(n) =>
+                                setNationOptions((prev) => [
+                                    ...prev,
+                                    { value: n.id, label: n.name },
+                                ])
                             }
-                        >
-                            <option value="">{t("none")}</option>
-                            {nations.map((n) => (
-                                <option key={n.id} value={n.id}>
-                                    {n.name}
-                                </option>
-                            ))}
-                        </OrnateSelect>
+                        />
                     </OrnateField>
                     <OrnateField label={t("fields.agreementType")}>
                         <OrnateTextInput

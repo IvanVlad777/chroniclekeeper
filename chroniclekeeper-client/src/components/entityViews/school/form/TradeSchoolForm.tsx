@@ -5,11 +5,14 @@ import {
     Button,
     OrnateCheckbox,
     OrnateField,
-    OrnateSelect,
     OrnateTextArea,
     OrnateTextInput,
 } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
+import {
+    EntityPicker,
+    type EntityOption,
+} from "../../../quickCreate/EntityPicker";
 import {
     createTradeSchool,
     deleteTradeSchool,
@@ -17,7 +20,6 @@ import {
     updateTradeSchool,
 } from "../../../../api/tradeSchools";
 import { getEducationSystems } from "../../../../api/educationSystems";
-import { EducationSystemDto } from "../../../../interfaces/loreInterfaces";
 import { useWorld } from "../../../../hooks/useWorld";
 import { useAuth } from "../../../../hooks/useAuth";
 import { apiErrorMessage } from "../../../../utils/apiError";
@@ -57,12 +59,13 @@ export default function TradeSchoolForm() {
     const { t } = useTranslation("school");
     const { selectedWorld, loading: worldLoading } = useWorld();
     const { userInfo } = useAuth();
-    const canDelete =
+    const canCreate =
         userInfo?.roles.some((r) => editorRoles.includes(r)) ?? false;
+    const canDelete = canCreate;
 
     const [form, setForm] = useState<FormState>(emptyForm);
-    const [educationSystems, setEducationSystems] = useState<
-        EducationSystemDto[]
+    const [educationSystemOptions, setEducationSystemOptions] = useState<
+        EntityOption[]
     >([]);
     const [loading, setLoading] = useState(true);
     const [loadError, setLoadError] = useState<string | null>(null);
@@ -86,7 +89,9 @@ export default function TradeSchoolForm() {
         ])
             .then(([systems, school]) => {
                 if (cancelled) return;
-                setEducationSystems(systems);
+                setEducationSystemOptions(
+                    systems.map((es) => ({ value: es.id, label: es.name }))
+                );
                 if (school) {
                     setForm({
                         name: school.name ?? "",
@@ -243,20 +248,22 @@ export default function TradeSchoolForm() {
                         required={!isEdit}
                         hint={isEdit ? t("form.educationSystemLocked") : undefined}
                     >
-                        <OrnateSelect
-                            value={form.educationSystemId}
+                        <EntityPicker
+                            kind="educationSystem"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("none")}
                             disabled={isEdit}
-                            onChange={(e) =>
-                                set("educationSystemId", e.target.value)
+                            value={form.educationSystemId}
+                            options={educationSystemOptions}
+                            onChange={(v) => set("educationSystemId", v)}
+                            onCreated={(es) =>
+                                setEducationSystemOptions((prev) => [
+                                    ...prev,
+                                    { value: es.id, label: es.name },
+                                ])
                             }
-                        >
-                            <option value="">{t("none")}</option>
-                            {educationSystems.map((es) => (
-                                <option key={es.id} value={es.id}>
-                                    {es.name}
-                                </option>
-                            ))}
-                        </OrnateSelect>
+                        />
                     </OrnateField>
                     <OrnateField label={t("fields.durationYears")}>
                         <OrnateTextInput

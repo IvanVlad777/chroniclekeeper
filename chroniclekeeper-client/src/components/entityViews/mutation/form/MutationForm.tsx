@@ -10,6 +10,10 @@ import {
 } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
 import {
+    EntityPicker,
+    type EntityOption,
+} from "../../../quickCreate/EntityPicker";
+import {
     createMutation,
     deleteMutation,
     getMutationById,
@@ -18,8 +22,6 @@ import {
 import { getCreatures } from "../../../../api/creatures";
 import { getHistories } from "../../../../api/histories";
 import {
-    CreatureDto,
-    HistoryDto,
     MutationEffect,
     MutationOrigin,
     MutationUpdateDto,
@@ -74,12 +76,13 @@ export default function MutationForm() {
     const { t } = useTranslation("mutation");
     const { selectedWorld, loading: worldLoading } = useWorld();
     const { userInfo } = useAuth();
-    const canDelete =
+    const canCreate =
         userInfo?.roles.some((r) => editorRoles.includes(r)) ?? false;
+    const canDelete = canCreate;
 
     const [form, setForm] = useState<FormState>(emptyForm);
-    const [creatures, setCreatures] = useState<CreatureDto[]>([]);
-    const [histories, setHistories] = useState<HistoryDto[]>([]);
+    const [creatureOptions, setCreatureOptions] = useState<EntityOption[]>([]);
+    const [historyOptions, setHistoryOptions] = useState<EntityOption[]>([]);
     const [loading, setLoading] = useState(isEdit);
     const [loadError, setLoadError] = useState<string | null>(null);
     const [saveError, setSaveError] = useState<string | null>(null);
@@ -92,10 +95,18 @@ export default function MutationForm() {
     useEffect(() => {
         if (!selectedWorld) return;
         getCreatures({ worldId: selectedWorld.id })
-            .then(setCreatures)
+            .then((cs) =>
+                setCreatureOptions(
+                    cs.map((c) => ({ value: c.id, label: c.name }))
+                )
+            )
             .catch((err) => console.error("Failed to load creatures:", err));
         getHistories(selectedWorld.id)
-            .then(setHistories)
+            .then((hs) =>
+                setHistoryOptions(
+                    hs.map((h) => ({ value: h.id, label: h.name }))
+                )
+            )
             .catch((err) => console.error("Failed to load histories:", err));
     }, [selectedWorld]);
 
@@ -260,32 +271,38 @@ export default function MutationForm() {
                         </OrnateSelect>
                     </OrnateField>
                     <OrnateField label={t("fields.mutantCreature")}>
-                        <OrnateSelect
+                        <EntityPicker
+                            kind="creature"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("form.noCreature")}
                             value={form.mutantCreatureId}
-                            onChange={(e) =>
-                                set("mutantCreatureId", e.target.value)
+                            options={creatureOptions}
+                            onChange={(v) => set("mutantCreatureId", v)}
+                            onCreated={(c) =>
+                                setCreatureOptions((prev) => [
+                                    ...prev,
+                                    { value: c.id, label: c.name },
+                                ])
                             }
-                        >
-                            <option value="">{t("form.noCreature")}</option>
-                            {creatures.map((c) => (
-                                <option key={c.id} value={c.id}>
-                                    {c.name}
-                                </option>
-                            ))}
-                        </OrnateSelect>
+                        />
                     </OrnateField>
                     <OrnateField label={t("fields.history")}>
-                        <OrnateSelect
+                        <EntityPicker
+                            kind="history"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("form.noHistory")}
                             value={form.historyId}
-                            onChange={(e) => set("historyId", e.target.value)}
-                        >
-                            <option value="">{t("form.noHistory")}</option>
-                            {histories.map((h) => (
-                                <option key={h.id} value={h.id}>
-                                    {h.name}
-                                </option>
-                            ))}
-                        </OrnateSelect>
+                            options={historyOptions}
+                            onChange={(v) => set("historyId", v)}
+                            onCreated={(h) =>
+                                setHistoryOptions((prev) => [
+                                    ...prev,
+                                    { value: h.id, label: h.name },
+                                ])
+                            }
+                        />
                     </OrnateField>
                 </div>
             </div>

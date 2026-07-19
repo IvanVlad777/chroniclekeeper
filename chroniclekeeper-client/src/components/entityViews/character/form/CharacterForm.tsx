@@ -5,7 +5,6 @@ import {
     Button,
     OrnateCheckbox,
     OrnateField,
-    OrnateSelect,
     OrnateTextArea,
     OrnateTextInput,
 } from "../../../ornate";
@@ -25,12 +24,8 @@ import { getProfessions } from "../../../../api/professions";
 import {
     BackgroundInfo,
     CharacterUpdateDto,
-    NationDto,
     PersonalityInfo,
-    ProfessionDto,
     RaceDto,
-    ReligionDto,
-    SocialClassDto,
     emptyBackgroundInfo,
     emptyPersonalityInfo,
 } from "../../../../interfaces/loreInterfaces";
@@ -151,10 +146,14 @@ export default function CharacterForm() {
     const [form, setForm] = useState<FormState>(emptyForm);
     const [speciesOptions, setSpeciesOptions] = useState<EntityOption[]>([]);
     const [races, setRaces] = useState<RaceDto[]>([]);
-    const [socialClasses, setSocialClasses] = useState<SocialClassDto[]>([]);
-    const [nations, setNations] = useState<NationDto[]>([]);
-    const [religions, setReligions] = useState<ReligionDto[]>([]);
-    const [professions, setProfessions] = useState<ProfessionDto[]>([]);
+    const [socialClassOptions, setSocialClassOptions] = useState<EntityOption[]>(
+        []
+    );
+    const [nationOptions, setNationOptions] = useState<EntityOption[]>([]);
+    const [religionOptions, setReligionOptions] = useState<EntityOption[]>([]);
+    const [professionOptions, setProfessionOptions] = useState<EntityOption[]>(
+        []
+    );
     const [characterOptions, setCharacterOptions] = useState<EntityOption[]>([]);
     const [loading, setLoading] = useState(true);
     const [loadError, setLoadError] = useState<string | null>(null);
@@ -205,10 +204,21 @@ export default function CharacterForm() {
                 setSpeciesOptions(speciesData.map((sp) => ({ value: sp.id, label: sp.name })));
                 setRaces(racesData);
                 setCharacterOptions(charactersData.map((c) => ({ value: c.id, label: c.name })));
-                setSocialClasses(socialClassData);
-                setNations(nationsData);
-                setReligions(religionsData);
-                setProfessions(professionsData);
+                setSocialClassOptions(
+                    socialClassData.map((sc) => ({
+                        value: sc.id,
+                        label: sc.name,
+                    }))
+                );
+                setNationOptions(
+                    nationsData.map((n) => ({ value: n.id, label: n.name }))
+                );
+                setReligionOptions(
+                    religionsData.map((r) => ({ value: r.id, label: r.name }))
+                );
+                setProfessionOptions(
+                    professionsData.map((p) => ({ value: p.id, label: p.name }))
+                );
 
                 if (isEdit) {
                     const c = await getCharacter(editId);
@@ -471,78 +481,104 @@ export default function CharacterForm() {
                                 : undefined
                         }
                     >
-                        <OrnateSelect
-                            value={form.raceId}
+                        <EntityPicker
+                            kind="race"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("none")}
                             disabled={!form.sapientSpeciesId}
-                            onChange={(e) => set("raceId", e.target.value)}
-                        >
-                            <option value="">{t("none")}</option>
-                            {raceOptions.map((r) => (
-                                <option key={r.id} value={r.id}>
-                                    {r.name}
-                                </option>
-                            ))}
-                        </OrnateSelect>
+                            value={form.raceId}
+                            options={raceOptions.map((r) => ({
+                                value: r.id,
+                                label: r.name,
+                            }))}
+                            createContext={{
+                                sapientSpeciesId: form.sapientSpeciesId
+                                    ? Number(form.sapientSpeciesId)
+                                    : undefined,
+                            }}
+                            onChange={(v) => set("raceId", v)}
+                            onCreated={(r) =>
+                                setRaces((prev) => [
+                                    ...prev,
+                                    {
+                                        id: r.id,
+                                        name: r.name,
+                                        sapientSpeciesId: Number(
+                                            form.sapientSpeciesId
+                                        ),
+                                    } as unknown as RaceDto,
+                                ])
+                            }
+                        />
                     </OrnateField>
                     <OrnateField label={t("socialClass")}>
-                        <OrnateSelect
+                        <EntityPicker
+                            kind="socialClass"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("none")}
                             value={form.socialClassId}
-                            onChange={(e) =>
-                                set("socialClassId", e.target.value)
+                            options={socialClassOptions}
+                            onChange={(v) => set("socialClassId", v)}
+                            onCreated={(sc) =>
+                                setSocialClassOptions((prev) => [
+                                    ...prev,
+                                    { value: sc.id, label: sc.name },
+                                ])
                             }
-                        >
-                            <option value="">{t("none")}</option>
-                            {socialClasses.map((sc) => (
-                                <option key={sc.id} value={sc.id}>
-                                    {sc.name}
-                                </option>
-                            ))}
-                        </OrnateSelect>
+                        />
                     </OrnateField>
                     <OrnateField label={t("nation")}>
-                        <OrnateSelect
+                        <EntityPicker
+                            kind="nation"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("none")}
                             value={form.nationId}
-                            onChange={(e) =>
-                                set("nationId", e.target.value)
+                            options={nationOptions}
+                            onChange={(v) => set("nationId", v)}
+                            onCreated={(n) =>
+                                setNationOptions((prev) => [
+                                    ...prev,
+                                    { value: n.id, label: n.name },
+                                ])
                             }
-                        >
-                            <option value="">{t("none")}</option>
-                            {nations.map((n) => (
-                                <option key={n.id} value={n.id}>
-                                    {n.name}
-                                </option>
-                            ))}
-                        </OrnateSelect>
+                        />
                     </OrnateField>
                     <OrnateField label={t("religion")}>
-                        <OrnateSelect
+                        <EntityPicker
+                            kind="religion"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("none")}
                             value={form.religionId}
-                            onChange={(e) =>
-                                set("religionId", e.target.value)
+                            options={religionOptions}
+                            onChange={(v) => set("religionId", v)}
+                            onCreated={(r) =>
+                                setReligionOptions((prev) => [
+                                    ...prev,
+                                    { value: r.id, label: r.name },
+                                ])
                             }
-                        >
-                            <option value="">{t("none")}</option>
-                            {religions.map((r) => (
-                                <option key={r.id} value={r.id}>
-                                    {r.name}
-                                </option>
-                            ))}
-                        </OrnateSelect>
+                        />
                     </OrnateField>
                     <OrnateField label={t("profession.label")}>
-                        <OrnateSelect
+                        <EntityPicker
+                            kind="profession"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("none")}
                             value={form.professionId}
-                            onChange={(e) =>
-                                set("professionId", e.target.value)
+                            options={professionOptions}
+                            onChange={(v) => set("professionId", v)}
+                            onCreated={(p) =>
+                                setProfessionOptions((prev) => [
+                                    ...prev,
+                                    { value: p.id, label: p.name },
+                                ])
                             }
-                        >
-                            <option value="">{t("none")}</option>
-                            {professions.map((p) => (
-                                <option key={p.id} value={p.id}>
-                                    {p.name}
-                                </option>
-                            ))}
-                        </OrnateSelect>
+                        />
                     </OrnateField>
                     <OrnateField label={t("father")}>
                         <EntityPicker

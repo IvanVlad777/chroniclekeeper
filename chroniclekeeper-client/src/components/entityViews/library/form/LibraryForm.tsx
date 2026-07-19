@@ -5,11 +5,14 @@ import {
     Button,
     OrnateCheckbox,
     OrnateField,
-    OrnateSelect,
     OrnateTextArea,
     OrnateTextInput,
 } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
+import {
+    EntityPicker,
+    type EntityOption,
+} from "../../../quickCreate/EntityPicker";
 import {
     createLibrary,
     deleteLibrary,
@@ -18,10 +21,6 @@ import {
 } from "../../../../api/libraries";
 import { getUniversities } from "../../../../api/universities";
 import { getLocations } from "../../../../api/locations";
-import {
-    LocationDto,
-    UniversityDto,
-} from "../../../../interfaces/loreInterfaces";
 import { useWorld } from "../../../../hooks/useWorld";
 import { useAuth } from "../../../../hooks/useAuth";
 import { apiErrorMessage } from "../../../../utils/apiError";
@@ -59,12 +58,13 @@ export default function LibraryForm() {
     const { t } = useTranslation("library");
     const { selectedWorld, loading: worldLoading } = useWorld();
     const { userInfo } = useAuth();
-    const canDelete =
+    const canCreate =
         userInfo?.roles.some((r) => editorRoles.includes(r)) ?? false;
+    const canDelete = canCreate;
 
     const [form, setForm] = useState<FormState>(emptyForm);
-    const [universities, setUniversities] = useState<UniversityDto[]>([]);
-    const [locations, setLocations] = useState<LocationDto[]>([]);
+    const [universityOptions, setUniversityOptions] = useState<EntityOption[]>([]);
+    const [locationOptions, setLocationOptions] = useState<EntityOption[]>([]);
     const [loading, setLoading] = useState(true);
     const [loadError, setLoadError] = useState<string | null>(null);
     const [saveError, setSaveError] = useState<string | null>(null);
@@ -88,8 +88,12 @@ export default function LibraryForm() {
         ])
             .then(([universitiesData, locationsData, library]) => {
                 if (cancelled) return;
-                setUniversities(universitiesData);
-                setLocations(locationsData);
+                setUniversityOptions(
+                    universitiesData.map((u) => ({ value: u.id, label: u.name }))
+                );
+                setLocationOptions(
+                    locationsData.map((l) => ({ value: l.id, label: l.name }))
+                );
                 if (library) {
                     setForm({
                         name: library.name ?? "",
@@ -229,34 +233,38 @@ export default function LibraryForm() {
 
                 <div className={s.col}>
                     <OrnateField label={t("form.university")}>
-                        <OrnateSelect
+                        <EntityPicker
+                            kind="university"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("none")}
                             value={form.universityId}
-                            onChange={(e) =>
-                                set("universityId", e.target.value)
+                            options={universityOptions}
+                            onChange={(v) => set("universityId", v)}
+                            onCreated={(u) =>
+                                setUniversityOptions((prev) => [
+                                    ...prev,
+                                    { value: u.id, label: u.name },
+                                ])
                             }
-                        >
-                            <option value="">{t("none")}</option>
-                            {universities.map((u) => (
-                                <option key={u.id} value={u.id}>
-                                    {u.name}
-                                </option>
-                            ))}
-                        </OrnateSelect>
+                        />
                     </OrnateField>
                     <OrnateField label={t("form.location")}>
-                        <OrnateSelect
+                        <EntityPicker
+                            kind="location"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("none")}
                             value={form.locationId}
-                            onChange={(e) =>
-                                set("locationId", e.target.value)
+                            options={locationOptions}
+                            onChange={(v) => set("locationId", v)}
+                            onCreated={(l) =>
+                                setLocationOptions((prev) => [
+                                    ...prev,
+                                    { value: l.id, label: l.name },
+                                ])
                             }
-                        >
-                            <option value="">{t("none")}</option>
-                            {locations.map((l) => (
-                                <option key={l.id} value={l.id}>
-                                    {l.name}
-                                </option>
-                            ))}
-                        </OrnateSelect>
+                        />
                     </OrnateField>
                     <OrnateCheckbox
                         label={t("fields.isPublic")}

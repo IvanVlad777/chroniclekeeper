@@ -5,11 +5,14 @@ import {
     Button,
     OrnateCheckbox,
     OrnateField,
-    OrnateSelect,
     OrnateTextArea,
     OrnateTextInput,
 } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
+import {
+    EntityPicker,
+    type EntityOption,
+} from "../../../quickCreate/EntityPicker";
 import {
     createSchool,
     deleteSchool,
@@ -18,7 +21,6 @@ import {
 } from "../../../../api/schools";
 import { getEducationSystems } from "../../../../api/educationSystems";
 import { getLocations } from "../../../../api/locations";
-import { EducationSystemDto, LocationDto } from "../../../../interfaces/loreInterfaces";
 import { useWorld } from "../../../../hooks/useWorld";
 import { useAuth } from "../../../../hooks/useAuth";
 import { apiErrorMessage } from "../../../../utils/apiError";
@@ -54,14 +56,15 @@ export default function SchoolForm() {
     const { t } = useTranslation("school");
     const { selectedWorld, loading: worldLoading } = useWorld();
     const { userInfo } = useAuth();
-    const canDelete =
+    const canCreate =
         userInfo?.roles.some((r) => editorRoles.includes(r)) ?? false;
+    const canDelete = canCreate;
 
     const [form, setForm] = useState<FormState>(emptyForm);
-    const [educationSystems, setEducationSystems] = useState<
-        EducationSystemDto[]
+    const [educationSystemOptions, setEducationSystemOptions] = useState<
+        EntityOption[]
     >([]);
-    const [locations, setLocations] = useState<LocationDto[]>([]);
+    const [locationOptions, setLocationOptions] = useState<EntityOption[]>([]);
     const [loading, setLoading] = useState(true);
     const [loadError, setLoadError] = useState<string | null>(null);
     const [saveError, setSaveError] = useState<string | null>(null);
@@ -85,8 +88,12 @@ export default function SchoolForm() {
         ])
             .then(([systems, locationsData, school]) => {
                 if (cancelled) return;
-                setEducationSystems(systems);
-                setLocations(locationsData);
+                setEducationSystemOptions(
+                    systems.map((es) => ({ value: es.id, label: es.name }))
+                );
+                setLocationOptions(
+                    locationsData.map((l) => ({ value: l.id, label: l.name }))
+                );
                 if (school) {
                     setForm({
                         name: school.name ?? "",
@@ -224,20 +231,22 @@ export default function SchoolForm() {
                         required={!isEdit}
                         hint={isEdit ? t("form.educationSystemLocked") : undefined}
                     >
-                        <OrnateSelect
-                            value={form.educationSystemId}
+                        <EntityPicker
+                            kind="educationSystem"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("none")}
                             disabled={isEdit}
-                            onChange={(e) =>
-                                set("educationSystemId", e.target.value)
+                            value={form.educationSystemId}
+                            options={educationSystemOptions}
+                            onChange={(v) => set("educationSystemId", v)}
+                            onCreated={(es) =>
+                                setEducationSystemOptions((prev) => [
+                                    ...prev,
+                                    { value: es.id, label: es.name },
+                                ])
                             }
-                        >
-                            <option value="">{t("none")}</option>
-                            {educationSystems.map((es) => (
-                                <option key={es.id} value={es.id}>
-                                    {es.name}
-                                </option>
-                            ))}
-                        </OrnateSelect>
+                        />
                     </OrnateField>
                     <OrnateCheckbox
                         label={t("fields.isPublic")}
@@ -250,17 +259,21 @@ export default function SchoolForm() {
                         onChange={(e) => set("isReligious", e.target.checked)}
                     />
                     <OrnateField label={t("fields.location")}>
-                        <OrnateSelect
+                        <EntityPicker
+                            kind="location"
+                            worldId={selectedWorld.id}
+                            canCreate={canCreate}
+                            noneLabel={t("none")}
                             value={form.locationId}
-                            onChange={(e) => set("locationId", e.target.value)}
-                        >
-                            <option value="">{t("none")}</option>
-                            {locations.map((l) => (
-                                <option key={l.id} value={l.id}>
-                                    {l.name}
-                                </option>
-                            ))}
-                        </OrnateSelect>
+                            options={locationOptions}
+                            onChange={(v) => set("locationId", v)}
+                            onCreated={(l) =>
+                                setLocationOptions((prev) => [
+                                    ...prev,
+                                    { value: l.id, label: l.name },
+                                ])
+                            }
+                        />
                     </OrnateField>
                 </div>
             </div>

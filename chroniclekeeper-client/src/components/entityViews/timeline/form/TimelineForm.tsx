@@ -4,11 +4,14 @@ import { useTranslation } from "react-i18next";
 import {
     Button,
     OrnateField,
-    OrnateSelect,
     OrnateTextArea,
     OrnateTextInput,
 } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
+import {
+    EntityPicker,
+    type EntityOption,
+} from "../../../quickCreate/EntityPicker";
 import {
     createTimeline,
     deleteTimeline,
@@ -16,8 +19,9 @@ import {
     updateTimeline,
 } from "../../../../api/timelines";
 import { getHistories } from "../../../../api/histories";
-import { HistoryDto } from "../../../../interfaces/loreInterfaces";
 import { useWorld } from "../../../../hooks/useWorld";
+import { useAuth } from "../../../../hooks/useAuth";
+import { editorRoles } from "../../../shell/roles";
 import { apiErrorMessage } from "../../../../utils/apiError";
 import s from "./styles.module.css";
 
@@ -30,11 +34,14 @@ export default function TimelineForm() {
     const navigate = useNavigate();
     const { t } = useTranslation("timeline");
     const { selectedWorld, loading: worldLoading } = useWorld();
+    const { userInfo } = useAuth();
+    const canCreate =
+        userInfo?.roles.some((r) => editorRoles.includes(r)) ?? false;
 
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [historyId, setHistoryId] = useState("");
-    const [histories, setHistories] = useState<HistoryDto[]>([]);
+    const [historyOptions, setHistoryOptions] = useState<EntityOption[]>([]);
     const [loading, setLoading] = useState(true);
     const [loadError, setLoadError] = useState<string | null>(null);
     const [saveError, setSaveError] = useState<string | null>(null);
@@ -51,7 +58,9 @@ export default function TimelineForm() {
         getHistories(selectedWorld.id)
             .then(async (historiesData) => {
                 if (cancelled) return;
-                setHistories(historiesData);
+                setHistoryOptions(
+                    historiesData.map((h) => ({ value: h.id, label: h.name }))
+                );
                 if (isEdit) {
                     const tl = await getTimeline(editId);
                     if (cancelled) return;
@@ -173,17 +182,21 @@ export default function TimelineForm() {
                     />
                 </OrnateField>
                 <OrnateField label={t("fields.history")}>
-                    <OrnateSelect
+                    <EntityPicker
+                        kind="history"
+                        worldId={selectedWorld.id}
+                        canCreate={canCreate}
+                        noneLabel={t("none")}
                         value={historyId}
-                        onChange={(e) => setHistoryId(e.target.value)}
-                    >
-                        <option value="">{t("none")}</option>
-                        {histories.map((h) => (
-                            <option key={h.id} value={h.id}>
-                                {h.name}
-                            </option>
-                        ))}
-                    </OrnateSelect>
+                        options={historyOptions}
+                        onChange={(v) => setHistoryId(v)}
+                        onCreated={(h) =>
+                            setHistoryOptions((prev) => [
+                                ...prev,
+                                { value: h.id, label: h.name },
+                            ])
+                        }
+                    />
                 </OrnateField>
             </div>
 
