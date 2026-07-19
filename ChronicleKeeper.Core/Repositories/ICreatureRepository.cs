@@ -31,5 +31,14 @@ namespace ChronicleKeeper.Core.Repositories
         Task<bool> IsHabitatLinkedAsync(int creatureId, int ecosystemId, CancellationToken cancellationToken = default);
         Task AddHabitatAsync(int creatureId, int ecosystemId, CancellationToken cancellationToken = default);
         Task<bool> RemoveHabitatAsync(int creatureId, int ecosystemId, CancellationToken cancellationToken = default);
+
+        // Self-referencing links (symbiosis + predation prey side; predators are read-only reverse).
+        Task<bool> IsSymbioticLinkedAsync(int creatureId, int partnerId, CancellationToken cancellationToken = default);
+        Task AddSymbiosisAsync(int creatureId, int partnerId, CancellationToken cancellationToken = default);
+        Task<bool> RemoveSymbiosisAsync(int creatureId, int partnerId, CancellationToken cancellationToken = default);
+
+        Task<bool> IsPreyLinkedAsync(int predatorId, int preyId, CancellationToken cancellationToken = default);
+        Task AddPreyAsync(int predatorId, int preyId, CancellationToken cancellationToken = default);
+        Task<bool> RemovePreyAsync(int predatorId, int preyId, CancellationToken cancellationToken = default);
     }
 }

@@ -182,6 +182,8 @@ namespace ChronicleKeeper.Core.DTOs.CultureDetails
     {
         public ReferenceDto? History { get; set; }
         public ReferenceDto? Culture { get; set; }
+        /// <summary>Characters that wear this clothing (read-only reverse of CharacterClothing).</summary>
+        public List<ReferenceDto> Wearers { get; set; } = new();
     }
 
     public class ClothingCreateDto

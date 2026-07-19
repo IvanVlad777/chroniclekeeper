@@ -1,4 +1,26 @@
 {
+    "subject": {
+        "single": "School subject",
+        "loadError": "Failed to load",
+        "notFound": "Subject not found",
+        "backToSchool": "Back to school",
+        "description": "Description",
+        "none": "None",
+        "yes": "Yes",
+        "no": "No",
+        "teachers": "Teachers",
+        "link": "link",
+        "pick": "Pick a character",
+        "confirm": "Link",
+        "cancel": "Cancel",
+        "remove": "Unlink {{name}}",
+        "addFailed": "Linking failed.",
+        "removeFailed": "Unlinking failed.",
+        "fields": {
+            "subjectName": "Subject",
+            "isMandatory": "Mandatory"
+        }
+    },
     "listTitle": "Schools",
     "search": "Search schools…",
     "loaderror": "Failed to load",

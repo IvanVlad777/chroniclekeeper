@@ -128,7 +128,8 @@
         "culturalInstitutions": "Kulturne institucije",
         "reverseMilitary": "Vojne organizacije",
         "reverseTradeRoutes": "Trgovački putovi",
-        "reverseCreatures": "Bića"
+        "reverseCreatures": "Bića",
+        "timelineEvents": "Događaji ovdje"
     },
     "form": {
         "newTitle": "Nova lokacija",

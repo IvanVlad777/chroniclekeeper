@@ -28,7 +28,7 @@ namespace ChronicleKeeper.Core.CQRS.SchoolSubjects.Handlers
         }
     }
 
-    public class GetSchoolSubjectByIdQueryHandler : IRequestHandler<GetSchoolSubjectByIdQuery, SchoolSubjectDto?>
+    public class GetSchoolSubjectByIdQueryHandler : IRequestHandler<GetSchoolSubjectByIdQuery, SchoolSubjectDetailsDto?>
     {
         private readonly ISchoolSubjectRepository _repository;
         private readonly IMapper _mapper;
@@ -39,10 +39,56 @@ namespace ChronicleKeeper.Core.CQRS.SchoolSubjects.Handlers
             _mapper = mapper;
         }
 
-        public async Task<SchoolSubjectDto?> Handle(GetSchoolSubjectByIdQuery request, CancellationToken cancellationToken)
+        public async Task<SchoolSubjectDetailsDto?> Handle(GetSchoolSubjectByIdQuery request, CancellationToken cancellationToken)
         {
-            var subject = await _repository.FindByIdAsync(request.Id, cancellationToken);
-            return subject == null ? null : _mapper.Map<SchoolSubjectDto>(subject);
+            var subject = await _repository.GetByIdAsync(request.Id, cancellationToken);
+            return subject == null ? null : _mapper.Map<SchoolSubjectDetailsDto>(subject);
+        }
+    }
+
+    public class AddSchoolSubjectTeacherCommandHandler : IRequestHandler<AddSchoolSubjectTeacherCommand, bool>
+    {
+        private readonly ISchoolSubjectRepository _repository;
+        private readonly ICharacterRepository _characterRepository;
+
+        public AddSchoolSubjectTeacherCommandHandler(ISchoolSubjectRepository repository, ICharacterRepository characterRepository)
+        {
+            _repository = repository;
+            _characterRepository = characterRepository;
+        }
+
+        public async Task<bool> Handle(AddSchoolSubjectTeacherCommand request, CancellationToken cancellationToken)
+        {
+            var subject = await _repository.FindByIdAsync(request.SchoolSubjectId, cancellationToken)
+                ?? throw new EntityNotFoundException("SchoolSubject", request.SchoolSubjectId);
+
+            if (!await _characterRepository.ExistsInWorldAsync(request.CharacterId, subject.WorldId, cancellationToken))
+            {
+                throw new DomainValidationException($"Character with ID {request.CharacterId} does not exist in this world.");
+            }
+
+            if (await _repository.IsTeacherLinkedAsync(request.SchoolSubjectId, request.CharacterId, cancellationToken))
+            {
+                throw new DomainValidationException("This character is already a teacher of the subject.");
+            }
+
+            await _repository.AddTeacherAsync(request.SchoolSubjectId, request.CharacterId, cancellationToken);
+            return true;
+        }
+    }
+
+    public class RemoveSchoolSubjectTeacherCommandHandler : IRequestHandler<RemoveSchoolSubjectTeacherCommand, bool>
+    {
+        private readonly ISchoolSubjectRepository _repository;
+
+        public RemoveSchoolSubjectTeacherCommandHandler(ISchoolSubjectRepository repository)
+        {
+            _repository = repository;
+        }
+
+        public Task<bool> Handle(RemoveSchoolSubjectTeacherCommand request, CancellationToken cancellationToken)
+        {
+            return _repository.RemoveTeacherAsync(request.SchoolSubjectId, request.CharacterId, cancellationToken);
         }
     }
 

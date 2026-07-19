@@ -32,11 +32,12 @@ namespace ChronicleKeeper.Core.Entities.Geography.Creatures
 
         // TODO: Uncomment when Mutation entity is revived
         public ICollection<Miscellaneous.Mutation> Mutations { get; set; } = new List<Miscellaneous.Mutation>();
-        // TODO: Self-referencing many-to-many (join entities, e.g. CreatureSymbiosis/CreaturePredation) — deferred, new pattern for this codebase
-        //public ICollection<Creature> SymbioticPartners { get; set; } = new List<Creature>();
-        //public ICollection<Creature> Prey { get; set; } = new List<Creature>();
-        //[InverseProperty("Prey")]
-        //public ICollection<Creature> Predators { get; set; } = new List<Creature>();
+        // Self-referencing many-to-many (join entities in CreatureSelfLinks.cs). Navs are typed as
+        // the join entity, not Creature directly (the join-entity convention). SymbioticPartners and
+        // Prey are the owner (write) side; Predators is the reverse read side of CreaturePredation.
+        public virtual ICollection<CreatureSymbiosis> SymbioticPartners { get; set; } = new List<CreatureSymbiosis>();
+        public virtual ICollection<CreaturePredation> Prey { get; set; } = new List<CreaturePredation>();
+        public virtual ICollection<CreaturePredation> Predators { get; set; } = new List<CreaturePredation>();
     }
 
 }

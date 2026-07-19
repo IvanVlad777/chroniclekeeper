@@ -25,8 +25,10 @@ namespace ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient
         public virtual ICollection<RegionSapientSpecies> NativeRegions { get; set; } = new List<RegionSapientSpecies>();
 
         //public virtual ICollection<Character> Characters { get; set; } = new List<Character>(); // TODO: expose if the inverse navigation becomes useful
-        //public ICollection<Profession> FrequentOccupations { get; set; } = new List<Profession>(); // TODO: Uncomment when Profession entity is revived
-        //public ICollection<Folklore> Folklore { get; set; } = new List<Folklore>(); // TODO: Uncomment when Folklore entity is revived
-        //public ICollection<Culture> Cultures { get; set; } = new List<Culture>(); // TODO: Uncomment when Culture entity is revived
+        // Reverse read navs for the join tables owned by Profession/Culture/Folklore (typed as the
+        // join entity, not the target — the join-entity convention).
+        public virtual ICollection<Professions.ProfessionSapientSpecies> FrequentOccupations { get; set; } = new List<Professions.ProfessionSapientSpecies>();
+        public virtual ICollection<Social.Cultures.FolkloreSapientSpecies> Folklore { get; set; } = new List<Social.Cultures.FolkloreSapientSpecies>();
+        public virtual ICollection<Social.Cultures.CultureSapientSpecies> Cultures { get; set; } = new List<Social.Cultures.CultureSapientSpecies>();
     }
 }

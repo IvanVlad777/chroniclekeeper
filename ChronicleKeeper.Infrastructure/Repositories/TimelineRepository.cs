@@ -27,6 +27,10 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .Include(t => t.Events.OrderBy(e => e.SortOrder))
                     .ThenInclude(e => e.Location)
                 .Include(t => t.Events.OrderBy(e => e.SortOrder))
+                    .ThenInclude(e => e.Battle)
+                .Include(t => t.Events.OrderBy(e => e.SortOrder))
+                    .ThenInclude(e => e.Folklore)
+                .Include(t => t.Events.OrderBy(e => e.SortOrder))
                     .ThenInclude(e => e.InvolvedCharacters)
                         .ThenInclude(ic => ic.Character)
                 .Include(t => t.History)
@@ -103,6 +107,8 @@ namespace ChronicleKeeper.Infrastructure.Repositories
             existing.Consequences = timelineEvent.Consequences;
             existing.IsMajorEvent = timelineEvent.IsMajorEvent;
             existing.LocationId = timelineEvent.LocationId;
+            existing.BattleId = timelineEvent.BattleId;
+            existing.FolkloreId = timelineEvent.FolkloreId;
             await NormalizeLinksAsync(existing, cancellationToken);
 
             var want = (await ValidCharacterIdsAsync(involvedCharacterIds, existing.WorldId, cancellationToken)).ToHashSet();
@@ -120,13 +126,23 @@ namespace ChronicleKeeper.Infrastructure.Repositories
             return existing;
         }
 
-        /// <summary>Nulls a LocationId that isn't in the event's world (keeps the FK clean).</summary>
+        /// <summary>Nulls Location/Battle/Folklore pointers that aren't in the event's world (keeps the FKs clean).</summary>
         private async Task NormalizeLinksAsync(TimelineEvent ev, CancellationToken ct)
         {
             if (ev.LocationId is int locId &&
                 !await _context.Locations.AnyAsync(l => l.Id == locId && l.WorldId == ev.WorldId, ct))
             {
                 ev.LocationId = null;
+            }
+            if (ev.BattleId is int battleId &&
+                !await _context.Battles.AnyAsync(b => b.Id == battleId && b.WorldId == ev.WorldId, ct))
+            {
+                ev.BattleId = null;
+            }
+            if (ev.FolkloreId is int folkloreId &&
+                !await _context.Folktales.AnyAsync(f => f.Id == folkloreId && f.WorldId == ev.WorldId, ct))
+            {
+                ev.FolkloreId = null;
             }
         }
 

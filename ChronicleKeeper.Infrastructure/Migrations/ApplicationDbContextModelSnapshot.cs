@@ -1294,6 +1294,36 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.ToTable("CreatureEcosystems");
                 });
 
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Creatures.CreaturePredation", b =>
+                {
+                    b.Property<int>("PredatorCreatureId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PreyCreatureId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PredatorCreatureId", "PreyCreatureId");
+
+                    b.HasIndex("PreyCreatureId");
+
+                    b.ToTable("CreaturePredations");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Creatures.CreatureSymbiosis", b =>
+                {
+                    b.Property<int>("CreatureId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SymbioticPartnerId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CreatureId", "SymbioticPartnerId");
+
+                    b.HasIndex("SymbioticPartnerId");
+
+                    b.ToTable("CreatureSymbioses");
+                });
+
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.Deity", b =>
                 {
                     b.Property<int>("Id")
@@ -1596,6 +1626,9 @@ namespace ChronicleKeeper.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("BattleId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Consequences")
                         .IsRequired()
                         .HasMaxLength(2000)
@@ -1618,6 +1651,9 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<int?>("FolkloreId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsMajorEvent")
                         .HasColumnType("bit");
@@ -1643,6 +1679,10 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BattleId");
+
+                    b.HasIndex("FolkloreId");
 
                     b.HasIndex("LocationId");
 
@@ -4060,6 +4100,21 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.HasIndex("WorldId", "Name");
 
                     b.ToTable("SchoolSubjects");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Education.SchoolSubjectTeacher", b =>
+                {
+                    b.Property<int>("SchoolSubjectId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CharacterId")
+                        .HasColumnType("int");
+
+                    b.HasKey("SchoolSubjectId", "CharacterId");
+
+                    b.HasIndex("CharacterId");
+
+                    b.ToTable("SchoolSubjectTeachers");
                 });
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Education.SchoolTeacher", b =>
@@ -7714,6 +7769,44 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Navigation("Ecosystem");
                 });
 
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Creatures.CreaturePredation", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Creatures.Creature", "Predator")
+                        .WithMany("Prey")
+                        .HasForeignKey("PredatorCreatureId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Creatures.Creature", "Prey")
+                        .WithMany("Predators")
+                        .HasForeignKey("PreyCreatureId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Predator");
+
+                    b.Navigation("Prey");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Creatures.CreatureSymbiosis", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Creatures.Creature", "Creature")
+                        .WithMany("SymbioticPartners")
+                        .HasForeignKey("CreatureId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Creatures.Creature", "SymbioticPartner")
+                        .WithMany()
+                        .HasForeignKey("SymbioticPartnerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Creature");
+
+                    b.Navigation("SymbioticPartner");
+                });
+
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.Deity", b =>
                 {
                     b.HasOne("ChronicleKeeper.Core.Entities.HistoryTimelines.History", "History")
@@ -7833,8 +7926,18 @@ namespace ChronicleKeeper.Infrastructure.Migrations
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.HistoryTimelines.TimelineEvent", b =>
                 {
-                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Location", "Location")
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Military.Battle", "Battle")
                         .WithMany()
+                        .HasForeignKey("BattleId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Cultures.Folklore", "Folklore")
+                        .WithMany()
+                        .HasForeignKey("FolkloreId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Geography.Location", "Location")
+                        .WithMany("TimelineEvents")
                         .HasForeignKey("LocationId")
                         .OnDelete(DeleteBehavior.SetNull);
 
@@ -7849,6 +7952,10 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .HasForeignKey("WorldId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Battle");
+
+                    b.Navigation("Folklore");
 
                     b.Navigation("Location");
 
@@ -8010,7 +8117,7 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.SapientSpecies", "SapientSpecies")
-                        .WithMany()
+                        .WithMany("FrequentOccupations")
                         .HasForeignKey("SapientSpeciesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -8356,7 +8463,7 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.SapientSpecies", "SapientSpecies")
-                        .WithMany()
+                        .WithMany("Cultures")
                         .HasForeignKey("SapientSpeciesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -8445,7 +8552,7 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.SapientSpecies", "SapientSpecies")
-                        .WithMany()
+                        .WithMany("Folklore")
                         .HasForeignKey("SapientSpeciesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -9248,6 +9355,25 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Navigation("School");
 
                     b.Navigation("World");
+                });
+
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Education.SchoolSubjectTeacher", b =>
+                {
+                    b.HasOne("ChronicleKeeper.Core.Entities.Characters.Character", "Character")
+                        .WithMany()
+                        .HasForeignKey("CharacterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ChronicleKeeper.Core.Entities.Social.Education.SchoolSubject", "SchoolSubject")
+                        .WithMany("Teachers")
+                        .HasForeignKey("SchoolSubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Character");
+
+                    b.Navigation("SchoolSubject");
                 });
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Education.SchoolTeacher", b =>
@@ -10378,7 +10504,13 @@ namespace ChronicleKeeper.Infrastructure.Migrations
 
                     b.Navigation("Mutations");
 
+                    b.Navigation("Predators");
+
+                    b.Navigation("Prey");
+
                     b.Navigation("Subspecies");
+
+                    b.Navigation("SymbioticPartners");
                 });
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.Deity", b =>
@@ -10405,6 +10537,8 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Navigation("SubLocations");
 
                     b.Navigation("Tags");
+
+                    b.Navigation("TimelineEvents");
 
                     b.Navigation("TradeRouteLinks");
                 });
@@ -10592,6 +10726,11 @@ namespace ChronicleKeeper.Infrastructure.Migrations
                     b.Navigation("Teachers");
                 });
 
+            modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Education.SchoolSubject", b =>
+                {
+                    b.Navigation("Teachers");
+                });
+
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Social.Education.University", b =>
                 {
                     b.Navigation("Alumni");
@@ -10738,6 +10877,12 @@ namespace ChronicleKeeper.Infrastructure.Migrations
 
             modelBuilder.Entity("ChronicleKeeper.Core.Entities.Geography.Creatures.Sapient.SapientSpecies", b =>
                 {
+                    b.Navigation("Cultures");
+
+                    b.Navigation("Folklore");
+
+                    b.Navigation("FrequentOccupations");
+
                     b.Navigation("NativeRegions");
 
                     b.Navigation("Races");

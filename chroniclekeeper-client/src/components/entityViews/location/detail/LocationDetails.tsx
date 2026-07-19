@@ -5,6 +5,8 @@ import { Button, DisplayGrid, OrnateDisplayBox } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
 import { TagEditor } from "../../../tagging/TagEditor";
 import { LinkEditor } from "../../../linking/LinkEditor";
+import { ReadRefList } from "../../../linking/ReadRefList";
+import { AppearsInSection } from "../../content/AppearsInSection";
 import { HistoryBlock } from "../../../history/HistoryBlock";
 import {
     ecosystemLocationTypes,
@@ -629,6 +631,18 @@ export default function LocationDetails() {
                         </>
                     );
                 })()}
+
+            <div className={s.sectionHead}>
+                <span className={s.sectionTitle}>{t("crossLinks.timelineEvents")}</span>
+                <span className={s.sectionLine} />
+            </div>
+            <ReadRefList items={location.timelineEvents} noneLabel={t("none")} />
+
+            <AppearsInSection
+                worldId={location.worldId}
+                entityType="Location"
+                entityId={location.id}
+            />
         </div>
     );
 }

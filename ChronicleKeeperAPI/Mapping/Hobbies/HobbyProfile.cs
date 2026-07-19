@@ -14,6 +14,9 @@ public class HobbyProfile : Profile
         CreateMap<Hobby, HobbyDetailsDto>()
             .ForMember(dest => dest.History, opt => opt.MapFrom(src => src.History == null
                 ? null
-                : new ReferenceDto { Id = src.History.Id, Name = src.History.Name }));
+                : new ReferenceDto { Id = src.History.Id, Name = src.History.Name }))
+            .ForMember(dest => dest.Practitioners, opt => opt.MapFrom(src => src.Practitioners
+                .Where(x => x.Character != null)
+                .Select(x => new ReferenceDto { Id = x.Character!.Id, Name = x.Character.Name })));
     }
 }

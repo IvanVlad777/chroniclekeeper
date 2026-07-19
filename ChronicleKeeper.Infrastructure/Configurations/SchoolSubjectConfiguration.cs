@@ -17,4 +17,26 @@ namespace ChronicleKeeper.Infrastructure.Configurations
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }
+
+    public class SchoolSubjectTeacherConfiguration : IEntityTypeConfiguration<SchoolSubjectTeacher>
+    {
+        public void Configure(EntityTypeBuilder<SchoolSubjectTeacher> builder)
+        {
+            builder.HasKey(x => new { x.SchoolSubjectId, x.CharacterId });
+
+            builder.HasOne(x => x.SchoolSubject)
+                .WithMany(s => s.Teachers)
+                .HasForeignKey(x => x.SchoolSubjectId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // The parents (SchoolSubject, Character) share no cascading ancestor (WorldId is always
+            // Restrict), so both sides may cascade.
+            builder.HasOne(x => x.Character)
+                .WithMany()
+                .HasForeignKey(x => x.CharacterId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasIndex(x => x.CharacterId);
+        }
+    }
 }

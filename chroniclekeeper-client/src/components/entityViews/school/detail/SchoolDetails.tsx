@@ -298,7 +298,9 @@ export default function SchoolDetails() {
             ) : (
                 school.subjects.map((subj) => (
                     <div key={subj.id} className={s.childRow}>
-                        <span className={s.childName}>{subj.subjectName || subj.name}</span>
+                        <Link to={`/storymap/school-subjects/${subj.id}`} className={s.childName}>
+                            {subj.subjectName || subj.name}
+                        </Link>
                         <div className={s.childBody}>
                             {subj.description && <p className={s.childDesc}>{subj.description}</p>}
                             <p className={s.childMeta}>

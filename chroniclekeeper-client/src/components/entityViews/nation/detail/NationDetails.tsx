@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Button, DisplayGrid, OrnateDisplayBox, Tag } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
 import { HistoryBlock } from "../../../history/HistoryBlock";
+import { AppearsInSection } from "../../content/AppearsInSection";
 import { NationDetailsDto } from "../../../../interfaces/loreInterfaces";
 import { getNationById } from "../../../../api/nations";
 import { useAuth } from "../../../../hooks/useAuth";
@@ -153,6 +154,12 @@ export default function NationDetails() {
                 history={nation.history}
                 canEdit={canEdit}
                 onChanged={refetch}
+            />
+
+            <AppearsInSection
+                worldId={nation.worldId}
+                entityType="Nation"
+                entityId={nation.id}
             />
         </div>
     );

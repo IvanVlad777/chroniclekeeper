@@ -1,8 +1,8 @@
 using ChronicleKeeper.Core.Entities.Base;
 using ChronicleKeeper.Core.Entities.Geography;
 using System.ComponentModel.DataAnnotations;
-//using ChronicleKeeper.Core.Entities.Social.Cultures;
-//using ChronicleKeeper.Core.Entities.Social.Military;
+using ChronicleKeeper.Core.Entities.Social.Cultures;
+using ChronicleKeeper.Core.Entities.Social.Military;
 
 namespace ChronicleKeeper.Core.Entities.HistoryTimelines
 {
@@ -30,9 +30,12 @@ namespace ChronicleKeeper.Core.Entities.HistoryTimelines
         /// <summary>Characters involved in the event (many-to-many via join entity).</summary>
         public virtual ICollection<TimelineEventCharacter> InvolvedCharacters { get; set; } = new List<TimelineEventCharacter>();
 
-        //public int? BattleId { get; set; } // TODO: Uncomment when Battle entity is revived
-        //public Battle? Battle { get; set; }
-        //public int? FolkloreId { get; set; } // TODO: Uncomment when Folklore entity is revived
-        //public Folklore? Folklore { get; set; }
+        /// <summary>Optional link to the battle this event represents (SetNull).</summary>
+        public int? BattleId { get; set; }
+        public virtual Battle? Battle { get; set; }
+
+        /// <summary>Optional link to the folklore/legend this event is drawn from (SetNull).</summary>
+        public int? FolkloreId { get; set; }
+        public virtual Folklore? Folklore { get; set; }
     }
 }

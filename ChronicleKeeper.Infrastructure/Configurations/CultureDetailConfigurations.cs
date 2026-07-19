@@ -275,7 +275,7 @@ namespace ChronicleKeeper.Infrastructure.Configurations
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(fs => fs.SapientSpecies)
-                .WithMany()
+                .WithMany(s => s.Folklore)
                 .HasForeignKey(fs => fs.SapientSpeciesId)
                 .OnDelete(DeleteBehavior.Cascade);
         }

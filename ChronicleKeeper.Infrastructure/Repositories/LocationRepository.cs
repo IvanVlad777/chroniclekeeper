@@ -64,6 +64,8 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .Include(l => ((City)l).InhabitingCreatures).ThenInclude(x => x.Creature)
                 // Reverse read-only trade routes (owned by TradeRoute via TradeRouteLocation) — base Location nav
                 .Include(l => l.TradeRouteLinks).ThenInclude(x => x.TradeRoute)
+                // Reverse read-only timeline events that took place at this location
+                .Include(l => l.TimelineEvents)
                 .Include(l => ((RiverEcosystem)l).SourceLocation)
                 .Include(l => ((RiverEcosystem)l).MouthLocation)
                 .AsNoTracking()

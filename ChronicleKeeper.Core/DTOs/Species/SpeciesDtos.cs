@@ -36,6 +36,10 @@ namespace ChronicleKeeper.Core.DTOs.Species
         public ReferenceDto? ParentCreature { get; set; }
         public List<ReferenceDto> Subspecies { get; set; } = new();
         public ReferenceDto? History { get; set; }
+        // Reverse read-only lists (write side owned by Profession/Culture/Folklore).
+        public List<ReferenceDto> FrequentOccupations { get; set; } = new();
+        public List<ReferenceDto> Cultures { get; set; } = new();
+        public List<ReferenceDto> Folklore { get; set; } = new();
     }
 
     public class SpeciesCreateDto

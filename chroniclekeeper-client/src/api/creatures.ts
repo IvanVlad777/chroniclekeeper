@@ -66,3 +66,31 @@ export const removeCreatureHabitat = async (
 ): Promise<void> => {
     await api.delete(`/creatures/${creatureId}/habitats/${ecosystemId}`);
 };
+
+export const addCreatureSymbiosis = async (
+    creatureId: number,
+    partnerId: number
+): Promise<void> => {
+    await api.post(`/creatures/${creatureId}/symbiotic-partners/${partnerId}`);
+};
+
+export const removeCreatureSymbiosis = async (
+    creatureId: number,
+    partnerId: number
+): Promise<void> => {
+    await api.delete(`/creatures/${creatureId}/symbiotic-partners/${partnerId}`);
+};
+
+export const addCreaturePrey = async (
+    creatureId: number,
+    preyId: number
+): Promise<void> => {
+    await api.post(`/creatures/${creatureId}/prey/${preyId}`);
+};
+
+export const removeCreaturePrey = async (
+    creatureId: number,
+    preyId: number
+): Promise<void> => {
+    await api.delete(`/creatures/${creatureId}/prey/${preyId}`);
+};

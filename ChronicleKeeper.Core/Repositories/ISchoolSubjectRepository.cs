@@ -6,8 +6,14 @@ namespace ChronicleKeeper.Core.Repositories
     {
         Task<SchoolSubject> CreateAsync(SchoolSubject subject, CancellationToken cancellationToken = default);
         Task<SchoolSubject?> FindByIdAsync(int id, CancellationToken cancellationToken = default);
+        /// <summary>Full graph (School, Teachers) — for detail view.</summary>
+        Task<SchoolSubject?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
         Task<List<SchoolSubject>> GetAllAsync(int? worldId = null, int? schoolId = null, CancellationToken cancellationToken = default);
         Task<SchoolSubject> UpdateAsync(SchoolSubject subject, CancellationToken cancellationToken = default);
         Task<bool> DeleteAsync(int id, CancellationToken cancellationToken = default);
+
+        Task<bool> IsTeacherLinkedAsync(int subjectId, int characterId, CancellationToken cancellationToken = default);
+        Task AddTeacherAsync(int subjectId, int characterId, CancellationToken cancellationToken = default);
+        Task<bool> RemoveTeacherAsync(int subjectId, int characterId, CancellationToken cancellationToken = default);
     }
 }

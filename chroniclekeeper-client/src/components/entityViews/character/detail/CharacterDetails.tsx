@@ -14,6 +14,7 @@ import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
 import { TagEditor } from "../../../tagging/TagEditor";
 import { LinkEditor } from "../../../linking/LinkEditor";
 import { HistoryBlock } from "../../../history/HistoryBlock";
+import { AppearsInSection } from "../../content/AppearsInSection";
 import {
     AbilityDto,
     CharacterDetailsDto,
@@ -606,6 +607,11 @@ export default function CharacterDetail() {
                         history={character.history}
                         canEdit={canEdit}
                         onChanged={refetch}
+                    />
+                    <AppearsInSection
+                        worldId={character.worldId}
+                        entityType="Character"
+                        entityId={character.id}
                     />
                 </div>
 

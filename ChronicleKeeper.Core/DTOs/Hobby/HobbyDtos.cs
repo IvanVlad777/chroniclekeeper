@@ -18,6 +18,8 @@ namespace ChronicleKeeper.Core.DTOs.Hobby
     public class HobbyDetailsDto : HobbyDto
     {
         public ReferenceDto? History { get; set; }
+        /// <summary>Characters that practice this hobby (read-only reverse of CharacterHobby).</summary>
+        public List<ReferenceDto> Practitioners { get; set; } = new();
     }
 
     public class HobbyCreateDto

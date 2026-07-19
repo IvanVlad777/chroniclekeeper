@@ -12,7 +12,9 @@ import {
 } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
 import {
+    BattleDto,
     CharacterDto,
+    FolkloreDto,
     LocationDto,
     TimelineDetailsDto,
     TimelineEventDto,
@@ -25,6 +27,8 @@ import {
 } from "../../../../api/timelines";
 import { getCharacters } from "../../../../api/characters";
 import { getLocations } from "../../../../api/locations";
+import { getBattles } from "../../../../api/battles";
+import { getFolklore } from "../../../../api/folklore";
 import { useAuth } from "../../../../hooks/useAuth";
 import { apiErrorMessage } from "../../../../utils/apiError";
 import s from "./styles.module.css";
@@ -40,6 +44,8 @@ interface EventFormState {
     consequences: string;
     isMajorEvent: boolean;
     locationId: string;
+    battleId: string;
+    folkloreId: string;
     involvedCharacterIds: string[];
 }
 
@@ -52,6 +58,8 @@ const emptyEventForm: EventFormState = {
     consequences: "",
     isMajorEvent: false,
     locationId: "",
+    battleId: "",
+    folkloreId: "",
     involvedCharacterIds: [],
 };
 
@@ -125,6 +133,8 @@ export default function TimelineDetails() {
     // World lookups for the event form's location + involved-character pickers.
     const [locations, setLocations] = useState<LocationDto[]>([]);
     const [characters, setCharacters] = useState<CharacterDto[]>([]);
+    const [battles, setBattles] = useState<BattleDto[]>([]);
+    const [folklore, setFolklore] = useState<FolkloreDto[]>([]);
 
     const setE = <K extends keyof EventFormState>(
         key: K,
@@ -171,11 +181,18 @@ export default function TimelineDetails() {
     useEffect(() => {
         if (!canEdit || !worldId) return;
         let cancelled = false;
-        Promise.all([getLocations(worldId), getCharacters(worldId)])
-            .then(([locs, chars]) => {
+        Promise.all([
+            getLocations(worldId),
+            getCharacters(worldId),
+            getBattles(worldId),
+            getFolklore(worldId),
+        ])
+            .then(([locs, chars, btls, folk]) => {
                 if (cancelled) return;
                 setLocations(locs);
                 setCharacters(chars);
+                setBattles(btls);
+                setFolklore(folk);
             })
             .catch((err) =>
                 console.error("Failed to load event pickers:", err)
@@ -205,6 +222,8 @@ export default function TimelineDetails() {
             consequences: ev.consequences ?? "",
             isMajorEvent: ev.isMajorEvent,
             locationId: ev.location ? String(ev.location.id) : "",
+            battleId: ev.battle ? String(ev.battle.id) : "",
+            folkloreId: ev.folklore ? String(ev.folklore.id) : "",
             involvedCharacterIds: ev.involvedCharacters.map((c) => String(c.id)),
         });
         setEventError(null);
@@ -233,6 +252,10 @@ export default function TimelineDetails() {
                 isMajorEvent: eventForm.isMajorEvent,
                 locationId: eventForm.locationId
                     ? Number(eventForm.locationId)
+                    : null,
+                battleId: eventForm.battleId ? Number(eventForm.battleId) : null,
+                folkloreId: eventForm.folkloreId
+                    ? Number(eventForm.folkloreId)
                     : null,
                 involvedCharacterIds: eventForm.involvedCharacterIds.map(Number),
             };
@@ -369,6 +392,32 @@ export default function TimelineDetails() {
                     {locations.map((l) => (
                         <option key={l.id} value={l.id}>
                             {l.name}
+                        </option>
+                    ))}
+                </OrnateSelect>
+            </OrnateField>
+            <OrnateField label={t("events.battle")}>
+                <OrnateSelect
+                    value={eventForm.battleId}
+                    onChange={(e) => setE("battleId", e.target.value)}
+                >
+                    <option value="">{t("events.noBattle")}</option>
+                    {battles.map((b) => (
+                        <option key={b.id} value={b.id}>
+                            {b.name}
+                        </option>
+                    ))}
+                </OrnateSelect>
+            </OrnateField>
+            <OrnateField label={t("events.folklore")}>
+                <OrnateSelect
+                    value={eventForm.folkloreId}
+                    onChange={(e) => setE("folkloreId", e.target.value)}
+                >
+                    <option value="">{t("events.noFolklore")}</option>
+                    {folklore.map((f) => (
+                        <option key={f.id} value={f.id}>
+                            {f.name}
                         </option>
                     ))}
                 </OrnateSelect>

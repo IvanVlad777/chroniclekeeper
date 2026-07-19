@@ -128,7 +128,8 @@
         "culturalInstitutions": "Cultural institutions",
         "reverseMilitary": "Military organizations",
         "reverseTradeRoutes": "Trade routes",
-        "reverseCreatures": "Creatures"
+        "reverseCreatures": "Creatures",
+        "timelineEvents": "Events here"
     },
     "form": {
         "newTitle": "New location",

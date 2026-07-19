@@ -10,6 +10,7 @@ import {
     OrnateTextInput,
 } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
+import { ReadRefList } from "../../../linking/ReadRefList";
 import {
     RaceDto,
     SpeciesDetailsDto,
@@ -320,6 +321,36 @@ export default function SpeciesDetails() {
                     </p>
                 </>
             )}
+
+            <div className={s.sectionHead}>
+                <span className={s.sectionTitle}>{t("reverse.occupations")}</span>
+                <span className={s.sectionLine} />
+            </div>
+            <ReadRefList
+                items={species.frequentOccupations}
+                linkTo={(id) => `/storymap/professions/${id}`}
+                noneLabel={t("none")}
+            />
+
+            <div className={s.sectionHead}>
+                <span className={s.sectionTitle}>{t("reverse.cultures")}</span>
+                <span className={s.sectionLine} />
+            </div>
+            <ReadRefList
+                items={species.cultures}
+                linkTo={(id) => `/storymap/cultures/${id}`}
+                noneLabel={t("none")}
+            />
+
+            <div className={s.sectionHead}>
+                <span className={s.sectionTitle}>{t("reverse.folklore")}</span>
+                <span className={s.sectionLine} />
+            </div>
+            <ReadRefList
+                items={species.folklore}
+                linkTo={(id) => `/storymap/folklore/${id}`}
+                noneLabel={t("none")}
+            />
 
             <div className={s.sectionHead}>
                 <span className={s.sectionTitle}>

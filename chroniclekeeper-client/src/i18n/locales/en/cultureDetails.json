@@ -1,4 +1,33 @@
 {
+    "clothing": {
+        "listTitle": "Clothing",
+        "single": "Clothing",
+        "backtolist": "Back to clothing",
+        "wearers": "Wearers",
+        "fields": {
+            "clothingType": "Type",
+            "materials": "Materials",
+            "culture": "Culture"
+        }
+    },
+    "culturalInstitution": {
+        "listTitle": "Cultural institutions",
+        "single": "Cultural institution",
+        "backtolist": "Back to cultural institutions",
+        "notableArtists": "Notable artists",
+        "link": "link",
+        "pick": "Pick a character",
+        "confirm": "Link",
+        "remove": "Unlink {{name}}",
+        "addFailed": "Linking failed.",
+        "removeFailed": "Unlinking failed.",
+        "cancel": "Cancel",
+        "fields": {
+            "institutionType": "Type",
+            "culture": "Culture",
+            "city": "City"
+        }
+    },
     "sections": {
         "custom": "Customs",
         "artForm": "Art forms",
@@ -76,7 +105,9 @@
         "loadError": "Failed to load.",
         "notFound": "Not found",
         "backToCultures": "Back to cultures",
-        "cultures": "Cultures"
+        "cultures": "Cultures",
+        "description": "Description",
+        "none": "None"
     },
     "standalone": {
         "noWorld": "Select a world first.",

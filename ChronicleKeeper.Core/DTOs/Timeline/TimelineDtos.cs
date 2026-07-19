@@ -62,6 +62,10 @@ namespace ChronicleKeeper.Core.DTOs.Timeline
         public bool IsMajorEvent { get; set; }
         /// <summary>Where the event took place (optional).</summary>
         public ReferenceDto? Location { get; set; }
+        /// <summary>Battle this event represents (optional).</summary>
+        public ReferenceDto? Battle { get; set; }
+        /// <summary>Folklore/legend this event is drawn from (optional).</summary>
+        public ReferenceDto? Folklore { get; set; }
         /// <summary>Characters involved in the event.</summary>
         public List<ReferenceDto> InvolvedCharacters { get; set; } = new();
         public DateTime CreatedAt { get; set; }
@@ -95,6 +99,12 @@ namespace ChronicleKeeper.Core.DTOs.Timeline
 
         /// <summary>Where the event took place (optional; must be in the timeline's world).</summary>
         public int? LocationId { get; set; }
+
+        /// <summary>Battle this event represents (optional; must be in the timeline's world).</summary>
+        public int? BattleId { get; set; }
+
+        /// <summary>Folklore/legend this event is drawn from (optional; must be in the timeline's world).</summary>
+        public int? FolkloreId { get; set; }
 
         /// <summary>Characters involved (must be in the timeline's world).</summary>
         public List<int> InvolvedCharacterIds { get; set; } = new();

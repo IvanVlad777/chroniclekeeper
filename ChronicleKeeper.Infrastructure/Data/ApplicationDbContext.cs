@@ -113,6 +113,8 @@ namespace ChronicleKeeper.Infrastructure.Data
         public DbSet<Fungus> Fungi { get; set; }
         public DbSet<CreatureCity> CreatureCities { get; set; }
         public DbSet<CreatureEcosystem> CreatureEcosystems { get; set; }
+        public DbSet<CreatureSymbiosis> CreatureSymbioses { get; set; }
+        public DbSet<CreaturePredation> CreaturePredations { get; set; }
 
         // Factions
         public DbSet<Faction> Factions { get; set; }
@@ -180,6 +182,7 @@ namespace ChronicleKeeper.Infrastructure.Data
         public DbSet<University> Universities { get; set; }
         public DbSet<Library> Libraries { get; set; }
         public DbSet<SchoolSubject> SchoolSubjects { get; set; }
+        public DbSet<SchoolSubjectTeacher> SchoolSubjectTeachers { get; set; }
         public DbSet<EducationRecord> EducationRecords { get; set; }
         public DbSet<UniversityMajor> UniversityMajors { get; set; }
         public DbSet<ReligiousEducation> ReligiousEducations { get; set; }

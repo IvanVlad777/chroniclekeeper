@@ -58,6 +58,11 @@
     "subspecies": {
         "label": "Subspecies"
     },
+    "reverse": {
+        "occupations": "Frequent occupations",
+        "cultures": "Cultures",
+        "folklore": "Folklore"
+    },
     "races": {
         "label": "Races",
         "add": "add",

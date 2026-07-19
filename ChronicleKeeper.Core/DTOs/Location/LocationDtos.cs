@@ -88,6 +88,7 @@ namespace ChronicleKeeper.Core.DTOs.Location
         public List<ReferenceDto> MilitaryOrganizations { get; set; } = new();  // Country
         public List<ReferenceDto> TradeRoutes { get; set; } = new();            // Country/City
         public List<ReferenceDto> Creatures { get; set; } = new();              // City
+        public List<ReferenceDto> TimelineEvents { get; set; } = new();         // any location — events that took place here
     }
 
     /// <summary>Entity types that a Country/City can be cross-linked to (owner: Country or City).</summary>

@@ -69,6 +69,46 @@ namespace ChronicleKeeper.Infrastructure.Configurations
         }
     }
 
+    public class CreatureSymbiosisConfiguration : IEntityTypeConfiguration<CreatureSymbiosis>
+    {
+        public void Configure(EntityTypeBuilder<CreatureSymbiosis> builder)
+        {
+            builder.HasKey(x => new { x.CreatureId, x.SymbioticPartnerId });
+
+            builder.HasOne(x => x.Creature)
+                .WithMany(c => c.SymbioticPartners)
+                .HasForeignKey(x => x.CreatureId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne(x => x.SymbioticPartner)
+                .WithMany()
+                .HasForeignKey(x => x.SymbioticPartnerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasIndex(x => x.SymbioticPartnerId);
+        }
+    }
+
+    public class CreaturePredationConfiguration : IEntityTypeConfiguration<CreaturePredation>
+    {
+        public void Configure(EntityTypeBuilder<CreaturePredation> builder)
+        {
+            builder.HasKey(x => new { x.PredatorCreatureId, x.PreyCreatureId });
+
+            builder.HasOne(x => x.Predator)
+                .WithMany(c => c.Prey)
+                .HasForeignKey(x => x.PredatorCreatureId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasOne(x => x.Prey)
+                .WithMany(c => c.Predators)
+                .HasForeignKey(x => x.PreyCreatureId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasIndex(x => x.PreyCreatureId);
+        }
+    }
+
     public class CreatureEcosystemConfiguration : IEntityTypeConfiguration<CreatureEcosystem>
     {
         public void Configure(EntityTypeBuilder<CreatureEcosystem> builder)

@@ -9,7 +9,7 @@ namespace ChronicleKeeper.Core.CQRS.SchoolSubjects.Queries
         public int? SchoolId { get; set; }
     }
 
-    public class GetSchoolSubjectByIdQuery : IRequest<SchoolSubjectDto?>
+    public class GetSchoolSubjectByIdQuery : IRequest<SchoolSubjectDetailsDto?>
     {
         public int Id { get; set; }
     }

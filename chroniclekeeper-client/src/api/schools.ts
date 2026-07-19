@@ -4,6 +4,7 @@ import {
     SchoolDetailsDto,
     SchoolDto,
     SchoolSubjectCreateDto,
+    SchoolSubjectDetailsDto,
     SchoolSubjectDto,
     SchoolSubjectUpdateDto,
     SchoolUpdateDto,
@@ -70,6 +71,27 @@ export const updateSchoolSubject = async (
 
 export const deleteSchoolSubject = async (id: number): Promise<void> => {
     await api.delete(`/school-subjects/${id}`);
+};
+
+export const getSchoolSubjectById = async (
+    id: number
+): Promise<SchoolSubjectDetailsDto> => {
+    const response = await api.get<SchoolSubjectDetailsDto>(`/school-subjects/${id}`);
+    return response.data;
+};
+
+export const addSchoolSubjectTeacher = async (
+    subjectId: number,
+    characterId: number
+): Promise<void> => {
+    await api.post(`/school-subjects/${subjectId}/teachers/${characterId}`);
+};
+
+export const removeSchoolSubjectTeacher = async (
+    subjectId: number,
+    characterId: number
+): Promise<void> => {
+    await api.delete(`/school-subjects/${subjectId}/teachers/${characterId}`);
 };
 
 export const addSchoolStudent = async (schoolId: number, characterId: number): Promise<void> => {

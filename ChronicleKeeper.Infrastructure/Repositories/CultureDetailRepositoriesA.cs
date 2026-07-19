@@ -141,7 +141,9 @@ namespace ChronicleKeeper.Infrastructure.Repositories
             _context.Clothing
                 .Include(c => c.History)
                 .Include(c => c.Culture)
+                .Include(c => c.Wearers).ThenInclude(x => x.Character)
                 .AsNoTracking()
+                .AsSplitQuery()
                 .FirstOrDefaultAsync(c => c.Id == id, ct);
 
         public Task<Clothing?> FindByIdAsync(int id, CancellationToken ct = default) =>

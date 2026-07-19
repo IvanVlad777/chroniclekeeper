@@ -4,6 +4,8 @@
     "loaderror": "Failed to load",
     "notfound": "Content not found",
     "none": "None",
+    "appearsIn": "Appears in",
+    "noAppearances": "No appearances recorded",
     "backtolist": "Back to content",
     "emptyTitle": "No content yet",
     "emptyText": "Books, articles, movies, series — the narrative material your world's entities appear in. Create the first one to start building the appearance index.",

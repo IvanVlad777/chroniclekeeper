@@ -39,7 +39,7 @@ namespace ChronicleKeeper.Infrastructure.Configurations
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(cs => cs.SapientSpecies)
-                .WithMany()
+                .WithMany(s => s.Cultures)
                 .HasForeignKey(cs => cs.SapientSpeciesId)
                 .OnDelete(DeleteBehavior.Cascade);
 

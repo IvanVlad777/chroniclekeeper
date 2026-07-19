@@ -39,7 +39,10 @@ namespace ChronicleKeeperAPI.Mapping.CultureDetails
             CreateMap<ClothingUpdateDto, Clothing>();
             CreateMap<Clothing, ClothingDetailsDto>()
                 .ForMember(d => d.History, o => o.MapFrom(s => s.History == null ? null : new ReferenceDto { Id = s.History.Id, Name = s.History.Name }))
-                .ForMember(d => d.Culture, o => o.MapFrom(s => s.Culture == null ? null : new ReferenceDto { Id = s.Culture.Id, Name = s.Culture.Name }));
+                .ForMember(d => d.Culture, o => o.MapFrom(s => s.Culture == null ? null : new ReferenceDto { Id = s.Culture.Id, Name = s.Culture.Name }))
+                .ForMember(d => d.Wearers, o => o.MapFrom(s => s.Wearers
+                    .Where(x => x.Character != null)
+                    .Select(x => new ReferenceDto { Id = x.Character!.Id, Name = x.Character.Name })));
 
             // ---- Tradition ----
             CreateMap<Tradition, TraditionDto>();

@@ -136,5 +136,55 @@ namespace ChronicleKeeperAPI.Controllers
             if (!result) return NotFound();
             return NoContent();
         }
+
+        // POST: /api/creatures/{id}/symbiotic-partners/{partnerId}
+        [HttpPost("{id}/symbiotic-partners/{partnerId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Link a symbiotic partner (another creature)")]
+        [SwaggerResponse(204, "Partner linked")]
+        [SwaggerResponse(400, "Invalid input / self / already linked")]
+        public async Task<IActionResult> AddSymbiosis(int id, int partnerId)
+        {
+            await _mediator.Send(new AddCreatureSymbiosisCommand { CreatureId = id, PartnerId = partnerId });
+            return NoContent();
+        }
+
+        // DELETE: /api/creatures/{id}/symbiotic-partners/{partnerId}
+        [HttpDelete("{id}/symbiotic-partners/{partnerId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Unlink a symbiotic partner")]
+        [SwaggerResponse(204, "Partner unlinked")]
+        [SwaggerResponse(404, "Link not found")]
+        public async Task<IActionResult> RemoveSymbiosis(int id, int partnerId)
+        {
+            var result = await _mediator.Send(new RemoveCreatureSymbiosisCommand { CreatureId = id, PartnerId = partnerId });
+            if (!result) return NotFound();
+            return NoContent();
+        }
+
+        // POST: /api/creatures/{id}/prey/{preyId}
+        [HttpPost("{id}/prey/{preyId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Link prey (a creature this one preys on)")]
+        [SwaggerResponse(204, "Prey linked")]
+        [SwaggerResponse(400, "Invalid input / self / already linked")]
+        public async Task<IActionResult> AddPrey(int id, int preyId)
+        {
+            await _mediator.Send(new AddCreaturePreyCommand { CreatureId = id, PreyId = preyId });
+            return NoContent();
+        }
+
+        // DELETE: /api/creatures/{id}/prey/{preyId}
+        [HttpDelete("{id}/prey/{preyId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Unlink prey")]
+        [SwaggerResponse(204, "Prey unlinked")]
+        [SwaggerResponse(404, "Link not found")]
+        public async Task<IActionResult> RemovePrey(int id, int preyId)
+        {
+            var result = await _mediator.Send(new RemoveCreaturePreyCommand { CreatureId = id, PreyId = preyId });
+            if (!result) return NotFound();
+            return NoContent();
+        }
     }
 }

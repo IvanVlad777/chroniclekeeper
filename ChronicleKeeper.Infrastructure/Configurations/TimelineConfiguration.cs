@@ -38,12 +38,25 @@ namespace ChronicleKeeper.Infrastructure.Configurations
 
             // Pointer-only "where" reference — SetNull, doesn't block deleting the location.
             builder.HasOne(e => e.Location)
-                .WithMany()
+                .WithMany(l => l.TimelineEvents)
                 .HasForeignKey(e => e.LocationId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            // Optional pointers to a Battle / Folklore — SetNull, don't block deleting those entities.
+            builder.HasOne(e => e.Battle)
+                .WithMany()
+                .HasForeignKey(e => e.BattleId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            builder.HasOne(e => e.Folklore)
+                .WithMany()
+                .HasForeignKey(e => e.FolkloreId)
                 .OnDelete(DeleteBehavior.SetNull);
 
             builder.HasIndex(e => new { e.TimelineId, e.SortOrder });
             builder.HasIndex(e => e.LocationId);
+            builder.HasIndex(e => e.BattleId);
+            builder.HasIndex(e => e.FolkloreId);
         }
     }
 

@@ -1,4 +1,26 @@
 {
+    "subject": {
+        "single": "Školski predmet",
+        "loadError": "Učitavanje nije uspjelo",
+        "notFound": "Predmet nije pronađen",
+        "backToSchool": "Natrag na školu",
+        "description": "Opis",
+        "none": "Nema",
+        "yes": "Da",
+        "no": "Ne",
+        "teachers": "Učitelji",
+        "link": "poveži",
+        "pick": "Odaberi lik",
+        "confirm": "Poveži",
+        "cancel": "Odustani",
+        "remove": "Odveži {{name}}",
+        "addFailed": "Povezivanje nije uspjelo.",
+        "removeFailed": "Odvezivanje nije uspjelo.",
+        "fields": {
+            "subjectName": "Predmet",
+            "isMandatory": "Obavezan"
+        }
+    },
     "listTitle": "Škole",
     "search": "Traži škole…",
     "loaderror": "Neuspješno učitavanje",

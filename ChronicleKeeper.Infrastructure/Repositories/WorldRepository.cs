@@ -316,7 +316,11 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .ExecuteDeleteAsync(cancellationToken);
 
             // 7v. Stvorenja (self-ref ParentCreatureId već razvezan u koraku 1; History je SetNull;
-            //     CreatureCity je Cascade s obje strane pa se čisti sam bez obzira na redoslijed)
+            //     CreatureCity je Cascade s obje strane pa se čisti sam bez obzira na redoslijed).
+            //     Self-ref joinovi Symbiosis/Predation imaju Restrict stranu (SymbioticPartnerId/
+            //     PreyCreatureId) → brišu se prvi da ne blokiraju brisanje stvorenja.
+            await _context.CreatureSymbioses.Where(x => x.Creature!.WorldId == id).ExecuteDeleteAsync(cancellationToken);
+            await _context.CreaturePredations.Where(x => x.Predator!.WorldId == id).ExecuteDeleteAsync(cancellationToken);
             await _context.Creatures
                 .Where(c => c.WorldId == id)
                 .ExecuteDeleteAsync(cancellationToken);

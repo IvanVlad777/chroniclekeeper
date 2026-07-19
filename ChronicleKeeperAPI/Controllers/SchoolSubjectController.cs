@@ -36,9 +36,9 @@ namespace ChronicleKeeperAPI.Controllers
         [HttpGet("{id}")]
         [Authorize]
         [SwaggerOperation(Summary = "Get school subject by ID")]
-        [SwaggerResponse(200, "School subject found", typeof(SchoolSubjectDto))]
+        [SwaggerResponse(200, "School subject found", typeof(SchoolSubjectDetailsDto))]
         [SwaggerResponse(404, "School subject not found")]
-        public async Task<ActionResult<SchoolSubjectDto>> GetById(int id)
+        public async Task<ActionResult<SchoolSubjectDetailsDto>> GetById(int id)
         {
             var subject = await _mediator.Send(new GetSchoolSubjectByIdQuery { Id = id });
             if (subject == null) return NotFound();
@@ -83,6 +83,31 @@ namespace ChronicleKeeperAPI.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _mediator.Send(new DeleteSchoolSubjectCommand { Id = id });
+            if (!result) return NotFound();
+            return NoContent();
+        }
+
+        // POST: /api/school-subjects/{id}/teachers/{characterId}
+        [HttpPost("{id}/teachers/{characterId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Link a teacher (character) to this subject")]
+        [SwaggerResponse(204, "Teacher linked")]
+        [SwaggerResponse(400, "Invalid target / already linked")]
+        public async Task<IActionResult> AddTeacher(int id, int characterId)
+        {
+            await _mediator.Send(new AddSchoolSubjectTeacherCommand { SchoolSubjectId = id, CharacterId = characterId });
+            return NoContent();
+        }
+
+        // DELETE: /api/school-subjects/{id}/teachers/{characterId}
+        [HttpDelete("{id}/teachers/{characterId}")]
+        [Authorize(Roles = "Editor,Admin,SuperAdmin")]
+        [SwaggerOperation(Summary = "Unlink a teacher from this subject")]
+        [SwaggerResponse(204, "Teacher unlinked")]
+        [SwaggerResponse(404, "Link not found")]
+        public async Task<IActionResult> RemoveTeacher(int id, int characterId)
+        {
+            var result = await _mediator.Send(new RemoveSchoolSubjectTeacherCommand { SchoolSubjectId = id, CharacterId = characterId });
             if (!result) return NotFound();
             return NoContent();
         }

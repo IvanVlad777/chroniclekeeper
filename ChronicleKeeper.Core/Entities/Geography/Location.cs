@@ -37,7 +37,8 @@ namespace ChronicleKeeper.Core.Entities.Geography
         public virtual ICollection<School> Schools { get; set; } = new List<School>();
         //public ICollection<CulturalFestival> Festivals { get; set; } = new List<CulturalFestival>(); // TODO: Uncomment when CulturalFestival entity is revived
         //public ICollection<HolySite> HolySites { get; set; } = new List<HolySite>(); // TODO: Uncomment when HolySite entity is revived
-        //public ICollection<TimelineEvent> TimelineEvents { get; set; } = new List<TimelineEvent>(); // TODO: Uncomment when TimelineEvent gets its Location link
+        // Reverse read-only nav for TimelineEvent.LocationId (events that took place at this location).
+        public virtual ICollection<TimelineEvent> TimelineEvents { get; set; } = new List<TimelineEvent>();
         // Reverse read-only nav for the TradeRoute-owned TradeRouteLocation join — surfaced on
         // Country/City detail as a read list (the TradeRoute owns the write side).
         public virtual ICollection<TradeRouteLocation> TradeRouteLinks { get; set; } = new List<TradeRouteLocation>();

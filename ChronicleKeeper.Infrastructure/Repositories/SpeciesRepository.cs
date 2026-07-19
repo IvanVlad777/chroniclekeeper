@@ -30,7 +30,11 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .Include(s => s.ParentCreature)
                 .Include(s => s.Subspecies)
                 .Include(s => s.History)
+                .Include(s => s.FrequentOccupations).ThenInclude(x => x.Profession)
+                .Include(s => s.Cultures).ThenInclude(x => x.Culture)
+                .Include(s => s.Folklore).ThenInclude(x => x.Folklore)
                 .AsNoTracking()
+                .AsSplitQuery()
                 .FirstOrDefaultAsync(s => s.Id == id, cancellationToken);
         }
 

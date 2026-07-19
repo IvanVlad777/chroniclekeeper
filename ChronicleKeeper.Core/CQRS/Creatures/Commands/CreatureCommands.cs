@@ -42,4 +42,28 @@ namespace ChronicleKeeper.Core.CQRS.Creatures.Commands
         public int CreatureId { get; set; }
         public int EcosystemId { get; set; }
     }
+
+    public class AddCreatureSymbiosisCommand : IRequest<bool>
+    {
+        public int CreatureId { get; set; }
+        public int PartnerId { get; set; }
+    }
+
+    public class RemoveCreatureSymbiosisCommand : IRequest<bool>
+    {
+        public int CreatureId { get; set; }
+        public int PartnerId { get; set; }
+    }
+
+    public class AddCreaturePreyCommand : IRequest<bool>
+    {
+        public int CreatureId { get; set; }
+        public int PreyId { get; set; }
+    }
+
+    public class RemoveCreaturePreyCommand : IRequest<bool>
+    {
+        public int CreatureId { get; set; }
+        public int PreyId { get; set; }
+    }
 }

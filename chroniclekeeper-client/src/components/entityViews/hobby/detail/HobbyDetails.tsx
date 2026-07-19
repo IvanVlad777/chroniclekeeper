@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Button, DisplayGrid, OrnateDisplayBox, Tag } from "../../../ornate";
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
+import { ReadRefList } from "../../../linking/ReadRefList";
 import { HobbyDetailsDto } from "../../../../interfaces/loreInterfaces";
 import { getHobbyById } from "../../../../api/hobbies";
 import { useAuth } from "../../../../hooks/useAuth";
@@ -139,6 +140,16 @@ export default function HobbyDetails() {
                     </div>
                 </>
             )}
+
+            <div className={s.sectionHead}>
+                <span className={s.sectionTitle}>{t("practitioners")}</span>
+                <span className={s.sectionLine} />
+            </div>
+            <ReadRefList
+                items={item.practitioners}
+                linkTo={(id) => `/storymap/characters/${id}`}
+                noneLabel={t("none")}
+            />
         </div>
     );
 }

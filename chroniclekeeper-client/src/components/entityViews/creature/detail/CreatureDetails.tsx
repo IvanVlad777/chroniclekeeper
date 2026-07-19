@@ -7,15 +7,21 @@ import { LinkEditor } from "../../../linking/LinkEditor";
 import { HistoryBlock } from "../../../history/HistoryBlock";
 import {
     CreatureDetailsDto,
+    CreatureDto,
     LocationDto,
     ecosystemLocationTypes,
 } from "../../../../interfaces/loreInterfaces";
 import {
     addCreatureCity,
     addCreatureHabitat,
+    addCreaturePrey,
+    addCreatureSymbiosis,
     getCreatureById,
+    getCreatures,
     removeCreatureCity,
     removeCreatureHabitat,
+    removeCreaturePrey,
+    removeCreatureSymbiosis,
 } from "../../../../api/creatures";
 import { getLocations } from "../../../../api/locations";
 import { useAuth } from "../../../../hooks/useAuth";
@@ -41,6 +47,13 @@ export default function CreatureDetails() {
 
     const [cityCandidates, setCityCandidates] = useState<LocationDto[] | null>(null);
     const [habitatCandidates, setHabitatCandidates] = useState<LocationDto[] | null>(null);
+    // Self-ref candidates = other creatures in the world (excluding this one).
+    const [creatureCandidates, setCreatureCandidates] = useState<CreatureDto[] | null>(null);
+    const loadCreatures = useCallback((worldId: number, selfId: number) => {
+        getCreatures({ worldId }).then((list) =>
+            setCreatureCandidates(list.filter((c) => c.id !== selfId))
+        );
+    }, []);
 
     useEffect(() => {
         const creatureId = Number(id);
@@ -304,6 +317,83 @@ export default function CreatureDetails() {
                 onChanged={refetch}
                 canEdit={canEdit}
                 linkTo={(ecosystemId) => `/storymap/locations/${ecosystemId}`}
+                addLabel={t("links.add")}
+                noneLabel={t("none")}
+                pickLabel={t("links.pick")}
+                cancelLabel={t("form.cancel")}
+                confirmLabel={t("links.confirm")}
+                removeLabel={(name) => t("links.remove", { name })}
+                addFailedLabel={t("links.addFailed")}
+                removeFailedLabel={t("links.removeFailed")}
+            />
+
+            <div className={`${s.sectionHead} ${s.sectionSpacer}`}>
+                <span className={s.sectionTitle}>{t("links.symbioticPartners")}</span>
+                <span className={s.sectionLine} />
+            </div>
+            <LinkEditor
+                items={creature.symbioticPartners}
+                candidates={
+                    creatureCandidates
+                        ? creatureCandidates.map((c) => ({ id: c.id, name: c.name }))
+                        : null
+                }
+                onLoadCandidates={() => loadCreatures(creature.worldId, creature.id)}
+                onAdd={(partnerId) => addCreatureSymbiosis(creature.id, partnerId)}
+                onRemove={(partnerId) => removeCreatureSymbiosis(creature.id, partnerId)}
+                onChanged={refetch}
+                canEdit={canEdit}
+                linkTo={(cid) => `/storymap/creatures/${cid}`}
+                addLabel={t("links.add")}
+                noneLabel={t("none")}
+                pickLabel={t("links.pick")}
+                cancelLabel={t("form.cancel")}
+                confirmLabel={t("links.confirm")}
+                removeLabel={(name) => t("links.remove", { name })}
+                addFailedLabel={t("links.addFailed")}
+                removeFailedLabel={t("links.removeFailed")}
+            />
+
+            <div className={`${s.sectionHead} ${s.sectionSpacer}`}>
+                <span className={s.sectionTitle}>{t("links.prey")}</span>
+                <span className={s.sectionLine} />
+            </div>
+            <LinkEditor
+                items={creature.prey}
+                candidates={
+                    creatureCandidates
+                        ? creatureCandidates.map((c) => ({ id: c.id, name: c.name }))
+                        : null
+                }
+                onLoadCandidates={() => loadCreatures(creature.worldId, creature.id)}
+                onAdd={(preyId) => addCreaturePrey(creature.id, preyId)}
+                onRemove={(preyId) => removeCreaturePrey(creature.id, preyId)}
+                onChanged={refetch}
+                canEdit={canEdit}
+                linkTo={(cid) => `/storymap/creatures/${cid}`}
+                addLabel={t("links.add")}
+                noneLabel={t("none")}
+                pickLabel={t("links.pick")}
+                cancelLabel={t("form.cancel")}
+                confirmLabel={t("links.confirm")}
+                removeLabel={(name) => t("links.remove", { name })}
+                addFailedLabel={t("links.addFailed")}
+                removeFailedLabel={t("links.removeFailed")}
+            />
+
+            <div className={`${s.sectionHead} ${s.sectionSpacer}`}>
+                <span className={s.sectionTitle}>{t("links.predators")}</span>
+                <span className={s.sectionLine} />
+            </div>
+            <LinkEditor
+                items={creature.predators}
+                candidates={[]}
+                onLoadCandidates={() => {}}
+                onAdd={() => Promise.resolve()}
+                onRemove={() => Promise.resolve()}
+                onChanged={refetch}
+                canEdit={false}
+                linkTo={(cid) => `/storymap/creatures/${cid}`}
                 addLabel={t("links.add")}
                 noneLabel={t("none")}
                 pickLabel={t("links.pick")}

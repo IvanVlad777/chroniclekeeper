@@ -25,7 +25,9 @@ namespace ChronicleKeeper.Infrastructure.Repositories
         {
             return await _context.Hobbies
                 .Include(h => h.History)
+                .Include(h => h.Practitioners).ThenInclude(x => x.Character)
                 .AsNoTracking()
+                .AsSplitQuery()
                 .FirstOrDefaultAsync(h => h.Id == id, cancellationToken);
         }
 

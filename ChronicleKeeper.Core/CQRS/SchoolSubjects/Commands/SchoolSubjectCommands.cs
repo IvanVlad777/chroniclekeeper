@@ -18,4 +18,16 @@ namespace ChronicleKeeper.Core.CQRS.SchoolSubjects.Commands
     {
         public int Id { get; set; }
     }
+
+    public class AddSchoolSubjectTeacherCommand : IRequest<bool>
+    {
+        public int SchoolSubjectId { get; set; }
+        public int CharacterId { get; set; }
+    }
+
+    public class RemoveSchoolSubjectTeacherCommand : IRequest<bool>
+    {
+        public int SchoolSubjectId { get; set; }
+        public int CharacterId { get; set; }
+    }
 }

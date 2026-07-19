@@ -478,8 +478,97 @@ namespace ChronicleKeeper.Core.CQRS.Creatures.Handlers
         }
     }
 
+    public class AddCreatureSymbiosisCommandHandler : IRequestHandler<AddCreatureSymbiosisCommand, bool>
+    {
+        private readonly ICreatureRepository _repository;
+
+        public AddCreatureSymbiosisCommandHandler(ICreatureRepository repository)
+        {
+            _repository = repository;
+        }
+
+        public async Task<bool> Handle(AddCreatureSymbiosisCommand request, CancellationToken cancellationToken)
+        {
+            await CreatureValidation.ValidateSelfLinkAsync(_repository, request.CreatureId, request.PartnerId, "symbiotic partner", cancellationToken);
+            if (await _repository.IsSymbioticLinkedAsync(request.CreatureId, request.PartnerId, cancellationToken))
+            {
+                throw new DomainValidationException("This creature is already linked as a symbiotic partner.");
+            }
+            await _repository.AddSymbiosisAsync(request.CreatureId, request.PartnerId, cancellationToken);
+            return true;
+        }
+    }
+
+    public class RemoveCreatureSymbiosisCommandHandler : IRequestHandler<RemoveCreatureSymbiosisCommand, bool>
+    {
+        private readonly ICreatureRepository _repository;
+
+        public RemoveCreatureSymbiosisCommandHandler(ICreatureRepository repository)
+        {
+            _repository = repository;
+        }
+
+        public Task<bool> Handle(RemoveCreatureSymbiosisCommand request, CancellationToken cancellationToken)
+        {
+            return _repository.RemoveSymbiosisAsync(request.CreatureId, request.PartnerId, cancellationToken);
+        }
+    }
+
+    public class AddCreaturePreyCommandHandler : IRequestHandler<AddCreaturePreyCommand, bool>
+    {
+        private readonly ICreatureRepository _repository;
+
+        public AddCreaturePreyCommandHandler(ICreatureRepository repository)
+        {
+            _repository = repository;
+        }
+
+        public async Task<bool> Handle(AddCreaturePreyCommand request, CancellationToken cancellationToken)
+        {
+            await CreatureValidation.ValidateSelfLinkAsync(_repository, request.CreatureId, request.PreyId, "prey", cancellationToken);
+            if (await _repository.IsPreyLinkedAsync(request.CreatureId, request.PreyId, cancellationToken))
+            {
+                throw new DomainValidationException("This creature is already linked as prey.");
+            }
+            await _repository.AddPreyAsync(request.CreatureId, request.PreyId, cancellationToken);
+            return true;
+        }
+    }
+
+    public class RemoveCreaturePreyCommandHandler : IRequestHandler<RemoveCreaturePreyCommand, bool>
+    {
+        private readonly ICreatureRepository _repository;
+
+        public RemoveCreaturePreyCommandHandler(ICreatureRepository repository)
+        {
+            _repository = repository;
+        }
+
+        public Task<bool> Handle(RemoveCreaturePreyCommand request, CancellationToken cancellationToken)
+        {
+            return _repository.RemovePreyAsync(request.CreatureId, request.PreyId, cancellationToken);
+        }
+    }
+
     internal static class CreatureValidation
     {
+        /// <summary>Both creatures must exist in the same world, and a creature can't self-link.</summary>
+        public static async Task ValidateSelfLinkAsync(
+            ICreatureRepository repository, int creatureId, int targetId, string label, CancellationToken cancellationToken)
+        {
+            if (creatureId == targetId)
+            {
+                throw new DomainValidationException($"A creature cannot be its own {label}.");
+            }
+            var creature = await repository.FindByIdAsync(creatureId, cancellationToken)
+                ?? throw new EntityNotFoundException("Creature", creatureId);
+            var target = await repository.FindByIdAsync(targetId, cancellationToken);
+            if (target == null || target.WorldId != creature.WorldId)
+            {
+                throw new DomainValidationException($"Creature with ID {targetId} does not exist in this world.");
+            }
+        }
+
         /// <summary>Roditelj mora postojati u istom svijetu, ne smije biti samo stvorenje, i ne smije stvarati ciklus.</summary>
         public static async Task ValidateParentAsync(
             ICreatureRepository repository, Creature creature, CancellationToken cancellationToken)

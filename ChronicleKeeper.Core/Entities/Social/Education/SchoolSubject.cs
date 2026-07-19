@@ -12,6 +12,17 @@ namespace ChronicleKeeper.Core.Entities.Social.Education
         public int SchoolId { get; set; }
         public virtual School School { get; set; } = null!;
 
-        //public virtual ICollection<Characters.Character> Teachers { get; set; } = new List<Characters.Character>(); // TODO: Uncomment when Character many-to-many cross-links are revived
+        // Character many-to-many (join entity SchoolSubjectTeacher) — teachers of this subject.
+        public virtual ICollection<SchoolSubjectTeacher> Teachers { get; set; } = new List<SchoolSubjectTeacher>();
+    }
+
+    /// <summary>Join: SchoolSubject ↔ Character (teachers). Composite PK, not a LoreEntity, Cascade both sides.</summary>
+    public class SchoolSubjectTeacher
+    {
+        public int SchoolSubjectId { get; set; }
+        public virtual SchoolSubject? SchoolSubject { get; set; }
+
+        public int CharacterId { get; set; }
+        public virtual Characters.Character? Character { get; set; }
     }
 }

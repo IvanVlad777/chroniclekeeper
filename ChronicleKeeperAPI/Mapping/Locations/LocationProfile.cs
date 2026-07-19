@@ -77,7 +77,9 @@ public class LocationProfile : Profile
             // Reverse read-only lists
             .ForMember(dest => dest.MilitaryOrganizations, opt => opt.MapFrom(src => GetMilitaryOrganizations(src)))
             .ForMember(dest => dest.TradeRoutes, opt => opt.MapFrom(src => GetTradeRoutes(src)))
-            .ForMember(dest => dest.Creatures, opt => opt.MapFrom(src => GetInhabitingCreatures(src)));
+            .ForMember(dest => dest.Creatures, opt => opt.MapFrom(src => GetInhabitingCreatures(src)))
+            .ForMember(dest => dest.TimelineEvents, opt => opt.MapFrom(src => src.TimelineEvents
+                .Select(e => new ReferenceDto { Id = e.Id, Name = e.Name })));
     }
 
     private static string? GetContinentSpecifics(Location location) => location is Continent c ? c.ContinentSpecifics : null;

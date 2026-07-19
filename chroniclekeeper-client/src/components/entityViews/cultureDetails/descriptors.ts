@@ -103,6 +103,7 @@ export const descriptors: Descriptor[] = [
     },
     {
         key: "clothing",
+        detailRoute: "/storymap/clothing",
         list: clothing.getClothing,
         create: clothing.createClothing,
         update: clothing.updateClothing,
@@ -184,6 +185,7 @@ export const descriptors: Descriptor[] = [
     },
     {
         key: "culturalInstitution",
+        detailRoute: "/storymap/cultural-institutions",
         optionalCulture: true,
         list: culturalInstitutions.getCulturalInstitutions,
         create: culturalInstitutions.createCulturalInstitution,

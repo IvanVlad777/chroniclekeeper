@@ -15,6 +15,13 @@ namespace ChronicleKeeper.Core.DTOs.SchoolSubject
         public DateTime UpdatedAt { get; set; }
     }
 
+    public class SchoolSubjectDetailsDto : SchoolSubjectDto
+    {
+        public ReferenceDto? School { get; set; }
+        /// <summary>Characters that teach this subject (many-to-many via SchoolSubjectTeacher).</summary>
+        public List<ReferenceDto> Teachers { get; set; } = new();
+    }
+
     public class SchoolSubjectCreateDto
     {
         [Required]

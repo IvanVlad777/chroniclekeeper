@@ -58,6 +58,11 @@
     "subspecies": {
         "label": "Podvrste"
     },
+    "reverse": {
+        "occupations": "Česta zanimanja",
+        "cultures": "Kulture",
+        "folklore": "Folklor"
+    },
     "races": {
         "label": "Rase",
         "add": "dodaj",

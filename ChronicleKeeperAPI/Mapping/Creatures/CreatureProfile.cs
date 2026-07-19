@@ -77,7 +77,16 @@ namespace ChronicleKeeperAPI.Mapping.Creatures
                     .Select(cc => new ReferenceDto { Id = cc.City!.Id, Name = cc.City.Name })))
                 .ForMember(dest => dest.Habitats, opt => opt.MapFrom(src => src.Habitants
                     .Where(ce => ce.Ecosystem != null)
-                    .Select(ce => new ReferenceDto { Id = ce.Ecosystem!.Id, Name = ce.Ecosystem.Name })));
+                    .Select(ce => new ReferenceDto { Id = ce.Ecosystem!.Id, Name = ce.Ecosystem.Name })))
+                .ForMember(dest => dest.SymbioticPartners, opt => opt.MapFrom(src => src.SymbioticPartners
+                    .Where(x => x.SymbioticPartner != null)
+                    .Select(x => new ReferenceDto { Id = x.SymbioticPartner!.Id, Name = x.SymbioticPartner.Name })))
+                .ForMember(dest => dest.Prey, opt => opt.MapFrom(src => src.Prey
+                    .Where(x => x.Prey != null)
+                    .Select(x => new ReferenceDto { Id = x.Prey!.Id, Name = x.Prey.Name })))
+                .ForMember(dest => dest.Predators, opt => opt.MapFrom(src => src.Predators
+                    .Where(x => x.Predator != null)
+                    .Select(x => new ReferenceDto { Id = x.Predator!.Id, Name = x.Predator.Name })));
         }
 
         private static string GetSubtype(Creature creature) => creature switch

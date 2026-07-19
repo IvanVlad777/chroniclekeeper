@@ -29,6 +29,9 @@ namespace ChronicleKeeper.Infrastructure.Repositories
                 .Include(c => c.History)
                 .Include(c => c.CitiesItInhabits).ThenInclude(cc => cc.City)
                 .Include(c => c.Habitants).ThenInclude(ce => ce.Ecosystem)
+                .Include(c => c.SymbioticPartners).ThenInclude(x => x.SymbioticPartner)
+                .Include(c => c.Prey).ThenInclude(x => x.Prey)
+                .Include(c => c.Predators).ThenInclude(x => x.Predator)
                 .AsNoTracking()
                 .AsSplitQuery()
                 .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
@@ -68,6 +71,11 @@ namespace ChronicleKeeper.Infrastructure.Repositories
 
         public async Task<bool> DeleteAsync(int id, CancellationToken cancellationToken = default)
         {
+            // Clear the Restrict sides of the self-ref joins first (the Cascade sides — CreatureId /
+            // PredatorCreatureId — clean themselves when the row is deleted).
+            await _context.CreatureSymbioses.Where(x => x.SymbioticPartnerId == id).ExecuteDeleteAsync(cancellationToken);
+            await _context.CreaturePredations.Where(x => x.PreyCreatureId == id).ExecuteDeleteAsync(cancellationToken);
+
             var deleted = await _context.Creatures
                 .Where(c => c.Id == id)
                 .ExecuteDeleteAsync(cancellationToken);
@@ -133,6 +141,46 @@ namespace ChronicleKeeper.Infrastructure.Repositories
         {
             var deleted = await _context.CreatureEcosystems
                 .Where(ce => ce.CreatureId == creatureId && ce.EcosystemId == ecosystemId)
+                .ExecuteDeleteAsync(cancellationToken);
+            return deleted > 0;
+        }
+
+        public async Task<bool> IsSymbioticLinkedAsync(int creatureId, int partnerId, CancellationToken cancellationToken = default)
+        {
+            return await _context.CreatureSymbioses
+                .AnyAsync(x => x.CreatureId == creatureId && x.SymbioticPartnerId == partnerId, cancellationToken);
+        }
+
+        public async Task AddSymbiosisAsync(int creatureId, int partnerId, CancellationToken cancellationToken = default)
+        {
+            _context.CreatureSymbioses.Add(new CreatureSymbiosis { CreatureId = creatureId, SymbioticPartnerId = partnerId });
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task<bool> RemoveSymbiosisAsync(int creatureId, int partnerId, CancellationToken cancellationToken = default)
+        {
+            var deleted = await _context.CreatureSymbioses
+                .Where(x => x.CreatureId == creatureId && x.SymbioticPartnerId == partnerId)
+                .ExecuteDeleteAsync(cancellationToken);
+            return deleted > 0;
+        }
+
+        public async Task<bool> IsPreyLinkedAsync(int predatorId, int preyId, CancellationToken cancellationToken = default)
+        {
+            return await _context.CreaturePredations
+                .AnyAsync(x => x.PredatorCreatureId == predatorId && x.PreyCreatureId == preyId, cancellationToken);
+        }
+
+        public async Task AddPreyAsync(int predatorId, int preyId, CancellationToken cancellationToken = default)
+        {
+            _context.CreaturePredations.Add(new CreaturePredation { PredatorCreatureId = predatorId, PreyCreatureId = preyId });
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task<bool> RemovePreyAsync(int predatorId, int preyId, CancellationToken cancellationToken = default)
+        {
+            var deleted = await _context.CreaturePredations
+                .Where(x => x.PredatorCreatureId == predatorId && x.PreyCreatureId == preyId)
                 .ExecuteDeleteAsync(cancellationToken);
             return deleted > 0;
         }

@@ -13,6 +13,7 @@ import {
 import { EmptyState, ErrorState, LoadingSkeleton } from "../../../feedback";
 import { TagEditor } from "../../../tagging/TagEditor";
 import { HistoryBlock } from "../../../history/HistoryBlock";
+import { AppearsInSection } from "../../content/AppearsInSection";
 import {
     CharacterDto,
     FactionDetailsDto,
@@ -417,6 +418,11 @@ export default function FactionDetails() {
                         history={faction.history}
                         canEdit={canEdit}
                         onChanged={refetch}
+                    />
+                    <AppearsInSection
+                        worldId={faction.worldId}
+                        entityType="Faction"
+                        entityId={faction.id}
                     />
                 </div>
             </div>

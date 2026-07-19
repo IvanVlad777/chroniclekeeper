@@ -41,6 +41,9 @@ import CultureDetails from "../components/entityViews/culture/detail/CultureDeta
 import ArchitectureStyleDetail from "../components/entityViews/cultureDetails/ArchitectureStyleDetail";
 import FolkloreDetail from "../components/entityViews/cultureDetails/FolkloreDetail";
 import StandaloneCultureDetailPage from "../components/entityViews/cultureDetails/StandaloneCultureDetailPage";
+import ClothingDetail from "../components/entityViews/clothing/detail/ClothingDetail";
+import CulturalInstitutionDetail from "../components/entityViews/culturalInstitution/detail/CulturalInstitutionDetail";
+import SchoolSubjectDetail from "../components/entityViews/schoolSubject/detail/SchoolSubjectDetail";
 import DeityList from "../components/entityViews/mythology/deity/DeityList";
 import DeityDetails from "../components/entityViews/mythology/deity/DeityDetails";
 import DeityForm from "../components/entityViews/mythology/deity/DeityForm";
@@ -315,6 +318,9 @@ const AppRoutes = () => {
                         />
                     }
                 />
+                <Route path="cultural-institutions/:id" element={<CulturalInstitutionDetail />} />
+                <Route path="clothing/:id" element={<ClothingDetail />} />
+                <Route path="school-subjects/:id" element={<SchoolSubjectDetail />} />
                 <Route path="deities" element={<DeityList />} />
                 <Route path="deities/new" element={<DeityForm />} />
                 <Route path="deities/:id" element={<DeityDetails />} />

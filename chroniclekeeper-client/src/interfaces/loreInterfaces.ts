@@ -61,6 +61,9 @@ export interface SpeciesDetailsDto extends SpeciesDto {
     parentCreature?: ReferenceDto | null;
     subspecies: ReferenceDto[];
     history?: ReferenceDto | null;
+    frequentOccupations: ReferenceDto[];
+    cultures: ReferenceDto[];
+    folklore: ReferenceDto[];
 }
 
 export interface SpeciesCreateDto {
@@ -276,6 +279,7 @@ export interface HobbyDto {
 
 export interface HobbyDetailsDto extends HobbyDto {
     history?: ReferenceDto | null;
+    practitioners: ReferenceDto[];
 }
 
 export interface HobbyCreateDto {
@@ -431,6 +435,10 @@ export interface TimelineEventDto {
     isMajorEvent: boolean;
     /** Gdje se event dogodio (opcionalno). */
     location?: ReferenceDto | null;
+    /** Bitka koju event predstavlja (opcionalno). */
+    battle?: ReferenceDto | null;
+    /** Folklor/legenda iz koje event potječe (opcionalno). */
+    folklore?: ReferenceDto | null;
     /** Likovi uključeni u event. */
     involvedCharacters: ReferenceDto[];
     createdAt: string;
@@ -462,6 +470,8 @@ export interface TimelineEventCreateDto {
     consequences: string;
     isMajorEvent: boolean;
     locationId?: number | null;
+    battleId?: number | null;
+    folkloreId?: number | null;
     involvedCharacterIds: number[];
 }
 
@@ -691,6 +701,7 @@ export interface LocationDetailsDto extends LocationDto {
     militaryOrganizations: ReferenceDto[]; // Country
     tradeRoutes: ReferenceDto[]; // Country/City
     creatures: ReferenceDto[]; // City
+    timelineEvents: ReferenceDto[]; // any location — events that took place here
 }
 
 export interface LocationCreateDto {
@@ -1282,6 +1293,11 @@ export interface SchoolSubjectDto {
     isMandatory: boolean;
     createdAt: string;
     updatedAt: string;
+}
+
+export interface SchoolSubjectDetailsDto extends SchoolSubjectDto {
+    school?: ReferenceDto | null;
+    teachers: ReferenceDto[];
 }
 
 export interface SchoolDto {
@@ -2113,6 +2129,9 @@ export interface CreatureDetailsDto extends CreatureDto {
     history?: ReferenceDto | null;
     cities: ReferenceDto[];
     habitats: ReferenceDto[];
+    symbioticPartners: ReferenceDto[];
+    prey: ReferenceDto[];
+    predators: ReferenceDto[]; // read-only reverse
 }
 
 export interface CreatureCreateDto {
@@ -2939,6 +2958,7 @@ export interface ClothingDto {
 export interface ClothingDetailsDto extends ClothingDto {
     history?: ReferenceDto | null;
     culture?: ReferenceDto | null;
+    wearers: ReferenceDto[];
 }
 export interface ClothingCreateDto {
     name: string;

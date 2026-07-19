@@ -1,4 +1,33 @@
 {
+    "clothing": {
+        "listTitle": "Odjeća",
+        "single": "Odjeća",
+        "backtolist": "Natrag na odjeću",
+        "wearers": "Nositelji",
+        "fields": {
+            "clothingType": "Vrsta",
+            "materials": "Materijali",
+            "culture": "Kultura"
+        }
+    },
+    "culturalInstitution": {
+        "listTitle": "Kulturne institucije",
+        "single": "Kulturna institucija",
+        "backtolist": "Natrag na kulturne institucije",
+        "notableArtists": "Istaknuti umjetnici",
+        "link": "poveži",
+        "pick": "Odaberi lik",
+        "confirm": "Poveži",
+        "remove": "Odveži {{name}}",
+        "addFailed": "Povezivanje nije uspjelo.",
+        "removeFailed": "Odvezivanje nije uspjelo.",
+        "cancel": "Odustani",
+        "fields": {
+            "institutionType": "Vrsta",
+            "culture": "Kultura",
+            "city": "Grad"
+        }
+    },
     "sections": {
         "custom": "Običaji",
         "artForm": "Umjetničke forme",
@@ -76,7 +105,9 @@
         "loadError": "Učitavanje nije uspjelo.",
         "notFound": "Nije pronađeno",
         "backToCultures": "Natrag na kulture",
-        "cultures": "Kulture"
+        "cultures": "Kulture",
+        "description": "Opis",
+        "none": "Nema"
     },
     "standalone": {
         "noWorld": "Prvo odaberite svijet.",
